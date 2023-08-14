@@ -483,7 +483,7 @@ function showHelp() {
     if (gameState == 0) {
 		$('#startBtn').toggle();
     }
-    
+
     if ($('#openSideBar').attr('src') == './images/btn_back.svg') {
         $('#openSideBar').attr('src', './images/btn_help.svg');
         if (gameState != 0 && gameState != -1 && gameState != 2) {
@@ -508,15 +508,7 @@ function showHelp() {
         + "<p>Time left before your combo streak disappears is indicated by "
         + "<span style='color:#f1c40f;'>the</span> <span style='color:#e74c3c'>colored</span> "
         + "<span style='color:#3498db'>lines</span> <span style='color:#2ecc71'>on</span> the outer hexagon</p>"
-        + "<hr> <p id = 'afterhr'></p> <p>You are playing"
-        + " <a href='https://github.com/attogram/hextris-lite' target='_blank'>Hextris Lite</a> v"
-        + hextris_lite_version
-        + "</p><p>Brought to you by <a href='https://github.com/attogram' target='_blank'>The Attogram Project</a>"
-        + "<br />License: GNU General Public License v3 or later</p>"
-        + "<p>Forked from the original Hextris"
-        + "<br />by <a href='http://loganengstrom.com' target='_blank'>Logan Engstrom</a>"
-        + " &amp; <a href='https://github.com/garrettdreyfus' target='_blank'>Garrett Finucane</a>"
-        + "<br />License: GNU General Public License v3 or later</p>");
+        );
     if (gameState == 1) {
         pause();
     }
