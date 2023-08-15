@@ -44,7 +44,7 @@ var pageGameMenu = document.querySelector('#pageGameMenu');
 // --
 var newGameBtn = document.querySelector('#newGameBtn');
 var highScoresBtn = document.querySelector('#highScoresBtn');
-var aboutBtn = document.querySelector('#aboutBtn');
+
 
 // Tutorial Page
 var pageTutorial = document.querySelector('#pageTutorial');
@@ -84,13 +84,6 @@ var pageHighScore = document.querySelector('#pageHighScore');
 // --
 var lvlLostNewHighScore = document.querySelector('#lvlLostNewHighScore');
 
-
-// About Page
-var pageAbout = document.querySelector('#pageAbout');
-// --
-var abtPageBackBtn = document.querySelector('#abtPageBackBtn');
-
-
 // ------- Show Hide Pages Control Panel ------- //
 var playDelayPageToggle = document.getElementById('playDelayPageToggle');
 var playAreaPageToggle = document.getElementById('playAreaPageToggle');
@@ -100,18 +93,17 @@ var pauseMenuPageToggle = document.getElementById('pauseMenuPageToggle');
 var levelPassedPageToggle = document.getElementById('levelPassedPageToggle');
 var youLostPageToggle = document.getElementById('youLostPageToggle');
 var highScorePageToggle = document.getElementById('highScorePageToggle');
-var aboutPageToggle = document.getElementById('aboutPageToggle');
 var splashPageToggle = document.getElementById('splashPageToggle');
 
 var pagesTogglesArray = [
   playAreaPageToggle, gameMenuPageToggle, tutorialPageToggle, playDelayPageToggle,
   pauseMenuPageToggle, levelPassedPageToggle,
-  youLostPageToggle, highScorePageToggle, aboutPageToggle, splashPageToggle
+  youLostPageToggle, highScorePageToggle, splashPageToggle
 ]
 var pagesArray = [
   pagePlayArea, pageGameMenu, pageTutorial, pagePlayDelay,
   pagePauseMenu, pageLevelPassed,
-  pageYouLost, pageHighScore, pageAbout, pageSplash
+  pageYouLost, pageHighScore, pageSplash
 ]
 
 // show/hide pages if the checkbox is checked
@@ -190,24 +182,6 @@ toolsBox = {
       },500);
     }
   },
-  pageAbout: {
-    creditsAnimation:'',
-    creditsCont: document.querySelector('.credits-cont'),
-    moveCredits: function() {
-      var creditsCont = toolsBox.pageAbout.creditsCont;
-      toolsBox.pageAbout.creditsAnimation = window.setInterval(function() {
-        creditsCont.scrollTop += 2;
-        if (creditsCont.scrollTop === creditsCont.scrollHeight-creditsCont.offsetHeight) {
-          clearInterval(toolsBox.pageAbout.creditsAnimation);
-          creditsCont.scrollTop = 0;
-          toolsBox.pageAbout.moveCredits();
-        }
-      }, 40)
-    },
-    stopMovingCredits: function() {
-      clearInterval(toolsBox.pageAbout.creditsAnimation);
-    }
-  }
 }
 
 
@@ -708,14 +682,7 @@ toolsBox.onClickNTouchstart(pmCntnuGmBtn, function() {
   gameEngine.resume();
 });
 
-// About Page Buttons
-// -- Back Button
-abtPageBackBtn.addEventListener('click', function() {
-  audioPool.playSound(buttonTap);
-  toolsBox.showPage(pageGameMenu);
-  toolsBox.hidePage(pageAbout);
-  toolsBox.pageAbout.stopMovingCredits(); // stop animating the credits in the about page
-}, false);
+
 
 // Game Menu Buttons
 // -- New Game Button
@@ -724,13 +691,7 @@ newGameBtn.addEventListener('click', function() {
   toolsBox.showPage(pageTutorial);
   toolsBox.hidePage(pageGameMenu);
 }, false);
-// -- About Button
-aboutBtn.addEventListener('click', function() {
-  audioPool.playSound(buttonTap);
-  toolsBox.showPage(pageAbout);
-  toolsBox.hidePage(pageGameMenu);
-  toolsBox.pageAbout.moveCredits(); // animate the credits in the about page
-}, false);
+
 
 
 
