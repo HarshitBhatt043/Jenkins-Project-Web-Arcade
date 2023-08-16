@@ -3,6 +3,7 @@ html {
   height: 100%;
   min-height: 100%;
 }
+
 body {
   background-color: #333;
   margin: 0;
@@ -13,6 +14,7 @@ body {
   color: #ffb6a9;
   padding-bottom: 10px;
 }
+
 canvas {
   display: block;
   margin-left: auto;
@@ -20,24 +22,29 @@ canvas {
   max-width: 100%;
   cursor: pointer;
 }
+
 b,
 h3 {
   color: #fff;
   padding-bottom: 10px;
 }
+
 h3,
 h1 {
   margin-top: 15px;
   margin-bottom: 0;
 }
+
 p {
   margin-top: 10px;
   color: #ffb6a9;
   font-size: 16px;
 }
+
 h1 {
   color: #ffa7ff;
 }
+
 .wrapper {
   position: relative;
   margin-left: auto;
@@ -47,6 +54,7 @@ h1 {
   padding: 0 15px;
   box-sizing: border-box;
 }
+
 .wrapper:after {
   content: " ";
   clear: both;
@@ -57,14 +65,17 @@ h1 {
   content: " ";
   display: table;
 }
+
 a {
   color: #ffe17f;
 }
+
 ul {
   padding: 0;
   list-style: none;
   margin: 0;
 }
+
 ul > li {
   font-size: 16px;
   line-height: 21px;
@@ -74,18 +85,22 @@ ul > li {
 .text-right {
   text-align: right;
 }
+
 .pt-5 {
   padding-top: 10px;
 }
+
 .col-50 {
   box-sizing: border-box;
   width: 50%;
   float: left;
   padding-right: 10px;
 }
+
 .bg-dark {
   background-color: rgba(0, 0, 0, 0.3);
 }
+
 .fa,
 .far,
 .fab {
@@ -145,6 +160,7 @@ ul > li {
   text-align: center;
   padding: 20px;
 }
+
 .img-responsive {
   width: 100%;
   max-width: 100%;
@@ -155,11 +171,13 @@ ul > li {
   animation: blink-animation 1s steps(2, start) infinite;
   -webkit-animation: blink-animation 1s steps(2, start) infinite;
 }
+
 @keyframes blink-animation {
   to {
     visibility: hidden;
   }
 }
+
 @-webkit-keyframes blink-animation {
   to {
     visibility: hidden;
