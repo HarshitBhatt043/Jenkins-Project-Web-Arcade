@@ -8582,20 +8582,7 @@ class Hub {
         this.loader.style.cssText = 'pointer-events:none; position:absolute; left:calc(50% - 100px); top:calc(50% - 100px); width:200px; height:200px;';
 
         
-        /*this.link = document.createElement('div');
-        this.link.style.cssText = 'position:absolute;  left:10px; bottom:10px; width:50px; height:50px; pointer-events:auto; display:block;';
-        this.link.innerHTML = '<a href="https://github.com/lo-th/3d.city" target="_blank">' + UIL.Tools.icon('github', '#DEDEDE', 50) + '</a>';
-        this.hub.appendChild( this.link )*/
 
-        this.link = add('button', { 
-            target:this.hub, w:64, h:64, pos:{left:'10px', bottom:'10px'}, simple:true, 
-            button:'#8397ac' 
-        }).icon( Tools.icon('github', '#DEDEDE', 50) ).onChange( function(v){ window.open('https://github.com/lo-th/3d.city','_blank'); } );
-
-        this.donate = add('button', { 
-            target:this.hub, w:64, h:64, pos:{left:'84px', bottom:'10px'}, simple:true, 
-            button:'#8397ac' 
-        }).icon( Tools.icon('donate', '#DEDEDE', 50) ).onChange( function(v){ window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8KTXA987XHYNQ','_blank'); } );
 
 
 
@@ -8757,8 +8744,6 @@ class Hub {
 
     initGameHub  (){
 
-        this.link.dispose();
-        this.donate.dispose();
 
         var _this = this;
         //this.removeSelector("DIFFICULTY");
@@ -8966,8 +8951,7 @@ class Hub {
             this.linke.style.cssText ='position:absolute; top:160px; left:10px; width:180px; height:20px; pointer-events:auto; font-size:12px; text-align:center; color:'+this.colors[0]+';';
             this.aboutWindow.appendChild( this.linke );
 
-            this.abb.innerHTML = "3D CITY<br><br>All 3d side made by Lo.th<br>Simulation from MicropolisJS<br><br><br>More info and source<br>";
-            this.linke.innerHTML = "<a href='https://github.com/lo-th/3d.city' target='_blank'>https://github.com/lo-th/3d.city";
+            this.abb.innerHTML = "3D CITY<br>Simulation from MicropolisJS<br>";
 
 
 
