@@ -7,68 +7,76 @@
  *
  */
 
-import { MiscUtils } from '../Micro.js';
+import { MiscUtils } from "../Micro.js";
 
 export class BlockMap {
+  constructor(gameMapWidth, gameMapHeight, blockSize) {
+    if (
+      gameMapWidth === undefined ||
+      gameMapHeight === undefined ||
+      blockSize === undefined
+    )
+      throw new Error("Invalid dimensions for block map");
 
-    constructor ( gameMapWidth, gameMapHeight, blockSize ) {
+    this.isBlockMap = true;
 
-        if (gameMapWidth === undefined || gameMapHeight === undefined || blockSize === undefined) throw new Error('Invalid dimensions for block map')
+    this.blockSize = blockSize;
+    this.gameMapWidth = gameMapWidth;
+    this.gameMapHeight = gameMapHeight;
 
-        this.isBlockMap = true
+    this.width = Math.floor((gameMapWidth + blockSize - 1) / blockSize);
+    this.height = Math.floor((gameMapHeight + blockSize - 1) / blockSize);
 
-        this.blockSize = blockSize;
-        this.gameMapWidth = gameMapWidth;
-        this.gameMapHeight = gameMapHeight;
+    this.data = [];
+    this.clear();
+  }
 
-        this.width = Math.floor((gameMapWidth + blockSize - 1) / blockSize)
-        this.height = Math.floor((gameMapHeight + blockSize - 1) / blockSize)
-
-        this.data = [];
-        this.clear();
-
+  clear() {
+    let x,
+      y = this.height;
+    while (y--) {
+      x = this.width;
+      while (x--) {
+        this.data[this.width * y + x] = 0;
+      }
     }
+  }
 
-    clear () {
-
-        let x, y = this.height;
-        while( y-- ){
-            x = this.width;
-            while( x-- ){
-                this.data[ this.width * y + x ] = 0;
-            }
-        }
-
+  copyFrom(sourceMap, sourceFn) {
+    if (
+      sourceMap.width !== this.width ||
+      sourceMap.height !== this.height ||
+      sourceMap.blockSize !== this.blockSize
+    )
+      console.warn("Copying from incompatible blockMap!");
+    let x,
+      y,
+      height = sourceMap.height,
+      width = sourceMap.width;
+    for (y = 0; y < height; y++) {
+      for (x = 0; x < width; x++) {
+        this.data[width * y + x] = sourceFn(sourceMap.data[width * y + x]);
+      }
     }
+  }
 
-    copyFrom ( sourceMap, sourceFn ) {
+  get(x, y) {
+    return this.data[this.width * y + x];
+  }
 
-        if (sourceMap.width !== this.width || sourceMap.height !== this.height || sourceMap.blockSize !== this.blockSize) console.warn('Copying from incompatible blockMap!');
-        let x, y, height = sourceMap.height, width = sourceMap.width
-        for ( y = 0; y < height; y++) {
-            for ( x = 0; x < width; x++){
-                this.data[width * y + x] = sourceFn(sourceMap.data[width * y + x]);
-            }
-        }
-    }
+  set(x, y, value) {
+    this.data[this.width * y + x] = value;
+  }
 
-    get ( x, y ) {
-        return this.data[ this.width * y + x ];
-    }
+  toBlock(num) {
+    return Math.floor(num / this.blockSize);
+  }
 
-    set ( x, y, value ) {
-        this.data[ this.width * y + x ] = value;
-    }
+  worldGet(x, y) {
+    return this.get(this.toBlock(x), this.toBlock(y));
+  }
 
-    toBlock ( num ) {
-        return Math.floor( num / this.blockSize );
-    }
-
-    worldGet ( x, y ) { 
-        return this.get( this.toBlock(x), this.toBlock(y) );
-    }
-
-    worldSet ( x, y, value ) {
-        this.set( this.toBlock(x), this.toBlock(y), value );
-    }
+  worldSet(x, y, value) {
+    this.set(this.toBlock(x), this.toBlock(y), value);
+  }
 }

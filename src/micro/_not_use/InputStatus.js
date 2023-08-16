@@ -7,184 +7,265 @@
  *
  */
 
-import { Micro } from '../Micro.js';
+import { Micro } from "../Micro.js";
 
 export class InputStatus {
+  constructor(map) {
+    this.gameTools = new Micro.GameTools(map);
+    this.canvas = document.getElementById(Micro.DEFAULT_ID);
 
-    constructor ( map ) {
+    // Tool clicks
+    this.clickX = -1;
+    this.clickY = -1;
 
-        this.gameTools = new Micro.GameTools(map);
-        this.canvas = document.getElementById(Micro.DEFAULT_ID);
+    // Keyboard Movement
+    this.up = false;
+    this.down = false;
+    this.left = false;
+    this.right = false;
 
-        // Tool clicks
-        this.clickX = -1;
-        this.clickY = -1;
+    // Mouse movement
+    this.mouseX = -1;
+    this.mouseY = -1;
 
-        // Keyboard Movement
-        this.up = false;
-        this.down = false;
-        this.left = false;
-        this.right = false;
+    // Tool buttons
+    this.toolName = null;
+    this.currentTool = null;
+    this.toolWidth = 0;
+    this.toolColour = "";
 
-        // Mouse movement
-        this.mouseX = -1;
-        this.mouseY = -1;
+    // Other buttons
+    this.budgetRequested = false;
+    this.evalRequested = false;
+    this.disasterRequested = false;
 
-        // Tool buttons
-        this.toolName = null;
-        this.currentTool = null;
-        this.toolWidth = 0;
-        this.toolColour = '';
+    // Speed
+    this.speedChangeRequested = false;
+    this.requestedSpeed = null;
 
-        // Other buttons
-        this.budgetRequested = false;
-        this.evalRequested = false;
-        this.disasterRequested = false;
+    this.bindKeys();
 
-        // Speed
-        this.speedChangeRequested = false;
-        this.requestedSpeed = null;
+    var _this = this;
+    this.canvas.addEventListener(
+      "mouseenter",
+      function (e) {
+        _this.mouseEnterHandler(e);
+      },
+      false
+    );
+    this.canvas.addEventListener(
+      "mouseleave",
+      function (e) {
+        _this.mouseLeaveHandler(e);
+      },
+      false
+    );
 
-        this.bindKeys();
-
-        var _this = this;
-        this.canvas.addEventListener( 'mouseenter', function(e) { _this.mouseEnterHandler(e); }, false );
-        this.canvas.addEventListener( 'mouseleave', function(e) { _this.mouseLeaveHandler(e); }, false );
-
-        var bb = document.getElementsByClassName('toolButton');
-        for(var i=0; i<bb.length; i++){
-            bb[i].addEventListener( 'click', function(e) { _this.toolButtonHandler(e); }, false );
-            bb[i].addEventListener( 'mouseover', function(e) { _this.toolButtonOver(e); }, false );
-        }
-
-        document.getElementById('evalRequest').addEventListener( 'click', function(e) { _this.evalHandler(e); } , false );
-        document.getElementById('budgetRequest').addEventListener( 'click', function(e) { _this.budgetHandler(e); } , false );
-        document.getElementById('disasterRequest').addEventListener( 'click', function(e) { _this.disasterHandler(e); } , false );
-        document.getElementById('pauseRequest').addEventListener( 'click', function(e) { _this.speedChangeHandler(e); } , false );
+    var bb = document.getElementsByClassName("toolButton");
+    for (var i = 0; i < bb.length; i++) {
+      bb[i].addEventListener(
+        "click",
+        function (e) {
+          _this.toolButtonHandler(e);
+        },
+        false
+      );
+      bb[i].addEventListener(
+        "mouseover",
+        function (e) {
+          _this.toolButtonOver(e);
+        },
+        false
+      );
     }
 
-    bindKeys () {
-        var _this = this;
-        document.onkeydown = function(e) {
-            e = e || window.event;
-            var handled = false;
-            if (e.keyCode == 38) { _this.up = true; handled = true; }
-            else if (e.keyCode == 40) { _this.down = true; handled = true; } 
-            else if (e.keyCode == 39) { _this.right = true; handled = true; } 
-            else if (e.keyCode == 37) { _this.left = true; handled = true; }
-            if (handled) e.preventDefault();
-        };
-        document.onkeyup = function(e) {
-            e = e || window.event;
-            if (e.keyCode == 38) _this.up = false;
-            if (e.keyCode == 40) _this.down = false;
-            if (e.keyCode == 39) _this.right = false;
-            if (e.keyCode == 37) _this.left = false;
-        };
-        // self.focus()
-    }
+    document.getElementById("evalRequest").addEventListener(
+      "click",
+      function (e) {
+        _this.evalHandler(e);
+      },
+      false
+    );
+    document.getElementById("budgetRequest").addEventListener(
+      "click",
+      function (e) {
+        _this.budgetHandler(e);
+      },
+      false
+    );
+    document.getElementById("disasterRequest").addEventListener(
+      "click",
+      function (e) {
+        _this.disasterHandler(e);
+      },
+      false
+    );
+    document.getElementById("pauseRequest").addEventListener(
+      "click",
+      function (e) {
+        _this.speedChangeHandler(e);
+      },
+      false
+    );
+  }
 
-    clickHandled () {
-        this.clickX = -1;
-        this.clickY = -1;
-        this.currentTool.clear();
-    }
+  bindKeys() {
+    var _this = this;
+    document.onkeydown = function (e) {
+      e = e || window.event;
+      var handled = false;
+      if (e.keyCode == 38) {
+        _this.up = true;
+        handled = true;
+      } else if (e.keyCode == 40) {
+        _this.down = true;
+        handled = true;
+      } else if (e.keyCode == 39) {
+        _this.right = true;
+        handled = true;
+      } else if (e.keyCode == 37) {
+        _this.left = true;
+        handled = true;
+      }
+      if (handled) e.preventDefault();
+    };
+    document.onkeyup = function (e) {
+      e = e || window.event;
+      if (e.keyCode == 38) _this.up = false;
+      if (e.keyCode == 40) _this.down = false;
+      if (e.keyCode == 39) _this.right = false;
+      if (e.keyCode == 37) _this.left = false;
+    };
+    // self.focus()
+  }
 
-    getRelativeCoordinates (e) {
-        var rect = this.canvas.getBoundingClientRect();
-        var dx = window.innerWidth-200;
-        var x;
-        var y;
-        if (e.x !== undefined && e.y !== undefined) {
-            x = e.x- rect.left;
-            y = e.y- rect.top;
-        } else {
-            x = e.clientX -  rect.left;//+ 0;
-            y = e.clientY - rect.top;
-        }
-        return {x: x, y: y};
-    }
+  clickHandled() {
+    this.clickX = -1;
+    this.clickY = -1;
+    this.currentTool.clear();
+  }
 
-    speedChangeHandled () {
-        this.speedChangeRequested = false;
-        this.requestedSpeed = null;
+  getRelativeCoordinates(e) {
+    var rect = this.canvas.getBoundingClientRect();
+    var dx = window.innerWidth - 200;
+    var x;
+    var y;
+    if (e.x !== undefined && e.y !== undefined) {
+      x = e.x - rect.left;
+      y = e.y - rect.top;
+    } else {
+      x = e.clientX - rect.left; //+ 0;
+      y = e.clientY - rect.top;
     }
+    return { x: x, y: y };
+  }
 
-    speedChangeHandler (e) {
-        this.speedChangeRequested = true;
-        var requestedSpeed = document.getElementById('pauseRequest').innerHTML;
-        var newRequest = requestedSpeed === 'Pause' ? 'Play' : 'Pause';
-        document.getElementById('pauseRequest').innerHTML=newRequest;
-    }
+  speedChangeHandled() {
+    this.speedChangeRequested = false;
+    this.requestedSpeed = null;
+  }
 
-    mouseEnterHandler (e) {
-        var _this = this;
-        this.canvas.addEventListener( 'mousemove', function(e) { _this.mouseMoveHandler(e); }, false );
-        this.canvas.addEventListener( 'click', function(e) { _this.canvasClickHandler(e); }, false );
-    }
+  speedChangeHandler(e) {
+    this.speedChangeRequested = true;
+    var requestedSpeed = document.getElementById("pauseRequest").innerHTML;
+    var newRequest = requestedSpeed === "Pause" ? "Play" : "Pause";
+    document.getElementById("pauseRequest").innerHTML = newRequest;
+  }
 
-    mouseLeaveHandler (e) {
-        var _this = this;
-        this.canvas.removeEventListener( 'mousemove', function(e) { _this.mouseMoveHandler(e); }, false );
-        this.canvas.removeEventListener( 'click', function(e) { _this.canvasClickHandler(e); }, false );
-        this.mouseX = -1;
-        this.mouseY = -1;
-    }
+  mouseEnterHandler(e) {
+    var _this = this;
+    this.canvas.addEventListener(
+      "mousemove",
+      function (e) {
+        _this.mouseMoveHandler(e);
+      },
+      false
+    );
+    this.canvas.addEventListener(
+      "click",
+      function (e) {
+        _this.canvasClickHandler(e);
+      },
+      false
+    );
+  }
 
-    mouseMoveHandler (e) {
-        var coords = this.getRelativeCoordinates(e);
-        this.mouseX = coords.x;
-        this.mouseY = coords.y;
-    }
+  mouseLeaveHandler(e) {
+    var _this = this;
+    this.canvas.removeEventListener(
+      "mousemove",
+      function (e) {
+        _this.mouseMoveHandler(e);
+      },
+      false
+    );
+    this.canvas.removeEventListener(
+      "click",
+      function (e) {
+        _this.canvasClickHandler(e);
+      },
+      false
+    );
+    this.mouseX = -1;
+    this.mouseY = -1;
+  }
 
-    canvasClickHandler (e) {
-        this.clickX = this.mouseX;
-        this.clickY = this.mouseY;
-        e.preventDefault();
-    }
+  mouseMoveHandler(e) {
+    var coords = this.getRelativeCoordinates(e);
+    this.mouseX = coords.x;
+    this.mouseY = coords.y;
+  }
 
-    toolButtonOver (e) {
-        var name = e.target.getAttribute("data-tool");
-        var price = e.target.getAttribute("data-price");
-        if(price == 0){ price = ""; name = "info"}
-        else price += "$";
-        document.getElementById('buttonsInfos').innerHTML = name +" "+ price;
-    }
+  canvasClickHandler(e) {
+    this.clickX = this.mouseX;
+    this.clickY = this.mouseY;
+    e.preventDefault();
+  }
 
-    toolButtonHandler(e) {
-        var bb = document.getElementsByClassName('selected');
-        for(var i=0; i<bb.length; i++){
-            bb[i].className = bb[i].className.replace("selected", "unselected");
-        }
-        e.target.className = e.target.className.replace("unselected", "selected");
-        this.toolName = e.target.getAttribute("data-tool");
-        this.toolWidth = e.target.getAttribute("data-size");
-        this.currentTool = this.gameTools[this.toolName];
-        this.toolColour = e.target.getAttribute("data-colour");
-        e.preventDefault();
-    }
+  toolButtonOver(e) {
+    var name = e.target.getAttribute("data-tool");
+    var price = e.target.getAttribute("data-price");
+    if (price == 0) {
+      price = "";
+      name = "info";
+    } else price += "$";
+    document.getElementById("buttonsInfos").innerHTML = name + " " + price;
+  }
 
-    disasterHandler (e) {
-        this.disasterRequested = true;
+  toolButtonHandler(e) {
+    var bb = document.getElementsByClassName("selected");
+    for (var i = 0; i < bb.length; i++) {
+      bb[i].className = bb[i].className.replace("selected", "unselected");
     }
+    e.target.className = e.target.className.replace("unselected", "selected");
+    this.toolName = e.target.getAttribute("data-tool");
+    this.toolWidth = e.target.getAttribute("data-size");
+    this.currentTool = this.gameTools[this.toolName];
+    this.toolColour = e.target.getAttribute("data-colour");
+    e.preventDefault();
+  }
 
-    evalHandler (e) {
-        this.evalRequested = true;
-    }
+  disasterHandler(e) {
+    this.disasterRequested = true;
+  }
 
-    budgetHandler (e) {
-        this.budgetRequested = true;
-    }
+  evalHandler(e) {
+    this.evalRequested = true;
+  }
 
-    evalHandled (e) {
-        this.evalRequested = false;
-    }
+  budgetHandler(e) {
+    this.budgetRequested = true;
+  }
 
-    disasterHandled (e) {
-        this.disasterRequested = false;
-    }
+  evalHandled(e) {
+    this.evalRequested = false;
+  }
 
-    budgetHandled (e) {
-        this.budgetRequested = false;
-    }
+  disasterHandled(e) {
+    this.disasterRequested = false;
+  }
+
+  budgetHandled(e) {
+    this.budgetRequested = false;
+  }
 }

@@ -8,37 +8,25 @@
  */
 
 export class TileHistory {
+  constructor() {
+    this.clear();
+  }
 
-    constructor () {
+  clear() {
+    this.data = {};
+  }
 
-        this.clear();
+  toKey(x, y) {
+    return [x, y].join(",");
+  }
 
-    }
+  getTile(x, y) {
+    let key = this.toKey(x, y);
+    return this.data[key];
+  }
 
-    clear () {
-
-        this.data = {};
-
-    }
-
-    toKey ( x, y ) {
-
-        return [x, y].join(',');
-
-    }
-
-    getTile ( x, y ) {
-
-        let key = this.toKey( x, y );
-        return this.data[key];
-
-    }
-
-    setTile ( x, y, value ) {
-
-        let key = this.toKey( x, y );
-        this.data[key] = value
-
-    }
-
+  setTile(x, y, value) {
+    let key = this.toKey(x, y);
+    this.data[key] = value;
+  }
 }
