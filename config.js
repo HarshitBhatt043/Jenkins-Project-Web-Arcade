@@ -1,5 +1,5 @@
 var Config = {
-	debug: 			false,
-	tweet: 			true,
-	barph: 			true
+  debug: false,
+  tweet: true,
+  barph: true,
 };
