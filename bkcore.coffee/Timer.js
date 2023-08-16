@@ -7,11 +7,10 @@
  @author Thibaut 'BKcore' Despoulain <http://bkcore.com>
 */
 
-
-(function() {
+(function () {
   var Timer, exports;
 
-  Timer = (function() {
+  Timer = (function () {
     /*
         Creates a new timer, inactive by default.
         Call Timer.start() to activate.
@@ -23,7 +22,7 @@
         current: 0,
         previous: 0,
         elapsed: 0,
-        delta: 0
+        delta: 0,
       };
       this.active = false;
     }
@@ -32,16 +31,15 @@
         Starts/restarts the timer.
     */
 
-
-    Timer.prototype.start = function() {
+    Timer.prototype.start = function () {
       var now;
-      now = (new Date).getTime();
+      now = new Date().getTime();
       this.time.start = now;
       this.time.current = now;
       this.time.previous = now;
       this.time.elapsed = 0;
       this.time.delta = 0;
-      return this.active = true;
+      return (this.active = true);
     };
 
     /*
@@ -50,34 +48,31 @@
         @param bool Do pause
     */
 
-
-    Timer.prototype.pause = function(doPause) {
-      return this.active = !doPause;
+    Timer.prototype.pause = function (doPause) {
+      return (this.active = !doPause);
     };
 
     /*
         Update method to be called inside a RAF loop
     */
 
-
-    Timer.prototype.update = function() {
+    Timer.prototype.update = function () {
       var now;
       if (!this.active) {
         return;
       }
-      now = (new Date).getTime();
+      now = new Date().getTime();
       this.time.current = now;
       this.time.elapsed = this.time.current - this.time.start;
       this.time.delta = now - this.time.previous;
-      return this.time.previous = now;
+      return (this.time.previous = now);
     };
 
     /*
         Returns a formatted version of the current elapsed time using msToTime().
     */
 
-
-    Timer.prototype.getElapsedTime = function() {
+    Timer.prototype.getElapsedTime = function () {
       return this.constructor.msToTime(this.time.elapsed);
     };
 
@@ -88,8 +83,7 @@
         @return Object{h,m,s,ms}
     */
 
-
-    Timer.msToTime = function(t) {
+    Timer.msToTime = function (t) {
       var h, m, ms, s;
       ms = t % 1000;
       s = Math.floor((t / 1000) % 60);
@@ -100,7 +94,7 @@
         m: m,
         s: s,
         ms: ms,
-        ms: ms
+        ms: ms,
       };
     };
 
@@ -111,8 +105,7 @@
         @return Object<string>{h,m,s,ms}
     */
 
-
-    Timer.msToTimeString = function(t) {
+    Timer.msToTimeString = function (t) {
       var time;
       time = this.msToTime(t);
       time.h = this.zfill(time.h, 2);
@@ -129,19 +122,17 @@
         @param size int Desired string size
     */
 
-
-    Timer.zfill = function(num, size) {
+    Timer.zfill = function (num, size) {
       var len;
       len = size - num.toString().length;
       if (len > 0) {
-        return new Array(len + 1).join('0') + num;
+        return new Array(len + 1).join("0") + num;
       } else {
         return num.toString();
       }
     };
 
     return Timer;
-
   })();
 
   /*
@@ -149,11 +140,9 @@
     @package bkcore
   */
 
-
   exports = exports != null ? exports : this;
 
   exports.bkcore || (exports.bkcore = {});
 
   exports.bkcore.Timer = Timer;
-
 }).call(this);

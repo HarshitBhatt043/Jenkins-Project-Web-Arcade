@@ -1,155 +1,130 @@
 var pgli = pgli || {};
 
+pgli.Project = gamecore.Base.extend(
+  "Project",
+  {
+    patternRoot: /\/([a-z]+\.pmod)/gi,
+    patternPath: /([a-z\/]+\/)[a-z]+\.pmod/gi,
+  },
 
-pgli.Project = gamecore.Base.extend('Project',
-{
-	patternRoot: /\/([a-z]+\.pmod)/ig,
-	patternPath: /([a-z\/]+\/)[a-z]+\.pmod/ig
+  {
+    appInstance: null,
+    modules: null,
+    activeFile: null,
+    files: null,
+    keys: [],
+    name: "default",
+    path: "/files/",
+    root: "default.pmod",
+    diagram: null,
+    loadingQueue: [],
+    onLoad: function () {
+      console.log("Project loaded.");
+    },
 
-},
+    init: function (projectFile, onLoad) {
+      this.onLoad = onLoad;
+      this.modules = new gamecore.Hashtable();
+      this.files = new gamecore.Hashtable();
+      this.path = pgli.Project.patternPath.exec(projectFile)[1];
+      this.root = pgli.Project.patternRoot.exec(projectFile)[1];
 
-{
-	appInstance: null,
-	modules: null,
-	activeFile: null,
-	files:null,
-	keys :[],
-	name: "default",
-	path: "/files/",
-	root: "default.pmod",
-	diagram: null,
-	loadingQueue: [],
-	onLoad: function() { console.log("Project loaded."); },
+      var self = this;
 
-	
+      this.loadFile(projectFile, this.root, true, true);
+    },
 
-	init : function(projectFile, onLoad)
-	{
-		this.onLoad = onLoad;		
-		this.modules = new gamecore.Hashtable();
-		this.files = new gamecore.Hashtable();
-		this.path = pgli.Project.patternPath.exec(projectFile)[1];
-	    this.root = pgli.Project.patternRoot.exec(projectFile)[1];
+    loadFile: function (path, name, doDependencies, doDiagram) {
+      trace("#Loading [" + name + "].");
+      var self = this;
+      var request = $.ajax({
+        url: path,
+        type: "get",
+        dataType: "text",
+      })
+        .success(function (data) {
+          self.files.put(name, data);
+          self.keys.push(name);
 
-	    var self = this;
+          var object = pgli.lang.Parser.parseModule(data);
+          self.modules.put(name, object);
 
-    	this.loadFile(projectFile,this.root,true,true);
-    		
-	},
+          if (doDependencies == true) self.loadDependencies(object);
 
-	loadFile: function(path,name,doDependencies,doDiagram)
-	{
-		trace("#Loading ["+name+"].");
-		var self = this;
-		var request = $.ajax({
-	            url: path,
-	            type: 'get',
-	            dataType: "text",
-		    })
-		    .success(function(data)
-		    {
-		    	self.files.put(name, data);
-		    	self.keys.push(name);
+          if (doDiagram == true)
+            self.getAppInstance().addDiagramNode(name, object);
 
-		    	var object = pgli.lang.Parser.parseModule(data);
-		    	self.modules.put(name, object);
+          trace("#[" + name + "] loaded");
 
-		    	if(doDependencies == true)
-		    		self.loadDependencies(object);
+          self.onLoad();
+        })
+        .error(function () {
+          throw "Unable to load file: " + path;
+        });
+    },
 
-		    	if(doDiagram == true)
-		    		self.getAppInstance().addDiagramNode(name, object);
+    loadDependencies: function (object) {
+      if (!("layers" in object)) return;
 
-		    	trace("#["+name+"] loaded");
-		  
-		        self.onLoad();
-		    })
-		    .error(function()
-		    {
-		        throw "Unable to load file: " + path;
-		    });
-	},
+      var layers = object.layers;
+      var self = this;
 
-	loadDependencies: function(object)
-	{
+      for (var i = 0, len = layers.length; i < len; i++) {
+        if (!("use" in layers[i])) continue;
 
-		if(!("layers" in object))
-			return;
+        var layerName = layers[i].use;
 
-		var layers = object.layers;
-		var self = this;
+        trace("#Found dependency [" + layerName + "]");
 
-		for (var i=0, len = layers.length; i<len ; i++)
-		{
-			if(!("use" in layers[i]) )
-				continue;
+        (function (name, self) {
+          self.loadFile(self.path + name, name, true, true);
+        })(layerName, self);
+      }
+    },
 
-			var layerName = layers[i].use;
+    getModulesCount: function () {
+      return this.keys.length;
+    },
 
-			trace("#Found dependency ["+layerName+"]");
+    getModule: function (key) {
+      return this.modules.get(key);
+    },
 
-	    	(function(name,self)
-	    	{
-		    	self.loadFile(self.path+name,name,true,true);
+    getFile: function (key) {
+      return this.files.get(key);
+    },
 
-	    	})(layerName,self);
-		}
+    getModuleKey: function (index) {
+      return this.keys[index];
+    },
 
-	},
+    getRootModule: function () {
+      return this.modules.get(this.root);
+    },
 
-	getModulesCount: function()
-	{
-		return this.keys.length;
-	},
+    isEmpty: function () {
+      return this.keys.length <= 0;
+    },
 
-	getModule: function(key)
-	{
-		return this.modules.get(key);
-	},
+    setAppInstance: function (app) {
+      this.appInstance = app;
+    },
 
-	getFile: function(key)
-	{
-		return this.files.get(key);
-	},
+    getAppInstance: function () {
+      return this.appInstance;
+    },
 
-	getModuleKey: function(index)
-	{
-		return this.keys[index];
-	},
+    setActiveFile: function (key) {
+      this.activeFile = key;
+    },
 
-	getRootModule: function()
-	{
-		return this.modules.get(this.root);
-	},
+    rememberActiveFile: function () {
+      if (!this.activeFile) return;
 
-	isEmpty: function()
-	{
-		return (this.keys.length <= 0);
-	},
+      this.files.put(this.activeFile, this.getAppInstance().getEditorContent());
+    },
 
-	setAppInstance: function(app)
-	{
-		this.appInstance = app;
-	},
-
-	getAppInstance: function()
-	{
-		return this.appInstance;
-	},
-
-	setActiveFile: function(key)
-	{
-		this.activeFile = key;
-	},
-
-	rememberActiveFile: function()
-	{
-		if(!this.activeFile) return;
-
-		this.files.put(this.activeFile, this.getAppInstance().getEditorContent());
-	} 
-
-	/*updateDiagram: function()
+    /*updateDiagram: function()
 	{
 
 	},
@@ -158,5 +133,5 @@ pgli.Project = gamecore.Base.extend('Project',
 	{
 		//canvasRenderer.Render(modules, root, new Hashtable());
 	}*/
-
-});
+  }
+);

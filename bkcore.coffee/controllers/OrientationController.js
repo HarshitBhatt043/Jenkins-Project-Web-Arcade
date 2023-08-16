@@ -7,14 +7,12 @@
   @author Thibaut 'BKcore' Despoulain <http://bkcore.com>
 */
 
-
-(function() {
+(function () {
   var OrientationController, exports, _base;
 
-  OrientationController = (function() {
-
-    OrientationController.isCompatible = function() {
-      return 'DeviceOrientationEvent' in window;
+  OrientationController = (function () {
+    OrientationController.isCompatible = function () {
+      return "DeviceOrientationEvent" in window;
     };
 
     /*
@@ -24,7 +22,6 @@
         @param registerTouch bool Enable touch detection
         @param touchCallback function Callback for touches
     */
-
 
     function OrientationController(dom, registerTouch, touchCallback) {
       var _this = this;
@@ -39,16 +36,28 @@
       this.dbeta = null;
       this.dgamma = null;
       this.touches = null;
-      window.addEventListener('deviceorientation', (function(e) {
-        return _this.orientationChange(e);
-      }), false);
+      window.addEventListener(
+        "deviceorientation",
+        function (e) {
+          return _this.orientationChange(e);
+        },
+        false
+      );
       if (this.registerTouch) {
-        this.dom.addEventListener('touchstart', (function(e) {
-          return _this.touchStart(e);
-        }), false);
-        this.dom.addEventListener('touchend', (function(e) {
-          return _this.touchEnd(e);
-        }), false);
+        this.dom.addEventListener(
+          "touchstart",
+          function (e) {
+            return _this.touchStart(e);
+          },
+          false
+        );
+        this.dom.addEventListener(
+          "touchend",
+          function (e) {
+            return _this.touchEnd(e);
+          },
+          false
+        );
       }
     }
 
@@ -56,8 +65,7 @@
         @private
     */
 
-
-    OrientationController.prototype.orientationChange = function(event) {
+    OrientationController.prototype.orientationChange = function (event) {
       if (!this.active) {
         return;
       }
@@ -77,8 +85,7 @@
         @private
     */
 
-
-    OrientationController.prototype.touchStart = function(event) {
+    OrientationController.prototype.touchStart = function (event) {
       var touch, _i, _len, _ref;
       if (!this.active) {
         return;
@@ -98,8 +105,7 @@
         @private
     */
 
-
-    OrientationController.prototype.touchEnd = function(event) {
+    OrientationController.prototype.touchEnd = function (event) {
       var touch, _i, _len, _ref;
       if (!this.active) {
         return;
@@ -116,7 +122,6 @@
     };
 
     return OrientationController;
-
   })();
 
   exports = exports != null ? exports : this;
@@ -126,5 +131,4 @@
   (_base = exports.bkcore).controllers || (_base.controllers = {});
 
   exports.bkcore.controllers.OrientationController = OrientationController;
-
 }).call(this);

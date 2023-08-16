@@ -8,14 +8,13 @@
   @author Thibaut 'BKcore' Despoulain <http://bkcore.com>
  */
 
-(function() {
+(function () {
   var TouchController, Vec2, exports, _base;
 
-  TouchController = (function() {
-    TouchController.isCompatible = function() {
-      return 'ontouchstart' in document.documentElement;
+  TouchController = (function () {
+    TouchController.isCompatible = function () {
+      return "ontouchstart" in document.documentElement;
     };
-
 
     /*
       Creates a new TouchController
@@ -35,29 +34,40 @@
       this.stickPos = new Vec2(0, 0);
       this.stickStartPos = new Vec2(0, 0);
       this.stickVector = new Vec2(0, 0);
-      this.dom.addEventListener('touchstart', ((function(_this) {
-        return function(e) {
-          return _this.touchStart(e);
-        };
-      })(this)), false);
-      this.dom.addEventListener('touchmove', ((function(_this) {
-        return function(e) {
-          return _this.touchMove(e);
-        };
-      })(this)), false);
-      this.dom.addEventListener('touchend', ((function(_this) {
-        return function(e) {
-          return _this.touchEnd(e);
-        };
-      })(this)), false);
+      this.dom.addEventListener(
+        "touchstart",
+        (function (_this) {
+          return function (e) {
+            return _this.touchStart(e);
+          };
+        })(this),
+        false
+      );
+      this.dom.addEventListener(
+        "touchmove",
+        (function (_this) {
+          return function (e) {
+            return _this.touchMove(e);
+          };
+        })(this),
+        false
+      );
+      this.dom.addEventListener(
+        "touchend",
+        (function (_this) {
+          return function (e) {
+            return _this.touchEnd(e);
+          };
+        })(this),
+        false
+      );
     }
-
 
     /*
       @private
      */
 
-    TouchController.prototype.touchStart = function(event) {
+    TouchController.prototype.touchStart = function (event) {
       var touch, _i, _len, _ref;
       if (!this.active) {
         return;
@@ -81,12 +91,11 @@
       return false;
     };
 
-
     /*
       @private
      */
 
-    TouchController.prototype.touchMove = function(event) {
+    TouchController.prototype.touchMove = function (event) {
       var touch, _i, _len, _ref;
       event.preventDefault();
       if (!this.active) {
@@ -95,7 +104,10 @@
       _ref = event.changedTouches;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         touch = _ref[_i];
-        if (this.stickID === touch.identifier && touch.clientX < this.stickMargin) {
+        if (
+          this.stickID === touch.identifier &&
+          touch.clientX < this.stickMargin
+        ) {
           this.stickPos.set(touch.clientX, touch.clientY);
           this.stickVector.copy(this.stickPos).substract(this.stickStartPos);
           break;
@@ -105,12 +117,11 @@
       return false;
     };
 
-
     /*
       @private
      */
 
-    TouchController.prototype.touchEnd = function(event) {
+    TouchController.prototype.touchEnd = function (event) {
       var touch, _i, _len, _ref;
       if (!this.active) {
         return;
@@ -133,9 +144,7 @@
     };
 
     return TouchController;
-
   })();
-
 
   /*
     Internal class used for vector2
@@ -143,34 +152,32 @@
     @private
    */
 
-  Vec2 = (function() {
+  Vec2 = (function () {
     function Vec2(x, y) {
       this.x = x != null ? x : 0;
       this.y = y != null ? y : 0;
     }
 
-    Vec2.prototype.substract = function(vec) {
+    Vec2.prototype.substract = function (vec) {
       this.x -= vec.x;
       this.y -= vec.y;
       return this;
     };
 
-    Vec2.prototype.copy = function(vec) {
+    Vec2.prototype.copy = function (vec) {
       this.x = vec.x;
       this.y = vec.y;
       return this;
     };
 
-    Vec2.prototype.set = function(x, y) {
+    Vec2.prototype.set = function (x, y) {
       this.x = x;
       this.y = y;
       return this;
     };
 
     return Vec2;
-
   })();
-
 
   /*
     Exports
@@ -184,5 +191,4 @@
   (_base = exports.bkcore).controllers || (_base.controllers = {});
 
   exports.bkcore.controllers.TouchController = TouchController;
-
 }).call(this);

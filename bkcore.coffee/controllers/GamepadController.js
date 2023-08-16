@@ -6,19 +6,17 @@
   @author Mahesh Kulkarni <http://twitter.com/maheshkk>
 */
 
-
-(function() {
+(function () {
   var GamepadController, exports, _base;
 
-  GamepadController = (function() {
-    GamepadController.isCompatible = function() {
-      return ('getGamepads' in navigator) || ('webkitGetGamepads' in navigator);
+  GamepadController = (function () {
+    GamepadController.isCompatible = function () {
+      return "getGamepads" in navigator || "webkitGetGamepads" in navigator;
     };
 
     /*
       Creates a new GamepadController
     */
-
 
     function GamepadController(buttonPressCallback) {
       this.buttonPressCallback = buttonPressCallback;
@@ -31,18 +29,19 @@
       @public
     */
 
-
-    GamepadController.prototype.updateAvailable = function() {
+    GamepadController.prototype.updateAvailable = function () {
       var accel, gamepads, gp, lt, rt, sel, _ref, _ref1, _ref2, _ref3;
       if (!this.active) {
         return false;
       }
-      gamepads = navigator.getGamepads ? navigator.getGamepads() : navigator.webkitGetGamepads();
+      gamepads = navigator.getGamepads
+        ? navigator.getGamepads()
+        : navigator.webkitGetGamepads();
       if (!(gamepads != null ? gamepads[0] : void 0)) {
         return false;
       }
       gp = gamepads[0];
-      if ((gp.buttons == null) || (gp.axes == null)) {
+      if (gp.buttons == null || gp.axes == null) {
         return;
       }
       this.lstickx = gp.axes[0];
@@ -59,7 +58,6 @@
     };
 
     return GamepadController;
-
   })();
 
   exports = exports != null ? exports : this;
@@ -69,5 +67,4 @@
   (_base = exports.bkcore).controllers || (_base.controllers = {});
 
   exports.bkcore.controllers.GamepadController = GamepadController;
-
 }).call(this);
