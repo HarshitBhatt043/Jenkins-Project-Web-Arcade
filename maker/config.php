@@ -7,7 +7,7 @@
  */
 
 // Title - for <title> - text only, no HTML
-$title = 'Attogram Games';
+$title = 'Jeenkins arcade';
 
 // Headline - text and/or HTML
-$headline = 'Attogram Games';
+$headline = 'arcade';

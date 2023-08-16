@@ -66,7 +66,7 @@ class AttogramGames
     {
         global $argc;
 
-        $this->title = 'Attogram Games Website';
+        $this->title = 'Jenkins Arcade';
         $this->verbose("\n{$this->title} Builder v" . self::VERSION);
         $this->verbose('');
         if ($argc === 1) {
