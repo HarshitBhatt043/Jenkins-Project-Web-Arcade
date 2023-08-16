@@ -2,17 +2,17 @@
  * Define some useful helpers that are used throughout the game.
  */
 var Helpers = (function () {
-  'use strict';
+  "use strict";
   /** Load a file (usually JSON).
    */
   var loadFile = function (filename) {
     var res;
     $.ajax({
       async: false,
-      url : filename,
-      success : function(data) {
+      url: filename,
+      success: function (data) {
         res = data;
-      }
+      },
     });
     return res;
   };
@@ -25,14 +25,14 @@ var Helpers = (function () {
     }
 
     var prefixes = [
-      { magnitude: 1e24, label: 'Y' },
-      { magnitude: 1e21, label: 'Z' },
-      { magnitude: 1e18, label: 'E' },
-      { magnitude: 1e15, label: 'P' },
-      { magnitude: 1e12, label: 'T' },
-      { magnitude:  1e9, label: 'B' },
-      { magnitude:  1e6, label: 'M' },
-      { magnitude:  1e3, label: 'k' }
+      { magnitude: 1e24, label: "Y" },
+      { magnitude: 1e21, label: "Z" },
+      { magnitude: 1e18, label: "E" },
+      { magnitude: 1e15, label: "P" },
+      { magnitude: 1e12, label: "T" },
+      { magnitude: 1e9, label: "B" },
+      { magnitude: 1e6, label: "M" },
+      { magnitude: 1e3, label: "k" },
     ];
 
     var abs = Math.abs(number);
@@ -41,8 +41,8 @@ var Helpers = (function () {
         return (number / prefixes[i].magnitude).toFixed(1) + prefixes[i].label;
       }
     }
-    return number; 
-  }
+    return number;
+  };
 
   var formatTime = function (msec) {
     var totals = Math.ceil(msec / 1000);
@@ -54,35 +54,35 @@ var Helpers = (function () {
 
     var str = [];
     if (days > 0) {
-      str.push(days + ' day' + (days % 100 == 1 ? '' : 's'));
+      str.push(days + " day" + (days % 100 == 1 ? "" : "s"));
     }
     if (hours > 0) {
-      str.push(hours + ' h');
+      str.push(hours + " h");
     }
     if (mins > 0) {
-      str.push(mins + ' min');
+      str.push(mins + " min");
     }
     if (secs > 0) {
-      str.push(secs + ' s');
+      str.push(secs + " s");
     }
 
-    return str.join(', ');
+    return str.join(", ");
   };
 
-  var saveVersion =  '1.0';
+  var saveVersion = "1.0";
   var validateSaveVersion = function () {
-    var ver = ObjectStorage.load('saveVersion');
-    if (typeof ver === 'undefined' || ver != saveVersion) {
+    var ver = ObjectStorage.load("saveVersion");
+    if (typeof ver === "undefined" || ver != saveVersion) {
       ObjectStorage.clear();
-      ObjectStorage.save('saveVersion', saveVersion);
+      ObjectStorage.save("saveVersion", saveVersion);
     }
   };
- 
+
   return {
     loadFile: loadFile,
     formatNumberPostfix: formatNumberPostfix,
     formatTime: formatTime,
     validateSaveVersion: validateSaveVersion,
-    analytics: ''
+    analytics: "",
   };
 })();

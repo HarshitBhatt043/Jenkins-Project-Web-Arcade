@@ -7,7 +7,9 @@
     "icon": "fa-group",
     "cost": 4e2,
     "targets": [{ "key": "workers-masterstudents", "property": "rate" }],
-    "requirements": [{ "key": "workers-masterstudents", "property": "hired", "threshold": 5 }],
+    "requirements": [
+      { "key": "workers-masterstudents", "property": "hired", "threshold": 5 }
+    ],
     "constant": 2
   },
   {
@@ -32,7 +34,9 @@
     "icon": "fa-group",
     "cost": 4e4,
     "targets": [{ "key": "workers-masterstudents", "property": "rate" }],
-    "requirements": [{ "key": "upgrade-masterstudents2", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-masterstudents2", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -43,7 +47,9 @@
     "icon": "fa-group",
     "cost": 4e5,
     "targets": [{ "key": "workers-masterstudents", "property": "rate" }],
-    "requirements": [{ "key": "upgrade-masterstudents3", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-masterstudents3", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -54,7 +60,9 @@
     "icon": "fa-group",
     "cost": 6e3,
     "targets": [{ "key": "workers-phdstudents", "property": "rate" }],
-    "requirements": [{ "key": "workers-phdstudents", "property": "hired", "threshold": 5 }],
+    "requirements": [
+      { "key": "workers-phdstudents", "property": "hired", "threshold": 5 }
+    ],
     "constant": 16
   },
   {
@@ -65,7 +73,9 @@
     "icon": "fa-group",
     "cost": 6e4,
     "targets": [{ "key": "workers-phdstudents", "property": "rate" }],
-    "requirements": [{ "key": "upgrade-phdstudents1", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-phdstudents1", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -76,7 +86,9 @@
     "icon": "fa-group",
     "cost": 6e5,
     "targets": [{ "key": "workers-phdstudents", "property": "rate" }],
-    "requirements": [{ "key": "upgrade-phdstudents2", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-phdstudents2", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -87,7 +99,9 @@
     "icon": "fa-group",
     "cost": 6e6,
     "targets": [{ "key": "workers-phdstudents", "property": "rate" }],
-    "requirements": [{ "key": "upgrade-phdstudents3", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-phdstudents3", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -98,7 +112,9 @@
     "icon": "fa-group",
     "cost": 7.5e4,
     "targets": [{ "key": "workers-postdocs", "property": "rate" }],
-    "requirements": [{ "key": "workers-postdocs", "property": "hired", "threshold": 5 }],
+    "requirements": [
+      { "key": "workers-postdocs", "property": "hired", "threshold": 5 }
+    ],
     "constant": 50
   },
   {
@@ -109,7 +125,9 @@
     "icon": "fa-group",
     "cost": 7.5e5,
     "targets": [{ "key": "workers-postdocs", "property": "rate" }],
-    "requirements": [{ "key": "upgrade-postdocs1", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-postdocs1", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -120,7 +138,9 @@
     "icon": "fa-group",
     "cost": 7.5e6,
     "targets": [{ "key": "workers-postdocs", "property": "rate" }],
-    "requirements": [{ "key": "upgrade-postdocs2", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-postdocs2", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -131,7 +151,9 @@
     "icon": "fa-group",
     "cost": 7.5e7,
     "targets": [{ "key": "workers-postdocs", "property": "rate" }],
-    "requirements": [{ "key": "upgrade-postdocs3", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-postdocs3", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -142,7 +164,9 @@
     "icon": "fa-group",
     "cost": 6e5,
     "targets": [{ "key": "workers-fellows", "property": "rate" }],
-    "requirements": [{ "key": "workers-fellows", "property": "hired", "threshold": 5 }],
+    "requirements": [
+      { "key": "workers-fellows", "property": "hired", "threshold": 5 }
+    ],
     "constant": 4e3
   },
   {
@@ -153,7 +177,9 @@
     "icon": "fa-group",
     "cost": 6e6,
     "targets": [{ "key": "workers-fellows", "property": "rate" }],
-    "requirements": [{ "key": "upgrade-fellows1", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-fellows1", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -164,7 +190,9 @@
     "icon": "fa-group",
     "cost": 6e7,
     "targets": [{ "key": "workers-fellows", "property": "rate" }],
-    "requirements": [{ "key": "upgrade-fellows2", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-fellows2", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -175,7 +203,9 @@
     "icon": "fa-group",
     "cost": 6e8,
     "targets": [{ "key": "workers-fellows", "property": "rate" }],
-    "requirements": [{ "key": "upgrade-fellows3", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-fellows3", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -186,7 +216,9 @@
     "icon": "fa-group",
     "cost": 6.5e6,
     "targets": [{ "key": "workers-permanent", "property": "rate" }],
-    "requirements": [{ "key": "workers-permanent", "property": "hired", "threshold": 5 }],
+    "requirements": [
+      { "key": "workers-permanent", "property": "hired", "threshold": 5 }
+    ],
     "constant": 2e4
   },
   {
@@ -197,7 +229,9 @@
     "icon": "fa-group",
     "cost": 6.5e7,
     "targets": [{ "key": "workers-permanent", "property": "rate" }],
-    "requirements": [{ "key": "upgrade-permanent1", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-permanent1", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -208,7 +242,9 @@
     "icon": "fa-group",
     "cost": 6.5e8,
     "targets": [{ "key": "workers-permanent", "property": "rate" }],
-    "requirements": [{ "key": "upgrade-permanent2", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-permanent2", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -219,7 +255,9 @@
     "icon": "fa-group",
     "cost": 6.5e9,
     "targets": [{ "key": "workers-permanent", "property": "rate" }],
-    "requirements": [{ "key": "upgrade-permanent3", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-permanent3", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -230,7 +268,9 @@
     "icon": "fa-group",
     "cost": 5e7,
     "targets": [{ "key": "workers-profs", "property": "rate" }],
-    "requirements": [{ "key": "workers-profs", "property": "hired", "threshold": 5 }],
+    "requirements": [
+      { "key": "workers-profs", "property": "hired", "threshold": 5 }
+    ],
     "constant": 3e5
   },
   {
@@ -241,7 +281,9 @@
     "icon": "fa-group",
     "cost": 5e8,
     "targets": [{ "key": "workers-profs", "property": "rate" }],
-    "requirements": [{ "key": "upgrade-profs1", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-profs1", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -252,7 +294,9 @@
     "icon": "fa-group",
     "cost": 5e9,
     "targets": [{ "key": "workers-profs", "property": "rate" }],
-    "requirements": [{ "key": "upgrade-profs2", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-profs2", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -263,7 +307,9 @@
     "icon": "fa-group",
     "cost": 5e10,
     "targets": [{ "key": "workers-profs", "property": "rate" }],
-    "requirements": [{ "key": "upgrade-profs3", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-profs3", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -274,7 +320,9 @@
     "icon": "fa-group",
     "cost": 3e8,
     "targets": [{ "key": "workers-nobel", "property": "rate" }],
-    "requirements": [{ "key": "workers-nobel", "property": "hired", "threshold": 5 }],
+    "requirements": [
+      { "key": "workers-nobel", "property": "hired", "threshold": 5 }
+    ],
     "constant": 3e6
   },
   {
@@ -285,7 +333,9 @@
     "icon": "fa-group",
     "cost": 3e9,
     "targets": [{ "key": "workers-nobel", "property": "rate" }],
-    "requirements": [{ "key": "upgrade-nobel1", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-nobel1", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -296,7 +346,9 @@
     "icon": "fa-group",
     "cost": 3e10,
     "targets": [{ "key": "workers-nobel", "property": "rate" }],
-    "requirements": [{ "key": "upgrade-nobel2", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-nobel2", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -307,7 +359,9 @@
     "icon": "fa-group",
     "cost": 3e11,
     "targets": [{ "key": "workers-nobel", "property": "rate" }],
-    "requirements": [{ "key": "upgrade-nobel3", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-nobel3", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -318,7 +372,9 @@
     "icon": "fa-group",
     "cost": 2e9,
     "targets": [{ "key": "workers-summies", "property": "rate" }],
-    "requirements": [{ "key": "workers-summies", "property": "hired", "threshold": 5 }],
+    "requirements": [
+      { "key": "workers-summies", "property": "hired", "threshold": 5 }
+    ],
     "constant": 8e7
   },
   {
@@ -329,7 +385,9 @@
     "icon": "fa-group",
     "cost": 2e10,
     "targets": [{ "key": "workers-summies", "property": "rate" }],
-    "requirements": [{ "key": "upgrade-summies1", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-summies1", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -340,7 +398,9 @@
     "icon": "fa-group",
     "cost": 2e11,
     "targets": [{ "key": "workers-summies", "property": "rate" }],
-    "requirements": [{ "key": "upgrade-summies2", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-summies2", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -351,7 +411,9 @@
     "icon": "fa-group",
     "cost": 2e12,
     "targets": [{ "key": "workers-summies", "property": "rate" }],
-    "requirements": [{ "key": "upgrade-summies3", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-summies3", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -400,7 +462,9 @@
     "icon": "fa-bolt",
     "cost": 2e3,
     "targets": [{ "key": "lab", "property": "detector" }],
-    "requirements": [{ "key": "upgrade-energy1", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-energy1", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -411,7 +475,9 @@
     "icon": "fa-bolt",
     "cost": 2e4,
     "targets": [{ "key": "lab", "property": "detector" }],
-    "requirements": [{ "key": "upgrade-energy2", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-energy2", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -422,7 +488,9 @@
     "icon": "fa-bolt",
     "cost": 2e5,
     "targets": [{ "key": "lab", "property": "detector" }],
-    "requirements": [{ "key": "upgrade-energy3", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-energy3", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -433,7 +501,9 @@
     "icon": "fa-bolt",
     "cost": 2e6,
     "targets": [{ "key": "lab", "property": "detector" }],
-    "requirements": [{ "key": "upgrade-energy4", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-energy4", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -444,7 +514,9 @@
     "icon": "fa-bolt",
     "cost": 2e7,
     "targets": [{ "key": "lab", "property": "detector" }],
-    "requirements": [{ "key": "upgrade-energy5", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-energy5", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -455,7 +527,9 @@
     "icon": "fa-bolt",
     "cost": 2e8,
     "targets": [{ "key": "lab", "property": "detector" }],
-    "requirements": [{ "key": "upgrade-energy6", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-energy6", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -466,7 +540,9 @@
     "icon": "fa-bolt",
     "cost": 2e9,
     "targets": [{ "key": "lab", "property": "detector" }],
-    "requirements": [{ "key": "upgrade-energy7", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-energy7", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -477,7 +553,9 @@
     "icon": "fa-bolt",
     "cost": 2e10,
     "targets": [{ "key": "lab", "property": "detector" }],
-    "requirements": [{ "key": "upgrade-energy8", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-energy8", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -488,7 +566,9 @@
     "icon": "fa-bolt",
     "cost": 2e11,
     "targets": [{ "key": "lab", "property": "detector" }],
-    "requirements": [{ "key": "upgrade-energy9", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-energy9", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -499,7 +579,9 @@
     "icon": "fa-bolt",
     "cost": 2e12,
     "targets": [{ "key": "lab", "property": "detector" }],
-    "requirements": [{ "key": "upgrade-energy10", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-energy10", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -510,7 +592,9 @@
     "icon": "fa-bolt",
     "cost": 2e13,
     "targets": [{ "key": "lab", "property": "detector" }],
-    "requirements": [{ "key": "upgrade-energy11", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-energy11", "property": "used", "threshold": 1 }
+    ],
     "factor": 2
   },
   {
@@ -532,7 +616,9 @@
     "icon": "fa-bullseye",
     "cost": 8e3,
     "targets": [{ "key": "lab", "property": "detector" }],
-    "requirements": [{ "key": "upgrade-energy1", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-energy1", "property": "used", "threshold": 1 }
+    ],
     "constant": 15
   },
   {
@@ -543,7 +629,9 @@
     "icon": "fa-bullseye",
     "cost": 8e4,
     "targets": [{ "key": "lab", "property": "detector" }],
-    "requirements": [{ "key": "upgrade-energy2", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-energy2", "property": "used", "threshold": 1 }
+    ],
     "constant": 75
   },
   {
@@ -554,7 +642,9 @@
     "icon": "fa-bullseye",
     "cost": 8e5,
     "targets": [{ "key": "lab", "property": "detector" }],
-    "requirements": [{ "key": "upgrade-energy3", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-energy3", "property": "used", "threshold": 1 }
+    ],
     "constant": 375
   },
   {
@@ -565,7 +655,9 @@
     "icon": "fa-bullseye",
     "cost": 8e6,
     "targets": [{ "key": "lab", "property": "detector" }],
-    "requirements": [{ "key": "upgrade-energy4", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-energy4", "property": "used", "threshold": 1 }
+    ],
     "constant": 1875
   },
   {
@@ -576,7 +668,9 @@
     "icon": "fa-bullseye",
     "cost": 8e7,
     "targets": [{ "key": "lab", "property": "detector" }],
-    "requirements": [{ "key": "upgrade-energy5", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-energy5", "property": "used", "threshold": 1 }
+    ],
     "constant": 9400
   },
   {
@@ -587,7 +681,9 @@
     "icon": "fa-bullseye",
     "cost": 8e8,
     "targets": [{ "key": "lab", "property": "detector" }],
-    "requirements": [{ "key": "upgrade-energy6", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-energy6", "property": "used", "threshold": 1 }
+    ],
     "constant": 47000
   },
   {
@@ -598,7 +694,9 @@
     "icon": "fa-bullseye",
     "cost": 8e9,
     "targets": [{ "key": "lab", "property": "detector" }],
-    "requirements": [{ "key": "upgrade-energy7", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-energy7", "property": "used", "threshold": 1 }
+    ],
     "constant": 235e3
   },
   {
@@ -609,7 +707,9 @@
     "icon": "fa-bullseye",
     "cost": 8e10,
     "targets": [{ "key": "lab", "property": "detector" }],
-    "requirements": [{ "key": "upgrade-energy8", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-energy8", "property": "used", "threshold": 1 }
+    ],
     "constant": 1.2e6
   },
   {
@@ -620,7 +720,9 @@
     "icon": "fa-bullseye",
     "cost": 8e11,
     "targets": [{ "key": "lab", "property": "detector" }],
-    "requirements": [{ "key": "upgrade-energy9", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-energy9", "property": "used", "threshold": 1 }
+    ],
     "constant": 6e6
   },
   {
@@ -631,7 +733,9 @@
     "icon": "fa-bullseye",
     "cost": 8e12,
     "targets": [{ "key": "lab", "property": "detector" }],
-    "requirements": [{ "key": "upgrade-energy10", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-energy10", "property": "used", "threshold": 1 }
+    ],
     "constant": 3e7
   },
   {
@@ -642,7 +746,9 @@
     "icon": "fa-bullseye",
     "cost": 8e13,
     "targets": [{ "key": "lab", "property": "detector" }],
-    "requirements": [{ "key": "upgrade-energy11", "property": "used", "threshold": 1 }],
+    "requirements": [
+      { "key": "upgrade-energy11", "property": "used", "threshold": 1 }
+    ],
     "constant": 1.5e8
   },
   {
@@ -695,7 +801,9 @@
     "icon": "fa-newspaper-o",
     "cost": 7500,
     "targets": [{ "key": "research-cpv", "property": "reputation" }],
-    "requirements": [{ "key": "research-cpv", "property": "level", "threshold": 5 }],
+    "requirements": [
+      { "key": "research-cpv", "property": "level", "threshold": 5 }
+    ],
     "factor": 2
   },
   {
@@ -740,7 +848,7 @@
     "effect": "Future research of CP violation gives +1M reputation.",
     "icon": "fa-",
     "cost": 4e11,
-    "targets": [{"key": "research-cpv", "property": "reputation"}],
+    "targets": [{ "key": "research-cpv", "property": "reputation" }],
     "requirements": [
       { "key": "research-cpv", "property": "level", "threshold": 15 },
       { "key": "upgrade-lhc", "property": "used", "threshold": 1 }

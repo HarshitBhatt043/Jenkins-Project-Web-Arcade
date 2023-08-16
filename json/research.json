@@ -7,9 +7,9 @@
     "image": "assets/icons/png/CPV.png",
     "info": "html/CPV.html",
     "state": {
-      "reputation": 1e0,
+      "reputation": 1,
       "cost": 1e1,
-      "info_levels": [ 1, 5, 10, 15, 20 ]
+      "info_levels": [1, 5, 10, 15, 20]
     }
   },
   {
@@ -20,9 +20,9 @@
     "image": "assets/icons/png/Jpsi.png",
     "info": "html/Jpsi.html",
     "state": {
-      "reputation": 6e0,
+      "reputation": 6,
       "cost": 4e2,
-      "info_levels": [ 1, 5 ]
+      "info_levels": [1, 5]
     }
   },
   {
@@ -35,7 +35,7 @@
     "state": {
       "reputation": 3.3e1,
       "cost": 1e4,
-      "info_levels": [ 1, 5 ]
+      "info_levels": [1, 5]
     }
   },
   {
@@ -48,10 +48,10 @@
     "state": {
       "reputation": 1.85e2,
       "cost": 2e5,
-      "info_levels": [ 1, 5 ]
+      "info_levels": [1, 5]
     }
   },
-    {
+  {
     "key": "research-gluons",
     "name": "Gluons",
     "description": "8 almost identical elementary particles that convey the strong force.",
@@ -61,7 +61,7 @@
     "state": {
       "reputation": 1e3,
       "cost": 3e6,
-      "info_levels": [ 1 ]
+      "info_levels": [1]
     }
   },
   {
@@ -74,7 +74,7 @@
     "state": {
       "reputation": 5.4e3,
       "cost": 3.2e7,
-      "info_levels": [ 1 ]
+      "info_levels": [1]
     }
   },
   {
@@ -87,7 +87,7 @@
     "state": {
       "reputation": 3e4,
       "cost": 1.28e8,
-      "info_levels": [ 1 ]
+      "info_levels": [1]
     }
   },
   {
@@ -100,7 +100,7 @@
     "state": {
       "reputation": 1.6e5,
       "cost": 9e8,
-      "info_levels": [ 1 ]
+      "info_levels": [1]
     }
   },
   {
@@ -113,7 +113,7 @@
     "state": {
       "reputation": 9e5,
       "cost": 5e9,
-      "info_levels": [ 1, 5, 10, 15, 20 ]
+      "info_levels": [1, 5, 10, 15, 20]
     }
   },
   {
@@ -126,7 +126,7 @@
     "state": {
       "reputation": 4.75e6,
       "cost": 2.4e10,
-      "info_levels": [ 1 ]
+      "info_levels": [1]
     }
   },
   {
@@ -139,7 +139,7 @@
     "state": {
       "reputation": 2.5e7,
       "cost": 9e10,
-      "info_levels": [ 1 ]
+      "info_levels": [1]
     }
   }
 ]
