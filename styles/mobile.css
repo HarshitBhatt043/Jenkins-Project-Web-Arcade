@@ -1,11 +1,12 @@
 #title {
-  margin:1vh auto;
+  margin: 1vh auto;
 }
 
 #board {
-  margin-top:5vh;
+  margin-top: 5vh;
 }
 
-.fb-like *, #fb-root * {
+.fb-like *,
+#fb-root * {
   display: none !important;
 }
