@@ -1,31 +1,34 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="author" content="" />
+    <meta
+      name="description"
+      content="Push down all the blocks in the minimum number of moves. Exciting? Hoo boy, you bet your sweet granddaddy it is."
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <title>Hexahedral</title>
+    <script src="bundle.js" defer></script>
 
-  <meta charset="utf-8">
-  <meta name="author" content="">
-  <meta name="description" content="Push down all the blocks in the minimum number of moves. Exciting? Hoo boy, you bet your sweet granddaddy it is.">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>Hexahedral</title>
-  <script src="bundle.js" defer></script>
+    <style>
+      /* Prevent flash of unstyled content. */
+      body {
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <footer>
+      Push down all the blocks in the minimum number of moves.To move your cube
+      either use the arrow keys, or click on an adjacent pink or blue cube.
+    </footer>
 
-  <style>
-    /* Prevent flash of unstyled content. */
-    body {
-      opacity: 0;
-    }
-  </style>
-
-</head>
-<body>
-
-  <footer>
-    Push down all the blocks in the minimum number of moves.To move your cube either use the arrow keys, or click on an adjacent pink or blue cube.
-  </footer>
-
-  <audio preload="auto" class="lose" src="audio/lose.mp3"></audio>
-  <audio preload="auto" class="move" src="audio/move.mp3"></audio>
-  <audio preload="auto" class="win" src="audio/win.mp3"></audio>
-
-</body>
+    <audio preload="auto" class="lose" src="audio/lose.mp3"></audio>
+    <audio preload="auto" class="move" src="audio/move.mp3"></audio>
+    <audio preload="auto" class="win" src="audio/win.mp3"></audio>
+  </body>
 </html>
