@@ -1,8 +1,5 @@
 <?php
-/**
- * Attogram Games
- * https://github.com/attogram/games
- */
+
 declare(strict_types = 1);
 
 namespace Attogram\Games;

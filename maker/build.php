@@ -1,8 +1,4 @@
 <?php
-/**
- * Attogram Games Website Builder
- * https://github.com/attogram/games
- */
 
 use Attogram\Games\AttogramGames;
 
