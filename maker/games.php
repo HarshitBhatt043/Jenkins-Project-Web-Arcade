@@ -1,16 +1,9 @@
 <?php
-/**
- * Attogram Games
- * https://github.com/attogram/games
- *
- * The Ordered List of Games
- */
 
 $games = [
     'hextris' => [
         'name'    => 'Hextris',
         'tag'     => 'hexagonal tetris',
- 
         'git'     => 'https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade.git',
         'branch'  => 'hextris-lite',
         'mobile'  => true,
@@ -19,7 +12,6 @@ $games = [
     'pond' => [
         'name'    => 'The Pond',
         'tag'     => 'eat, swim, love',
- 
         'git'     => 'https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade.git',
         'branch'  => 'pond-lite',
         'mobile'  => true,
@@ -28,7 +20,6 @@ $games = [
     '2048-lite' => [
         'name'    => '2048',
         'tag'     => '2, 4, 8, swipe',
- 
         'git'     => 'https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade.git',
         'branch'  => '2048',
         'mobile'  => true,
@@ -37,7 +28,6 @@ $games = [
     '0hh1' => [
         'name'    => '0hh1',
         'tag'     => 'tap the blue',
- 
         'git'     => 'https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade.git',
         'branch'  => '0hh1',
         'mobile'  => true,
@@ -46,7 +36,6 @@ $games = [
     'hexgl' => [
         'name'    => 'HexGL',
         'tag'     => 'racing pod',
- 
         'git'     => 'https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade.git',
         'branch'  => 'HexGL',
         'mobile'  => false,
@@ -55,7 +44,6 @@ $games = [
     'clumsy-bird' => [
         'name'    => 'Clumsy Bird',
         'tag'     => 'flappy happy',
- 
         'git'     => 'https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade.git',
         'branch'  => 'floppybird', 
         'mobile'  => true,
@@ -64,7 +52,6 @@ $games = [
     'ns-shaft' => [
         'name'    => 'NS-Shaft',
         'tag'     => 'fall safely',
- 
         'git'     => 'https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade.git',
         'branch'  => 'NS-SHAFT',        
         'mobile'  => true,
@@ -73,7 +60,6 @@ $games = [
     'parity' => [
         'name'    => 'parity',
         'tag'     => 'fall safely',
- 
         'git'     => 'https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade.git',
         'branch'  => 'parity',        
         'mobile'  => true,
@@ -82,7 +68,6 @@ $games = [
     'hexahedral' => [
         'name'    => 'hexahedral',
         'tag'     => 'fall safely',
- 
         'git'     => 'https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade.git',
         'branch'  => 'hexahedral',        
         'mobile'  => true,
@@ -91,7 +76,6 @@ $games = [
     'swipe-brick-breaker' => [
         'name'    => 'swipe-brick-breaker',
         'tag'     => 'fall safely',
- 
         'git'     => 'https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade.git',
         'branch'  => 'swipe-brick-breaker',        
         'mobile'  => true,
@@ -100,7 +84,6 @@ $games = [
     'taptaptap' => [
         'name'    => 'taptaptap',
         'tag'     => 'fall safely',
- 
         'git'     => 'https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade.git',
         'branch'  => 'taptaptap',        
         'mobile'  => true,
@@ -109,7 +92,6 @@ $games = [
     'particle-clicker' => [
         'name'    => 'particle-clicker',
         'tag'     => 'fall safely',
- 
         'git'     => 'https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade.git',
         'branch'  => 'particle-clicker',        
         'mobile'  => true,
@@ -118,10 +100,33 @@ $games = [
     '3d.city' => [
         'name'    => '3d.city',
         'tag'     => 'fall safely',
- 
         'git'     => 'https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade.git',
         'branch'  => '3d.city',        
         'mobile'  => false,
+        'desktop' => true,
+    ],
+    'fire-n-ice' => [
+        'name'    => 'fire-n-ice',
+        'tag'     => 'fall safely',
+        'git'     => 'https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade.git',
+        'branch'  => 'fire-n-ice',        
+        'mobile'  => true,
+        'desktop' => true,
+    ],
+    'paint-run2' => [
+        'name'    => 'paint-run2',
+        'tag'     => 'fall safely',
+        'git'     => 'https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade.git',
+        'branch'  => 'paint-run2',        
+        'mobile'  => false,
+        'desktop' => true,
+    ],
+    'tower_game' => [
+        'name'    => 'tower_game',
+        'tag'     => 'fall safely',
+        'git'     => 'https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade.git',
+        'branch'  => 'tower_game',        
+        'mobile'  => true,
         'desktop' => true,
     ],
 ];
