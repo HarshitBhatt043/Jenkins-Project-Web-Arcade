@@ -61,67 +61,58 @@
     <script>
       // Check if the browser supports the Gamepad API
       if ("getGamepads" in navigator) {
+        // Function to simulate a click on the element
+        function simulateClick() {
+          console.log("Simulating Clicks.");
+          const element = document.getElementById("s-controlType");
+          if (element) {
+            element.click();
+          }
+        }
+
         // Function to handle gamepad connection event
         function handleGamepadConnected(event) {
-          console.log('GP connected.')
-          // Get the gamepad object
-          const gamepad = event.gamepad;
-
-          // Function to simulate a click on the element
-          function simulateClick() {
-            console.log('Simulating Clicks.')
-            const element = document.getElementById("s-controlType");
-            if (element) {
-              element.click();
-            }
-          }
+          console.log("GP connected.");
 
           // Simulate three clicks with a delay of 0.1 seconds between each click
           for (let i = 0; i < 3; i++) {
             setTimeout(simulateClick, i * 100);
-
-            console.log('GP ready.')
           }
 
-          // Event listener for gamepad connection event
-          window.addEventListener("gamepadconnected", handleGamepadConnected);
+          console.log("GP ready.");
         }
-        // Check if the Gamepad API is supported by the browser
-        if ("getGamepads" in navigator) {
-          // Initialize a variable to track if step-2 has been clicked
-          //let step2Clicked = false;
 
-          // Function to handle gamepad button presses
-          function handleGamepadButtonPress(event) {
-            // Get the connected gamepads
-            const gamepads = navigator.getGamepads();
+        // Event listener for gamepad connection event
+        window.addEventListener("gamepadconnected", handleGamepadConnected);
 
-            // Loop through all connected gamepads
-            for (const gamepad of gamepads) {
-              // Check if the gamepad is connected and has buttons
-              if (gamepad && gamepad.buttons.length > 0) {
-                // Loop through all buttons on the gamepad
-                for (const button of gamepad.buttons) {
-                  // Check if any button is pressed
-                  if (button.pressed) {
-                    // Check if step-2 has not been clicked yet
-                    if (true) {
-                      // Trigger a click event on the element with id "step-2"
-                      document.getElementById("step-2").click();
+        // Function to handle gamepad button presses
+        function handleGamepadButtonPress(event) {
+          // Get the connected gamepads
+          const gamepads = navigator.getGamepads();
 
-                      // Set step2Clicked to true to prevent subsequent clicks
-                      //step2Clicked = true;
-                    }
-                    return; // Exit the function after one button press is detected
+          // Loop through all connected gamepads
+          for (const gamepad of gamepads) {
+            // Check if the gamepad is connected and has buttons
+            if (gamepad && gamepad.buttons.length > 0) {
+              // Loop through all buttons on the gamepad
+              for (const button of gamepad.buttons) {
+                // Check if any button is pressed
+                if (button.pressed) {
+                  // Check if step-2 has not been clicked yet
+                  if (true) {
+                    // Trigger a click event on the element with id "step-2"
+                    document.getElementById("step-2").click();
                   }
+                  return; // Exit the function after one button press is detected
                 }
               }
             }
           }
-
-          // Add an event listener for gamepad button presses
-          window.addEventListener("gamepadbuttondown", handleGamepadButtonPress);
         }
+
+        // Add an event listener for gamepad button presses
+        window.addEventListener("gamepadbuttondown", handleGamepadButtonPress);
+      }
     </script>
   </head>
 
