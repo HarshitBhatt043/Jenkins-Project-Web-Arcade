@@ -48,16 +48,10 @@ function drawSoundControl() {
     ctx.fillText("By: Zolmeister", 10, 20);
     ctx.font = "normal 12px sans";
     ctx.fillText("Music: Chrissi J", 10, 42);
-  } else if (GAME.state === "menu") {
-    ctx.fillStyle = "#111";
-    ctx.fillRect(10, 10, 50, 20);
-    ctx.fillStyle = "#333";
-    ctx.font = "normal 12px sans";
-    ctx.fillText("About", 10, 20);
   }
 }
 
 function showAbout() {
-  about = true;
+  about = false;
   drawSoundControl();
 }
