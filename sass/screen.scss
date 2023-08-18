@@ -92,7 +92,6 @@ button {
     }
   }
 
-
   $start-btn-width: 128px;
   $start-btn-height: 64px;
 
@@ -148,7 +147,6 @@ button {
 $settings-size: 250px;
 
 .settings-view {
-
   .settings {
     position: absolute;
     width: $settings-size;
@@ -188,13 +186,9 @@ $settings-size: 250px;
     font-size: 3em;
     color: white;
   }
-
 }
 
-@media screen and
-  (min-width: 320px),
-  screen and
-  (min-height: 240px) {
+@media screen and (min-width: 320px), screen and (min-height: 240px) {
   .game {
     margin: auto;
   }
@@ -210,9 +204,7 @@ $settings-size: 250px;
   }
 }
 
-@media screen and
-  (min-width: 480px) and
-  (min-height: 400px) {
+@media screen and (min-width: 480px) and (min-height: 400px) {
   .game {
     margin: auto;
   }
@@ -228,10 +220,7 @@ $settings-size: 250px;
   }
 }
 
-@media screen and
-  (min-width: 640px) and
-  (min-height: 576px) {
-
+@media screen and (min-width: 640px) and (min-height: 576px) {
   .game {
     margin: 32px auto;
     width: 640px;

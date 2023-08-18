@@ -1,8 +1,6 @@
 /*globals define*/
-define([
-  'utils'
-], function( Utils ) {
-  'use strict';
+define(["utils"], function (Utils) {
+  "use strict";
 
   // Settings singleton data.
   var settings;
@@ -13,7 +11,7 @@ define([
     explosions: false,
     glow: false,
     gradients: false,
-    trail: false
+    trail: false,
   };
 
   var highSettings = {
@@ -21,18 +19,18 @@ define([
     explosions: true,
     glow: true,
     gradients: true,
-    trail: true
+    trail: true,
   };
 
   // Basic setter functions for each quality level.
-  var settingsFn = function( quality ) {
-    return function() {
-      settings = Utils.defaults( {}, quality );
+  var settingsFn = function (quality) {
+    return function () {
+      settings = Utils.defaults({}, quality);
     };
   };
 
-  var low  = settingsFn( lowSettings ),
-      high = settingsFn( highSettings );
+  var low = settingsFn(lowSettings),
+    high = settingsFn(highSettings);
 
   // Set default to high.
   high();
@@ -40,30 +38,30 @@ define([
   // Settings singleton, with quality setters.
   var Settings = {
     low: low,
-    high: high
+    high: high,
   };
 
   // Define a getter function for each property.
-  var properties = Object.keys( settings ).reduce(function( object, key ) {
-    object[ key ] = {
-      get: function() {
-        return settings[ key ];
+  var properties = Object.keys(settings).reduce(function (object, key) {
+    object[key] = {
+      get: function () {
+        return settings[key];
       },
 
-      set: function( value ) {
-        settings[ key ] = value;
-      }
+      set: function (value) {
+        settings[key] = value;
+      },
     };
 
     return object;
-  }, {} );
+  }, {});
 
-  Object.defineProperties( Settings, properties );
+  Object.defineProperties(Settings, properties);
 
-  Object.defineProperty( Settings, 'keys', {
-    get: function() {
-      return Object.keys( settings );
-    }
+  Object.defineProperty(Settings, "keys", {
+    get: function () {
+      return Object.keys(settings);
+    },
   });
 
   return Settings;

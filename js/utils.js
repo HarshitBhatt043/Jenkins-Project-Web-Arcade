@@ -1,75 +1,75 @@
 /*globals define*/
-define(function() {
-  'use strict';
+define(function () {
+  "use strict";
 
   var PI2 = 2 * Math.PI,
-      HALF_PI = 0.5 * Math.PI;
+    HALF_PI = 0.5 * Math.PI;
 
   var RAD_TO_DEG = 180 / Math.PI,
-      DEG_TO_RAD = Math.PI / 180;
+    DEG_TO_RAD = Math.PI / 180;
 
   var EPSILON = 1e-1;
 
-  function clamp( value, min, max ) {
-    return Math.min( Math.max( value, min ), max );
+  function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
   }
 
-  function randomFloat( min, max ) {
-    return min + Math.random() * ( max - min );
+  function randomFloat(min, max) {
+    return min + Math.random() * (max - min);
   }
 
-  function randomInt( min, max ) {
-    return Math.round( randomFloat( min, max ) );
+  function randomInt(min, max) {
+    return Math.round(randomFloat(min, max));
   }
 
   /**
    * Returns a float: value +/- spread.
    */
-  function floatSpread( value, spread ) {
-    return randomFloat( value - spread, value + spread );
+  function floatSpread(value, spread) {
+    return randomFloat(value - spread, value + spread);
   }
 
   /**
    * Returns an int: value +/- spread.
    */
-  function intSpread( value, spread ) {
-    return randomInt( value - spread, value + spread );
+  function intSpread(value, spread) {
+    return randomInt(value - spread, value + spread);
   }
 
-  function lerp( a, b, t ) {
-    return a + t * ( b - a );
+  function lerp(a, b, t) {
+    return a + t * (b - a);
   }
 
-  function inverseLerp( value, a, b ) {
-    return ( value - a ) / ( b - a );
+  function inverseLerp(value, a, b) {
+    return (value - a) / (b - a);
   }
 
   /**
    * Project along the line given by [(x0, y0), (x1, y1)] by parameter.
    */
-  function lerp2d( x0, y0, x1, y1, parameter ) {
-    if ( parameter === null ) {
+  function lerp2d(x0, y0, x1, y1, parameter) {
+    if (parameter === null) {
       return null;
     }
 
     return {
-      x: lerp( x0, x1, parameter ),
-      y: lerp( y0, y1, parameter )
+      x: lerp(x0, x1, parameter),
+      y: lerp(y0, y1, parameter),
     };
   }
 
-  function distanceSquared( x0, y0, x1, y1 ) {
+  function distanceSquared(x0, y0, x1, y1) {
     var dx = x1 - x0,
-        dy = y1 - y0;
+      dy = y1 - y0;
 
     return dx * dx + dy * dy;
   }
 
-  function distance( x0, y0, x1, y1 ) {
-    return Math.sqrt( distanceSquared( x0, y0, x1, y1 ) );
+  function distance(x0, y0, x1, y1) {
+    return Math.sqrt(distanceSquared(x0, y0, x1, y1));
   }
 
-    /**
+  /**
    * Rounds a value to the given precision, removes any trailing zeros produced
    * by Number.prototype.toFixed().
    *
@@ -78,46 +78,46 @@ define(function() {
    *   x.toFixed(2); // "100.00"
    *   round( 100, 2 ); // "100"
    */
-  function round( value, precision ) {
-    return parseFloat( value.toFixed( precision ) );
+  function round(value, precision) {
+    return parseFloat(value.toFixed(precision));
   }
 
-  function roundNearZero( value, epsilon ) {
-    return Math.abs( value ) > ( epsilon || EPSILON ) ? value : 0;
+  function roundNearZero(value, epsilon) {
+    return Math.abs(value) > (epsilon || EPSILON) ? value : 0;
   }
 
   /**
    * Assuming the line is CW, the normal of the line is (-dy, dx).
    */
-  function lineNormal( x0, y0, x1, y1 ) {
+  function lineNormal(x0, y0, x1, y1) {
     var dx = x1 - x0,
-        dy = y1 - y0;
+      dy = y1 - y0;
 
     var lengthSquared = dx * dx + dy * dy;
-    if ( !lengthSquared ) {
+    if (!lengthSquared) {
       return null;
     }
 
-    var invLength = 1 / Math.sqrt( lengthSquared );
+    var invLength = 1 / Math.sqrt(lengthSquared);
     return {
-      x:  dy * invLength,
-      y: -dx * invLength
+      x: dy * invLength,
+      y: -dx * invLength,
     };
   }
 
-  function angleFrom( x0, y0, x1, y1 ) {
-    return Math.atan2( y1 - y0, x1 - x0 );
+  function angleFrom(x0, y0, x1, y1) {
+    return Math.atan2(y1 - y0, x1 - x0);
   }
 
   /**
    * Remove all values in array with an index in indices.
    */
-  function removeIndices( array, indices ) {
+  function removeIndices(array, indices) {
     indices.sort();
 
     var index = indices.length;
-    while( index-- ) {
-      array.splice( indices[ index ], 1 );
+    while (index--) {
+      array.splice(indices[index], 1);
     }
   }
 
@@ -125,18 +125,17 @@ define(function() {
    * Set the pre-existing properties of a given object with the values in attrs.
    * Recursively handles properties that are also objects.
    */
-  function set( object, attrs ) {
-    if ( !object || !attrs ) {
+  function set(object, attrs) {
+    if (!object || !attrs) {
       return;
     }
 
-    for ( var key in attrs ) {
-      if ( object.hasOwnProperty( key ) ) {
-        if ( typeof object[ key ] === 'object' &&
-             typeof  attrs[ key ] === 'object' ) {
-          set( object[ key ], attrs[ key ] );
+    for (var key in attrs) {
+      if (object.hasOwnProperty(key)) {
+        if (typeof object[key] === "object" && typeof attrs[key] === "object") {
+          set(object[key], attrs[key]);
         } else {
-          object[ key ] = attrs[ key ];
+          object[key] = attrs[key];
         }
       }
     }
@@ -148,14 +147,14 @@ define(function() {
    *
    * This is pretty much underscore.js's defaults().
    */
-  function defaults( object ) {
-    var args = [].slice.call( arguments, 1 );
+  function defaults(object) {
+    var args = [].slice.call(arguments, 1);
 
-    args.forEach(function( arg ) {
-      if ( arg ) {
-        for ( var key in arg ) {
-          if ( typeof object[ key ] === 'undefined' ) {
-            object[ key ] = arg[ key ];
+    args.forEach(function (arg) {
+      if (arg) {
+        for (var key in arg) {
+          if (typeof object[key] === "undefined") {
+            object[key] = arg[key];
           }
         }
       }
@@ -168,39 +167,39 @@ define(function() {
    * Rotates the axis-aligned bounding box defined by
    * [(left, top), (right, bottom)] by rotation. Translates by (tx, ty).
    */
-  function rotateAABB( tx, ty, left, top, right, bottom, rotation ) {
-    var cos = Math.cos( -rotation ),
-        sin = Math.sin( -rotation );
+  function rotateAABB(tx, ty, left, top, right, bottom, rotation) {
+    var cos = Math.cos(-rotation),
+      sin = Math.sin(-rotation);
 
     // Coordinates of rotated extents.
     var x = [],
-        y = [];
+      y = [];
 
     // Top left.
-    x.push( cos * left - sin * top );
-    y.push( sin * left + cos * top );
+    x.push(cos * left - sin * top);
+    y.push(sin * left + cos * top);
 
     // Bottom left.
-    x.push( cos * left - sin * bottom );
-    y.push( sin * left + cos * bottom );
+    x.push(cos * left - sin * bottom);
+    y.push(sin * left + cos * bottom);
 
     // Top right.
-    x.push( cos * right - sin * top );
-    y.push( sin * right + cos * top );
+    x.push(cos * right - sin * top);
+    y.push(sin * right + cos * top);
 
     // Bottom right.
-    x.push( cos * right - sin * bottom );
-    y.push( sin * right + cos * bottom );
+    x.push(cos * right - sin * bottom);
+    y.push(sin * right + cos * bottom);
 
     return {
-      xmin: Math.min.apply( null, x ) + tx,
-      ymin: Math.min.apply( null, y ) + ty,
-      xmax: Math.max.apply( null, x ) + tx,
-      ymax: Math.max.apply( null, y ) + ty
+      xmin: Math.min.apply(null, x) + tx,
+      ymin: Math.min.apply(null, y) + ty,
+      xmax: Math.max.apply(null, x) + tx,
+      ymax: Math.max.apply(null, y) + ty,
     };
   }
 
-  function relativeExpandAABB( aabb, dw, dh ) {
+  function relativeExpandAABB(aabb, dw, dh) {
     dw *= 0.5;
     dh *= 0.5;
 
@@ -208,27 +207,26 @@ define(function() {
       xmin: aabb.xmin - dw,
       ymin: aabb.ymin - dh,
       xmax: aabb.xmax + dw,
-      ymax: aabb.ymax + dh
+      ymax: aabb.ymax + dh,
     };
   }
 
-  function expandAABB( aabb, width, height ) {
-    var dw = width  - ( aabb.xmax - aabb.xmin ),
-        dh = height - ( aabb.ymax - aabb.ymin );
+  function expandAABB(aabb, width, height) {
+    var dw = width - (aabb.xmax - aabb.xmin),
+      dh = height - (aabb.ymax - aabb.ymin);
 
-    return relativeExpandAABB( aabb, dw, dh );
+    return relativeExpandAABB(aabb, dw, dh);
   }
 
-  function ratioExpandAABB( aabb, widthRatio, heightRatio ) {
+  function ratioExpandAABB(aabb, widthRatio, heightRatio) {
     var dw = aabb.xmax - aabb.xmin,
-        dh = aabb.ymax - aabb.ymin;
+      dh = aabb.ymax - aabb.ymin;
 
-    dw = ( dw *  widthRatio ) - dw;
-    dh = ( dh * heightRatio ) - dh;
+    dw = dw * widthRatio - dw;
+    dh = dh * heightRatio - dh;
 
-    return relativeExpandAABB( aabb, dw, dh );
+    return relativeExpandAABB(aabb, dw, dh);
   }
-
 
   return {
     PI2: PI2,
@@ -248,7 +246,7 @@ define(function() {
     intSpread: intSpread,
 
     lerp: lerp,
-    inverseLerp : inverseLerp,
+    inverseLerp: inverseLerp,
     lerp2d: lerp2d,
 
     distanceSquared: distanceSquared,
@@ -268,6 +266,6 @@ define(function() {
 
     expandAABB: expandAABB,
     ratioExpandAABB: ratioExpandAABB,
-    relativeExpandAABB: relativeExpandAABB
+    relativeExpandAABB: relativeExpandAABB,
   };
 });

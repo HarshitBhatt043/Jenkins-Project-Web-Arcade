@@ -1,12 +1,12 @@
 /*globals define*/
-define(function( require ) {
-  'use strict';
+define(function (require) {
+  "use strict";
 
-  var LevelUtils = require( 'levels/utils-level' );
+  var LevelUtils = require("levels/utils-level");
 
-  var Settings = require( 'config/settings' );
+  var Settings = require("config/settings");
 
-  return function( game ) {
+  return function (game) {
     game.clear();
 
     game.player.x = 0;
@@ -14,14 +14,14 @@ define(function( require ) {
 
     Settings.background = false;
 
-    LevelUtils.playerMaterialOn( game );
-    LevelUtils.addTrail( game );
+    LevelUtils.playerMaterialOn(game);
+    LevelUtils.addTrail(game);
 
-    game.camera.setHeight( 24, {
-      maintainAspectRatio: true
+    game.camera.setHeight(24, {
+      maintainAspectRatio: true,
     });
 
-    game.font = '48pt Georgia, Times New Roman, serif';
-    game.text = 'the end';
+    game.font = "48pt Georgia, Times New Roman, serif";
+    game.text = "the end";
   };
 });

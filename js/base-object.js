@@ -1,15 +1,15 @@
 /*globals define*/
-define(function() {
-  'use strict';
+define(function () {
+  "use strict";
 
   function BaseObject() {
     this.type = this.constructor.name.toLowerCase();
   }
 
-  BaseObject.prototype.set = function( attrs ) {
-    for ( var key in attrs ) {
-      if ( this.hasOwnProperty( key ) ) {
-        this[ key ] = attrs[ key ];
+  BaseObject.prototype.set = function (attrs) {
+    for (var key in attrs) {
+      if (this.hasOwnProperty(key)) {
+        this[key] = attrs[key];
       }
     }
   };
