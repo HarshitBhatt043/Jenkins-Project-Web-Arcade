@@ -1,6 +1,10 @@
 pipeline {
     agent { label 'prod-agent' }
 
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+    }
+
     stages {
         stage('Getting Code') {
             steps {
@@ -32,16 +36,35 @@ pipeline {
             }
         }
 
-        stage('Building') {
+        stage('Building Docker Image') {
             steps {
-                sh 'docker build . -t arcade'
+                sh 'docker build -t harshitbhatt043/arcade:latest .'
             }
         }
 
-        stage('Deploy') {
+        stage('Login Into Dockerhub') {
             steps {
-                sh 'docker run -d -p 7000:80 arcade'
+                echo 'loging in into docker hub using provided credentials'
+                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
+        }
+
+        stage('Pushing Image To Dockerhub') {
+            steps {
+                echo 'pushing latest image to docker hub'
+                    sh 'docker push harshitbhatt043/arcade:latest'
+            }
+        }
+
+        stage('Deploying Project Arcade') {
+            steps {
+                sh 'docker compose down && docker compose up -d'
+            }
+        }
+    }
+    post {
+        always {
+            sh 'docker logout'
         }
     }
 }
