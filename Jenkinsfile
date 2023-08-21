@@ -60,6 +60,33 @@ pipeline {
                 sh 'docker compose down && docker compose up -d'
             }
         }
+        stage('Health Checks') {
+            steps {
+                echo 'Performing health checks'
+                script {
+                    def appUrl = 'http://localhost:5000'
+                    def maxRetries = 3
+                    def retryInterval = 10
+                    def retries = 0
+                    def healthy = false
+                    while (retries < maxRetries) {
+                        try {
+                            sh "curl -sSf $appUrl -o /dev/null"
+                            healthy = true
+                            break
+                        } catch (Exception e) {
+                            retries++
+                            sleep retryInterval
+                        }
+                    }
+                    if (healthy) {
+                        echo 'Health checks passed, the application is healthy'
+                    } else {
+                        error 'Health checks failed, the application may be unhealthy'
+                    }
+                }
+            }
+        }
     }
     post {
         always {
