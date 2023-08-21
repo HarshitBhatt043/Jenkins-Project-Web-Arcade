@@ -34,7 +34,7 @@ pipeline {
 
         stage('Building') {
             steps {
-                sh 'docker build . arcade-t'
+                sh 'docker build . -t arcade'
             }
         }
 
