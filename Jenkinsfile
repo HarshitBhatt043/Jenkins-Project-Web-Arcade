@@ -32,14 +32,15 @@ pipeline {
             }
         }
 
-        stage('Build and Clean') {
+        stage('Building') {
             steps {
-                echo 'Building'
+                sh 'docker build . arcade-t'
             }
         }
+
         stage('Deploy') {
             steps {
-                echo 'Deploying'
+                sh 'docker run -d -p 7000:80 arcade'
             }
         }
     }
