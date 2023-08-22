@@ -9,8 +9,6 @@ pipeline {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
         TOKEN = credentials('telegramToken')
         CHAT_ID = credentials('telegramChatid')
-        CURRENT_BUILD_NUMBER = "${currentBuild.number}"
-        TEXT_BREAK = '------------------------------------------------------------------------'
     }
 
     stages {
@@ -20,8 +18,9 @@ pipeline {
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[url: 'https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade.git']]])
             }
         }
-        stage('Capture Git Info') {
+        stage('Capture SCM Info') {
             steps {
+                echo 'Capturing details for later use'
                 script {
                     GIT_COMMIT = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
                     GIT_MESSAGE = sh(returnStdout: true, script: "git log -n 1 --format=%s ${GIT_COMMIT}").trim()
@@ -31,9 +30,27 @@ pipeline {
                 }
             }
         }
-        stage('Pre-Build') {
+        stage('Notify Users') {
             steps {
-                sh "curl -sL --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${TEXT_BREAK}\n${GIT_INFO}\n${JOB_NAME} is Building\n${TEXT_BREAK}' --form chat_id='${CHAT_ID}'"
+                echo 'Sending available details'
+                script {
+                    def buildStatus = 'Building'
+                    def buildDuration = currentBuild.durationString
+                    def buildUrl = env.BUILD_URL
+                    def text_break = '------------------------------------------------------------------------'
+                    def notificationMessage = """${text_break}
+Build Information:
+Job: ${JOB_NAME}
+Build Number: ${BUILD_NUMBER}
+Status: ${buildStatus}
+Duration: ${buildDuration}
+Build URL: ${buildUrl}
+SCM Information:
+${GIT_INFO}
+${text_break}
+"""
+                    sh "curl -sL --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${notificationMessage}' --form chat_id='${CHAT_ID}'"
+                }
             }
         }
         stage('SonarQube Analysis') {
@@ -114,10 +131,10 @@ pipeline {
     }
     post {
         success {
-            sh "curl -sL --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${JOB_NAME} is Success' --form chat_id='${CHAT_ID}'"
+            sh "curl -sL --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${JOB_NAME} Build Successfully' --form chat_id='${CHAT_ID}'"
         }
         failure {
-            sh "curl -sL --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${JOB_NAME} is Failure' --form chat_id='${CHAT_ID}'"
+            sh "curl -sL --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${JOB_NAME} Build Failed' --form chat_id='${CHAT_ID}'"
         }
         always {
             echo 'Logging out of Docker Hub'
