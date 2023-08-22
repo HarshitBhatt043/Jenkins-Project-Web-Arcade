@@ -1,15 +1,39 @@
 pipeline {
     agent { label 'prod-agent' }
 
+    options {
+        buildDiscarder(logRotator(numToKeepStr:'5'))
+    }
+
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+        TOKEN = credentials('telegramToken')
+        CHAT_ID = credentials('telegramChatid')
+        CURRENT_BUILD_NUMBER = "${currentBuild.number}"
+        TEXT_BREAK = '------------------------------------------------------------------------'
     }
 
     stages {
         stage('Getting Code') {
             steps {
-                echo 'Clonning the project'
-                git url: 'https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade.git', branch: 'main'
+                echo 'Cloning the project'
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[url: 'https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade.git']]])
+            }
+        }
+        stage('Capture Git Info') {
+            steps {
+                script {
+                    GIT_COMMIT = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
+                    GIT_MESSAGE = sh(returnStdout: true, script: "git log -n 1 --format=%s ${GIT_COMMIT}").trim()
+                    GIT_AUTHOR = sh(returnStdout: true, script: "git log -n 1 --format=%ae ${GIT_COMMIT}").trim()
+                    GIT_COMMIT_SHORT = sh(returnStdout: true, script: "git rev-parse --short ${GIT_COMMIT}").trim()
+                    GIT_INFO = "Branch(Version): main\nLast Message: ${GIT_MESSAGE}\nAuthor: ${GIT_AUTHOR}\nCommit: ${GIT_COMMIT_SHORT}"
+                }
+            }
+        }
+        stage('Pre-Build') {
+            steps {
+                sh "curl -sL --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${TEXT_BREAK}\n${GIT_INFO}\n${JOB_NAME} is Building\n${TEXT_BREAK}' --form chat_id='${CHAT_ID}'"
             }
         }
         stage('SonarQube Analysis') {
@@ -89,10 +113,16 @@ pipeline {
         }
     }
     post {
+        success {
+            sh "curl -sL --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${JOB_NAME} is Success' --form chat_id='${CHAT_ID}'"
+        }
+        failure {
+            sh "curl -sL --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${JOB_NAME} is Failure' --form chat_id='${CHAT_ID}'"
+        }
         always {
-            echo 'Logging out of docker hub'
+            echo 'Logging out of Docker Hub'
             sh 'docker logout'
-            echo 'Running docker cleanup'
+            echo 'Running Docker cleanup'
             sh 'docker system prune -af'
         }
     }
