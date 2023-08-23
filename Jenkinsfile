@@ -93,7 +93,7 @@ Major Violations: ${metricsMap.component.measures.find { it.metric == 'major_vio
 Code Smells: ${metricsMap.component.measures.find { it.metric == 'code_smells' }?.value ?: 'N/A'}
 Code Complexity: ${metricsMap.component.measures.find { it.metric == 'cognitive_complexity' }?.value ?: 'N/A'}
 Technical debt: ${metricsMap.component.measures.find { it.metric == 'sqale_index' }?.value ?: 'N/A'} minutes
-SonarQube URL: [SonarQube Dashboard](${SONARURL}/dashboard?id=${projectKey})
+SonarQube URL: [${projectKey}](${SONARURL}/dashboard?id=${projectKey})
 ${text_break}
 """
                     sh "curl -sL --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${notificationMessage}' --form chat_id='${CHAT_ID}' --form parse_mode='Markdown'"
