@@ -1,7 +1,7 @@
 <?php
 
 // Title - for <title> - text only, no HTML
-$title = 'Jeenkins arcade';
+$title = 'ARCADE';
 
 // Headline - text and/or HTML
-$headline = 'arcade';
+$headline = 'Welcome To Arcade';
