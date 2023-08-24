@@ -4,5 +4,5 @@ services:
     image: harshitbhatt043/arcade:latest
     container_name: arcade
     ports:
-      - 5000:80
+      - 127.0.0.1:5000:80
     restart: unless-stopped
