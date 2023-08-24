@@ -63,8 +63,8 @@ pipeline {
                     def buildStatus = 'Building'
                     def buildDuration = currentBuild.durationString
                     def buildUrl = env.BUILD_URL
-                    def sonarPropertiesFile = "${WORKSPACE}/Web Arcade/sonar-project.properties"
-                    def projectKey = sh(script: "grep '^sonar.projectKey=' ${sonarPropertiesFile} | awk -F '=' '{print $2}'", returnStdout: true).trim()
+                    def sonarPropertiesFile = "${WORKSPACE}/sonar-project.properties"
+                    def projectKey = sh(script: "grep '^sonar.projectKey=' \"${sonarPropertiesFile}\" | cut -d'=' -f2 | tr -d '[:space:]'", returnStdout: true).trim()
                     def metricKeys = 'bugs,vulnerabilities,security_hotspots,code_smells,duplicated_lines_density,ncloc,cognitive_complexity,critical_violations,major_violations,sqale_index,alert_status'
                     def sonarQubeResult = sh(script: "curl --user ${SONARNOTIFY}: '${SONARURL}api/measures/component?component=${projectKey}&metricKeys=${metricKeys}'", returnStdout: true).trim()
                     def metricsMap = readJSON text: sonarQubeResult
