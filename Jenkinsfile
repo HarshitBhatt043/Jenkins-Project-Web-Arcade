@@ -157,7 +157,11 @@ ${text_break}
             sh "curl -sL --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${JOB_NAME} Deployed Successfully Took ${currentBuild.durationString.minus(' and counting')}' --form chat_id='${CHAT_ID}'"
         }
         failure {
-            sh "curl -sL --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${JOB_NAME} Deployment Failed' --form chat_id='${CHAT_ID}'"
+            script {
+            def buildLogUrl = "${BUILD_URL}console"
+            def notificationMessage = "${JOB_NAME} Deployment Failed: Check [Build Logs](${buildLogUrl})"
+            sh "curl -sL --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${notificationMessage}' --form chat_id='${CHAT_ID}'"
+            }
         }
         always {
             echo 'Logging out of Docker Hub'
