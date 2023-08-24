@@ -75,7 +75,7 @@ $games = [
         'mobile'  => true,
         'desktop' => true,
     ],
-    'swipe-brick-breaker' => [
+    'brick-breaker' => [
         'name'    => 'Brick Breaker',
         'tag'     => 'swipe and break',
         'git'     => $repo,
@@ -115,7 +115,7 @@ $games = [
         'mobile'  => true,
         'desktop' => true,
     ],
-    'paint-run2' => [
+    'paint-run' => [
         'name'    => 'Paint Run',
         'tag'     => 'turn tiles blue',
         'git'     => $repo,
@@ -123,7 +123,7 @@ $games = [
         'mobile'  => false,
         'desktop' => true,
     ],
-    'tower_game' => [
+    'tower' => [
         'name'    => 'Tower',
         'tag'     => 'build tower',
         'git'     => $repo,
@@ -131,7 +131,7 @@ $games = [
         'mobile'  => true,
         'desktop' => true,
     ],
-    'Hyperspace-Garbage' => [
+    'hyperspace' => [
         'name'    => 'Hyperspace Garbage',
         'tag'     => 'manipulate trash',
         'git'     => $repo,
@@ -139,7 +139,7 @@ $games = [
         'mobile'  => true,
         'desktop' => true,
     ],
-    'pacman-lite' => [
+    'pacman' => [
         'name'    => 'Pacman',
         'tag'     => 'pacman game',
         'git'     => $repo,
