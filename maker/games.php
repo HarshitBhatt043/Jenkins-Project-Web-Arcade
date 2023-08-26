@@ -147,4 +147,12 @@ $games = [
         'mobile'  => true,
         'desktop' => true,
     ],
+    'missile' => [
+        'name'    => 'Missile',
+        'tag'     => 'Dodge and pass',
+        'git'     => $repo,
+        'branch'  => 'missile',
+        'mobile'  => true,
+        'desktop' => true,
+    ],
 ];
