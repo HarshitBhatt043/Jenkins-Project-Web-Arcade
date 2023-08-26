@@ -1,69 +1,69 @@
+MG.fog = (function () {
+  var SHOW_TIME = 2.0;
+  var HIDE_TIME = 4.0;
 
+  var FogState = {
+    FADING_IN: "fading-in",
+    FADING_OUT: "fading-out",
+  };
 
+  var mState = FogState.FADING_OUT;
 
-MG.fog = (function (){
-    var SHOW_TIME = 2.0;
-    var HIDE_TIME = 4.0;
+  var mCallback = null;
 
-    var FogState = {
-        FADING_IN:  'fading-in',
-        FADING_OUT: 'fading-out'
-    };
+  var mRootNode;
+  var mVisibility = 1.0;
 
-    var mState = FogState.FADING_OUT;
+  return {
+    init: function () {
+      mRootNode = document.getElementById("fog");
+    },
 
-    var mCallback = null;
+    fadeIn: function (newCallback) {
+      mState = FogState.FADING_IN;
+      mRootNode.setAttribute("visibility", "visible");
+      mCallback = newCallback;
+    },
 
-    var mRootNode;
-    var mVisibility = 1.0;
+    fadeOut: function (callback) {
+      mState = FogState.FADING_OUT;
+      mCallback = callback;
+    },
 
-    return {
-        init: function () {
-            mRootNode = document.getElementById('fog');
-        },
+    update: function (dt) {
+      if (mState === FogState.FADING_OUT) {
+        mVisibility -= dt / HIDE_TIME;
 
-        fadeIn: function (newCallback) {
-            mState = FogState.FADING_IN;
-            mRootNode.setAttribute('visibility', 'visible');
-            mCallback = newCallback;
-        },
-
-        fadeOut: function (callback) {
-            mState = FogState.FADING_OUT;
-            mCallback = callback;
-        },
-
-        update: function (dt) {
-            if (mState === FogState.FADING_OUT) {
-                mVisibility -= dt/HIDE_TIME;
-
-                if (mVisibility < 0) {
-                    mVisibility = 0;
-                    if (mCallback) {
-                        mCallback();
-                        mCallback = undefined;
-                    }
-                }
-            } else {
-                mVisibility += dt/SHOW_TIME;
-
-                if (mVisibility > 1) {
-                    mVisibility = 1;
-                    if (mCallback) {
-                        mCallback();
-                        mCallback = undefined;
-                    }
-                }
-            }
-        },
-
-        updateDOM: function () {
-            if (mVisibility < 0) {
-                mRootNode.setAttribute('visibility', 'hidden');
-            } else {
-                mRootNode.setAttribute('visibility', 'visible');
-                mRootNode.setAttribute('opacity', String((0.5 - 0.5*Math.cos(Math.PI*mVisibility))));
-            }
+        if (mVisibility < 0) {
+          mVisibility = 0;
+          if (mCallback) {
+            mCallback();
+            mCallback = undefined;
+          }
         }
-    };
-}());
+      } else {
+        mVisibility += dt / SHOW_TIME;
+
+        if (mVisibility > 1) {
+          mVisibility = 1;
+          if (mCallback) {
+            mCallback();
+            mCallback = undefined;
+          }
+        }
+      }
+    },
+
+    updateDOM: function () {
+      if (mVisibility < 0) {
+        mRootNode.setAttribute("visibility", "hidden");
+      } else {
+        mRootNode.setAttribute("visibility", "visible");
+        mRootNode.setAttribute(
+          "opacity",
+          String(0.5 - 0.5 * Math.cos(Math.PI * mVisibility))
+        );
+      }
+    },
+  };
+})();
