@@ -155,4 +155,12 @@ $games = [
         'mobile'  => true,
         'desktop' => true,
     ],
+    'templerun2' => [
+        'name'    => 'Temple Run 2',
+        'tag'     => 'Dont get caught',
+        'git'     => $repo,
+        'branch'  => 'Temple_Run_2',
+        'mobile'  => true,
+        'desktop' => true,
+    ],
 ];
