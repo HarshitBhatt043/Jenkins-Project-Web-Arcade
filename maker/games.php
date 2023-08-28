@@ -163,4 +163,12 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
+    'tomb' => [
+        'name' => 'Tomb Run',
+        'tag' => 'Keep running',
+        'git' => $repo,
+        'branch' => 'Tomb_Run',
+        'mobile' => true,
+        'desktop' => true,
+    ],
 ];
