@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Attogram\Games;
 
@@ -26,32 +24,46 @@ class AttogramGames
 
     /** @var string */
     private $title;
+
     /** @var string */
     private $headline;
+
     /** @var bool */
     private $enableInstall;
+
     /** @var bool */
     private $enableUpdate;
+
     /** @var bool */
     private $enableEmbed;
+
     /** @var string */
     private $buildDirectory;
+
     /** @var string */
     private $homeDirectory;
+
     /** @var string */
     private $logoDirectory;
+
     /** @var string */
     private $templatesDirectory;
+
     /** @var string */
     private $customDirectory;
+
     /** @var array */
     private $games;
+
     /* @var string */
     private $menu;
+
     /* @var string */
     private $css;
+
     /* @var string */
     private $header;
+
     /* @var string */
     private $footer;
 
@@ -101,7 +113,7 @@ class AttogramGames
         $this->verbose('UPDATES: ' . ($this->enableUpdate ? 'Enabled' : 'Disabled'));
         $this->enableEmbed = in_array('embed', $argv) ? true : false;
         $this->verbose('WRITE EMBED: ' . ($this->enableEmbed ? 'Enabled' : 'Disabled'));
-        $this->verbose('WRITE INDEX: Enabled'); // always write index.html
+        $this->verbose('WRITE INDEX: Enabled');  // always write index.html
         $this->verbose('');
     }
 
@@ -139,6 +151,7 @@ class AttogramGames
     private function initConfig()
     {
         global $title, $headline;
+
         $configFile = 'config.php';
 
         $configuration = is_readable($this->customDirectory . $configFile)
@@ -309,10 +322,10 @@ class AttogramGames
             : $gameIndex . '/' . $game['index'];
         $mobile = empty($game['mobile'])
             ? ''
-            : '&#128241;'; // 📱
+            : '&#128241;';  // 📱
         $desktop = empty($game['desktop'])
             ? ''
-            : '&#9000;'; // ⌨
+            : '&#9000;';  // ⌨
         $logo = is_readable($this->logoDirectory . $gameIndex . '.png')
             ? $gameIndex . '.png'
             : 'game.png';
