@@ -22,7 +22,6 @@ class AttogramGames
 {
     private $title;
     private $headline;
-    private $enableInstall;
     private $buildDirectory;
     private $homeDirectory;
     private $logoDirectory;
