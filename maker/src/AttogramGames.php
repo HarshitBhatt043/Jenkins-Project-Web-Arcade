@@ -209,7 +209,7 @@ class AttogramGames
             }
             $this->verbose("INSTALLING: $gameIndex: $gameDirectory");
             chdir($this->homeDirectory);
-            $this->syscall('git clone ' . $game['git'] . ' ' . $gameIndex);
+            $this->syscall('git clone --depth 1 ' . $game['git'] . ' ' . $gameIndex);
             if (!empty($game['branch'])) {
                 chdir($gameDirectory);
                 $this->syscall('git checkout ' . $game['branch']);
