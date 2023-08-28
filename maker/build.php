@@ -11,11 +11,3 @@ if (!is_readable($class)) {
 
 /** @noinspection PhpIncludeInspection */
 require_once $class;
-
-try {
-    $app = new AttogramGames();
-
-    $app->run();
-} catch (Throwable $error) {
-    print 'Fatal Error: ' . $error->getMessage() . "\n";
-}
