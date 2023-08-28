@@ -13,7 +13,9 @@ if (!is_readable($class)) {
 require_once $class;
 
 try {
-    new AttogramGames();
+    $app = new AttogramGames();
+
+    $app->run();
 } catch (Throwable $error) {
     print 'Fatal Error: ' . $error->getMessage() . "\n";
 }
