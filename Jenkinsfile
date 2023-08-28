@@ -158,9 +158,9 @@ ${text_break}
         }
         failure {
             script {
-            def buildLogUrl = "${BUILD_URL}console"
-            def notificationMessage = "${JOB_NAME} Deployment Failed: Check [Build Logs](${buildLogUrl})"
-            sh "curl -sL --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${notificationMessage}' --form chat_id='${CHAT_ID}' --form parse_mode='Markdown'"
+                def buildLogUrl = "${BUILD_URL}console"
+                def notificationMessage = "${JOB_NAME} Deployment Failed: Check [Build Logs](${buildLogUrl})"
+                sh "curl -sL --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${notificationMessage}' --form chat_id='${CHAT_ID}' --form parse_mode='Markdown'"
             }
         }
         always {
