@@ -132,8 +132,8 @@ $games = [
         'desktop' => true,
     ],
     'hyperspace' => [
-        'name' => 'Hyperspace Garbage',
-        'tag' => '',
+        'name' => 'Garbage',
+        'tag' => 'collect',
         'git' => $repo,
         'branch' => 'Hyperspace-Garbage',
         'mobile' => true,
@@ -156,7 +156,7 @@ $games = [
         'desktop' => true,
     ],
     'templerun2' => [
-        'name' => 'Temple Run 2',
+        'name' => '',
         'tag' => '',
         'git' => $repo,
         'branch' => 'Temple_Run_2',
