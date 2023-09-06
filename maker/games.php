@@ -171,4 +171,12 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
+    'dino' => [
+        'name' => 'Dino',
+        'tag' => 'run',
+        'git' => $repo,
+        'branch' => 'Dino',
+        'mobile' => true,
+        'desktop' => true,
+    ],
 ];
