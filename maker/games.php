@@ -180,8 +180,8 @@ $games = [
         'desktop' => true,
     ],
     'tanuki' => [
-        'name' => 'Tanuki Sunset',
-        'tag' => 'control board',
+        'name' => 'Tanuki',
+        'tag' => 'sunset',
         'git' => $repo,
         'branch' => 'Tanuki-sunset',
         'mobile' => true,
