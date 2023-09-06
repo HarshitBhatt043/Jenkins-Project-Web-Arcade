@@ -187,4 +187,12 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
+    'elasticman' => [
+        'name' => 'Elastic',
+        'tag' => 'face',
+        'git' => $repo,
+        'branch' => 'Elasticman',
+        'mobile' => true,
+        'desktop' => true,
+    ],
 ];
