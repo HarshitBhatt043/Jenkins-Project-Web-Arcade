@@ -76,7 +76,7 @@ $games = [
         'desktop' => true,
     ],
     'brick-breaker' => [
-        'name' => 'Brick Breaker',
+        'name' => 'Brick Break',
         'tag' => '',
         'git' => $repo,
         'branch' => 'swipe-brick-breaker',
@@ -92,8 +92,8 @@ $games = [
         'desktop' => true,
     ],
     'particle-clicker' => [
-        'name' => 'Clicker',
-        'tag' => 'history particle physics',
+        'name' => 'Particle',
+        'tag' => 'clicker',
         'git' => $repo,
         'branch' => 'particle-clicker',
         'mobile' => true,
@@ -109,7 +109,7 @@ $games = [
     ],
     'fire-n-ice' => [
         'name' => 'Fire and ice',
-        'tag' => 'remake of NES game',
+        'tag' => 'remake',
         'git' => $repo,
         'branch' => 'fire-n-ice',
         'mobile' => true,
@@ -133,7 +133,7 @@ $games = [
     ],
     'hyperspace' => [
         'name' => 'Hyperspace Garbage',
-        'tag' => 'manipulate trash',
+        'tag' => '',
         'git' => $repo,
         'branch' => 'Hyperspace-Garbage',
         'mobile' => true,
@@ -141,7 +141,7 @@ $games = [
     ],
     'pacman' => [
         'name' => 'Pacman',
-        'tag' => 'pacman game',
+        'tag' => '2d',
         'git' => $repo,
         'branch' => 'pacman-lite',
         'mobile' => true,
@@ -149,7 +149,7 @@ $games = [
     ],
     'missile' => [
         'name' => 'Missile',
-        'tag' => 'Dodge and pass',
+        'tag' => 'Dodge',
         'git' => $repo,
         'branch' => 'missile',
         'mobile' => true,
@@ -157,7 +157,7 @@ $games = [
     ],
     'templerun2' => [
         'name' => 'Temple Run 2',
-        'tag' => 'Dont get caught',
+        'tag' => '',
         'git' => $repo,
         'branch' => 'Temple_Run_2',
         'mobile' => true,
