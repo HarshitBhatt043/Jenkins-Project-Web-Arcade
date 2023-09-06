@@ -77,7 +77,7 @@ $games = [
     ],
     'brick-breaker' => [
         'name' => 'Brick Breaker',
-        'tag' => 'swipe and break',
+        'tag' => '',
         'git' => $repo,
         'branch' => 'swipe-brick-breaker',
         'mobile' => true,
@@ -160,6 +160,14 @@ $games = [
         'tag' => 'Dont get caught',
         'git' => $repo,
         'branch' => 'Temple_Run_2',
+        'mobile' => true,
+        'desktop' => true,
+    ],
+    '99-balls' => [
+        'name' => '99 Balls Evo',
+        'tag' => '',
+        'git' => $repo,
+        'branch' => '99-Balls',
         'mobile' => true,
         'desktop' => true,
     ],
