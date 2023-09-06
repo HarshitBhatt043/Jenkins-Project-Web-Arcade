@@ -14,7 +14,6 @@
   --google-gray-900: rgb(32, 33, 36);
 }
 
-
 /* Copyright 2017 The Chromium Authors. All rights reserved.
  * Use of this source code is governed by a BSD-style license that can be
  * found in the LICENSE file. */
@@ -40,7 +39,7 @@ body {
   --google-gray-900: rgb(32, 33, 36);
   --heading-color: var(--google-gray-900);
   --link-color: rgb(88, 88, 88);
-  --popup-container-background-color: rgba(0,0,0,.65);
+  --popup-container-background-color: rgba(0, 0, 0, 0.65);
   --primary-button-fill-color-active: var(--google-blue-700);
   --primary-button-fill-color: var(--google-blue-600);
   --primary-button-text-color: #fff;
