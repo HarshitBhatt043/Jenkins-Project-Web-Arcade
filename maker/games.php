@@ -179,4 +179,12 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
+    'tanuki' => [
+        'name' => 'Tanuki Sunset',
+        'tag' => 'control board',
+        'git' => $repo,
+        'branch' => 'Tanuki-sunset',
+        'mobile' => true,
+        'desktop' => true,
+    ],
 ];
