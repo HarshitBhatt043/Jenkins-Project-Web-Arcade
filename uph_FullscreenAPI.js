@@ -1,8 +1,9 @@
 (function () {
-  'use strict';
+  "use strict";
 
-  var isCommonjs = typeof module !== 'undefined' && module.exports;
-  var keyboardAllowed = typeof Element !== 'undefined' && 'ALLOW_KEYBOARD_INPUT' in Element;
+  var isCommonjs = typeof module !== "undefined" && module.exports;
+  var keyboardAllowed =
+    typeof Element !== "undefined" && "ALLOW_KEYBOARD_INPUT" in Element;
 
   var fn = (function () {
     var val;
@@ -10,49 +11,47 @@
 
     var fnMap = [
       [
-        'requestFullscreen',
-        'exitFullscreen',
-        'fullscreenElement',
-        'fullscreenEnabled',
-        'fullscreenchange',
-        'fullscreenerror'
+        "requestFullscreen",
+        "exitFullscreen",
+        "fullscreenElement",
+        "fullscreenEnabled",
+        "fullscreenchange",
+        "fullscreenerror",
       ],
       // new WebKit
       [
-        'webkitRequestFullscreen',
-        'webkitExitFullscreen',
-        'webkitFullscreenElement',
-        'webkitFullscreenEnabled',
-        'webkitfullscreenchange',
-        'webkitfullscreenerror'
-
+        "webkitRequestFullscreen",
+        "webkitExitFullscreen",
+        "webkitFullscreenElement",
+        "webkitFullscreenEnabled",
+        "webkitfullscreenchange",
+        "webkitfullscreenerror",
       ],
       // old WebKit (Safari 5.1)
       [
-        'webkitRequestFullScreen',
-        'webkitCancelFullScreen',
-        'webkitCurrentFullScreenElement',
-        'webkitCancelFullScreen',
-        'webkitfullscreenchange',
-        'webkitfullscreenerror'
-
+        "webkitRequestFullScreen",
+        "webkitCancelFullScreen",
+        "webkitCurrentFullScreenElement",
+        "webkitCancelFullScreen",
+        "webkitfullscreenchange",
+        "webkitfullscreenerror",
       ],
       [
-        'mozRequestFullScreen',
-        'mozCancelFullScreen',
-        'mozFullScreenElement',
-        'mozFullScreenEnabled',
-        'mozfullscreenchange',
-        'mozfullscreenerror'
+        "mozRequestFullScreen",
+        "mozCancelFullScreen",
+        "mozFullScreenElement",
+        "mozFullScreenEnabled",
+        "mozfullscreenchange",
+        "mozfullscreenerror",
       ],
       [
-        'msRequestFullscreen',
-        'msExitFullscreen',
-        'msFullscreenElement',
-        'msFullscreenEnabled',
-        'MSFullscreenChange',
-        'MSFullscreenError'
-      ]
+        "msRequestFullscreen",
+        "msExitFullscreen",
+        "msFullscreenElement",
+        "msFullscreenEnabled",
+        "MSFullscreenChange",
+        "MSFullscreenError",
+      ],
     ];
 
     var i = 0;
@@ -98,7 +97,7 @@
         this.request(elem);
       }
     },
-    raw: fn
+    raw: fn,
   };
 
   if (!fn) {
@@ -115,21 +114,21 @@
     isFullscreen: {
       get: function () {
         return Boolean(document[fn.fullscreenElement]);
-      }
+      },
     },
     element: {
       enumerable: true,
       get: function () {
         return document[fn.fullscreenElement];
-      }
+      },
     },
     enabled: {
       enumerable: true,
       get: function () {
         // Coerce to boolean in case of old WebKit
         return Boolean(document[fn.fullscreenEnabled]);
-      }
-    }
+      },
+    },
   });
 
   if (isCommonjs) {
@@ -139,11 +138,10 @@
   }
 })();
 
-
-var canToggle             = false; // флаг определяет можно ли нам переключаться в фулл. Устанавливается когда польз-ль нажимает кнопку тоггла в игре.
-var fullscreenButton      = document.getElementById('toggle_fullscreen_button');
-var _canvas               = document.getElementById("gm4html5_div_id");
-var _canvas2              = document.getElementById("canvas");
+var canToggle = false; // флаг определяет можно ли нам переключаться в фулл. Устанавливается когда польз-ль нажимает кнопку тоггла в игре.
+var fullscreenButton = document.getElementById("toggle_fullscreen_button");
+var _canvas = document.getElementById("gm4html5_div_id");
+var _canvas2 = document.getElementById("canvas");
 
 /*
 function js_step()
@@ -167,8 +165,7 @@ function js_step()
 // х, у           - позиция центра кнопки в пикселях
 // width, height  - размер кнопки в пикселях
 
-function js_setFullscreenButtonParams( _x, _y, _width, _height )
-{
+function js_setFullscreenButtonParams(_x, _y, _width, _height) {
   toggleButton.style.left = _x - _width * 0.5 + "px";
   toggleButton.style.top = _y - _height * 0.5 + "px";
   toggleButton.style.width = _width + "px";
@@ -176,33 +173,30 @@ function js_setFullscreenButtonParams( _x, _y, _width, _height )
   toggleButton.style.pointerEvents = "auto";
 }
 
-function js_disableFullscreenButton( )
-{
-  toggleButton.style.pointerEvents = 'none';
+function js_disableFullscreenButton() {
+  toggleButton.style.pointerEvents = "none";
 }
 
-function js_initFullscreenButton()
-{
-      js_disableFullscreenButton( );
+function js_initFullscreenButton() {
+  js_disableFullscreenButton();
 
-      toggleButton.addEventListener('click', function () 
-      {
-        // код работы кнопки тоггла
+  toggleButton.addEventListener(
+    "click",
+    function () {
+      // код работы кнопки тоггла
 
-        if (screenfull.enabled) 
-        {
-           screenfull.toggle(document.getElementById("gm4html5_div_id"));
-        }
-      }, 
-    true);
+      if (screenfull.enabled) {
+        screenfull.toggle(document.getElementById("gm4html5_div_id"));
+      }
+    },
+    true
+  );
 }
 
-function js_isFullscreenEnabled( )
-{
+function js_isFullscreenEnabled() {
   return screenfull.isFullscreen;
 }
 
-function js_isFullscreenAvaliable( )
-{
+function js_isFullscreenAvaliable() {
   return screenfull.enabled;
 }
