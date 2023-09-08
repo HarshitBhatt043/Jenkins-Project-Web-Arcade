@@ -195,4 +195,12 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
+    'subway-sf' => [
+        'name' => 'San',
+        'tag' => 'Francisco',
+        'git' => $repo,
+        'branch' => 'Subway-SF',
+        'mobile' => true,
+        'desktop' => true,
+    ],
 ];
