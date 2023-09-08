@@ -204,8 +204,8 @@ $games = [
         'desktop' => true,
     ],
     'subway-ny' => [
-        'name' => 'New',
-        'tag' => 'york',
+        'name' => 'New York',
+        'tag' => 'hard version',
         'git' => $repo,
         'branch' => 'Subway-NY',
         'mobile' => true,
