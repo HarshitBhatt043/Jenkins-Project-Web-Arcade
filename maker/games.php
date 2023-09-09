@@ -227,4 +227,12 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
+    'rocket-league' => [
+        'name' => 'Do',
+        'tag' => 'maximum goals',
+        'git' => $repo,
+        'branch' => 'Rocket-League',
+        'mobile' => false,
+        'desktop' => true,
+    ],
 ];
