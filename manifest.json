@@ -16,7 +16,6 @@
         <h1 class="zone-name-title h1">
             <img class="heading-favicon" src="/favicon.ico"
                  onerror="this.onerror=null;this.parentNode.removeChild(this)">
-            yell0wsuit.page
         </h1>
         <h2 class="h2" id="challenge-running">
             Checking if the site connection is secure
@@ -68,8 +67,8 @@
                 zh: 'm1+F1z/iqj1rUhs9rPJVzu5plKP52JVsXY4RprN2Jw0=',
                 uh: 'JkAkY486s8b7quQvdaIQRGNNNpmu+ejtUZNcz6o7wFM=',
                 hh: 'o2TyIDBYwIegZ8vvioZXRPilwytWJjT0s2ZT+r3y5F4=',
-            }
-        };
+        }
+    };
         var trkjs = document.createElement('img');
         trkjs.setAttribute('src', '/cdn-cgi/images/trace/jsch/js/transparent.gif?ray=780659e44e0c2da2');
         trkjs.setAttribute('style', 'display: none');
@@ -80,13 +79,18 @@
         window._cf_chl_opt.cOgUQuery = location.search === '' && location.href.slice(0, -window._cf_chl_opt.cOgUHash.length).indexOf('?') !== -1 ? '?' : location.search;
         if (window.history && window.history.replaceState) {
             var ogU = location.pathname + window._cf_chl_opt.cOgUQuery + window._cf_chl_opt.cOgUHash;
-            history.replaceState(null, null, "\/html5-games\/games\/fruitninja\/manifest.json?__cf_chl_rt_tk=jCaHGo64Tx_zjS1a4xfkRvkz3gpVtvOfwK06dX0HUmU-1672189143-0-gaNycGzNBpE" + window._cf_chl_opt.cOgUHash);
+            history.replaceState(null,
+        null,
+        "\/html5-games\/games\/fruitninja\/manifest.json?__cf_chl_rt_tk=jCaHGo64Tx_zjS1a4xfkRvkz3gpVtvOfwK06dX0HUmU-1672189143-0-gaNycGzNBpE" + window._cf_chl_opt.cOgUHash);
             cpo.onload = function() {
-                history.replaceState(null, null, ogU);
-            };
-        }
-        document.getElementsByTagName('head')[0].appendChild(cpo);
-    }());
+                history.replaceState(null,
+            null, ogU);
+        };
+    }
+        document.getElementsByTagName('head')[
+        0
+    ].appendChild(cpo);
+}());
 </script>
 
 
