@@ -211,4 +211,12 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
+    'fruit-ninja' => [
+        'name' => 'Slice',
+        'tag' => 'fruits',
+        'git' => $repo,
+        'branch' => 'Fruit-ninja',
+        'mobile' => true,
+        'desktop' => true,
+    ],
 ];
