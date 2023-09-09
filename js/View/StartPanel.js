@@ -24,7 +24,7 @@ function StartPanel() {
         g_WxMgr.bWx &&
           innerWidth / innerHeight < 17 / 9 &&
           PlatformAPI.createBannerAd("Start");
-      const e = new Laya.Image("fbcdn/gamessumo.png");
+      const e = new Laya.Image("");
       (e.scaleX = e.scaleY = 0.1), (e.x = 900), (e.y = 600), this.addChild(e);
     }),
     (this.createCollect = function () {
