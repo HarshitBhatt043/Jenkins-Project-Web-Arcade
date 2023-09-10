@@ -240,7 +240,15 @@ $games = [
         'tag' => '3d',
         'git' => $repo,
         'branch' => 'Pacman-3d',
-        'mobile' => false,
+        'mobile' => true,
+        'desktop' => true,
+    ],
+    'time-sphere' => [
+        'name' => 'Draw',
+        'tag' => 'and win',
+        'git' => $repo,
+        'branch' => 'Time-Sphere',
+        'mobile' => true,
         'desktop' => true,
     ],
 ];
