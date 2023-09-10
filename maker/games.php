@@ -235,4 +235,12 @@ $games = [
         'mobile' => false,
         'desktop' => true,
     ],
+    'pacman3d' => [
+        'name' => 'Pacman',
+        'tag' => '3d',
+        'git' => $repo,
+        'branch' => 'Pacman-3d',
+        'mobile' => false,
+        'desktop' => true,
+    ],
 ];
