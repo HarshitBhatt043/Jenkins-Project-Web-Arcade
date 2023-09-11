@@ -259,4 +259,12 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
+    'cluster-rush' => [
+        'name' => 'Jump',
+        'tag' => 'over trucks',
+        'git' => $repo,
+        'branch' => 'Cluster-Rush',
+        'mobile' => false,
+        'desktop' => true,
+    ],
 ];
