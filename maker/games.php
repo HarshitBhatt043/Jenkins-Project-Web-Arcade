@@ -323,4 +323,12 @@ $games = [
         'mobile' => false,
         'desktop' => true,
     ],
+    'slime' => [
+        'name' => 'Jump',
+        'tag' => 'to finish line',
+        'git' => $repo,
+        'branch' => 'Slime',
+        'mobile' => true,
+        'desktop' => true,
+    ],
 ];
