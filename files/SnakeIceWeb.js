@@ -10575,8 +10575,8 @@ function _Z1(_E8, _F8) {
       _E8._S8 = 1 ? 1 : 0;
       _E8._W8 = 7;
       _E8._Y8 = 7200;
-      _E8._N8 = "https://lagged.com/";
-      _E8._O8 = "https://lagged.com/dragon-vs-bricks/scores";
+      _E8._N8 = "";
+      _E8._O8 = "";
       sg_lag_init("snake_vsic_binits", "lagdevaF3001");
       break;
   }
