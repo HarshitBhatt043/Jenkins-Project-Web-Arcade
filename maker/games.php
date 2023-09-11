@@ -267,4 +267,12 @@ $games = [
         'mobile' => false,
         'desktop' => true,
     ],
+    'color-switch' => [
+        'name' => 'Tap',
+        'tag' => 'and pass',
+        'git' => $repo,
+        'branch' => 'Color-Switch',
+        'mobile' => true,
+        'desktop' => true,
+    ],
 ];
