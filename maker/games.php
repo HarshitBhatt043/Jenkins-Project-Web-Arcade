@@ -315,4 +315,12 @@ $games = [
         'mobile' => false,
         'desktop' => true,
     ],
+    'battle-stone' => [
+        'name' => 'Lets',
+        'tag' => 'fight',
+        'git' => $repo,
+        'branch' => 'Battle-Stone',
+        'mobile' => false,
+        'desktop' => true,
+    ],
 ];
