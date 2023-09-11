@@ -19,21 +19,25 @@
     <script src="Build/UnityLoader.js"></script>
     <script src="/js/main.js"></script>
     <script>
-      var gameInstance = UnityLoader.instantiate("gameContainer", "Build/cars-simulator-v2.json", {
-        onProgress: UnityProgress,
-        Module: {
-          onRuntimeInitialized: function () {
-            UnityProgress(gameInstance, "complete");
+      var gameInstance = UnityLoader.instantiate(
+        "gameContainer",
+        "Build/cars-simulator-v2.json",
+        {
+          onProgress: UnityProgress,
+          Module: {
+            onRuntimeInitialized: function () {
+              UnityProgress(gameInstance, "complete");
+            },
           },
-        },
-      });
+        }
+      );
     </script>
     <script src="shared/lib.js" type="text/javascript"></script>
     <script src="gamebreak.js" type="text/javascript"></script>
   </head>
   <body>
     <div class="webgl-content">
-      <div id="gameContainer" style="width: 100vw; height: 100vh;"></div>
+      <div id="gameContainer" style="width: 100vw; height: 100vh"></div>
     </div>
   </body>
 </html>

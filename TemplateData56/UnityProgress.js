@@ -7,13 +7,15 @@ function UnityProgress(gameInstance, progress) {
 
   if (!gameInstance.logo) {
     gameInstance.logo = document.createElement("div");
-    gameInstance.logo.className = "logo " + gameInstance.Module.splashScreenStyle;
+    gameInstance.logo.className =
+      "logo " + gameInstance.Module.splashScreenStyle;
     gameInstance.container.appendChild(gameInstance.logo);
   }
 
   if (!gameInstance.progress) {
     gameInstance.progress = document.createElement("div");
-    gameInstance.progress.className = "progress " + gameInstance.Module.splashScreenStyle;
+    gameInstance.progress.className =
+      "progress " + gameInstance.Module.splashScreenStyle;
     gameInstance.progress.empty = document.createElement("div");
     gameInstance.progress.empty.className = "empty";
     gameInstance.progress.appendChild(gameInstance.progress.empty);
@@ -28,10 +30,12 @@ function UnityProgress(gameInstance, progress) {
 
   gameInstance.progress.full.style.width = 100 * progress + "%";
   gameInstance.progress.empty.style.width = 100 * (1 - progress) + "%";
-  gameInstance.textProgress.innerHTML = "Loading: " + Math.floor(progress * 100) + "%";
+  gameInstance.textProgress.innerHTML =
+    "Loading: " + Math.floor(progress * 100) + "%";
 
   if (progress == 1) {
-    gameInstance.textProgress.innerHTML = 'Running... <img src="' + rootPath + '/gears.gif" class="spinner" />';
+    gameInstance.textProgress.innerHTML =
+      'Running... <img src="' + rootPath + '/gears.gif" class="spinner" />';
   }
 
   if (progress == "complete") {
@@ -106,7 +110,9 @@ window.Game = (function () {
     }
 
     document.getElementsByTagName("body")[0].style.overflow = "hidden";
-    var gameContainer = document.getElementById("gameContainer") || document.getElementById("unityContainer");
+    var gameContainer =
+      document.getElementById("gameContainer") ||
+      document.getElementById("unityContainer");
     var canvas = document.getElementById("#canvas");
 
     var gameSizeRatio = gameContainer.offsetWidth / gameContainer.offsetHeight;
@@ -148,7 +154,12 @@ window.Game = (function () {
   };
 
   Game.prototype.fullscreen = function () {
-    return document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+    return (
+      document.fullscreenElement ||
+      document.webkitFullscreenElement ||
+      document.mozFullScreenElement ||
+      document.msFullscreenElement
+    );
   };
 
   return Game;
