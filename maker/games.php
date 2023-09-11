@@ -283,4 +283,12 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
+    'dragon-bricks' => [
+        'name' => 'Break',
+        'tag' => 'through blocks',
+        'git' => $repo,
+        'branch' => 'Dragon-Bricks',
+        'mobile' => true,
+        'desktop' => true,
+    ],
 ];
