@@ -251,4 +251,12 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
+    'adventure-drivers' => [
+        'name' => 'Win',
+        'tag' => 'the race',
+        'git' => $repo,
+        'branch' => 'Adventure-Drivers',
+        'mobile' => true,
+        'desktop' => true,
+    ],
 ];
