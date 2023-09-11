@@ -296,7 +296,15 @@ $games = [
         'tag' => 'through',
         'git' => $repo,
         'branch' => 'Drift-Boss',
-        'mobile' => false,
+        'mobile' => true,
         'desktop' => true,
-    ]
+    ],
+    'core-ball' => [
+        'name' => 'How many',
+        'tag' => 'can u plant',
+        'git' => $repo,
+        'branch' => 'Core-Ball',
+        'mobile' => true,
+        'desktop' => true,
+    ],
 ];
