@@ -291,4 +291,12 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
+    'drift-boss' => [
+        'name' => 'Drift',
+        'tag' => 'through',
+        'git' => $repo,
+        'branch' => 'Drift-Boss',
+        'mobile' => false,
+        'desktop' => true,
+    ]
 ];
