@@ -307,4 +307,12 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
+    'car-simulator' => [
+        'name' => 'Experience',
+        'tag' => 'simulation',
+        'git' => $repo,
+        'branch' => 'Car-Simulator',
+        'mobile' => false,
+        'desktop' => true,
+    ],
 ];
