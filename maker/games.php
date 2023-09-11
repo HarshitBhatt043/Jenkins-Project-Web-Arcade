@@ -275,4 +275,12 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
+    'connect-3' => [
+        'name' => 'Match',
+        'tag' => 'three',
+        'git' => $repo,
+        'branch' => 'Connect-3',
+        'mobile' => true,
+        'desktop' => true,
+    ],
 ];
