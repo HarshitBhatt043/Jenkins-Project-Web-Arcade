@@ -3,7 +3,7 @@
 $repo = 'https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade.git';
 
 $games = [
-    'hextris' => [
+    'hextris-lite' => [
         'name' => 'Hexagonal',
         'tag' => 'tetris',
         'git' => $repo,
@@ -11,7 +11,7 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    'pond' => [
+    'pond-lite' => [
         'name' => 'Pond',
         'tag' => 'eat, swim',
         'git' => $repo,
@@ -35,7 +35,7 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    'hexgl' => [
+    'HexGL' => [
         'name' => 'Racing',
         'tag' => 'pod',
         'git' => $repo,
@@ -43,7 +43,7 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    'clumsy-bird' => [
+    'floppybird' => [
         'name' => 'Flappy',
         'tag' => ' bird',
         'git' => $repo,
@@ -51,7 +51,7 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    'ns-shaft' => [
+    'NS-SHAFT' => [
         'name' => 'Fall',
         'tag' => 'safely',
         'git' => $repo,
@@ -75,7 +75,7 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    'brick-breaker' => [
+    'swipe-brick-breaker' => [
         'name' => 'Brick Break',
         'tag' => 'easy',
         'git' => $repo,
@@ -115,7 +115,7 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    'paint-run' => [
+    'paint-run2' => [
         'name' => 'Turn',
         'tag' => ' the tiles blue',
         'git' => $repo,
@@ -123,7 +123,7 @@ $games = [
         'mobile' => false,
         'desktop' => true,
     ],
-    'tower' => [
+    'tower_game' => [
         'name' => 'Build',
         'tag' => 'highest tower',
         'git' => $repo,
@@ -131,7 +131,7 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    'hyperspace' => [
+    'Hyperspace-Garbage' => [
         'name' => 'Garbage',
         'tag' => 'collect',
         'git' => $repo,
@@ -139,7 +139,7 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    'pacman' => [
+    'pacman-lite' => [
         'name' => 'Pacman',
         'tag' => '2d',
         'git' => $repo,
@@ -155,7 +155,7 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    'templerun2' => [
+    'Temple_Run_2' => [
         'name' => 'Take',
         'tag' => 'the idol',
         'git' => $repo,
@@ -163,7 +163,7 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    '99-balls' => [
+    '99-Balls' => [
         'name' => 'Brick Break',
         'tag' => 'hard',
         'git' => $repo,
@@ -171,7 +171,7 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    'dino' => [
+    'Dino' => [
         'name' => 'Dino',
         'tag' => 'run',
         'git' => $repo,
@@ -179,7 +179,7 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    'tanuki' => [
+    'Tanuki-sunset' => [
         'name' => 'Tanuki',
         'tag' => 'sunset',
         'git' => $repo,
@@ -187,7 +187,7 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    'elasticman' => [
+    'Elasticman' => [
         'name' => 'Elastic',
         'tag' => 'face',
         'git' => $repo,
@@ -195,7 +195,7 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    'subway-sf' => [
+    'Subway-SF' => [
         'name' => 'San',
         'tag' => 'francisco',
         'git' => $repo,
@@ -203,7 +203,7 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    'subway-ny' => [
+    'Subway-NY' => [
         'name' => 'New York',
         'tag' => 'hard version',
         'git' => $repo,
@@ -211,7 +211,7 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    'fruit-ninja' => [
+    'Fruit-ninja' => [
         'name' => 'Slice',
         'tag' => 'fruits',
         'git' => $repo,
@@ -219,7 +219,7 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    'fruit-ninja2' => [
+    'Fruit-ninja2' => [
         'name' => 'Slice',
         'tag' => 'more fruits',
         'git' => $repo,
@@ -227,7 +227,7 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    'rocket-league' => [
+    'Rocket-League' => [
         'name' => 'Do',
         'tag' => 'maximum goals',
         'git' => $repo,
@@ -235,7 +235,7 @@ $games = [
         'mobile' => false,
         'desktop' => true,
     ],
-    'pacman3d' => [
+    'Pacman-3d' => [
         'name' => 'Pacman',
         'tag' => '3d',
         'git' => $repo,
@@ -243,7 +243,7 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    'time-sphere' => [
+    'Time-Sphere' => [
         'name' => 'Draw',
         'tag' => 'and win',
         'git' => $repo,
@@ -251,7 +251,7 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    'adventure-drivers' => [
+    'Adventure-Drivers' => [
         'name' => 'Win',
         'tag' => 'the race',
         'git' => $repo,
@@ -259,7 +259,7 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    'cluster-rush' => [
+    'Cluster-Rush' => [
         'name' => 'Jump',
         'tag' => 'over trucks',
         'git' => $repo,
@@ -267,7 +267,7 @@ $games = [
         'mobile' => false,
         'desktop' => true,
     ],
-    'color-switch' => [
+    'Color-Switch' => [
         'name' => 'Tap',
         'tag' => 'and pass',
         'git' => $repo,
@@ -275,7 +275,7 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    'connect-3' => [
+    'Connect-3' => [
         'name' => 'Match',
         'tag' => 'three',
         'git' => $repo,
@@ -283,7 +283,7 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    'dragon-bricks' => [
+    'Dragon-Bricks' => [
         'name' => 'Break',
         'tag' => 'through blocks',
         'git' => $repo,
@@ -291,7 +291,7 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    'drift-boss' => [
+    'Drift-Boss' => [
         'name' => 'Drift',
         'tag' => 'through',
         'git' => $repo,
@@ -299,7 +299,7 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    'core-ball' => [
+    'Core-Ball' => [
         'name' => 'How many',
         'tag' => 'can u plant',
         'git' => $repo,
@@ -307,7 +307,7 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    'car-simulator' => [
+    'Car-Simulator' => [
         'name' => 'Experience',
         'tag' => 'simulation',
         'git' => $repo,
@@ -315,7 +315,7 @@ $games = [
         'mobile' => false,
         'desktop' => true,
     ],
-    'battle-stone' => [
+    'Battle-Stone' => [
         'name' => 'Lets',
         'tag' => 'fight',
         'git' => $repo,
@@ -323,7 +323,7 @@ $games = [
         'mobile' => false,
         'desktop' => true,
     ],
-    'slime' => [
+    'Slime' => [
         'name' => 'Jump',
         'tag' => 'to finish line',
         'git' => $repo,
@@ -331,7 +331,7 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    'drift-hunters' => [
+    'Drift-Hunters' => [
         'name' => 'Drift',
         'tag' => 'earn , unlock',
         'git' => $repo,
