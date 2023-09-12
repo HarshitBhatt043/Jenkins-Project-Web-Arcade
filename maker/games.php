@@ -333,10 +333,10 @@ $games = [
     ],
     'Drift-Hunters' => [
         'name' => 'Drift',
-        'tag' => 'earn , unlock',
+        'tag' => 'and unlock new',
         'git' => $repo,
         'branch' => 'Drift-Hunters',
-        'mobile' => true,
+        'mobile' => false,
         'desktop' => true,
     ],
 ];
