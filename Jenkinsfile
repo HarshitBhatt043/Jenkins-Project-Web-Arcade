@@ -112,8 +112,7 @@ ${text_break}
                         echo 'rclone is already installed.'
                     }
                     }
-                sh 'rclone --config=/root/rclone.conf sync "project:" "/root/cloud/" --transfers=20 --checkers=20 --tpslimit 10 --size-only --stats-one-line -P'
-                sh 'cp -r "/root/cloud/"* "${WORKSPACE}"'
+                sh 'rclone --config=/root/rclone.conf sync "project:" "${WORKSPACE}/cloud" --transfers=20 --checkers=20 --tpslimit 12 --size-only --fast-list --stats-one-line -P'
             }
         }
         stage('Building Docker Image') {
