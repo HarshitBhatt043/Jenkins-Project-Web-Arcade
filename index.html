@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Drift Hunters</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png" />
+    <link rel="manifest" href="./site.webmanifest" />
+    <link rel="shortcut icon" href="TemplateData/favicon.ico" />
+    <link rel="stylesheet" href="TemplateData/style.css" />
+    <script src="TemplateData/UnityProgress.js"></script>
+    <script src="Build/UnityLoader.js"></script>
+    <script>
+      var gameInstance = UnityLoader.instantiate(
+        "gameContainer",
+        "Build/ItchIO.json",
+        { onProgress: UnityProgress }
+      );
+    </script>
+  </head>
+  <body>
+    <div class="webgl-content">
+      <div
+        id="gameContainer"
+        style="
+          width: 960px;
+          height: 600px;
+          padding: 0px;
+          margin: 0px;
+          border: 0px;
+          position: relative;
+        "
+      ></div>
+    </div>
+  </body>
+</html>
