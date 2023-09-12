@@ -104,7 +104,7 @@ ${text_break}
             steps {
                 echo 'Installing OR Checking rclone'
                 sh 'curl https://rclone.org/install.sh | bash'
-                sh 'rclone --config=/root/rclone.conf sync "project:" "/root/cloud/" --transfers=20 --checkers=20 --tpslimit 10 --size-only -P'
+                sh 'rclone --config=/root/rclone.conf sync "project:" "/root/cloud/" --transfers=20 --checkers=20 --tpslimit 10 --size-only --stats-one-line -P'
                 sh 'cp "/root/cloud/*" "${WORKSPACE}"'
             }
         }
