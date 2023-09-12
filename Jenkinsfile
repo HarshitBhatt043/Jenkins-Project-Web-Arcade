@@ -102,10 +102,18 @@ ${text_break}
         }
         stage('Clonning Project Assets') {
             steps {
-                echo 'Installing OR Checking rclone'
-                sh 'curl https://rclone.org/install.sh | bash'
+                echo 'Checking and installing rclone'
+                    script {
+                    def rcloneInstalled = sh(script: 'command -v rclone', returnStatus: true)
+                    if (rcloneInstalled != 0) {
+                        echo 'rclone is not installed. Installing...'
+                        sh 'curl https://rclone.org/install.sh | bash'
+                    } else {
+                        echo 'rclone is already installed.'
+                    }
+                    }
                 sh 'rclone --config=/root/rclone.conf sync "project:" "/root/cloud/" --transfers=20 --checkers=20 --tpslimit 10 --size-only --stats-one-line -P'
-                sh 'cp "/root/cloud/*" "${WORKSPACE}"'
+                sh 'cp -r "/root/cloud/"* "${WORKSPACE}"'
             }
         }
         stage('Building Docker Image') {
