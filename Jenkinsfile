@@ -100,6 +100,14 @@ ${text_break}
                 }
             }
         }
+        stage('Clonning Project Assets') {
+            steps {
+                echo 'Installing OR Checking rclone'
+                sh 'curl https://rclone.org/install.sh | bash'
+                sh 'rclone --config=/root/rclone.conf sync "project:" "/root/cloud/" --transfers=20 --checkers=20 --tpslimit 10 --size-only -P'
+                sh 'cp /root/cloud/* ${WORKSPACE}'
+            }
+        }
         stage('Building Docker Image') {
             steps {
                 echo 'Building docker image of the project'
