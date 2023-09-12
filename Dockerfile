@@ -5,10 +5,11 @@ COPY . /app
 WORKDIR /app/maker
 RUN php build.php install
 RUN find /app -type d -name ".git" -exec rm -rf {} +
+RUN  cp -r /app/cloud/assets/* /app/
+RUN rm -rf /app/cloud
 
 FROM httpd:alpine3.16
 COPY --from=Building /app /usr/local/apache2/htdocs/
-RUN mv ./assets/* /usr/local/apache2/htdocs/
 RUN addgroup -g 1001 arcade && adduser -D -u 1001 -G arcade arcade
 RUN find /usr/local/apache2/htdocs -type d -print0 | xargs -0 -P 4 -I {} chown arcade:arcade {}
 RUN chown -R arcade:arcade /usr/local/apache2/logs/
