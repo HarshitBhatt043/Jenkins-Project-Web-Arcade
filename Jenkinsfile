@@ -105,7 +105,7 @@ ${text_break}
                 echo 'Installing OR Checking rclone'
                 sh 'curl https://rclone.org/install.sh | bash'
                 sh 'rclone --config=/root/rclone.conf sync "project:" "/root/cloud/" --transfers=20 --checkers=20 --tpslimit 10 --size-only -P'
-                sh 'cp /root/cloud/* ${WORKSPACE}'
+                sh 'cp "/root/cloud/*" "${WORKSPACE}"'
             }
         }
         stage('Building Docker Image') {
