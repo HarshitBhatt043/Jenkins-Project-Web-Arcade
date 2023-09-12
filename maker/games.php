@@ -331,4 +331,12 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
+    'drift-hunters' => [
+        'name' => 'Drift',
+        'tag' => 'earn , unlock',
+        'git' => $repo,
+        'branch' => 'Drift-Hunters',
+        'mobile' => true,
+        'desktop' => true,
+    ],
 ];
