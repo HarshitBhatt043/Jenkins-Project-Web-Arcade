@@ -13,7 +13,8 @@
   transform: translate(-50%, -50%);
 }
 .webgl-content .logo {
-  background: url("img/1run4progresslogo-light_orig.png") no-repeat center / contain;
+  background: url("img/1run4progresslogo-light_orig.png") no-repeat center /
+    contain;
   width: 154px;
   height: 130px;
 }
@@ -23,7 +24,8 @@
   margin-top: 90px;
 }
 .webgl-content .progress .empty {
-  background: url("img/2run42progressempty-light_orig.png") no-repeat right / cover;
+  background: url("img/2run42progressempty-light_orig.png") no-repeat right /
+    cover;
   float: right;
   width: 100%;
   height: 100%;
