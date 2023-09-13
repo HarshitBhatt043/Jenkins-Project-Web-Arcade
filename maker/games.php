@@ -339,4 +339,12 @@ $games = [
         'mobile' => false,
         'desktop' => true,
     ],
+    'Doomori' => [
+        'name' => 'Stuck',
+        'tag' => 'survive or die',
+        'git' => $repo,
+        'branch' => 'Doomori',
+        'mobile' => false,
+        'desktop' => true,
+    ],
 ];
