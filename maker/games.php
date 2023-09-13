@@ -371,4 +371,12 @@ $games = [
         'mobile' => false,
         'desktop' => true,
     ],
+    'Madalin-Stuntcars-2' => [
+        'name' => 'Race car',
+        'tag' => 'simulator',
+        'git' => $repo,
+        'branch' => 'Madalin-Stuntcars-2',
+        'mobile' => false,
+        'desktop' => true,
+    ],
 ];
