@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
   <head>
-
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, user-scalable=no" />
     <link id="-gd-engine-icon" rel="icon" type="image/png" href="favicon.png" />
@@ -134,8 +133,18 @@
       Please try updating or use a different browser.
     </canvas>
     <div id="status">
-      <div id="status-progress" style="display: none;" oncontextmenu="event.preventDefault();"><div id="status-progress-inner"></div></div>
-      <div id="status-indeterminate" style="display: none;" oncontextmenu="event.preventDefault();">
+      <div
+        id="status-progress"
+        style="display: none"
+        oncontextmenu="event.preventDefault();"
+      >
+        <div id="status-progress-inner"></div>
+      </div>
+      <div
+        id="status-indeterminate"
+        style="display: none"
+        oncontextmenu="event.preventDefault();"
+      >
         <div></div>
         <div></div>
         <div></div>
@@ -145,7 +154,7 @@
         <div></div>
         <div></div>
       </div>
-      <div id="status-notice" class="godot" style="display: none;"></div>
+      <div id="status-notice" class="godot" style="display: none"></div>
     </div>
 
     <script type="text/javascript" src="index.js"></script>
@@ -163,8 +172,12 @@
 
         var canvas = document.getElementById("canvas");
         var statusProgress = document.getElementById("status-progress");
-        var statusProgressInner = document.getElementById("status-progress-inner");
-        var statusIndeterminate = document.getElementById("status-indeterminate");
+        var statusProgressInner = document.getElementById(
+          "status-progress-inner"
+        );
+        var statusIndeterminate = document.getElementById(
+          "status-indeterminate"
+        );
         var statusNotice = document.getElementById("status-notice");
 
         var initializing = true;
@@ -191,9 +204,11 @@
 
         setStatusMode = function setStatusMode(mode) {
           if (statusMode === mode || !initializing) return;
-          [statusProgress, statusIndeterminate, statusNotice].forEach((elem) => {
-            elem.style.display = "none";
-          });
+          [statusProgress, statusIndeterminate, statusNotice].forEach(
+            (elem) => {
+              elem.style.display = "none";
+            }
+          );
           animationCallbacks = animationCallbacks.filter(function (value) {
             return value != animateStatusIndeterminate;
           });
@@ -219,9 +234,11 @@
         function animateStatusIndeterminate(ms) {
           var i = Math.floor((ms / INDETERMINATE_STATUS_STEP_MS) % 8);
           if (statusIndeterminate.children[i].style.borderTopColor == "") {
-            Array.prototype.slice.call(statusIndeterminate.children).forEach((child) => {
-              child.style.borderTopColor = "";
-            });
+            Array.prototype.slice
+              .call(statusIndeterminate.children)
+              .forEach((child) => {
+                child.style.borderTopColor = "";
+              });
             statusIndeterminate.children[i].style.borderTopColor = "#dfdfdf";
           }
         }

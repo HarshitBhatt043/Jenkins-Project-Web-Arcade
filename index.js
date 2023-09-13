@@ -60,7 +60,10 @@ var Engine = {
         scriptDirectory = document.currentScript.src;
       }
       if (scriptDirectory.indexOf("blob:") !== 0) {
-        scriptDirectory = scriptDirectory.substr(0, scriptDirectory.lastIndexOf("/") + 1);
+        scriptDirectory = scriptDirectory.substr(
+          0,
+          scriptDirectory.lastIndexOf("/") + 1
+        );
       } else {
         scriptDirectory = "";
       }
@@ -94,7 +97,7 @@ var Engine = {
         xhr.send(null);
       };
       setWindowTitle = function (title) {
-        console.log(title + " was set to the title")
+        console.log(title + " was set to the title");
         document.title = "Kitchen gun game | 3kh0";
       };
     } else {
@@ -139,7 +142,10 @@ var Engine = {
             return 4;
           } else if (type[0] === "i") {
             var bits = parseInt(type.substr(1));
-            assert(bits % 8 === 0, "getNativeTypeSize invalid bits " + bits + ", type " + type);
+            assert(
+              bits % 8 === 0,
+              "getNativeTypeSize invalid bits " + bits + ", type " + type
+            );
             return bits / 8;
           } else {
             return 0;
@@ -155,7 +161,9 @@ var Engine = {
       }
     }
     function makeBigInt(low, high, unsigned) {
-      return unsigned ? +(low >>> 0) + +(high >>> 0) * 4294967296 : +(low >>> 0) + +(high | 0) * 4294967296;
+      return unsigned
+        ? +(low >>> 0) + +(high >>> 0) * 4294967296
+        : +(low >>> 0) + +(high | 0) * 4294967296;
     }
     var tempRet0 = 0;
     var setTempRet0 = function (value) {
@@ -190,7 +198,16 @@ var Engine = {
         case "i64":
           (tempI64 = [
             value >>> 0,
-            ((tempDouble = value), +Math_abs(tempDouble) >= 1 ? (tempDouble > 0 ? (Math_min(+Math_floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math_ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0) : 0),
+            ((tempDouble = value),
+            +Math_abs(tempDouble) >= 1
+              ? tempDouble > 0
+                ? (Math_min(+Math_floor(tempDouble / 4294967296), 4294967295) |
+                    0) >>>
+                  0
+                : ~~+Math_ceil(
+                    (tempDouble - +(~~tempDouble >>> 0)) / 4294967296
+                  ) >>> 0
+              : 0),
           ]),
             (HEAP32[ptr >> 2] = tempI64[0]),
             (HEAP32[(ptr + 4) >> 2] = tempI64[1]);
@@ -229,7 +246,11 @@ var Engine = {
       return null;
     }
     var wasmMemory;
-    var wasmTable = new WebAssembly.Table({ initial: 39082, maximum: 39082 + 0, element: "anyfunc" });
+    var wasmTable = new WebAssembly.Table({
+      initial: 39082,
+      maximum: 39082 + 0,
+      element: "anyfunc",
+    });
     var ABORT = false;
     var EXITSTATUS = 0;
     function assert(condition, text) {
@@ -239,7 +260,10 @@ var Engine = {
     }
     function getCFunc(ident) {
       var func = Module["_" + ident];
-      assert(func, "Cannot call unknown function " + ident + ", make sure it is exported");
+      assert(
+        func,
+        "Cannot call unknown function " + ident + ", make sure it is exported"
+      );
       return func;
     }
     function ccall(ident, returnType, argTypes, args, opts) {
@@ -312,7 +336,9 @@ var Engine = {
       if (allocator == ALLOC_NONE) {
         ret = ptr;
       } else {
-        ret = [_malloc, stackAlloc, dynamicAlloc][allocator](Math.max(size, singleType ? 1 : types.length));
+        ret = [_malloc, stackAlloc, dynamicAlloc][allocator](
+          Math.max(size, singleType ? 1 : types.length)
+        );
       }
       if (zeroinit) {
         var stop;
@@ -365,7 +391,8 @@ var Engine = {
         str += String.fromCharCode(ch);
       }
     }
-    var UTF8Decoder = typeof TextDecoder !== "undefined" ? new TextDecoder("utf8") : undefined;
+    var UTF8Decoder =
+      typeof TextDecoder !== "undefined" ? new TextDecoder("utf8") : undefined;
     function UTF8ArrayToString(u8Array, idx, maxBytesToRead) {
       var endIdx = idx + maxBytesToRead;
       var endPtr = idx;
@@ -389,7 +416,8 @@ var Engine = {
           if ((u0 & 240) == 224) {
             u0 = ((u0 & 15) << 12) | (u1 << 6) | u2;
           } else {
-            u0 = ((u0 & 7) << 18) | (u1 << 12) | (u2 << 6) | (u8Array[idx++] & 63);
+            u0 =
+              ((u0 & 7) << 18) | (u1 << 12) | (u2 << 6) | (u8Array[idx++] & 63);
           }
           if (u0 < 65536) {
             str += String.fromCharCode(u0);
@@ -444,7 +472,8 @@ var Engine = {
       var len = 0;
       for (var i = 0; i < str.length; ++i) {
         var u = str.charCodeAt(i);
-        if (u >= 55296 && u <= 57343) u = (65536 + ((u & 1023) << 10)) | (str.charCodeAt(++i) & 1023);
+        if (u >= 55296 && u <= 57343)
+          u = (65536 + ((u & 1023) << 10)) | (str.charCodeAt(++i) & 1023);
         if (u <= 127) ++len;
         else if (u <= 2047) len += 2;
         else if (u <= 65535) len += 3;
@@ -452,7 +481,10 @@ var Engine = {
       }
       return len;
     }
-    var UTF16Decoder = typeof TextDecoder !== "undefined" ? new TextDecoder("utf-16le") : undefined;
+    var UTF16Decoder =
+      typeof TextDecoder !== "undefined"
+        ? new TextDecoder("utf-16le")
+        : undefined;
     function allocateUTF8OnStack(str) {
       var size = lengthBytesUTF8(str) + 1;
       var ret = stackAlloc(size);
@@ -476,7 +508,15 @@ var Engine = {
       }
       return x;
     }
-    var buffer, HEAP8, HEAPU8, HEAP16, HEAPU16, HEAP32, HEAPU32, HEAPF32, HEAPF64;
+    var buffer,
+      HEAP8,
+      HEAPU8,
+      HEAP16,
+      HEAPU16,
+      HEAP32,
+      HEAPU32,
+      HEAPF32,
+      HEAPF64;
     function updateGlobalBufferAndViews(buf) {
       buffer = buf;
       Module["HEAP8"] = HEAP8 = new Int8Array(buf);
@@ -494,7 +534,9 @@ var Engine = {
     if (Module["wasmMemory"]) {
       wasmMemory = Module["wasmMemory"];
     } else {
-      wasmMemory = new WebAssembly.Memory({ initial: INITIAL_TOTAL_MEMORY / WASM_PAGE_SIZE });
+      wasmMemory = new WebAssembly.Memory({
+        initial: INITIAL_TOTAL_MEMORY / WASM_PAGE_SIZE,
+      });
     }
     if (wasmMemory) {
       buffer = wasmMemory.buffer;
@@ -530,7 +572,8 @@ var Engine = {
     var runtimeExited = false;
     function preRun() {
       if (Module["preRun"]) {
-        if (typeof Module["preRun"] == "function") Module["preRun"] = [Module["preRun"]];
+        if (typeof Module["preRun"] == "function")
+          Module["preRun"] = [Module["preRun"]];
         while (Module["preRun"].length) {
           addOnPreRun(Module["preRun"].shift());
         }
@@ -553,7 +596,8 @@ var Engine = {
     }
     function postRun() {
       if (Module["postRun"]) {
-        if (typeof Module["postRun"] == "function") Module["postRun"] = [Module["postRun"]];
+        if (typeof Module["postRun"] == "function")
+          Module["postRun"] = [Module["postRun"]];
         while (Module["postRun"].length) {
           addOnPostRun(Module["postRun"].shift());
         }
@@ -614,7 +658,9 @@ var Engine = {
     }
     var dataURIPrefix = "data:application/octet-stream;base64,";
     function isDataURI(filename) {
-      return String.prototype.startsWith ? filename.startsWith(dataURIPrefix) : filename.indexOf(dataURIPrefix) === 0;
+      return String.prototype.startsWith
+        ? filename.startsWith(dataURIPrefix)
+        : filename.indexOf(dataURIPrefix) === 0;
     }
     var wasmBinaryFile = "godot.javascript.opt.debug.wasm";
     if (!isDataURI(wasmBinaryFile)) {
@@ -635,11 +681,17 @@ var Engine = {
       }
     }
     function getBinaryPromise() {
-      if (!wasmBinary && (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER) && typeof fetch === "function") {
+      if (
+        !wasmBinary &&
+        (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER) &&
+        typeof fetch === "function"
+      ) {
         return fetch(wasmBinaryFile, { credentials: "same-origin" })
           .then(function (response) {
             if (!response["ok"]) {
-              throw "failed to load wasm binary file at '" + wasmBinaryFile + "'";
+              throw (
+                "failed to load wasm binary file at '" + wasmBinaryFile + "'"
+              );
             }
             return response["arrayBuffer"]();
           })
@@ -673,8 +725,15 @@ var Engine = {
           });
       }
       function instantiateAsync() {
-        if (!wasmBinary && typeof WebAssembly.instantiateStreaming === "function" && !isDataURI(wasmBinaryFile) && typeof fetch === "function") {
-          fetch(wasmBinaryFile, { credentials: "same-origin" }).then(function (response) {
+        if (
+          !wasmBinary &&
+          typeof WebAssembly.instantiateStreaming === "function" &&
+          !isDataURI(wasmBinaryFile) &&
+          typeof fetch === "function"
+        ) {
+          fetch(wasmBinaryFile, { credentials: "same-origin" }).then(function (
+            response
+          ) {
             var result = WebAssembly.instantiateStreaming(response, info);
             return result.then(receiveInstantiatedSource, function (reason) {
               err("wasm streaming compile failed: " + reason);
@@ -704,7 +763,11 @@ var Engine = {
       function ($0, $1) {
         const MIX_RATE = $0;
         const LATENCY = $1 / 1e3;
-        _audioDriver_audioContext = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: MIX_RATE, latencyHint: LATENCY });
+        _audioDriver_audioContext = new (window.AudioContext ||
+          window.webkitAudioContext)({
+          sampleRate: MIX_RATE,
+          latencyHint: LATENCY,
+        });
         _audioDriver_audioInput = null;
         _audioDriver_inputStream = null;
         _audioDriver_scriptNode = null;
@@ -712,23 +775,39 @@ var Engine = {
       function ($0, $1) {
         const BUFFER_LENGTH = $0;
         const CHANNEL_COUNT = $1;
-        _audioDriver_scriptNode = _audioDriver_audioContext.createScriptProcessor(BUFFER_LENGTH, 2, CHANNEL_COUNT);
+        _audioDriver_scriptNode =
+          _audioDriver_audioContext.createScriptProcessor(
+            BUFFER_LENGTH,
+            2,
+            CHANNEL_COUNT
+          );
         _audioDriver_scriptNode.connect(_audioDriver_audioContext.destination);
         return _audioDriver_scriptNode.bufferSize;
       },
       function ($0) {
         var INTERNAL_BUFFER_PTR = $0;
         var audioDriverMixFunction = cwrap("audio_driver_js_mix");
-        var audioDriverProcessCapture = cwrap("audio_driver_process_capture", null, ["number"]);
-        _audioDriver_scriptNode.onaudioprocess = function (audioProcessingEvent) {
+        var audioDriverProcessCapture = cwrap(
+          "audio_driver_process_capture",
+          null,
+          ["number"]
+        );
+        _audioDriver_scriptNode.onaudioprocess = function (
+          audioProcessingEvent
+        ) {
           audioDriverMixFunction();
           var input = audioProcessingEvent.inputBuffer;
           var output = audioProcessingEvent.outputBuffer;
-          var internalBuffer = HEAPF32.subarray(INTERNAL_BUFFER_PTR / HEAPF32.BYTES_PER_ELEMENT, INTERNAL_BUFFER_PTR / HEAPF32.BYTES_PER_ELEMENT + output.length * output.numberOfChannels);
+          var internalBuffer = HEAPF32.subarray(
+            INTERNAL_BUFFER_PTR / HEAPF32.BYTES_PER_ELEMENT,
+            INTERNAL_BUFFER_PTR / HEAPF32.BYTES_PER_ELEMENT +
+              output.length * output.numberOfChannels
+          );
           for (var channel = 0; channel < output.numberOfChannels; channel++) {
             var outputData = output.getChannelData(channel);
             for (var sample = 0; sample < outputData.length; sample++) {
-              outputData[sample] = internalBuffer[sample * output.numberOfChannels + channel];
+              outputData[sample] =
+                internalBuffer[sample * output.numberOfChannels + channel];
             }
           }
           if (_audioDriver_audioInput) {
@@ -742,7 +821,8 @@ var Engine = {
         };
       },
       function () {
-        if (_audioDriver_audioContext.resume) _audioDriver_audioContext.resume();
+        if (_audioDriver_audioContext.resume)
+          _audioDriver_audioContext.resume();
       },
       function () {
         var latency = 0;
@@ -770,17 +850,26 @@ var Engine = {
       function () {
         function gotMediaInput(stream) {
           _audioDriver_inputStream = stream;
-          _audioDriver_audioInput = _audioDriver_audioContext.createMediaStreamSource(stream);
+          _audioDriver_audioInput =
+            _audioDriver_audioContext.createMediaStreamSource(stream);
           _audioDriver_audioInput.connect(_audioDriver_scriptNode);
         }
         function gotMediaInputError(e) {
           out(e);
         }
         if (navigator.mediaDevices.getUserMedia) {
-          navigator.mediaDevices.getUserMedia({ audio: true }).then(gotMediaInput, gotMediaInputError);
+          navigator.mediaDevices
+            .getUserMedia({ audio: true })
+            .then(gotMediaInput, gotMediaInputError);
         } else {
-          if (!navigator.getUserMedia) navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-          navigator.getUserMedia({ audio: true }, gotMediaInput, gotMediaInputError);
+          if (!navigator.getUserMedia)
+            navigator.getUserMedia =
+              navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+          navigator.getUserMedia(
+            { audio: true },
+            gotMediaInput,
+            gotMediaInputError
+          );
         }
       },
       function () {
@@ -826,7 +915,9 @@ var Engine = {
             var array_ptr = _malloc(array_len);
             try {
               if (array_ptr === 0) {
-                throw new Error("String allocation failed (probably out of memory)");
+                throw new Error(
+                  "String allocation failed (probably out of memory)"
+                );
               }
               setValue(PTR, array_ptr, "*");
               stringToUTF8(eval_ret, array_ptr, array_len);
@@ -842,13 +933,21 @@ var Engine = {
             if (eval_ret === null) {
               break;
             }
-            if (ArrayBuffer.isView(eval_ret) && !(eval_ret instanceof Uint8Array)) {
+            if (
+              ArrayBuffer.isView(eval_ret) &&
+              !(eval_ret instanceof Uint8Array)
+            ) {
               eval_ret = new Uint8Array(eval_ret.buffer);
             } else if (eval_ret instanceof ArrayBuffer) {
               eval_ret = new Uint8Array(eval_ret);
             }
             if (eval_ret instanceof Uint8Array) {
-              var bytes_ptr = ccall("resize_poolbytearray_and_open_write", "number", ["number", "number", "number"], [BYTEARRAY_PTR, BYTEARRAY_WRITE_PTR, eval_ret.length]);
+              var bytes_ptr = ccall(
+                "resize_poolbytearray_and_open_write",
+                "number",
+                ["number", "number", "number"],
+                [BYTEARRAY_PTR, BYTEARRAY_WRITE_PTR, eval_ret.length]
+              );
               HEAPU8.set(eval_ret, bytes_ptr);
               return 20;
             }
@@ -864,7 +963,12 @@ var Engine = {
         FS.mount(IDBFS, {}, "/userfs");
         FS.syncfs(true, function (err) {
           requestAnimationFrame(function () {
-            ccall("main_after_fs_sync", null, ["string"], [err ? err.message : ""]);
+            ccall(
+              "main_after_fs_sync",
+              null,
+              ["string"],
+              [err ? err.message : ""]
+            );
           });
         });
       },
@@ -884,7 +988,9 @@ var Engine = {
         var PNG_PTR = $0;
         var PNG_LEN = $1;
         var PTR = $2;
-        var png = new Blob([HEAPU8.slice(PNG_PTR, PNG_PTR + PNG_LEN)], { type: "image/png" });
+        var png = new Blob([HEAPU8.slice(PNG_PTR, PNG_PTR + PNG_LEN)], {
+          type: "image/png",
+        });
         var url = URL.createObjectURL(png);
         var length_bytes = lengthBytesUTF8(url) + 1;
         var string_on_wasm_heap = _malloc(length_bytes);
@@ -907,7 +1013,10 @@ var Engine = {
         var text = UTF8ToString($0);
         if (!navigator.clipboard || !navigator.clipboard.writeText) return 1;
         navigator.clipboard.writeText(text).catch(function (e) {
-          console.error("Setting OS clipboard is only possible from an input callback for the HTML5 plafrom. Exception:", e);
+          console.error(
+            "Setting OS clipboard is only possible from an input callback for the HTML5 plafrom. Exception:",
+            e
+          );
         });
         return 0;
       },
@@ -922,7 +1031,13 @@ var Engine = {
         } catch (e) {}
       },
       function () {
-        (canvas.requestFullscreen || canvas.msRequestFullscreen || canvas.mozRequestFullScreen || canvas.mozRequestFullscreen || canvas.webkitRequestFullscreen).call(canvas);
+        (
+          canvas.requestFullscreen ||
+          canvas.msRequestFullscreen ||
+          canvas.mozRequestFullScreen ||
+          canvas.mozRequestFullscreen ||
+          canvas.webkitRequestFullscreen
+        ).call(canvas);
       },
       function () {
         return Module.resizeCanvasOnStart;
@@ -933,8 +1048,14 @@ var Engine = {
       function () {
         const send_notification = cwrap("send_notification", null, ["number"]);
         const notifications = arguments;
-        ["mouseover", "mouseleave", "focus", "blur"].forEach(function (event, index) {
-          Module.canvas.addEventListener(event, send_notification.bind(null, notifications[index]));
+        ["mouseover", "mouseleave", "focus", "blur"].forEach(function (
+          event,
+          index
+        ) {
+          Module.canvas.addEventListener(
+            event,
+            send_notification.bind(null, notifications[index])
+          );
         });
         const update_clipboard = cwrap("update_clipboard", null, ["string"]);
         window.addEventListener(
@@ -961,7 +1082,9 @@ var Engine = {
       function ($0, $1) {
         var PNG_PTR = $0;
         var PNG_LEN = $1;
-        var png = new Blob([HEAPU8.slice(PNG_PTR, PNG_PTR + PNG_LEN)], { type: "image/png" });
+        var png = new Blob([HEAPU8.slice(PNG_PTR, PNG_PTR + PNG_LEN)], {
+          type: "image/png",
+        });
         var url = URL.createObjectURL(png);
         var link = document.getElementById("-gd-engine-icon");
         if (link === null) {
@@ -1094,7 +1217,12 @@ var Engine = {
           var len = buffer.length * buffer.BYTES_PER_ELEMENT;
           var out = Module._malloc(len);
           Module.HEAPU8.set(buffer, out);
-          ccall("_emrtc_on_ch_message", "void", ["number", "number", "number", "number"], [c_ptr, out, len, is_string]);
+          ccall(
+            "_emrtc_on_ch_message",
+            "void",
+            ["number", "number", "number", "number"],
+            [c_ptr, out, len, is_string]
+          );
           Module._free(out);
         };
       },
@@ -1156,13 +1284,23 @@ var Engine = {
         }
         conn.oniceconnectionstatechange = function (event) {
           if (!Module.IDHandler.get($0)) return;
-          ccall("_emrtc_on_connection_state_changed", "void", ["number"], [c_ptr]);
+          ccall(
+            "_emrtc_on_connection_state_changed",
+            "void",
+            ["number"],
+            [c_ptr]
+          );
         };
         conn.onicecandidate = function (event) {
           if (!Module.IDHandler.get($0)) return;
           if (!event.candidate) return;
           var c = event.candidate;
-          ccall("_emrtc_on_ice_candidate", "void", ["number", "string", "number", "string"], [c_ptr, c.sdpMid, c.sdpMLineIndex, c.candidate]);
+          ccall(
+            "_emrtc_on_ice_candidate",
+            "void",
+            ["number", "string", "number", "string"],
+            [c_ptr, c.sdpMid, c.sdpMLineIndex, c.candidate]
+          );
         };
         conn.ondatachannel = function (evt) {
           var dict = Module.IDHandler.get($0);
@@ -1170,7 +1308,12 @@ var Engine = {
             return;
           }
           var id = Module.IDHandler.add({ channel: evt.channel, ptr: null });
-          ccall("_emrtc_emit_channel", "void", ["number", "number"], [c_ptr, id]);
+          ccall(
+            "_emrtc_emit_channel",
+            "void",
+            ["number", "number"],
+            [c_ptr, id]
+          );
         };
         dict["conn"] = conn;
       },
@@ -1190,7 +1333,12 @@ var Engine = {
           ccall("_emrtc_on_error", "void", [], []);
         };
         var onCreated = function (offer) {
-          ccall("_emrtc_session_description_created", "void", ["number", "string", "string"], [c_ptr, offer.type, offer.sdp]);
+          ccall(
+            "_emrtc_session_description_created",
+            "void",
+            ["number", "string", "string"],
+            [c_ptr, offer.type, offer.sdp]
+          );
         };
         conn.createOffer().then(onCreated).catch(onError);
       },
@@ -1217,7 +1365,12 @@ var Engine = {
           ccall("_emrtc_on_error", "void", [], []);
         };
         var onCreated = function (offer) {
-          ccall("_emrtc_session_description_created", "void", ["number", "string", "string"], [c_ptr, offer.type, offer.sdp]);
+          ccall(
+            "_emrtc_session_description_created",
+            "void",
+            ["number", "string", "string"],
+            [c_ptr, offer.type, offer.sdp]
+          );
         };
         var onSet = function () {
           if (type != "offer") {
@@ -1225,7 +1378,10 @@ var Engine = {
           }
           conn.createAnswer().then(onCreated);
         };
-        conn.setRemoteDescription({ sdp: sdp, type: type }).then(onSet).catch(onError);
+        conn
+          .setRemoteDescription({ sdp: sdp, type: type })
+          .then(onSet)
+          .catch(onError);
       },
       function ($0, $1, $2, $3) {
         var dict = Module.IDHandler.get($0);
@@ -1234,7 +1390,13 @@ var Engine = {
         var sdpMidName = UTF8ToString($1);
         var sdpMlineIndexName = UTF8ToString($2);
         var sdpName = UTF8ToString($3);
-        conn.addIceCandidate(new RTCIceCandidate({ candidate: sdpName, sdpMid: sdpMidName, sdpMlineIndex: sdpMlineIndexName }));
+        conn.addIceCandidate(
+          new RTCIceCandidate({
+            candidate: sdpName,
+            sdpMid: sdpMidName,
+            sdpMlineIndex: sdpMlineIndexName,
+          })
+        );
       },
       function ($0, $1, $2) {
         try {
@@ -1243,7 +1405,10 @@ var Engine = {
           var label = UTF8ToString($1);
           var config = JSON.parse(UTF8ToString($2));
           var conn = dict["conn"];
-          return Module.IDHandler.add({ channel: conn.createDataChannel(label, config), ptr: null });
+          return Module.IDHandler.add({
+            channel: conn.createDataChannel(label, config),
+            ptr: null,
+          });
         } catch (e) {
           return 0;
         }
@@ -1293,7 +1458,12 @@ var Engine = {
         socket.binaryType = "arraybuffer";
         socket.addEventListener("open", function (event) {
           if (!Module.IDHandler.has($0)) return;
-          ccall("_esws_on_connect", "void", ["number", "string"], [c_ptr, socket.protocol]);
+          ccall(
+            "_esws_on_connect",
+            "void",
+            ["number", "string"],
+            [c_ptr, socket.protocol]
+          );
         });
         socket.addEventListener("message", function (event) {
           if (!Module.IDHandler.has($0)) return;
@@ -1315,7 +1485,12 @@ var Engine = {
           var len = buffer.length * buffer.BYTES_PER_ELEMENT;
           var out = Module._malloc(len);
           Module.HEAPU8.set(buffer, out);
-          ccall("_esws_on_message", "void", ["number", "number", "number", "number"], [c_ptr, out, len, is_string]);
+          ccall(
+            "_esws_on_message",
+            "void",
+            ["number", "number", "number", "number"],
+            [c_ptr, out, len, is_string]
+          );
           Module._free(out);
         });
         socket.addEventListener("error", function (event) {
@@ -1326,7 +1501,12 @@ var Engine = {
           if (!Module.IDHandler.has($0)) return;
           var was_clean = 0;
           if (event.wasClean) was_clean = 1;
-          ccall("_esws_on_close", "void", ["number", "number", "string", "number"], [c_ptr, event.code, event.reason, was_clean]);
+          ccall(
+            "_esws_on_close",
+            "void",
+            ["number", "number", "string", "number"],
+            [c_ptr, event.code, event.reason, was_clean]
+          );
         });
         return Module.IDHandler.add(socket);
       },
@@ -1414,11 +1594,21 @@ var Engine = {
       return demangleAll(js);
     }
     function ___assert_fail(condition, filename, line, func) {
-      abort("Assertion failed: " + UTF8ToString(condition) + ", at: " + [filename ? UTF8ToString(filename) : "unknown filename", line, func ? UTF8ToString(func) : "unknown function"]);
+      abort(
+        "Assertion failed: " +
+          UTF8ToString(condition) +
+          ", at: " +
+          [
+            filename ? UTF8ToString(filename) : "unknown filename",
+            line,
+            func ? UTF8ToString(func) : "unknown function",
+          ]
+      );
     }
     function ___lock() {}
     function ___setErrNo(value) {
-      if (Module["___errno_location"]) HEAP32[Module["___errno_location"]() >> 2] = value;
+      if (Module["___errno_location"])
+        HEAP32[Module["___errno_location"]() >> 2] = value;
       return value;
     }
     function ___map_file(pathname, size) {
@@ -1427,7 +1617,8 @@ var Engine = {
     }
     var PATH = {
       splitPath: function (filename) {
-        var splitPathRe = /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
+        var splitPathRe =
+          /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
         return splitPathRe.exec(filename).slice(1);
       },
       normalizeArray: function (parts, allowAboveRoot) {
@@ -1620,7 +1811,10 @@ var Engine = {
         get_char: function (tty) {
           if (!tty.input.length) {
             var result = null;
-            if (typeof window != "undefined" && typeof window.prompt == "function") {
+            if (
+              typeof window != "undefined" &&
+              typeof window.prompt == "function"
+            ) {
               result = window.prompt("Input: ");
               if (result !== null) {
                 result += "\n";
@@ -1696,11 +1890,34 @@ var Engine = {
               stream: { llseek: MEMFS.stream_ops.llseek },
             },
             file: {
-              node: { getattr: MEMFS.node_ops.getattr, setattr: MEMFS.node_ops.setattr },
-              stream: { llseek: MEMFS.stream_ops.llseek, read: MEMFS.stream_ops.read, write: MEMFS.stream_ops.write, allocate: MEMFS.stream_ops.allocate, mmap: MEMFS.stream_ops.mmap, msync: MEMFS.stream_ops.msync },
+              node: {
+                getattr: MEMFS.node_ops.getattr,
+                setattr: MEMFS.node_ops.setattr,
+              },
+              stream: {
+                llseek: MEMFS.stream_ops.llseek,
+                read: MEMFS.stream_ops.read,
+                write: MEMFS.stream_ops.write,
+                allocate: MEMFS.stream_ops.allocate,
+                mmap: MEMFS.stream_ops.mmap,
+                msync: MEMFS.stream_ops.msync,
+              },
             },
-            link: { node: { getattr: MEMFS.node_ops.getattr, setattr: MEMFS.node_ops.setattr, readlink: MEMFS.node_ops.readlink }, stream: {} },
-            chrdev: { node: { getattr: MEMFS.node_ops.getattr, setattr: MEMFS.node_ops.setattr }, stream: FS.chrdev_stream_ops },
+            link: {
+              node: {
+                getattr: MEMFS.node_ops.getattr,
+                setattr: MEMFS.node_ops.setattr,
+                readlink: MEMFS.node_ops.readlink,
+              },
+              stream: {},
+            },
+            chrdev: {
+              node: {
+                getattr: MEMFS.node_ops.getattr,
+                setattr: MEMFS.node_ops.setattr,
+              },
+              stream: FS.chrdev_stream_ops,
+            },
           };
         }
         var node = FS.createNode(parent, name, mode, dev);
@@ -1736,18 +1953,24 @@ var Engine = {
       },
       getFileDataAsTypedArray: function (node) {
         if (!node.contents) return new Uint8Array();
-        if (node.contents.subarray) return node.contents.subarray(0, node.usedBytes);
+        if (node.contents.subarray)
+          return node.contents.subarray(0, node.usedBytes);
         return new Uint8Array(node.contents);
       },
       expandFileStorage: function (node, newCapacity) {
         var prevCapacity = node.contents ? node.contents.length : 0;
         if (prevCapacity >= newCapacity) return;
         var CAPACITY_DOUBLING_MAX = 1024 * 1024;
-        newCapacity = Math.max(newCapacity, (prevCapacity * (prevCapacity < CAPACITY_DOUBLING_MAX ? 2 : 1.125)) | 0);
+        newCapacity = Math.max(
+          newCapacity,
+          (prevCapacity * (prevCapacity < CAPACITY_DOUBLING_MAX ? 2 : 1.125)) |
+            0
+        );
         if (prevCapacity != 0) newCapacity = Math.max(newCapacity, 256);
         var oldContents = node.contents;
         node.contents = new Uint8Array(newCapacity);
-        if (node.usedBytes > 0) node.contents.set(oldContents.subarray(0, node.usedBytes), 0);
+        if (node.usedBytes > 0)
+          node.contents.set(oldContents.subarray(0, node.usedBytes), 0);
         return;
       },
       resizeFileStorage: function (node, newSize) {
@@ -1761,7 +1984,9 @@ var Engine = {
           var oldContents = node.contents;
           node.contents = new Uint8Array(new ArrayBuffer(newSize));
           if (oldContents) {
-            node.contents.set(oldContents.subarray(0, Math.min(newSize, node.usedBytes)));
+            node.contents.set(
+              oldContents.subarray(0, Math.min(newSize, node.usedBytes))
+            );
           }
           node.usedBytes = newSize;
           return;
@@ -1871,7 +2096,8 @@ var Engine = {
           if (size > 8 && contents.subarray) {
             buffer.set(contents.subarray(position, position + size), offset);
           } else {
-            for (var i = 0; i < size; i++) buffer[offset + i] = contents[position + i];
+            for (var i = 0; i < size; i++)
+              buffer[offset + i] = contents[position + i];
           }
           return size;
         },
@@ -1886,16 +2112,25 @@ var Engine = {
               node.usedBytes = length;
               return length;
             } else if (node.usedBytes === 0 && position === 0) {
-              node.contents = new Uint8Array(buffer.subarray(offset, offset + length));
+              node.contents = new Uint8Array(
+                buffer.subarray(offset, offset + length)
+              );
               node.usedBytes = length;
               return length;
             } else if (position + length <= node.usedBytes) {
-              node.contents.set(buffer.subarray(offset, offset + length), position);
+              node.contents.set(
+                buffer.subarray(offset, offset + length),
+                position
+              );
               return length;
             }
           }
           MEMFS.expandFileStorage(node, position + length);
-          if (node.contents.subarray && buffer.subarray) node.contents.set(buffer.subarray(offset, offset + length), position);
+          if (node.contents.subarray && buffer.subarray)
+            node.contents.set(
+              buffer.subarray(offset, offset + length),
+              position
+            );
           else {
             for (var i = 0; i < length; i++) {
               node.contents[position + i] = buffer[offset + i];
@@ -1920,7 +2155,10 @@ var Engine = {
         },
         allocate: function (stream, offset, length) {
           MEMFS.expandFileStorage(stream.node, offset + length);
-          stream.node.usedBytes = Math.max(stream.node.usedBytes, offset + length);
+          stream.node.usedBytes = Math.max(
+            stream.node.usedBytes,
+            offset + length
+          );
         },
         mmap: function (stream, buffer, offset, length, position, prot, flags) {
           if (!FS.isFile(stream.node.mode)) {
@@ -1929,7 +2167,10 @@ var Engine = {
           var ptr;
           var allocated;
           var contents = stream.node.contents;
-          if (!(flags & 2) && (contents.buffer === buffer || contents.buffer === buffer.buffer)) {
+          if (
+            !(flags & 2) &&
+            (contents.buffer === buffer || contents.buffer === buffer.buffer)
+          ) {
             allocated = false;
             ptr = contents.byteOffset;
           } else {
@@ -1937,7 +2178,11 @@ var Engine = {
               if (contents.subarray) {
                 contents = contents.subarray(position, position + length);
               } else {
-                contents = Array.prototype.slice.call(contents, position, position + length);
+                contents = Array.prototype.slice.call(
+                  contents,
+                  position,
+                  position + length
+                );
               }
             }
             allocated = true;
@@ -1957,7 +2202,14 @@ var Engine = {
           if (mmapFlags & 2) {
             return 0;
           }
-          var bytesWritten = MEMFS.stream_ops.write(stream, buffer, 0, length, offset, false);
+          var bytesWritten = MEMFS.stream_ops.write(
+            stream,
+            buffer,
+            0,
+            length,
+            offset,
+            false
+          );
           return 0;
         },
       },
@@ -1967,7 +2219,12 @@ var Engine = {
       indexedDB: function () {
         if (typeof indexedDB !== "undefined") return indexedDB;
         var ret = null;
-        if (typeof window === "object") ret = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+        if (typeof window === "object")
+          ret =
+            window.indexedDB ||
+            window.mozIndexedDB ||
+            window.webkitIndexedDB ||
+            window.msIndexedDB;
         assert(ret, "IDBFS used, but indexedDB not supported");
         return ret;
       },
@@ -2034,7 +2291,9 @@ var Engine = {
             return PATH.join2(root, p);
           };
         }
-        var check = FS.readdir(mount.mountpoint).filter(isRealDir).map(toAbsolute(mount.mountpoint));
+        var check = FS.readdir(mount.mountpoint)
+          .filter(isRealDir)
+          .map(toAbsolute(mount.mountpoint));
         while (check.length) {
           var path = check.pop();
           var stat;
@@ -2044,7 +2303,10 @@ var Engine = {
             return callback(e);
           }
           if (FS.isDir(stat.mode)) {
-            check.push.apply(check, FS.readdir(path).filter(isRealDir).map(toAbsolute(path)));
+            check.push.apply(
+              check,
+              FS.readdir(path).filter(isRealDir).map(toAbsolute(path))
+            );
           }
           entries[path] = { timestamp: stat.mtime };
         }
@@ -2065,7 +2327,11 @@ var Engine = {
             index.openKeyCursor().onsuccess = function (event) {
               var cursor = event.target.result;
               if (!cursor) {
-                return callback(null, { type: "remote", db: db, entries: entries });
+                return callback(null, {
+                  type: "remote",
+                  db: db,
+                  entries: entries,
+                });
               }
               entries[cursor.primaryKey] = { timestamp: cursor.key };
               cursor.continue();
@@ -2088,7 +2354,11 @@ var Engine = {
           return callback(null, { timestamp: stat.mtime, mode: stat.mode });
         } else if (FS.isFile(stat.mode)) {
           node.contents = MEMFS.getFileDataAsTypedArray(node);
-          return callback(null, { timestamp: stat.mtime, mode: stat.mode, contents: node.contents });
+          return callback(null, {
+            timestamp: stat.mtime,
+            mode: stat.mode,
+            contents: node.contents,
+          });
         } else {
           return callback(new Error("node type not supported"));
         }
@@ -2235,7 +2505,12 @@ var Engine = {
           for (var i = 0; i < parts.length - 1; i++) {
             var curr = parts.slice(0, i + 1).join("/");
             if (!createdParents[curr]) {
-              createdParents[curr] = WORKERFS.createNode(parent, parts[i], WORKERFS.DIR_MODE, 0);
+              createdParents[curr] = WORKERFS.createNode(
+                parent,
+                parts[i],
+                WORKERFS.DIR_MODE,
+                0
+              );
             }
             parent = createdParents[curr];
           }
@@ -2245,16 +2520,38 @@ var Engine = {
           var parts = path.split("/");
           return parts[parts.length - 1];
         }
-        Array.prototype.forEach.call(mount.opts["files"] || [], function (file) {
-          WORKERFS.createNode(ensureParent(file.name), base(file.name), WORKERFS.FILE_MODE, 0, file, file.lastModifiedDate);
-        });
+        Array.prototype.forEach.call(
+          mount.opts["files"] || [],
+          function (file) {
+            WORKERFS.createNode(
+              ensureParent(file.name),
+              base(file.name),
+              WORKERFS.FILE_MODE,
+              0,
+              file,
+              file.lastModifiedDate
+            );
+          }
+        );
         (mount.opts["blobs"] || []).forEach(function (obj) {
-          WORKERFS.createNode(ensureParent(obj["name"]), base(obj["name"]), WORKERFS.FILE_MODE, 0, obj["data"]);
+          WORKERFS.createNode(
+            ensureParent(obj["name"]),
+            base(obj["name"]),
+            WORKERFS.FILE_MODE,
+            0,
+            obj["data"]
+          );
         });
         (mount.opts["packages"] || []).forEach(function (pack) {
           pack["metadata"].files.forEach(function (file) {
             var name = file.filename.substr(1);
-            WORKERFS.createNode(ensureParent(name), base(name), WORKERFS.FILE_MODE, 0, pack["blob"].slice(file.start, file.end));
+            WORKERFS.createNode(
+              ensureParent(name),
+              base(name),
+              WORKERFS.FILE_MODE,
+              0,
+              pack["blob"].slice(file.start, file.end)
+            );
           });
         });
         return root;
@@ -2421,7 +2718,9 @@ var Engine = {
             while (FS.isLink(current.mode)) {
               var link = FS.readlink(current_path);
               current_path = PATH_FS.resolve(PATH.dirname(current_path), link);
-              var lookup = FS.lookupPath(current_path, { recurse_count: opts.recurse_count });
+              var lookup = FS.lookupPath(current_path, {
+                recurse_count: opts.recurse_count,
+              });
               current = lookup.node;
               if (count++ > 40) {
                 throw new FS.ErrnoError(32);
@@ -2437,7 +2736,9 @@ var Engine = {
           if (FS.isRoot(node)) {
             var mount = node.mount.mountpoint;
             if (!path) return mount;
-            return mount[mount.length - 1] !== "/" ? mount + "/" + path : mount + path;
+            return mount[mount.length - 1] !== "/"
+              ? mount + "/" + path
+              : mount + path;
           }
           path = path ? node.name + "/" + path : node.name;
           node = node.parent;
@@ -2566,7 +2867,23 @@ var Engine = {
       isSocket: function (mode) {
         return (mode & 49152) === 49152;
       },
-      flagModes: { r: 0, rs: 1052672, "r+": 2, w: 577, wx: 705, xw: 705, "w+": 578, "wx+": 706, "xw+": 706, a: 1089, ax: 1217, xa: 1217, "a+": 1090, "ax+": 1218, "xa+": 1218 },
+      flagModes: {
+        r: 0,
+        rs: 1052672,
+        "r+": 2,
+        w: 577,
+        wx: 705,
+        xw: 705,
+        "w+": 578,
+        "wx+": 706,
+        "xw+": 706,
+        a: 1089,
+        ax: 1217,
+        xa: 1217,
+        "a+": 1090,
+        "ax+": 1218,
+        "xa+": 1218,
+      },
       modeStringToFlags: function (str) {
         var flags = FS.flagModes[str];
         if (typeof flags === "undefined") {
@@ -2746,7 +3063,11 @@ var Engine = {
         }
         FS.syncFSRequests++;
         if (FS.syncFSRequests > 1) {
-          console.log("warning: " + FS.syncFSRequests + " FS.syncfs operations in flight at once, probably just doing extra work");
+          console.log(
+            "warning: " +
+              FS.syncFSRequests +
+              " FS.syncfs operations in flight at once, probably just doing extra work"
+          );
         }
         var mounts = FS.getMounts(FS.root.mount);
         var completed = 0;
@@ -2790,7 +3111,12 @@ var Engine = {
             throw new FS.ErrnoError(54);
           }
         }
-        var mount = { type: type, opts: opts, mountpoint: mountpoint, mounts: [] };
+        var mount = {
+          type: type,
+          opts: opts,
+          mountpoint: mountpoint,
+          mounts: [],
+        };
         var mountRoot = type.mount(mount);
         mountRoot.mount = mount;
         mount.root = mountRoot;
@@ -2936,14 +3262,19 @@ var Engine = {
         if (err) {
           throw new FS.ErrnoError(err);
         }
-        err = new_node ? FS.mayDelete(new_dir, new_name, isdir) : FS.mayCreate(new_dir, new_name);
+        err = new_node
+          ? FS.mayDelete(new_dir, new_name, isdir)
+          : FS.mayCreate(new_dir, new_name);
         if (err) {
           throw new FS.ErrnoError(err);
         }
         if (!old_dir.node_ops.rename) {
           throw new FS.ErrnoError(63);
         }
-        if (FS.isMountpoint(old_node) || (new_node && FS.isMountpoint(new_node))) {
+        if (
+          FS.isMountpoint(old_node) ||
+          (new_node && FS.isMountpoint(new_node))
+        ) {
           throw new FS.ErrnoError(10);
         }
         if (new_dir !== old_dir) {
@@ -2957,7 +3288,14 @@ var Engine = {
             FS.trackingDelegate["willMovePath"](old_path, new_path);
           }
         } catch (e) {
-          console.log("FS.trackingDelegate['willMovePath']('" + old_path + "', '" + new_path + "') threw an exception: " + e.message);
+          console.log(
+            "FS.trackingDelegate['willMovePath']('" +
+              old_path +
+              "', '" +
+              new_path +
+              "') threw an exception: " +
+              e.message
+          );
         }
         FS.hashRemoveNode(old_node);
         try {
@@ -2968,9 +3306,17 @@ var Engine = {
           FS.hashAddNode(old_node);
         }
         try {
-          if (FS.trackingDelegate["onMovePath"]) FS.trackingDelegate["onMovePath"](old_path, new_path);
+          if (FS.trackingDelegate["onMovePath"])
+            FS.trackingDelegate["onMovePath"](old_path, new_path);
         } catch (e) {
-          console.log("FS.trackingDelegate['onMovePath']('" + old_path + "', '" + new_path + "') threw an exception: " + e.message);
+          console.log(
+            "FS.trackingDelegate['onMovePath']('" +
+              old_path +
+              "', '" +
+              new_path +
+              "') threw an exception: " +
+              e.message
+          );
         }
       },
       rmdir: function (path) {
@@ -2993,14 +3339,25 @@ var Engine = {
             FS.trackingDelegate["willDeletePath"](path);
           }
         } catch (e) {
-          console.log("FS.trackingDelegate['willDeletePath']('" + path + "') threw an exception: " + e.message);
+          console.log(
+            "FS.trackingDelegate['willDeletePath']('" +
+              path +
+              "') threw an exception: " +
+              e.message
+          );
         }
         parent.node_ops.rmdir(parent, name);
         FS.destroyNode(node);
         try {
-          if (FS.trackingDelegate["onDeletePath"]) FS.trackingDelegate["onDeletePath"](path);
+          if (FS.trackingDelegate["onDeletePath"])
+            FS.trackingDelegate["onDeletePath"](path);
         } catch (e) {
-          console.log("FS.trackingDelegate['onDeletePath']('" + path + "') threw an exception: " + e.message);
+          console.log(
+            "FS.trackingDelegate['onDeletePath']('" +
+              path +
+              "') threw an exception: " +
+              e.message
+          );
         }
       },
       readdir: function (path) {
@@ -3031,14 +3388,25 @@ var Engine = {
             FS.trackingDelegate["willDeletePath"](path);
           }
         } catch (e) {
-          console.log("FS.trackingDelegate['willDeletePath']('" + path + "') threw an exception: " + e.message);
+          console.log(
+            "FS.trackingDelegate['willDeletePath']('" +
+              path +
+              "') threw an exception: " +
+              e.message
+          );
         }
         parent.node_ops.unlink(parent, name);
         FS.destroyNode(node);
         try {
-          if (FS.trackingDelegate["onDeletePath"]) FS.trackingDelegate["onDeletePath"](path);
+          if (FS.trackingDelegate["onDeletePath"])
+            FS.trackingDelegate["onDeletePath"](path);
         } catch (e) {
-          console.log("FS.trackingDelegate['onDeletePath']('" + path + "') threw an exception: " + e.message);
+          console.log(
+            "FS.trackingDelegate['onDeletePath']('" +
+              path +
+              "') threw an exception: " +
+              e.message
+          );
         }
       },
       readlink: function (path) {
@@ -3050,7 +3418,10 @@ var Engine = {
         if (!link.node_ops.readlink) {
           throw new FS.ErrnoError(28);
         }
-        return PATH_FS.resolve(FS.getPath(link.parent), link.node_ops.readlink(link));
+        return PATH_FS.resolve(
+          FS.getPath(link.parent),
+          link.node_ops.readlink(link)
+        );
       },
       stat: function (path, dontFollow) {
         var lookup = FS.lookupPath(path, { follow: !dontFollow });
@@ -3077,7 +3448,10 @@ var Engine = {
         if (!node.node_ops.setattr) {
           throw new FS.ErrnoError(63);
         }
-        node.node_ops.setattr(node, { mode: (mode & 4095) | (node.mode & ~4095), timestamp: Date.now() });
+        node.node_ops.setattr(node, {
+          mode: (mode & 4095) | (node.mode & ~4095),
+          timestamp: Date.now(),
+        });
       },
       lchmod: function (path, mode) {
         FS.chmod(path, mode, true);
@@ -3204,7 +3578,20 @@ var Engine = {
           FS.truncate(node, 0);
         }
         flags &= ~(128 | 512);
-        var stream = FS.createStream({ node: node, path: FS.getPath(node), flags: flags, seekable: true, position: 0, stream_ops: node.stream_ops, ungotten: [], error: false }, fd_start, fd_end);
+        var stream = FS.createStream(
+          {
+            node: node,
+            path: FS.getPath(node),
+            flags: flags,
+            seekable: true,
+            position: 0,
+            stream_ops: node.stream_ops,
+            ungotten: [],
+            error: false,
+          },
+          fd_start,
+          fd_end
+        );
         if (stream.stream_ops.open) {
           stream.stream_ops.open(stream);
         }
@@ -3227,7 +3614,12 @@ var Engine = {
             FS.trackingDelegate["onOpenFile"](path, trackingFlags);
           }
         } catch (e) {
-          console.log("FS.trackingDelegate['onOpenFile']('" + path + "', flags) threw an exception: " + e.message);
+          console.log(
+            "FS.trackingDelegate['onOpenFile']('" +
+              path +
+              "', flags) threw an exception: " +
+              e.message
+          );
         }
         return stream;
       },
@@ -3286,7 +3678,13 @@ var Engine = {
         } else if (!stream.seekable) {
           throw new FS.ErrnoError(70);
         }
-        var bytesRead = stream.stream_ops.read(stream, buffer, offset, length, position);
+        var bytesRead = stream.stream_ops.read(
+          stream,
+          buffer,
+          offset,
+          length,
+          position
+        );
         if (!seeking) stream.position += bytesRead;
         return bytesRead;
       },
@@ -3315,12 +3713,25 @@ var Engine = {
         } else if (!stream.seekable) {
           throw new FS.ErrnoError(70);
         }
-        var bytesWritten = stream.stream_ops.write(stream, buffer, offset, length, position, canOwn);
+        var bytesWritten = stream.stream_ops.write(
+          stream,
+          buffer,
+          offset,
+          length,
+          position,
+          canOwn
+        );
         if (!seeking) stream.position += bytesWritten;
         try {
-          if (stream.path && FS.trackingDelegate["onWriteToFile"]) FS.trackingDelegate["onWriteToFile"](stream.path);
+          if (stream.path && FS.trackingDelegate["onWriteToFile"])
+            FS.trackingDelegate["onWriteToFile"](stream.path);
         } catch (e) {
-          console.log("FS.trackingDelegate['onWriteToFile']('" + stream.path + "') threw an exception: " + e.message);
+          console.log(
+            "FS.trackingDelegate['onWriteToFile']('" +
+              stream.path +
+              "') threw an exception: " +
+              e.message
+          );
         }
         return bytesWritten;
       },
@@ -3343,7 +3754,11 @@ var Engine = {
         stream.stream_ops.allocate(stream, offset, length);
       },
       mmap: function (stream, buffer, offset, length, position, prot, flags) {
-        if ((prot & 2) !== 0 && (flags & 2) === 0 && (stream.flags & 2097155) !== 2) {
+        if (
+          (prot & 2) !== 0 &&
+          (flags & 2) === 0 &&
+          (stream.flags & 2097155) !== 2
+        ) {
           throw new FS.ErrnoError(2);
         }
         if ((stream.flags & 2097155) === 1) {
@@ -3352,13 +3767,27 @@ var Engine = {
         if (!stream.stream_ops.mmap) {
           throw new FS.ErrnoError(43);
         }
-        return stream.stream_ops.mmap(stream, buffer, offset, length, position, prot, flags);
+        return stream.stream_ops.mmap(
+          stream,
+          buffer,
+          offset,
+          length,
+          position,
+          prot,
+          flags
+        );
       },
       msync: function (stream, buffer, offset, length, mmapFlags) {
         if (!stream || !stream.stream_ops.msync) {
           return 0;
         }
-        return stream.stream_ops.msync(stream, buffer, offset, length, mmapFlags);
+        return stream.stream_ops.msync(
+          stream,
+          buffer,
+          offset,
+          length,
+          mmapFlags
+        );
       },
       munmap: function (stream) {
         return 0;
@@ -3443,7 +3872,10 @@ var Engine = {
         FS.mkdev("/dev/tty", FS.makedev(5, 0));
         FS.mkdev("/dev/tty1", FS.makedev(6, 0));
         var random_device;
-        if (typeof crypto === "object" && typeof crypto["getRandomValues"] === "function") {
+        if (
+          typeof crypto === "object" &&
+          typeof crypto["getRandomValues"] === "function"
+        ) {
           var randomBuffer = new Uint8Array(1);
           random_device = function () {
             crypto.getRandomValues(randomBuffer);
@@ -3591,7 +4023,17 @@ var Engine = {
           var lookup = FS.lookupPath(path, { follow: !dontResolveLastLink });
           path = lookup.path;
         } catch (e) {}
-        var ret = { isRoot: false, exists: false, error: 0, name: null, path: null, object: null, parentExists: false, parentPath: null, parentObject: null };
+        var ret = {
+          isRoot: false,
+          exists: false,
+          error: 0,
+          name: null,
+          path: null,
+          object: null,
+          parentExists: false,
+          parentPath: null,
+          parentObject: null,
+        };
         try {
           var lookup = FS.lookupPath(path, { parent: true });
           ret.parentExists = true;
@@ -3610,7 +4052,10 @@ var Engine = {
         return ret;
       },
       createFolder: function (parent, name, canRead, canWrite) {
-        var path = PATH.join2(typeof parent === "string" ? parent : FS.getPath(parent), name);
+        var path = PATH.join2(
+          typeof parent === "string" ? parent : FS.getPath(parent),
+          name
+        );
         var mode = FS.getMode(canRead, canWrite);
         return FS.mkdir(path, mode);
       },
@@ -3629,18 +4074,27 @@ var Engine = {
         return current;
       },
       createFile: function (parent, name, properties, canRead, canWrite) {
-        var path = PATH.join2(typeof parent === "string" ? parent : FS.getPath(parent), name);
+        var path = PATH.join2(
+          typeof parent === "string" ? parent : FS.getPath(parent),
+          name
+        );
         var mode = FS.getMode(canRead, canWrite);
         return FS.create(path, mode);
       },
       createDataFile: function (parent, name, data, canRead, canWrite, canOwn) {
-        var path = name ? PATH.join2(typeof parent === "string" ? parent : FS.getPath(parent), name) : parent;
+        var path = name
+          ? PATH.join2(
+              typeof parent === "string" ? parent : FS.getPath(parent),
+              name
+            )
+          : parent;
         var mode = FS.getMode(canRead, canWrite);
         var node = FS.create(path, mode);
         if (data) {
           if (typeof data === "string") {
             var arr = new Array(data.length);
-            for (var i = 0, len = data.length; i < len; ++i) arr[i] = data.charCodeAt(i);
+            for (var i = 0, len = data.length; i < len; ++i)
+              arr[i] = data.charCodeAt(i);
             data = arr;
           }
           FS.chmod(node, mode | 146);
@@ -3652,7 +4106,10 @@ var Engine = {
         return node;
       },
       createDevice: function (parent, name, input, output) {
-        var path = PATH.join2(typeof parent === "string" ? parent : FS.getPath(parent), name);
+        var path = PATH.join2(
+          typeof parent === "string" ? parent : FS.getPath(parent),
+          name
+        );
         var mode = FS.getMode(!!input, !!output);
         if (!FS.createDevice.major) FS.createDevice.major = 64;
         var dev = FS.makedev(FS.createDevice.major++, 0);
@@ -3703,14 +4160,20 @@ var Engine = {
         return FS.mkdev(path, mode, dev);
       },
       createLink: function (parent, name, target, canRead, canWrite) {
-        var path = PATH.join2(typeof parent === "string" ? parent : FS.getPath(parent), name);
+        var path = PATH.join2(
+          typeof parent === "string" ? parent : FS.getPath(parent),
+          name
+        );
         return FS.symlink(target, path);
       },
       forceLoadFile: function (obj) {
-        if (obj.isDevice || obj.isFolder || obj.link || obj.contents) return true;
+        if (obj.isDevice || obj.isFolder || obj.link || obj.contents)
+          return true;
         var success = true;
         if (typeof XMLHttpRequest !== "undefined") {
-          throw new Error("Lazy loading should have been performed (contents set) in createLazyFile, but it was not. Lazy loading only works in web workers. Use --embed-file or --preload-file in emcc on the main thread.");
+          throw new Error(
+            "Lazy loading should have been performed (contents set) in createLazyFile, but it was not. Lazy loading only works in web workers. Use --embed-file or --preload-file in emcc on the main thread."
+          );
         } else if (read_) {
           try {
             obj.contents = intArrayFromString(read_(obj.url), true);
@@ -3737,61 +4200,93 @@ var Engine = {
           var chunkNum = (idx / this.chunkSize) | 0;
           return this.getter(chunkNum)[chunkOffset];
         };
-        LazyUint8Array.prototype.setDataGetter = function LazyUint8Array_setDataGetter(getter) {
-          this.getter = getter;
-        };
-        LazyUint8Array.prototype.cacheLength = function LazyUint8Array_cacheLength() {
-          var xhr = new XMLHttpRequest();
-          xhr.open("HEAD", url, false);
-          xhr.send(null);
-          if (!((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304)) throw new Error("Couldn't load " + url + ". Status: " + xhr.status);
-          var datalength = Number(xhr.getResponseHeader("Content-length"));
-          var header;
-          var hasByteServing = (header = xhr.getResponseHeader("Accept-Ranges")) && header === "bytes";
-          var usesGzip = (header = xhr.getResponseHeader("Content-Encoding")) && header === "gzip";
-          var chunkSize = 1024 * 1024;
-          if (!hasByteServing) chunkSize = datalength;
-          var doXHR = function (from, to) {
-            if (from > to) throw new Error("invalid range (" + from + ", " + to + ") or no bytes requested!");
-            if (to > datalength - 1) throw new Error("only " + datalength + " bytes available! programmer error!");
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", url, false);
-            if (datalength !== chunkSize) xhr.setRequestHeader("Range", "bytes=" + from + "-" + to);
-            if (typeof Uint8Array != "undefined") xhr.responseType = "arraybuffer";
-            if (xhr.overrideMimeType) {
-              xhr.overrideMimeType("text/plain; charset=x-user-defined");
-            }
-            xhr.send(null);
-            if (!((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304)) throw new Error("Couldn't load " + url + ". Status: " + xhr.status);
-            if (xhr.response !== undefined) {
-              return new Uint8Array(xhr.response || []);
-            } else {
-              return intArrayFromString(xhr.responseText || "", true);
-            }
+        LazyUint8Array.prototype.setDataGetter =
+          function LazyUint8Array_setDataGetter(getter) {
+            this.getter = getter;
           };
-          var lazyArray = this;
-          lazyArray.setDataGetter(function (chunkNum) {
-            var start = chunkNum * chunkSize;
-            var end = (chunkNum + 1) * chunkSize - 1;
-            end = Math.min(end, datalength - 1);
-            if (typeof lazyArray.chunks[chunkNum] === "undefined") {
-              lazyArray.chunks[chunkNum] = doXHR(start, end);
+        LazyUint8Array.prototype.cacheLength =
+          function LazyUint8Array_cacheLength() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("HEAD", url, false);
+            xhr.send(null);
+            if (
+              !((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304)
+            )
+              throw new Error(
+                "Couldn't load " + url + ". Status: " + xhr.status
+              );
+            var datalength = Number(xhr.getResponseHeader("Content-length"));
+            var header;
+            var hasByteServing =
+              (header = xhr.getResponseHeader("Accept-Ranges")) &&
+              header === "bytes";
+            var usesGzip =
+              (header = xhr.getResponseHeader("Content-Encoding")) &&
+              header === "gzip";
+            var chunkSize = 1024 * 1024;
+            if (!hasByteServing) chunkSize = datalength;
+            var doXHR = function (from, to) {
+              if (from > to)
+                throw new Error(
+                  "invalid range (" +
+                    from +
+                    ", " +
+                    to +
+                    ") or no bytes requested!"
+                );
+              if (to > datalength - 1)
+                throw new Error(
+                  "only " + datalength + " bytes available! programmer error!"
+                );
+              var xhr = new XMLHttpRequest();
+              xhr.open("GET", url, false);
+              if (datalength !== chunkSize)
+                xhr.setRequestHeader("Range", "bytes=" + from + "-" + to);
+              if (typeof Uint8Array != "undefined")
+                xhr.responseType = "arraybuffer";
+              if (xhr.overrideMimeType) {
+                xhr.overrideMimeType("text/plain; charset=x-user-defined");
+              }
+              xhr.send(null);
+              if (
+                !((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304)
+              )
+                throw new Error(
+                  "Couldn't load " + url + ". Status: " + xhr.status
+                );
+              if (xhr.response !== undefined) {
+                return new Uint8Array(xhr.response || []);
+              } else {
+                return intArrayFromString(xhr.responseText || "", true);
+              }
+            };
+            var lazyArray = this;
+            lazyArray.setDataGetter(function (chunkNum) {
+              var start = chunkNum * chunkSize;
+              var end = (chunkNum + 1) * chunkSize - 1;
+              end = Math.min(end, datalength - 1);
+              if (typeof lazyArray.chunks[chunkNum] === "undefined") {
+                lazyArray.chunks[chunkNum] = doXHR(start, end);
+              }
+              if (typeof lazyArray.chunks[chunkNum] === "undefined")
+                throw new Error("doXHR failed!");
+              return lazyArray.chunks[chunkNum];
+            });
+            if (usesGzip || !datalength) {
+              chunkSize = datalength = 1;
+              datalength = this.getter(0).length;
+              chunkSize = datalength;
+              console.log(
+                "LazyFiles on gzip forces download of the whole file when length is accessed"
+              );
             }
-            if (typeof lazyArray.chunks[chunkNum] === "undefined") throw new Error("doXHR failed!");
-            return lazyArray.chunks[chunkNum];
-          });
-          if (usesGzip || !datalength) {
-            chunkSize = datalength = 1;
-            datalength = this.getter(0).length;
-            chunkSize = datalength;
-            console.log("LazyFiles on gzip forces download of the whole file when length is accessed");
-          }
-          this._length = datalength;
-          this._chunkSize = chunkSize;
-          this.lengthKnown = true;
-        };
+            this._length = datalength;
+            this._chunkSize = chunkSize;
+            this.lengthKnown = true;
+          };
         if (typeof XMLHttpRequest !== "undefined") {
-          if (!ENVIRONMENT_IS_WORKER) throw "Cannot do synchronous binary XHRs outside webworkers in modern browsers. Use --embed-file or --preload-file in emcc";
+          if (!ENVIRONMENT_IS_WORKER)
+            throw "Cannot do synchronous binary XHRs outside webworkers in modern browsers. Use --embed-file or --preload-file in emcc";
           var lazyArray = new LazyUint8Array();
           Object.defineProperties(lazyArray, {
             length: {
@@ -3840,7 +4335,13 @@ var Engine = {
             return fn.apply(null, arguments);
           };
         });
-        stream_ops.read = function stream_ops_read(stream, buffer, offset, length, position) {
+        stream_ops.read = function stream_ops_read(
+          stream,
+          buffer,
+          offset,
+          length,
+          position
+        ) {
           if (!FS.forceLoadFile(node)) {
             throw new FS.ErrnoError(29);
           }
@@ -3861,15 +4362,35 @@ var Engine = {
         node.stream_ops = stream_ops;
         return node;
       },
-      createPreloadedFile: function (parent, name, url, canRead, canWrite, onload, onerror, dontCreateFile, canOwn, preFinish) {
+      createPreloadedFile: function (
+        parent,
+        name,
+        url,
+        canRead,
+        canWrite,
+        onload,
+        onerror,
+        dontCreateFile,
+        canOwn,
+        preFinish
+      ) {
         Browser.init();
-        var fullname = name ? PATH_FS.resolve(PATH.join2(parent, name)) : parent;
+        var fullname = name
+          ? PATH_FS.resolve(PATH.join2(parent, name))
+          : parent;
         var dep = getUniqueRunDependency("cp " + fullname);
         function processData(byteArray) {
           function finish(byteArray) {
             if (preFinish) preFinish();
             if (!dontCreateFile) {
-              FS.createDataFile(parent, name, byteArray, canRead, canWrite, canOwn);
+              FS.createDataFile(
+                parent,
+                name,
+                byteArray,
+                canRead,
+                canWrite,
+                canOwn
+              );
             }
             if (onload) onload();
             removeRunDependency(dep);
@@ -3901,7 +4422,12 @@ var Engine = {
         }
       },
       indexedDB: function () {
-        return window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+        return (
+          window.indexedDB ||
+          window.mozIndexedDB ||
+          window.webkitIndexedDB ||
+          window.msIndexedDB
+        );
       },
       DB_NAME: function () {
         return "EM_FS_" + window.location.pathname;
@@ -3934,7 +4460,10 @@ var Engine = {
             else onerror();
           }
           paths.forEach(function (path) {
-            var putRequest = files.put(FS.analyzePath(path).object.contents, path);
+            var putRequest = files.put(
+              FS.analyzePath(path).object.contents,
+              path
+            );
             putRequest.onsuccess = function putRequest_onsuccess() {
               ok++;
               if (ok + fail == total) finish();
@@ -3980,7 +4509,14 @@ var Engine = {
               if (FS.analyzePath(path).exists) {
                 FS.unlink(path);
               }
-              FS.createDataFile(PATH.dirname(path), PATH.basename(path), getRequest.result, true, true, true);
+              FS.createDataFile(
+                PATH.dirname(path),
+                PATH.basename(path),
+                getRequest.result,
+                true,
+                true,
+                true
+              );
               ok++;
               if (ok + fail == total) finish();
             };
@@ -4016,7 +4552,11 @@ var Engine = {
         try {
           var stat = func(path);
         } catch (e) {
-          if (e && e.node && PATH.normalize(path) !== PATH.normalize(FS.getPath(e.node))) {
+          if (
+            e &&
+            e.node &&
+            PATH.normalize(path) !== PATH.normalize(FS.getPath(e.node))
+          ) {
             return -54;
           }
           throw e;
@@ -4032,7 +4572,16 @@ var Engine = {
         HEAP32[(buf + 32) >> 2] = 0;
         (tempI64 = [
           stat.size >>> 0,
-          ((tempDouble = stat.size), +Math_abs(tempDouble) >= 1 ? (tempDouble > 0 ? (Math_min(+Math_floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math_ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0) : 0),
+          ((tempDouble = stat.size),
+          +Math_abs(tempDouble) >= 1
+            ? tempDouble > 0
+              ? (Math_min(+Math_floor(tempDouble / 4294967296), 4294967295) |
+                  0) >>>
+                0
+              : ~~+Math_ceil(
+                  (tempDouble - +(~~tempDouble >>> 0)) / 4294967296
+                ) >>> 0
+            : 0),
         ]),
           (HEAP32[(buf + 40) >> 2] = tempI64[0]),
           (HEAP32[(buf + 44) >> 2] = tempI64[1]);
@@ -4046,7 +4595,16 @@ var Engine = {
         HEAP32[(buf + 76) >> 2] = 0;
         (tempI64 = [
           stat.ino >>> 0,
-          ((tempDouble = stat.ino), +Math_abs(tempDouble) >= 1 ? (tempDouble > 0 ? (Math_min(+Math_floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math_ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0) : 0),
+          ((tempDouble = stat.ino),
+          +Math_abs(tempDouble) >= 1
+            ? tempDouble > 0
+              ? (Math_min(+Math_floor(tempDouble / 4294967296), 4294967295) |
+                  0) >>>
+                0
+              : ~~+Math_ceil(
+                  (tempDouble - +(~~tempDouble >>> 0)) / 4294967296
+                ) >>> 0
+            : 0),
         ]),
           (HEAP32[(buf + 80) >> 2] = tempI64[0]),
           (HEAP32[(buf + 84) >> 2] = tempI64[1]);
@@ -4058,7 +4616,8 @@ var Engine = {
       },
       doMkdir: function (path, mode) {
         path = PATH.normalize(path);
-        if (path[path.length - 1] === "/") path = path.substr(0, path.length - 1);
+        if (path[path.length - 1] === "/")
+          path = path.substr(0, path.length - 1);
         FS.mkdir(path, mode, 0);
         return 0;
       },
@@ -4164,7 +4723,8 @@ var Engine = {
         FS.unlink(path);
         return 0;
       } catch (e) {
-        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError))
+          abort(e);
         return -e.errno;
       }
     }
@@ -4293,7 +4853,10 @@ var Engine = {
     };
     var SOCKFS = {
       mount: function (mount) {
-        Module["websocket"] = Module["websocket"] && "object" === typeof Module["websocket"] ? Module["websocket"] : {};
+        Module["websocket"] =
+          Module["websocket"] && "object" === typeof Module["websocket"]
+            ? Module["websocket"]
+            : {};
         Module["websocket"]._callbacks = {};
         Module["websocket"]["on"] = function (event, callback) {
           if ("function" === typeof callback) {
@@ -4313,11 +4876,27 @@ var Engine = {
         if (protocol) {
           assert(streaming == (protocol == 6));
         }
-        var sock = { family: family, type: type, protocol: protocol, server: null, error: null, peers: {}, pending: [], recv_queue: [], sock_ops: SOCKFS.websocket_sock_ops };
+        var sock = {
+          family: family,
+          type: type,
+          protocol: protocol,
+          server: null,
+          error: null,
+          peers: {},
+          pending: [],
+          recv_queue: [],
+          sock_ops: SOCKFS.websocket_sock_ops,
+        };
         var name = SOCKFS.nextname();
         var node = FS.createNode(SOCKFS.root, name, 49152, 0);
         node.sock = sock;
-        var stream = FS.createStream({ path: name, node: node, flags: FS.modeStringToFlags("r+"), seekable: false, stream_ops: SOCKFS.stream_ops });
+        var stream = FS.createStream({
+          path: name,
+          node: node,
+          flags: FS.modeStringToFlags("r+"),
+          seekable: false,
+          stream_ops: SOCKFS.stream_ops,
+        });
         sock.stream = stream;
         return sock;
       },
@@ -4376,14 +4955,17 @@ var Engine = {
             } else {
               var result = /ws[s]?:\/\/([^:]+):(\d+)/.exec(ws.url);
               if (!result) {
-                throw new Error("WebSocket URL must be in the format ws(s)://address:port");
+                throw new Error(
+                  "WebSocket URL must be in the format ws(s)://address:port"
+                );
               }
               addr = result[1];
               port = parseInt(result[2], 10);
             }
           } else {
             try {
-              var runtimeConfig = Module["websocket"] && "object" === typeof Module["websocket"];
+              var runtimeConfig =
+                Module["websocket"] && "object" === typeof Module["websocket"];
               var url = "ws:#".replace("#", "//");
               if (runtimeConfig) {
                 if ("string" === typeof Module["websocket"]["url"]) {
@@ -4392,7 +4974,8 @@ var Engine = {
               }
               if (url === "ws://" || url === "wss://") {
                 var parts = addr.split("/");
-                url = url + parts[0] + ":" + port + "/" + parts.slice(1).join("/");
+                url =
+                  url + parts[0] + ":" + port + "/" + parts.slice(1).join("/");
               }
               var subProtocols = "binary";
               if (runtimeConfig) {
@@ -4402,10 +4985,17 @@ var Engine = {
               }
               var opts = undefined;
               if (subProtocols !== "null") {
-                subProtocols = subProtocols.replace(/^ +| +$/g, "").split(/ *, */);
-                opts = ENVIRONMENT_IS_NODE ? { protocol: subProtocols.toString() } : subProtocols;
+                subProtocols = subProtocols
+                  .replace(/^ +| +$/g, "")
+                  .split(/ *, */);
+                opts = ENVIRONMENT_IS_NODE
+                  ? { protocol: subProtocols.toString() }
+                  : subProtocols;
               }
-              if (runtimeConfig && null === Module["websocket"]["subprotocol"]) {
+              if (
+                runtimeConfig &&
+                null === Module["websocket"]["subprotocol"]
+              ) {
                 subProtocols = "null";
                 opts = undefined;
               }
@@ -4421,11 +5011,29 @@ var Engine = {
               throw new FS.ErrnoError(ERRNO_CODES.EHOSTUNREACH);
             }
           }
-          var peer = { addr: addr, port: port, socket: ws, dgram_send_queue: [] };
+          var peer = {
+            addr: addr,
+            port: port,
+            socket: ws,
+            dgram_send_queue: [],
+          };
           SOCKFS.websocket_sock_ops.addPeer(sock, peer);
           SOCKFS.websocket_sock_ops.handlePeerEvents(sock, peer);
           if (sock.type === 2 && typeof sock.sport !== "undefined") {
-            peer.dgram_send_queue.push(new Uint8Array([255, 255, 255, 255, "p".charCodeAt(0), "o".charCodeAt(0), "r".charCodeAt(0), "t".charCodeAt(0), (sock.sport & 65280) >> 8, sock.sport & 255]));
+            peer.dgram_send_queue.push(
+              new Uint8Array([
+                255,
+                255,
+                255,
+                255,
+                "p".charCodeAt(0),
+                "o".charCodeAt(0),
+                "r".charCodeAt(0),
+                "t".charCodeAt(0),
+                (sock.sport & 65280) >> 8,
+                sock.sport & 255,
+              ])
+            );
           }
           return peer;
         },
@@ -4484,7 +5092,11 @@ var Engine = {
               SOCKFS.websocket_sock_ops.addPeer(sock, peer);
               return;
             }
-            sock.recv_queue.push({ addr: peer.addr, port: peer.port, data: data });
+            sock.recv_queue.push({
+              addr: peer.addr,
+              port: peer.port,
+              data: data,
+            });
             Module["websocket"].emit("message", sock.stream.fd);
           }
           if (ENVIRONMENT_IS_NODE) {
@@ -4500,7 +5112,11 @@ var Engine = {
             });
             peer.socket.on("error", function (error) {
               sock.error = ERRNO_CODES.ECONNREFUSED;
-              Module["websocket"].emit("error", [sock.stream.fd, sock.error, "ECONNREFUSED: Connection refused"]);
+              Module["websocket"].emit("error", [
+                sock.stream.fd,
+                sock.error,
+                "ECONNREFUSED: Connection refused",
+              ]);
             });
           } else {
             peer.socket.onopen = handleOpen;
@@ -4512,7 +5128,11 @@ var Engine = {
             };
             peer.socket.onerror = function (error) {
               sock.error = ERRNO_CODES.ECONNREFUSED;
-              Module["websocket"].emit("error", [sock.stream.fd, sock.error, "ECONNREFUSED: Connection refused"]);
+              Module["websocket"].emit("error", [
+                sock.stream.fd,
+                sock.error,
+                "ECONNREFUSED: Connection refused",
+              ]);
             };
           }
         },
@@ -4521,14 +5141,25 @@ var Engine = {
             return sock.pending.length ? 64 | 1 : 0;
           }
           var mask = 0;
-          var dest = sock.type === 1 ? SOCKFS.websocket_sock_ops.getPeer(sock, sock.daddr, sock.dport) : null;
-          if (sock.recv_queue.length || !dest || (dest && dest.socket.readyState === dest.socket.CLOSING) || (dest && dest.socket.readyState === dest.socket.CLOSED)) {
+          var dest =
+            sock.type === 1
+              ? SOCKFS.websocket_sock_ops.getPeer(sock, sock.daddr, sock.dport)
+              : null;
+          if (
+            sock.recv_queue.length ||
+            !dest ||
+            (dest && dest.socket.readyState === dest.socket.CLOSING) ||
+            (dest && dest.socket.readyState === dest.socket.CLOSED)
+          ) {
             mask |= 64 | 1;
           }
           if (!dest || (dest && dest.socket.readyState === dest.socket.OPEN)) {
             mask |= 4;
           }
-          if ((dest && dest.socket.readyState === dest.socket.CLOSING) || (dest && dest.socket.readyState === dest.socket.CLOSED)) {
+          if (
+            (dest && dest.socket.readyState === dest.socket.CLOSING) ||
+            (dest && dest.socket.readyState === dest.socket.CLOSED)
+          ) {
             mask |= 16;
           }
           return mask;
@@ -4564,7 +5195,10 @@ var Engine = {
           return 0;
         },
         bind: function (sock, addr, port) {
-          if (typeof sock.saddr !== "undefined" || typeof sock.sport !== "undefined") {
+          if (
+            typeof sock.saddr !== "undefined" ||
+            typeof sock.sport !== "undefined"
+          ) {
             throw new FS.ErrnoError(ERRNO_CODES.EINVAL);
           }
           sock.saddr = addr;
@@ -4586,8 +5220,15 @@ var Engine = {
           if (sock.server) {
             throw new FS.ErrnoError(ERRNO_CODES.EOPNOTSUPP);
           }
-          if (typeof sock.daddr !== "undefined" && typeof sock.dport !== "undefined") {
-            var dest = SOCKFS.websocket_sock_ops.getPeer(sock, sock.daddr, sock.dport);
+          if (
+            typeof sock.daddr !== "undefined" &&
+            typeof sock.dport !== "undefined"
+          ) {
+            var dest = SOCKFS.websocket_sock_ops.getPeer(
+              sock,
+              sock.daddr,
+              sock.dport
+            );
             if (dest) {
               if (dest.socket.readyState === dest.socket.CONNECTING) {
                 throw new FS.ErrnoError(ERRNO_CODES.EALREADY);
@@ -4643,7 +5284,11 @@ var Engine = {
           }
           var dest = SOCKFS.websocket_sock_ops.getPeer(sock, addr, port);
           if (sock.type === 1) {
-            if (!dest || dest.socket.readyState === dest.socket.CLOSING || dest.socket.readyState === dest.socket.CLOSED) {
+            if (
+              !dest ||
+              dest.socket.readyState === dest.socket.CLOSING ||
+              dest.socket.readyState === dest.socket.CLOSED
+            ) {
               throw new FS.ErrnoError(ERRNO_CODES.ENOTCONN);
             } else if (dest.socket.readyState === dest.socket.CONNECTING) {
               throw new FS.ErrnoError(ERRNO_CODES.EAGAIN);
@@ -4657,7 +5302,11 @@ var Engine = {
           data = buffer.slice(offset, offset + length);
           if (sock.type === 2) {
             if (!dest || dest.socket.readyState !== dest.socket.OPEN) {
-              if (!dest || dest.socket.readyState === dest.socket.CLOSING || dest.socket.readyState === dest.socket.CLOSED) {
+              if (
+                !dest ||
+                dest.socket.readyState === dest.socket.CLOSING ||
+                dest.socket.readyState === dest.socket.CLOSED
+              ) {
                 dest = SOCKFS.websocket_sock_ops.createPeer(sock, addr, port);
               }
               dest.dgram_send_queue.push(data);
@@ -4678,10 +5327,17 @@ var Engine = {
           var queued = sock.recv_queue.shift();
           if (!queued) {
             if (sock.type === 1) {
-              var dest = SOCKFS.websocket_sock_ops.getPeer(sock, sock.daddr, sock.dport);
+              var dest = SOCKFS.websocket_sock_ops.getPeer(
+                sock,
+                sock.daddr,
+                sock.dport
+              );
               if (!dest) {
                 throw new FS.ErrnoError(ERRNO_CODES.ENOTCONN);
-              } else if (dest.socket.readyState === dest.socket.CLOSING || dest.socket.readyState === dest.socket.CLOSED) {
+              } else if (
+                dest.socket.readyState === dest.socket.CLOSING ||
+                dest.socket.readyState === dest.socket.CLOSED
+              ) {
                 return null;
               } else {
                 throw new FS.ErrnoError(ERRNO_CODES.EAGAIN);
@@ -4694,10 +5350,18 @@ var Engine = {
           var queuedOffset = queued.data.byteOffset || 0;
           var queuedBuffer = queued.data.buffer || queued.data;
           var bytesRead = Math.min(length, queuedLength);
-          var res = { buffer: new Uint8Array(queuedBuffer, queuedOffset, bytesRead), addr: queued.addr, port: queued.port };
+          var res = {
+            buffer: new Uint8Array(queuedBuffer, queuedOffset, bytesRead),
+            addr: queued.addr,
+            port: queued.port,
+          };
           if (sock.type === 1 && bytesRead < queuedLength) {
             var bytesRemaining = queuedLength - bytesRead;
-            queued.data = new Uint8Array(queuedBuffer, queuedOffset + bytesRead, bytesRemaining);
+            queued.data = new Uint8Array(
+              queuedBuffer,
+              queuedOffset + bytesRead,
+              bytesRemaining
+            );
             sock.recv_queue.unshift(queued);
           }
           return res;
@@ -4716,7 +5380,8 @@ var Engine = {
     function __inet_pton6_raw(str) {
       var words;
       var w, offset, z;
-      var valid6regx = /^((?=.*::)(?!.*::.+::)(::)?([\dA-F]{1,4}:(:|\b)|){5}|([\dA-F]{1,4}:){6})((([\dA-F]{1,4}((?!\3)::|:\b|$))|(?!\2\3)){2}|(((2[0-4]|1\d|[1-9])?\d|25[0-5])\.?\b){4})$/i;
+      var valid6regx =
+        /^((?=.*::)(?!.*::.+::)(::)?([\dA-F]{1,4}:(:|\b)|){5}|([\dA-F]{1,4}:){6})((([\dA-F]{1,4}((?!\3)::|:\b|$))|(?!\2\3)){2}|(((2[0-4]|1\d|[1-9])?\d|25[0-5])\.?\b){4})$/i;
       var parts = [];
       if (!valid6regx.test(str)) {
         return null;
@@ -4732,8 +5397,12 @@ var Engine = {
       if (str.indexOf(".") > 0) {
         str = str.replace(new RegExp("[.]", "g"), ":");
         words = str.split(":");
-        words[words.length - 4] = parseInt(words[words.length - 4]) + parseInt(words[words.length - 3]) * 256;
-        words[words.length - 3] = parseInt(words[words.length - 2]) + parseInt(words[words.length - 1]) * 256;
+        words[words.length - 4] =
+          parseInt(words[words.length - 4]) +
+          parseInt(words[words.length - 3]) * 256;
+        words[words.length - 3] =
+          parseInt(words[words.length - 2]) +
+          parseInt(words[words.length - 1]) * 256;
         words = words.slice(0, words.length - 2);
       } else {
         words = str.split(":");
@@ -4754,7 +5423,12 @@ var Engine = {
           parts[w + offset] = words[w];
         }
       }
-      return [(parts[1] << 16) | parts[0], (parts[3] << 16) | parts[2], (parts[5] << 16) | parts[4], (parts[7] << 16) | parts[6]];
+      return [
+        (parts[1] << 16) | parts[0],
+        (parts[3] << 16) | parts[2],
+        (parts[5] << 16) | parts[4],
+        (parts[7] << 16) | parts[6],
+      ];
     }
     var DNS = {
       address_map: { id: 1, addrs: {}, names: {} },
@@ -4787,7 +5461,15 @@ var Engine = {
       },
     };
     function __inet_ntop4_raw(addr) {
-      return (addr & 255) + "." + ((addr >> 8) & 255) + "." + ((addr >> 16) & 255) + "." + ((addr >> 24) & 255);
+      return (
+        (addr & 255) +
+        "." +
+        ((addr >> 8) & 255) +
+        "." +
+        ((addr >> 16) & 255) +
+        "." +
+        ((addr >> 24) & 255)
+      );
     }
     function __inet_ntop6_raw(ints) {
       var str = "";
@@ -4797,7 +5479,16 @@ var Engine = {
       var zstart = 0;
       var len = 0;
       var i = 0;
-      var parts = [ints[0] & 65535, ints[0] >> 16, ints[1] & 65535, ints[1] >> 16, ints[2] & 65535, ints[2] >> 16, ints[3] & 65535, ints[3] >> 16];
+      var parts = [
+        ints[0] & 65535,
+        ints[0] >> 16,
+        ints[1] & 65535,
+        ints[1] >> 16,
+        ints[2] & 65535,
+        ints[2] >> 16,
+        ints[3] & 65535,
+        ints[3] >> 16,
+      ];
       var hasipv4 = true;
       var v4part = "";
       for (i = 0; i < 5; i++) {
@@ -4865,7 +5556,12 @@ var Engine = {
           if (salen !== 28) {
             return { errno: 28 };
           }
-          addr = [HEAP32[(sa + 8) >> 2], HEAP32[(sa + 12) >> 2], HEAP32[(sa + 16) >> 2], HEAP32[(sa + 20) >> 2]];
+          addr = [
+            HEAP32[(sa + 8) >> 2],
+            HEAP32[(sa + 12) >> 2],
+            HEAP32[(sa + 16) >> 2],
+            HEAP32[(sa + 20) >> 2],
+          ];
           addr = __inet_ntop6_raw(addr);
           break;
         default:
@@ -4949,7 +5645,12 @@ var Engine = {
               addrlen = SYSCALLS.get();
             var newsock = sock.sock_ops.accept(sock);
             if (addr) {
-              var res = __write_sockaddr(addr, newsock.family, DNS.lookup_name(newsock.daddr), newsock.dport);
+              var res = __write_sockaddr(
+                addr,
+                newsock.family,
+                DNS.lookup_name(newsock.daddr),
+                newsock.dport
+              );
             }
             return newsock.stream.fd;
           }
@@ -4957,7 +5658,12 @@ var Engine = {
             var sock = getSocketFromFD(),
               addr = SYSCALLS.get(),
               addrlen = SYSCALLS.get();
-            var res = __write_sockaddr(addr, sock.family, DNS.lookup_name(sock.saddr || "0.0.0.0"), sock.sport);
+            var res = __write_sockaddr(
+              addr,
+              sock.family,
+              DNS.lookup_name(sock.saddr || "0.0.0.0"),
+              sock.sport
+            );
             return 0;
           }
           case 7: {
@@ -4967,7 +5673,12 @@ var Engine = {
             if (!sock.daddr) {
               return -53;
             }
-            var res = __write_sockaddr(addr, sock.family, DNS.lookup_name(sock.daddr), sock.dport);
+            var res = __write_sockaddr(
+              addr,
+              sock.family,
+              DNS.lookup_name(sock.daddr),
+              sock.dport
+            );
             return 0;
           }
           case 11: {
@@ -4979,7 +5690,14 @@ var Engine = {
             if (!dest) {
               return FS.write(sock.stream, HEAP8, message, length);
             } else {
-              return sock.sock_ops.sendmsg(sock, HEAP8, message, length, dest.addr, dest.port);
+              return sock.sock_ops.sendmsg(
+                sock,
+                HEAP8,
+                message,
+                length,
+                dest.addr,
+                dest.port
+              );
             }
           }
           case 12: {
@@ -4992,7 +5710,12 @@ var Engine = {
             var msg = sock.sock_ops.recvmsg(sock, len);
             if (!msg) return 0;
             if (addr) {
-              var res = __write_sockaddr(addr, sock.family, DNS.lookup_name(msg.addr), msg.port);
+              var res = __write_sockaddr(
+                addr,
+                sock.family,
+                DNS.lookup_name(msg.addr),
+                msg.port
+              );
             }
             HEAPU8.set(msg.buffer, buf);
             return msg.buffer.byteLength;
@@ -5060,7 +5783,12 @@ var Engine = {
             if (!msg) return 0;
             var name = HEAP32[message >> 2];
             if (name) {
-              var res = __write_sockaddr(name, sock.family, DNS.lookup_name(msg.addr), msg.port);
+              var res = __write_sockaddr(
+                name,
+                sock.family,
+                DNS.lookup_name(msg.addr),
+                msg.port
+              );
             }
             var bytesRead = 0;
             var bytesRemaining = msg.buffer.byteLength;
@@ -5082,7 +5810,8 @@ var Engine = {
             abort("unsupported socketcall syscall " + call);
         }
       } catch (e) {
-        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError))
+          abort(e);
         return -e.errno;
       }
     }
@@ -5093,7 +5822,8 @@ var Engine = {
         FS.chdir(path);
         return 0;
       } catch (e) {
-        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError))
+          abort(e);
         return -e.errno;
       }
     }
@@ -5114,14 +5844,25 @@ var Engine = {
         FS.llseek(stream, offset, whence);
         (tempI64 = [
           stream.position >>> 0,
-          ((tempDouble = stream.position), +Math_abs(tempDouble) >= 1 ? (tempDouble > 0 ? (Math_min(+Math_floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math_ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0) : 0),
+          ((tempDouble = stream.position),
+          +Math_abs(tempDouble) >= 1
+            ? tempDouble > 0
+              ? (Math_min(+Math_floor(tempDouble / 4294967296), 4294967295) |
+                  0) >>>
+                0
+              : ~~+Math_ceil(
+                  (tempDouble - +(~~tempDouble >>> 0)) / 4294967296
+                ) >>> 0
+            : 0),
         ]),
           (HEAP32[result >> 2] = tempI64[0]),
           (HEAP32[(result + 4) >> 2] = tempI64[1]);
-        if (stream.getdents && offset === 0 && whence === 0) stream.getdents = null;
+        if (stream.getdents && offset === 0 && whence === 0)
+          stream.getdents = null;
         return 0;
       } catch (e) {
-        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError))
+          abort(e);
         return -e.errno;
       }
     }
@@ -5146,8 +5887,14 @@ var Engine = {
           dstWriteHigh = 0;
         var dstExceptLow = 0,
           dstExceptHigh = 0;
-        var allLow = (readfds ? HEAP32[readfds >> 2] : 0) | (writefds ? HEAP32[writefds >> 2] : 0) | (exceptfds ? HEAP32[exceptfds >> 2] : 0);
-        var allHigh = (readfds ? HEAP32[(readfds + 4) >> 2] : 0) | (writefds ? HEAP32[(writefds + 4) >> 2] : 0) | (exceptfds ? HEAP32[(exceptfds + 4) >> 2] : 0);
+        var allLow =
+          (readfds ? HEAP32[readfds >> 2] : 0) |
+          (writefds ? HEAP32[writefds >> 2] : 0) |
+          (exceptfds ? HEAP32[exceptfds >> 2] : 0);
+        var allHigh =
+          (readfds ? HEAP32[(readfds + 4) >> 2] : 0) |
+          (writefds ? HEAP32[(writefds + 4) >> 2] : 0) |
+          (exceptfds ? HEAP32[(exceptfds + 4) >> 2] : 0);
         var check = function (fd, low, high, val) {
           return fd < 32 ? low & val : high & val;
         };
@@ -5163,15 +5910,21 @@ var Engine = {
             flags = stream.stream_ops.poll(stream);
           }
           if (flags & 1 && check(fd, srcReadLow, srcReadHigh, mask)) {
-            fd < 32 ? (dstReadLow = dstReadLow | mask) : (dstReadHigh = dstReadHigh | mask);
+            fd < 32
+              ? (dstReadLow = dstReadLow | mask)
+              : (dstReadHigh = dstReadHigh | mask);
             total++;
           }
           if (flags & 4 && check(fd, srcWriteLow, srcWriteHigh, mask)) {
-            fd < 32 ? (dstWriteLow = dstWriteLow | mask) : (dstWriteHigh = dstWriteHigh | mask);
+            fd < 32
+              ? (dstWriteLow = dstWriteLow | mask)
+              : (dstWriteHigh = dstWriteHigh | mask);
             total++;
           }
           if (flags & 2 && check(fd, srcExceptLow, srcExceptHigh, mask)) {
-            fd < 32 ? (dstExceptLow = dstExceptLow | mask) : (dstExceptHigh = dstExceptHigh | mask);
+            fd < 32
+              ? (dstExceptLow = dstExceptLow | mask)
+              : (dstExceptHigh = dstExceptHigh | mask);
             total++;
           }
         }
@@ -5189,7 +5942,8 @@ var Engine = {
         }
         return total;
       } catch (e) {
-        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError))
+          abort(e);
         return -e.errno;
       }
     }
@@ -5201,7 +5955,8 @@ var Engine = {
           iovcnt = SYSCALLS.get();
         return SYSCALLS.doReadv(stream, iov, iovcnt);
       } catch (e) {
-        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError))
+          abort(e);
         return -e.errno;
       }
     }
@@ -5213,7 +5968,8 @@ var Engine = {
         FS.chmod(path, mode);
         return 0;
       } catch (e) {
-        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError))
+          abort(e);
         return -e.errno;
       }
     }
@@ -5242,7 +5998,8 @@ var Engine = {
         }
         return nonzero;
       } catch (e) {
-        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError))
+          abort(e);
         return -e.errno;
       }
     }
@@ -5258,7 +6015,8 @@ var Engine = {
         stringToUTF8(cwd, buf, size);
         return buf;
       } catch (e) {
-        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError))
+          abort(e);
         return -e.errno;
       }
     }
@@ -5269,7 +6027,8 @@ var Engine = {
           buf = SYSCALLS.get();
         return SYSCALLS.doStat(FS.stat, path, buf);
       } catch (e) {
-        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError))
+          abort(e);
         return -e.errno;
       }
     }
@@ -5279,7 +6038,8 @@ var Engine = {
       try {
         return PROCINFO.pid;
       } catch (e) {
-        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError))
+          abort(e);
         return -e.errno;
       }
     }
@@ -5306,18 +6066,41 @@ var Engine = {
           } else {
             var child = FS.lookupNode(stream.node, name);
             id = child.id;
-            type = FS.isChrdev(child.mode) ? 2 : FS.isDir(child.mode) ? 4 : FS.isLink(child.mode) ? 10 : 8;
+            type = FS.isChrdev(child.mode)
+              ? 2
+              : FS.isDir(child.mode)
+              ? 4
+              : FS.isLink(child.mode)
+              ? 10
+              : 8;
           }
           (tempI64 = [
             id >>> 0,
-            ((tempDouble = id), +Math_abs(tempDouble) >= 1 ? (tempDouble > 0 ? (Math_min(+Math_floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math_ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0) : 0),
+            ((tempDouble = id),
+            +Math_abs(tempDouble) >= 1
+              ? tempDouble > 0
+                ? (Math_min(+Math_floor(tempDouble / 4294967296), 4294967295) |
+                    0) >>>
+                  0
+                : ~~+Math_ceil(
+                    (tempDouble - +(~~tempDouble >>> 0)) / 4294967296
+                  ) >>> 0
+              : 0),
           ]),
             (HEAP32[(dirp + pos) >> 2] = tempI64[0]),
             (HEAP32[(dirp + pos + 4) >> 2] = tempI64[1]);
           (tempI64 = [
             ((idx + 1) * struct_size) >>> 0,
             ((tempDouble = (idx + 1) * struct_size),
-            +Math_abs(tempDouble) >= 1 ? (tempDouble > 0 ? (Math_min(+Math_floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math_ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0) : 0),
+            +Math_abs(tempDouble) >= 1
+              ? tempDouble > 0
+                ? (Math_min(+Math_floor(tempDouble / 4294967296), 4294967295) |
+                    0) >>>
+                  0
+                : ~~+Math_ceil(
+                    (tempDouble - +(~~tempDouble >>> 0)) / 4294967296
+                  ) >>> 0
+              : 0),
           ]),
             (HEAP32[(dirp + pos + 8) >> 2] = tempI64[0]),
             (HEAP32[(dirp + pos + 12) >> 2] = tempI64[1]);
@@ -5330,7 +6113,8 @@ var Engine = {
         FS.llseek(stream, idx * struct_size, 0);
         return pos;
       } catch (e) {
-        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError))
+          abort(e);
         return -e.errno;
       }
     }
@@ -5379,7 +6163,8 @@ var Engine = {
           }
         }
       } catch (e) {
-        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError))
+          abort(e);
         return -e.errno;
       }
     }
@@ -5401,7 +6186,8 @@ var Engine = {
         HEAP32[(buf + 36) >> 2] = 255;
         return 0;
       } catch (e) {
-        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError))
+          abort(e);
         return -e.errno;
       }
     }
@@ -5413,7 +6199,8 @@ var Engine = {
           count = SYSCALLS.get();
         return FS.read(stream, HEAP8, buf, count);
       } catch (e) {
-        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError))
+          abort(e);
         return -e.errno;
       }
     }
@@ -5424,7 +6211,8 @@ var Engine = {
           amode = SYSCALLS.get();
         return SYSCALLS.doAccess(path, amode);
       } catch (e) {
-        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError))
+          abort(e);
         return -e.errno;
       }
     }
@@ -5436,7 +6224,8 @@ var Engine = {
         FS.rename(old_path, new_path);
         return 0;
       } catch (e) {
-        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError))
+          abort(e);
         return -e.errno;
       }
     }
@@ -5447,7 +6236,8 @@ var Engine = {
           mode = SYSCALLS.get();
         return SYSCALLS.doMkdir(path, mode);
       } catch (e) {
-        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError))
+          abort(e);
         return -e.errno;
       }
     }
@@ -5459,7 +6249,8 @@ var Engine = {
           count = SYSCALLS.get();
         return FS.write(stream, HEAP8, buf, count);
       } catch (e) {
-        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError))
+          abort(e);
         return -e.errno;
       }
     }
@@ -5470,7 +6261,8 @@ var Engine = {
         FS.rmdir(path);
         return 0;
       } catch (e) {
-        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError))
+          abort(e);
         return -e.errno;
       }
     }
@@ -5483,7 +6275,8 @@ var Engine = {
         var stream = FS.open(pathname, flags, mode);
         return stream.fd;
       } catch (e) {
-        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError))
+          abort(e);
         return -e.errno;
       }
     }
@@ -5533,7 +6326,8 @@ var Engine = {
             abort("bad ioctl syscall " + op);
         }
       } catch (e) {
-        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError))
+          abort(e);
         return -e.errno;
       }
     }
@@ -5561,7 +6355,8 @@ var Engine = {
           len = SYSCALLS.get();
         return __emscripten_syscall_munmap(addr, len);
       } catch (e) {
-        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError))
+          abort(e);
         return -e.errno;
       }
     }
@@ -5573,7 +6368,12 @@ var Engine = {
       abort();
     }
     function _emscripten_get_now_is_monotonic() {
-      return 0 || (typeof performance === "object" && performance && typeof performance["now"] === "function");
+      return (
+        0 ||
+        (typeof performance === "object" &&
+          performance &&
+          typeof performance["now"] === "function")
+      );
     }
     function _clock_gettime(clk_id, tp) {
       var now;
@@ -5590,7 +6390,9 @@ var Engine = {
       return 0;
     }
     function _dlopen() {
-      abort("To use dlopen, you need to use Emscripten's linking support, see https://github.com/emscripten-core/emscripten/wiki/Linking");
+      abort(
+        "To use dlopen, you need to use Emscripten's linking support, see https://github.com/emscripten-core/emscripten/wiki/Linking"
+      );
     }
     function _dlclose() {
       return _dlopen.apply(null, arguments);
@@ -5608,10 +6410,15 @@ var Engine = {
         return 1;
       }
       if (mode == 0) {
-        Browser.mainLoop.scheduler = function Browser_mainLoop_scheduler_setTimeout() {
-          var timeUntilNextTick = Math.max(0, Browser.mainLoop.tickStartTime + value - _emscripten_get_now()) | 0;
-          setTimeout(Browser.mainLoop.runner, timeUntilNextTick);
-        };
+        Browser.mainLoop.scheduler =
+          function Browser_mainLoop_scheduler_setTimeout() {
+            var timeUntilNextTick =
+              Math.max(
+                0,
+                Browser.mainLoop.tickStartTime + value - _emscripten_get_now()
+              ) | 0;
+            setTimeout(Browser.mainLoop.runner, timeUntilNextTick);
+          };
         Browser.mainLoop.method = "timeout";
       } else if (mode == 1) {
         Browser.mainLoop.scheduler = function Browser_mainLoop_scheduler_rAF() {
@@ -5623,31 +6430,49 @@ var Engine = {
           var setImmediates = [];
           var emscriptenMainLoopMessageId = "setimmediate";
           var Browser_setImmediate_messageHandler = function (event) {
-            if (event.data === emscriptenMainLoopMessageId || event.data.target === emscriptenMainLoopMessageId) {
+            if (
+              event.data === emscriptenMainLoopMessageId ||
+              event.data.target === emscriptenMainLoopMessageId
+            ) {
               event.stopPropagation();
               setImmediates.shift()();
             }
           };
-          addEventListener("message", Browser_setImmediate_messageHandler, true);
+          addEventListener(
+            "message",
+            Browser_setImmediate_messageHandler,
+            true
+          );
           setImmediate = function Browser_emulated_setImmediate(func) {
             setImmediates.push(func);
             if (ENVIRONMENT_IS_WORKER) {
-              if (Module["setImmediates"] === undefined) Module["setImmediates"] = [];
+              if (Module["setImmediates"] === undefined)
+                Module["setImmediates"] = [];
               Module["setImmediates"].push(func);
               postMessage({ target: emscriptenMainLoopMessageId });
             } else postMessage(emscriptenMainLoopMessageId, "*");
           };
         }
-        Browser.mainLoop.scheduler = function Browser_mainLoop_scheduler_setImmediate() {
-          setImmediate(Browser.mainLoop.runner);
-        };
+        Browser.mainLoop.scheduler =
+          function Browser_mainLoop_scheduler_setImmediate() {
+            setImmediate(Browser.mainLoop.runner);
+          };
         Browser.mainLoop.method = "immediate";
       }
       return 0;
     }
-    function _emscripten_set_main_loop(func, fps, simulateInfiniteLoop, arg, noSetTiming) {
+    function _emscripten_set_main_loop(
+      func,
+      fps,
+      simulateInfiniteLoop,
+      arg,
+      noSetTiming
+    ) {
       noExitRuntime = true;
-      assert(!Browser.mainLoop.func, "emscripten_set_main_loop: there can only be one main loop function at once: call emscripten_cancel_main_loop to cancel the previous one before setting a new one with different parameters.");
+      assert(
+        !Browser.mainLoop.func,
+        "emscripten_set_main_loop: there can only be one main loop function at once: call emscripten_cancel_main_loop to cancel the previous one before setting a new one with different parameters."
+      );
       Browser.mainLoop.func = func;
       Browser.mainLoop.arg = arg;
       var browserIterationFunc;
@@ -5669,7 +6494,8 @@ var Engine = {
           blocker.func(blocker.arg);
           if (Browser.mainLoop.remainingBlockers) {
             var remaining = Browser.mainLoop.remainingBlockers;
-            var next = remaining % 1 == 0 ? remaining - 1 : Math.floor(remaining);
+            var next =
+              remaining % 1 == 0 ? remaining - 1 : Math.floor(remaining);
             if (blocker.counted) {
               Browser.mainLoop.remainingBlockers = next;
             } else {
@@ -5677,15 +6503,28 @@ var Engine = {
               Browser.mainLoop.remainingBlockers = (8 * remaining + next) / 9;
             }
           }
-          console.log('main loop blocker "' + blocker.name + '" took ' + (Date.now() - start) + " ms");
+          console.log(
+            'main loop blocker "' +
+              blocker.name +
+              '" took ' +
+              (Date.now() - start) +
+              " ms"
+          );
           Browser.mainLoop.updateStatus();
-          if (thisMainLoopId < Browser.mainLoop.currentlyRunningMainloop) return;
+          if (thisMainLoopId < Browser.mainLoop.currentlyRunningMainloop)
+            return;
           setTimeout(Browser.mainLoop.runner, 0);
           return;
         }
         if (thisMainLoopId < Browser.mainLoop.currentlyRunningMainloop) return;
-        Browser.mainLoop.currentFrameNumber = (Browser.mainLoop.currentFrameNumber + 1) | 0;
-        if (Browser.mainLoop.timingMode == 1 && Browser.mainLoop.timingValue > 1 && Browser.mainLoop.currentFrameNumber % Browser.mainLoop.timingValue != 0) {
+        Browser.mainLoop.currentFrameNumber =
+          (Browser.mainLoop.currentFrameNumber + 1) | 0;
+        if (
+          Browser.mainLoop.timingMode == 1 &&
+          Browser.mainLoop.timingValue > 1 &&
+          Browser.mainLoop.currentFrameNumber % Browser.mainLoop.timingValue !=
+            0
+        ) {
           Browser.mainLoop.scheduler();
           return;
         } else if (Browser.mainLoop.timingMode == 0) {
@@ -5699,7 +6538,8 @@ var Engine = {
         }
         Browser.mainLoop.runIter(browserIterationFunc);
         if (thisMainLoopId < Browser.mainLoop.currentlyRunningMainloop) return;
-        if (typeof SDL === "object" && SDL.audio && SDL.audio.queueNewAudioData) SDL.audio.queueNewAudioData();
+        if (typeof SDL === "object" && SDL.audio && SDL.audio.queueNewAudioData)
+          SDL.audio.queueNewAudioData();
         Browser.mainLoop.scheduler();
       };
       if (!noSetTiming) {
@@ -5743,7 +6583,9 @@ var Engine = {
             var expected = Browser.mainLoop.expectedBlockers;
             if (remaining) {
               if (remaining < expected) {
-                Module["setStatus"](message + " (" + (expected - remaining) + "/" + expected + ")");
+                Module["setStatus"](
+                  message + " (" + (expected - remaining) + "/" + expected + ")"
+                );
               } else {
                 Module["setStatus"](message);
               }
@@ -5766,7 +6608,8 @@ var Engine = {
             if (e instanceof ExitStatus) {
               return;
             } else {
-              if (e && typeof e === "object" && e.stack) err("exception thrown: " + [e, e.stack]);
+              if (e && typeof e === "object" && e.stack)
+                err("exception thrown: " + [e, e.stack]);
               throw e;
             }
           }
@@ -5786,28 +6629,58 @@ var Engine = {
           Browser.hasBlobConstructor = true;
         } catch (e) {
           Browser.hasBlobConstructor = false;
-          console.log("warning: no blob constructor, cannot create blobs with mimetypes");
+          console.log(
+            "warning: no blob constructor, cannot create blobs with mimetypes"
+          );
         }
-        Browser.BlobBuilder = typeof MozBlobBuilder != "undefined" ? MozBlobBuilder : typeof WebKitBlobBuilder != "undefined" ? WebKitBlobBuilder : !Browser.hasBlobConstructor ? console.log("warning: no BlobBuilder") : null;
-        Browser.URLObject = typeof window != "undefined" ? (window.URL ? window.URL : window.webkitURL) : undefined;
-        if (!Module.noImageDecoding && typeof Browser.URLObject === "undefined") {
-          console.log("warning: Browser does not support creating object URLs. Built-in browser image decoding will not be available.");
+        Browser.BlobBuilder =
+          typeof MozBlobBuilder != "undefined"
+            ? MozBlobBuilder
+            : typeof WebKitBlobBuilder != "undefined"
+            ? WebKitBlobBuilder
+            : !Browser.hasBlobConstructor
+            ? console.log("warning: no BlobBuilder")
+            : null;
+        Browser.URLObject =
+          typeof window != "undefined"
+            ? window.URL
+              ? window.URL
+              : window.webkitURL
+            : undefined;
+        if (
+          !Module.noImageDecoding &&
+          typeof Browser.URLObject === "undefined"
+        ) {
+          console.log(
+            "warning: Browser does not support creating object URLs. Built-in browser image decoding will not be available."
+          );
           Module.noImageDecoding = true;
         }
         var imagePlugin = {};
         imagePlugin["canHandle"] = function imagePlugin_canHandle(name) {
           return !Module.noImageDecoding && /\.(jpg|jpeg|png|bmp)$/i.test(name);
         };
-        imagePlugin["handle"] = function imagePlugin_handle(byteArray, name, onload, onerror) {
+        imagePlugin["handle"] = function imagePlugin_handle(
+          byteArray,
+          name,
+          onload,
+          onerror
+        ) {
           var b = null;
           if (Browser.hasBlobConstructor) {
             try {
               b = new Blob([byteArray], { type: Browser.getMimetype(name) });
               if (b.size !== byteArray.length) {
-                b = new Blob([new Uint8Array(byteArray).buffer], { type: Browser.getMimetype(name) });
+                b = new Blob([new Uint8Array(byteArray).buffer], {
+                  type: Browser.getMimetype(name),
+                });
               }
             } catch (e) {
-              warnOnce("Blob constructor present but fails: " + e + "; falling back to blob builder");
+              warnOnce(
+                "Blob constructor present but fails: " +
+                  e +
+                  "; falling back to blob builder"
+              );
             }
           }
           if (!b) {
@@ -5837,9 +6710,17 @@ var Engine = {
         Module["preloadPlugins"].push(imagePlugin);
         var audioPlugin = {};
         audioPlugin["canHandle"] = function audioPlugin_canHandle(name) {
-          return !Module.noAudioDecoding && name.substr(-4) in { ".ogg": 1, ".wav": 1, ".mp3": 1 };
+          return (
+            !Module.noAudioDecoding &&
+            name.substr(-4) in { ".ogg": 1, ".wav": 1, ".mp3": 1 }
+          );
         };
-        audioPlugin["handle"] = function audioPlugin_handle(byteArray, name, onload, onerror) {
+        audioPlugin["handle"] = function audioPlugin_handle(
+          byteArray,
+          name,
+          onload,
+          onerror
+        ) {
           var done = false;
           function finish(audio) {
             if (done) return;
@@ -5855,7 +6736,9 @@ var Engine = {
           }
           if (Browser.hasBlobConstructor) {
             try {
-              var b = new Blob([byteArray], { type: Browser.getMimetype(name) });
+              var b = new Blob([byteArray], {
+                type: Browser.getMimetype(name),
+              });
             } catch (e) {
               return fail();
             }
@@ -5870,9 +6753,14 @@ var Engine = {
             );
             audio.onerror = function audio_onerror(event) {
               if (done) return;
-              console.log("warning: browser could not fully decode audio " + name + ", trying slower base64 approach");
+              console.log(
+                "warning: browser could not fully decode audio " +
+                  name +
+                  ", trying slower base64 approach"
+              );
               function encode64(data) {
-                var BASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+                var BASE =
+                  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
                 var PAD = "=";
                 var ret = "";
                 var leftchar = 0;
@@ -5895,7 +6783,11 @@ var Engine = {
                 }
                 return ret;
               }
-              audio.src = "data:audio/x-" + name.substr(-3) + ";base64," + encode64(byteArray);
+              audio.src =
+                "data:audio/x-" +
+                name.substr(-3) +
+                ";base64," +
+                encode64(byteArray);
               finish(audio);
             };
             audio.src = url;
@@ -5909,22 +6801,54 @@ var Engine = {
         Module["preloadPlugins"].push(audioPlugin);
         function pointerLockChange() {
           Browser.pointerLock =
-            document["pointerLockElement"] === Module["canvas"] || document["mozPointerLockElement"] === Module["canvas"] || document["webkitPointerLockElement"] === Module["canvas"] || document["msPointerLockElement"] === Module["canvas"];
+            document["pointerLockElement"] === Module["canvas"] ||
+            document["mozPointerLockElement"] === Module["canvas"] ||
+            document["webkitPointerLockElement"] === Module["canvas"] ||
+            document["msPointerLockElement"] === Module["canvas"];
         }
         var canvas = Module["canvas"];
         if (canvas) {
-          canvas.requestPointerLock = canvas["requestPointerLock"] || canvas["mozRequestPointerLock"] || canvas["webkitRequestPointerLock"] || canvas["msRequestPointerLock"] || function () {};
-          canvas.exitPointerLock = document["exitPointerLock"] || document["mozExitPointerLock"] || document["webkitExitPointerLock"] || document["msExitPointerLock"] || function () {};
+          canvas.requestPointerLock =
+            canvas["requestPointerLock"] ||
+            canvas["mozRequestPointerLock"] ||
+            canvas["webkitRequestPointerLock"] ||
+            canvas["msRequestPointerLock"] ||
+            function () {};
+          canvas.exitPointerLock =
+            document["exitPointerLock"] ||
+            document["mozExitPointerLock"] ||
+            document["webkitExitPointerLock"] ||
+            document["msExitPointerLock"] ||
+            function () {};
           canvas.exitPointerLock = canvas.exitPointerLock.bind(document);
-          document.addEventListener("pointerlockchange", pointerLockChange, false);
-          document.addEventListener("mozpointerlockchange", pointerLockChange, false);
-          document.addEventListener("webkitpointerlockchange", pointerLockChange, false);
-          document.addEventListener("mspointerlockchange", pointerLockChange, false);
+          document.addEventListener(
+            "pointerlockchange",
+            pointerLockChange,
+            false
+          );
+          document.addEventListener(
+            "mozpointerlockchange",
+            pointerLockChange,
+            false
+          );
+          document.addEventListener(
+            "webkitpointerlockchange",
+            pointerLockChange,
+            false
+          );
+          document.addEventListener(
+            "mspointerlockchange",
+            pointerLockChange,
+            false
+          );
           if (Module["elementPointerLock"]) {
             canvas.addEventListener(
               "click",
               function (ev) {
-                if (!Browser.pointerLock && Module["canvas"].requestPointerLock) {
+                if (
+                  !Browser.pointerLock &&
+                  Module["canvas"].requestPointerLock
+                ) {
                   Module["canvas"].requestPointerLock();
                   ev.preventDefault();
                 }
@@ -5934,12 +6858,22 @@ var Engine = {
           }
         }
       },
-      createContext: function (canvas, useWebGL, setInModule, webGLContextAttributes) {
-        if (useWebGL && Module.ctx && canvas == Module.canvas) return Module.ctx;
+      createContext: function (
+        canvas,
+        useWebGL,
+        setInModule,
+        webGLContextAttributes
+      ) {
+        if (useWebGL && Module.ctx && canvas == Module.canvas)
+          return Module.ctx;
         var ctx;
         var contextHandle;
         if (useWebGL) {
-          var contextAttributes = { antialias: false, alpha: false, majorVersion: typeof WebGL2RenderingContext !== "undefined" ? 2 : 1 };
+          var contextAttributes = {
+            antialias: false,
+            alpha: false,
+            majorVersion: typeof WebGL2RenderingContext !== "undefined" ? 2 : 1,
+          };
           if (webGLContextAttributes) {
             for (var attribute in webGLContextAttributes) {
               contextAttributes[attribute] = webGLContextAttributes[attribute];
@@ -5956,7 +6890,11 @@ var Engine = {
         }
         if (!ctx) return null;
         if (setInModule) {
-          if (!useWebGL) assert(typeof GLctx === "undefined", "cannot set in module if GLctx is used, but we are a non-GL context that would replace it");
+          if (!useWebGL)
+            assert(
+              typeof GLctx === "undefined",
+              "cannot set in module if GLctx is used, but we are a non-GL context that would replace it"
+            );
           Module.ctx = ctx;
           if (useWebGL) GL.makeContextCurrent(contextHandle);
           Module.useWebGL = useWebGL;
@@ -5975,14 +6913,22 @@ var Engine = {
         Browser.lockPointer = lockPointer;
         Browser.resizeCanvas = resizeCanvas;
         Browser.vrDevice = vrDevice;
-        if (typeof Browser.lockPointer === "undefined") Browser.lockPointer = true;
-        if (typeof Browser.resizeCanvas === "undefined") Browser.resizeCanvas = false;
+        if (typeof Browser.lockPointer === "undefined")
+          Browser.lockPointer = true;
+        if (typeof Browser.resizeCanvas === "undefined")
+          Browser.resizeCanvas = false;
         if (typeof Browser.vrDevice === "undefined") Browser.vrDevice = null;
         var canvas = Module["canvas"];
         function fullscreenChange() {
           Browser.isFullscreen = false;
           var canvasContainer = canvas.parentNode;
-          if ((document["fullscreenElement"] || document["mozFullScreenElement"] || document["msFullscreenElement"] || document["webkitFullscreenElement"] || document["webkitCurrentFullScreenElement"]) === canvasContainer) {
+          if (
+            (document["fullscreenElement"] ||
+              document["mozFullScreenElement"] ||
+              document["msFullscreenElement"] ||
+              document["webkitFullscreenElement"] ||
+              document["webkitCurrentFullScreenElement"]) === canvasContainer
+          ) {
             canvas.exitFullscreen = Browser.exitFullscreen;
             if (Browser.lockPointer) canvas.requestPointerLock();
             Browser.isFullscreen = true;
@@ -6000,15 +6946,33 @@ var Engine = {
               Browser.updateCanvasDimensions(canvas);
             }
           }
-          if (Module["onFullScreen"]) Module["onFullScreen"](Browser.isFullscreen);
-          if (Module["onFullscreen"]) Module["onFullscreen"](Browser.isFullscreen);
+          if (Module["onFullScreen"])
+            Module["onFullScreen"](Browser.isFullscreen);
+          if (Module["onFullscreen"])
+            Module["onFullscreen"](Browser.isFullscreen);
         }
         if (!Browser.fullscreenHandlersInstalled) {
           Browser.fullscreenHandlersInstalled = true;
-          document.addEventListener("fullscreenchange", fullscreenChange, false);
-          document.addEventListener("mozfullscreenchange", fullscreenChange, false);
-          document.addEventListener("webkitfullscreenchange", fullscreenChange, false);
-          document.addEventListener("MSFullscreenChange", fullscreenChange, false);
+          document.addEventListener(
+            "fullscreenchange",
+            fullscreenChange,
+            false
+          );
+          document.addEventListener(
+            "mozfullscreenchange",
+            fullscreenChange,
+            false
+          );
+          document.addEventListener(
+            "webkitfullscreenchange",
+            fullscreenChange,
+            false
+          );
+          document.addEventListener(
+            "MSFullscreenChange",
+            fullscreenChange,
+            false
+          );
         }
         var canvasContainer = document.createElement("div");
         canvas.parentNode.insertBefore(canvasContainer, canvas);
@@ -6019,12 +6983,16 @@ var Engine = {
           canvasContainer["msRequestFullscreen"] ||
           (canvasContainer["webkitRequestFullscreen"]
             ? function () {
-                canvasContainer["webkitRequestFullscreen"](Element["ALLOW_KEYBOARD_INPUT"]);
+                canvasContainer["webkitRequestFullscreen"](
+                  Element["ALLOW_KEYBOARD_INPUT"]
+                );
               }
             : null) ||
           (canvasContainer["webkitRequestFullScreen"]
             ? function () {
-                canvasContainer["webkitRequestFullScreen"](Element["ALLOW_KEYBOARD_INPUT"]);
+                canvasContainer["webkitRequestFullScreen"](
+                  Element["ALLOW_KEYBOARD_INPUT"]
+                );
               }
             : null);
         if (vrDevice) {
@@ -6034,8 +7002,14 @@ var Engine = {
         }
       },
       requestFullScreen: function (lockPointer, resizeCanvas, vrDevice) {
-        err("Browser.requestFullScreen() is deprecated. Please call Browser.requestFullscreen instead.");
-        Browser.requestFullScreen = function (lockPointer, resizeCanvas, vrDevice) {
+        err(
+          "Browser.requestFullScreen() is deprecated. Please call Browser.requestFullscreen instead."
+        );
+        Browser.requestFullScreen = function (
+          lockPointer,
+          resizeCanvas,
+          vrDevice
+        ) {
           return Browser.requestFullscreen(lockPointer, resizeCanvas, vrDevice);
         };
         return Browser.requestFullscreen(lockPointer, resizeCanvas, vrDevice);
@@ -6044,7 +7018,13 @@ var Engine = {
         if (!Browser.isFullscreen) {
           return false;
         }
-        var CFS = document["exitFullscreen"] || document["cancelFullScreen"] || document["mozCancelFullScreen"] || document["msExitFullscreen"] || document["webkitCancelFullScreen"] || function () {};
+        var CFS =
+          document["exitFullscreen"] ||
+          document["cancelFullScreen"] ||
+          document["mozCancelFullScreen"] ||
+          document["msExitFullscreen"] ||
+          document["webkitCancelFullScreen"] ||
+          function () {};
         CFS.apply(document, []);
         return true;
       },
@@ -6120,19 +7100,38 @@ var Engine = {
         }, timeout);
       },
       getMimetype: function (name) {
-        return { jpg: "image/jpeg", jpeg: "image/jpeg", png: "image/png", bmp: "image/bmp", ogg: "audio/ogg", wav: "audio/wav", mp3: "audio/mpeg" }[name.substr(name.lastIndexOf(".") + 1)];
+        return {
+          jpg: "image/jpeg",
+          jpeg: "image/jpeg",
+          png: "image/png",
+          bmp: "image/bmp",
+          ogg: "audio/ogg",
+          wav: "audio/wav",
+          mp3: "audio/mpeg",
+        }[name.substr(name.lastIndexOf(".") + 1)];
       },
       getUserMedia: function (func) {
         if (!window.getUserMedia) {
-          window.getUserMedia = navigator["getUserMedia"] || navigator["mozGetUserMedia"];
+          window.getUserMedia =
+            navigator["getUserMedia"] || navigator["mozGetUserMedia"];
         }
         window.getUserMedia(func);
       },
       getMovementX: function (event) {
-        return event["movementX"] || event["mozMovementX"] || event["webkitMovementX"] || 0;
+        return (
+          event["movementX"] ||
+          event["mozMovementX"] ||
+          event["webkitMovementX"] ||
+          0
+        );
       },
       getMovementY: function (event) {
-        return event["movementY"] || event["mozMovementY"] || event["webkitMovementY"] || 0;
+        return (
+          event["movementY"] ||
+          event["mozMovementY"] ||
+          event["webkitMovementY"] ||
+          0
+        );
       },
       getMouseWheelDelta: function (event) {
         var delta = 0;
@@ -6189,9 +7188,19 @@ var Engine = {
           var rect = Module["canvas"].getBoundingClientRect();
           var cw = Module["canvas"].width;
           var ch = Module["canvas"].height;
-          var scrollX = typeof window.scrollX !== "undefined" ? window.scrollX : window.pageXOffset;
-          var scrollY = typeof window.scrollY !== "undefined" ? window.scrollY : window.pageYOffset;
-          if (event.type === "touchstart" || event.type === "touchend" || event.type === "touchmove") {
+          var scrollX =
+            typeof window.scrollX !== "undefined"
+              ? window.scrollX
+              : window.pageXOffset;
+          var scrollY =
+            typeof window.scrollY !== "undefined"
+              ? window.scrollY
+              : window.pageYOffset;
+          if (
+            event.type === "touchstart" ||
+            event.type === "touchend" ||
+            event.type === "touchmove"
+          ) {
             var touch = event.touch;
             if (touch === undefined) {
               return;
@@ -6204,7 +7213,10 @@ var Engine = {
             if (event.type === "touchstart") {
               Browser.lastTouches[touch.identifier] = coords;
               Browser.touches[touch.identifier] = coords;
-            } else if (event.type === "touchend" || event.type === "touchmove") {
+            } else if (
+              event.type === "touchend" ||
+              event.type === "touchmove"
+            ) {
               var last = Browser.touches[touch.identifier];
               if (!last) last = coords;
               Browser.lastTouches[touch.identifier] = last;
@@ -6227,7 +7239,10 @@ var Engine = {
         readAsync(
           url,
           function (arrayBuffer) {
-            assert(arrayBuffer, 'Loading data file "' + url + '" failed (no arrayBuffer).');
+            assert(
+              arrayBuffer,
+              'Loading data file "' + url + '" failed (no arrayBuffer).'
+            );
             onload(new Uint8Array(arrayBuffer));
             if (dep) removeRunDependency(dep);
           },
@@ -6291,7 +7306,11 @@ var Engine = {
           }
         }
         if (
-          (document["fullscreenElement"] || document["mozFullScreenElement"] || document["msFullscreenElement"] || document["webkitFullscreenElement"] || document["webkitCurrentFullScreenElement"]) === canvas.parentNode &&
+          (document["fullscreenElement"] ||
+            document["mozFullScreenElement"] ||
+            document["msFullscreenElement"] ||
+            document["webkitFullscreenElement"] ||
+            document["webkitCurrentFullScreenElement"]) === canvas.parentNode &&
           typeof screen != "undefined"
         ) {
           var factor = Math.min(screen.width / w, screen.height / h);
@@ -6333,12 +7352,23 @@ var Engine = {
       currentContext: 0,
       currentReadSurface: 0,
       currentDrawSurface: 0,
-      contextAttributes: { alpha: false, depth: false, stencil: false, antialias: false },
+      contextAttributes: {
+        alpha: false,
+        depth: false,
+        stencil: false,
+        antialias: false,
+      },
       stringCache: {},
       setErrorCode: function (code) {
         EGL.errorCode = code;
       },
-      chooseConfig: function (display, attribList, config, config_size, numConfigs) {
+      chooseConfig: function (
+        display,
+        attribList,
+        config,
+        config_size,
+        numConfigs
+      ) {
         if (display != 62e3) {
           EGL.setErrorCode(12296);
           return 0;
@@ -6427,11 +7457,18 @@ var Engine = {
         }
         for (var i in JSEvents.deferredCalls) {
           var call = JSEvents.deferredCalls[i];
-          if (call.targetFunction == targetFunction && arraysHaveEqualContent(call.argsList, argsList)) {
+          if (
+            call.targetFunction == targetFunction &&
+            arraysHaveEqualContent(call.argsList, argsList)
+          ) {
             return;
           }
         }
-        JSEvents.deferredCalls.push({ targetFunction: targetFunction, precedence: precedence, argsList: argsList });
+        JSEvents.deferredCalls.push({
+          targetFunction: targetFunction,
+          precedence: precedence,
+          argsList: argsList,
+        });
         JSEvents.deferredCalls.sort(function (x, y) {
           return x.precedence < y.precedence;
         });
@@ -6445,7 +7482,10 @@ var Engine = {
         }
       },
       canPerformEventHandlerRequests: function () {
-        return JSEvents.inEventHandler && JSEvents.currentEventHandler.allowsDeferredCalls;
+        return (
+          JSEvents.inEventHandler &&
+          JSEvents.currentEventHandler.allowsDeferredCalls
+        );
       },
       runDeferredCalls: function () {
         if (!JSEvents.canPerformEventHandlerRequests()) {
@@ -6462,18 +7502,29 @@ var Engine = {
       currentEventHandler: null,
       eventHandlers: [],
       isInternetExplorer: function () {
-        return navigator.userAgent.indexOf("MSIE") !== -1 || navigator.appVersion.indexOf("Trident/") > 0;
+        return (
+          navigator.userAgent.indexOf("MSIE") !== -1 ||
+          navigator.appVersion.indexOf("Trident/") > 0
+        );
       },
       removeAllHandlersOnTarget: function (target, eventTypeString) {
         for (var i = 0; i < JSEvents.eventHandlers.length; ++i) {
-          if (JSEvents.eventHandlers[i].target == target && (!eventTypeString || eventTypeString == JSEvents.eventHandlers[i].eventTypeString)) {
+          if (
+            JSEvents.eventHandlers[i].target == target &&
+            (!eventTypeString ||
+              eventTypeString == JSEvents.eventHandlers[i].eventTypeString)
+          ) {
             JSEvents._removeHandler(i--);
           }
         }
       },
       _removeHandler: function (i) {
         var h = JSEvents.eventHandlers[i];
-        h.target.removeEventListener(h.eventTypeString, h.eventListenerFunc, h.useCapture);
+        h.target.removeEventListener(
+          h.eventTypeString,
+          h.eventListenerFunc,
+          h.useCapture
+        );
         JSEvents.eventHandlers.splice(i, 1);
       },
       registerOrRemoveHandler: function (eventHandler) {
@@ -6487,26 +7538,42 @@ var Engine = {
         };
         if (eventHandler.callbackfunc) {
           eventHandler.eventListenerFunc = jsEventHandler;
-          eventHandler.target.addEventListener(eventHandler.eventTypeString, jsEventHandler, eventHandler.useCapture);
+          eventHandler.target.addEventListener(
+            eventHandler.eventTypeString,
+            jsEventHandler,
+            eventHandler.useCapture
+          );
           JSEvents.eventHandlers.push(eventHandler);
           JSEvents.registerRemoveEventListeners();
         } else {
           for (var i = 0; i < JSEvents.eventHandlers.length; ++i) {
-            if (JSEvents.eventHandlers[i].target == eventHandler.target && JSEvents.eventHandlers[i].eventTypeString == eventHandler.eventTypeString) {
+            if (
+              JSEvents.eventHandlers[i].target == eventHandler.target &&
+              JSEvents.eventHandlers[i].eventTypeString ==
+                eventHandler.eventTypeString
+            ) {
               JSEvents._removeHandler(i--);
             }
           }
         }
       },
       getBoundingClientRectOrZeros: function (target) {
-        return target.getBoundingClientRect ? target.getBoundingClientRect() : { left: 0, top: 0 };
+        return target.getBoundingClientRect
+          ? target.getBoundingClientRect()
+          : { left: 0, top: 0 };
       },
       pageScrollPos: function () {
         if (pageXOffset > 0 || pageYOffset > 0) {
           return [pageXOffset, pageYOffset];
         }
-        if (typeof document.documentElement.scrollLeft !== "undefined" || typeof document.documentElement.scrollTop !== "undefined") {
-          return [document.documentElement.scrollLeft, document.documentElement.scrollTop];
+        if (
+          typeof document.documentElement.scrollLeft !== "undefined" ||
+          typeof document.documentElement.scrollTop !== "undefined"
+        ) {
+          return [
+            document.documentElement.scrollLeft,
+            document.documentElement.scrollTop,
+          ];
         }
         return [document.body.scrollLeft | 0, document.body.scrollTop | 0];
       },
@@ -6517,11 +7584,17 @@ var Engine = {
         return target && target.nodeName ? target.nodeName : "";
       },
       tick: function () {
-        if (window["performance"] && window["performance"]["now"]) return window["performance"]["now"]();
+        if (window["performance"] && window["performance"]["now"])
+          return window["performance"]["now"]();
         else return Date.now();
       },
       fullscreenEnabled: function () {
-        return document.fullscreenEnabled || document.mozFullScreenEnabled || document.webkitFullscreenEnabled || document.msFullscreenEnabled;
+        return (
+          document.fullscreenEnabled ||
+          document.mozFullScreenEnabled ||
+          document.webkitFullscreenEnabled ||
+          document.msFullscreenEnabled
+        );
       },
     };
     function __setLetterbox(element, topBottom, leftRight) {
@@ -6529,8 +7602,10 @@ var Engine = {
         element.style.marginLeft = element.style.marginRight = leftRight + "px";
         element.style.marginTop = element.style.marginBottom = topBottom + "px";
       } else {
-        element.style.paddingLeft = element.style.paddingRight = leftRight + "px";
-        element.style.paddingTop = element.style.paddingBottom = topBottom + "px";
+        element.style.paddingLeft = element.style.paddingRight =
+          leftRight + "px";
+        element.style.paddingTop = element.style.paddingBottom =
+          topBottom + "px";
       }
     }
     function __hideEverythingExceptGivenElement(onlyVisibleElement) {
@@ -6541,7 +7616,10 @@ var Engine = {
         var children = parent.children;
         for (var i = 0; i < children.length; ++i) {
           if (children[i] != child) {
-            hiddenElements.push({ node: children[i], displayState: children[i].style.display });
+            hiddenElements.push({
+              node: children[i],
+              displayState: children[i].style.display,
+            });
             children[i].style.display = "none";
           }
         }
@@ -6555,12 +7633,15 @@ var Engine = {
     function __findEventTarget(target) {
       try {
         if (!target) return window;
-        if (typeof target === "number") target = __specialEventTargets[target] || UTF8ToString(target);
+        if (typeof target === "number")
+          target = __specialEventTargets[target] || UTF8ToString(target);
         if (target === "#window") return window;
         else if (target === "#document") return document;
         else if (target === "#screen") return screen;
         else if (target === "#canvas") return Module["canvas"];
-        return typeof target === "string" ? document.getElementById(target) : target;
+        return typeof target === "string"
+          ? document.getElementById(target)
+          : target;
       } catch (e) {
         return null;
       }
@@ -6568,10 +7649,12 @@ var Engine = {
     function __findCanvasEventTarget(target) {
       if (typeof target === "number") target = UTF8ToString(target);
       if (!target || target === "#canvas") {
-        if (typeof GL !== "undefined" && GL.offscreenCanvases["canvas"]) return GL.offscreenCanvases["canvas"];
+        if (typeof GL !== "undefined" && GL.offscreenCanvases["canvas"])
+          return GL.offscreenCanvases["canvas"];
         return Module["canvas"];
       }
-      if (typeof GL !== "undefined" && GL.offscreenCanvases[target]) return GL.offscreenCanvases[target];
+      if (typeof GL !== "undefined" && GL.offscreenCanvases[target])
+        return GL.offscreenCanvases[target];
       return __findEventTarget(target);
     }
     function _emscripten_get_canvas_element_size(target, width, height) {
@@ -6631,17 +7714,25 @@ var Engine = {
       var oldDocumentScroll = document.body.scroll;
       var oldImageRendering = canvas.style.imageRendering;
       function restoreOldStyle() {
-        var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+        var fullscreenElement =
+          document.fullscreenElement ||
+          document.mozFullScreenElement ||
+          document.webkitFullscreenElement ||
+          document.msFullscreenElement;
         if (!fullscreenElement) {
           document.removeEventListener("fullscreenchange", restoreOldStyle);
           document.removeEventListener("mozfullscreenchange", restoreOldStyle);
-          document.removeEventListener("webkitfullscreenchange", restoreOldStyle);
+          document.removeEventListener(
+            "webkitfullscreenchange",
+            restoreOldStyle
+          );
           document.removeEventListener("MSFullscreenChange", restoreOldStyle);
           __set_canvas_element_size(canvas, oldWidth, oldHeight);
           canvas.style.width = oldCssWidth;
           canvas.style.height = oldCssHeight;
           canvas.style.backgroundColor = oldBackgroundColor;
-          if (!oldDocumentBackgroundColor) document.body.style.backgroundColor = "white";
+          if (!oldDocumentBackgroundColor)
+            document.body.style.backgroundColor = "white";
           document.body.style.backgroundColor = oldDocumentBackgroundColor;
           canvas.style.paddingLeft = oldPaddingLeft;
           canvas.style.paddingRight = oldPaddingRight;
@@ -6655,9 +7746,15 @@ var Engine = {
           document.documentElement.style.overflow = oldDocumentOverflow;
           document.body.scroll = oldDocumentScroll;
           canvas.style.imageRendering = oldImageRendering;
-          if (canvas.GLctxObject) canvas.GLctxObject.GLctx.viewport(0, 0, oldWidth, oldHeight);
+          if (canvas.GLctxObject)
+            canvas.GLctxObject.GLctx.viewport(0, 0, oldWidth, oldHeight);
           if (__currentFullscreenStrategy.canvasResizedCallback) {
-            dynCall_iiii(__currentFullscreenStrategy.canvasResizedCallback, 37, 0, __currentFullscreenStrategy.canvasResizedCallbackUserData);
+            dynCall_iiii(
+              __currentFullscreenStrategy.canvasResizedCallback,
+              37,
+              0,
+              __currentFullscreenStrategy.canvasResizedCallbackUserData
+            );
           }
         }
       }
@@ -6675,12 +7772,20 @@ var Engine = {
     var __currentFullscreenStrategy = {};
     function __softFullscreenResizeWebGLRenderTarget() {
       var dpr = devicePixelRatio;
-      var inHiDPIFullscreenMode = __currentFullscreenStrategy.canvasResolutionScaleMode == 2;
-      var inAspectRatioFixedFullscreenMode = __currentFullscreenStrategy.scaleMode == 2;
-      var inPixelPerfectFullscreenMode = __currentFullscreenStrategy.canvasResolutionScaleMode != 0;
-      var inCenteredWithoutScalingFullscreenMode = __currentFullscreenStrategy.scaleMode == 3;
-      var screenWidth = inHiDPIFullscreenMode ? Math.round(innerWidth * dpr) : innerWidth;
-      var screenHeight = inHiDPIFullscreenMode ? Math.round(innerHeight * dpr) : innerHeight;
+      var inHiDPIFullscreenMode =
+        __currentFullscreenStrategy.canvasResolutionScaleMode == 2;
+      var inAspectRatioFixedFullscreenMode =
+        __currentFullscreenStrategy.scaleMode == 2;
+      var inPixelPerfectFullscreenMode =
+        __currentFullscreenStrategy.canvasResolutionScaleMode != 0;
+      var inCenteredWithoutScalingFullscreenMode =
+        __currentFullscreenStrategy.scaleMode == 3;
+      var screenWidth = inHiDPIFullscreenMode
+        ? Math.round(innerWidth * dpr)
+        : innerWidth;
+      var screenHeight = inHiDPIFullscreenMode
+        ? Math.round(innerHeight * dpr)
+        : innerHeight;
       var w = screenWidth;
       var h = screenHeight;
       var canvas = __currentFullscreenStrategy.target;
@@ -6715,8 +7820,16 @@ var Engine = {
         var b = (innerWidth - w) / 2;
         __setLetterbox(canvas, topMargin, b);
       }
-      if (!inCenteredWithoutScalingFullscreenMode && __currentFullscreenStrategy.canvasResizedCallback) {
-        dynCall_iiii(__currentFullscreenStrategy.canvasResizedCallback, 37, 0, __currentFullscreenStrategy.canvasResizedCallbackUserData);
+      if (
+        !inCenteredWithoutScalingFullscreenMode &&
+        __currentFullscreenStrategy.canvasResizedCallback
+      ) {
+        dynCall_iiii(
+          __currentFullscreenStrategy.canvasResizedCallback,
+          37,
+          0,
+          __currentFullscreenStrategy.canvasResizedCallbackUserData
+        );
       }
     }
     function _JSEvents_resizeCanvasForFullscreen(target, strategy) {
@@ -6730,22 +7843,29 @@ var Engine = {
       var windowedRttWidth = canvasSize[0];
       var windowedRttHeight = canvasSize[1];
       if (strategy.scaleMode == 3) {
-        __setLetterbox(target, (cssHeight - windowedCssHeight) / 2, (cssWidth - windowedCssWidth) / 2);
+        __setLetterbox(
+          target,
+          (cssHeight - windowedCssHeight) / 2,
+          (cssWidth - windowedCssWidth) / 2
+        );
         cssWidth = windowedCssWidth;
         cssHeight = windowedCssHeight;
       } else if (strategy.scaleMode == 2) {
         if (cssWidth * windowedRttHeight < windowedRttWidth * cssHeight) {
-          var desiredCssHeight = (windowedRttHeight * cssWidth) / windowedRttWidth;
+          var desiredCssHeight =
+            (windowedRttHeight * cssWidth) / windowedRttWidth;
           __setLetterbox(target, (cssHeight - desiredCssHeight) / 2, 0);
           cssHeight = desiredCssHeight;
         } else {
-          var desiredCssWidth = (windowedRttWidth * cssHeight) / windowedRttHeight;
+          var desiredCssWidth =
+            (windowedRttWidth * cssHeight) / windowedRttHeight;
           __setLetterbox(target, 0, (cssWidth - desiredCssWidth) / 2);
           cssWidth = desiredCssWidth;
         }
       }
       if (!target.style.backgroundColor) target.style.backgroundColor = "black";
-      if (!document.body.style.backgroundColor) document.body.style.backgroundColor = "black";
+      if (!document.body.style.backgroundColor)
+        document.body.style.backgroundColor = "black";
       target.style.width = cssWidth + "px";
       target.style.height = cssHeight + "px";
       if (strategy.filteringMode == 1) {
@@ -6757,12 +7877,14 @@ var Engine = {
         target.style.imageRendering = "crisp-edges";
         target.style.imageRendering = "pixelated";
       }
-      var dpiScale = strategy.canvasResolutionScaleMode == 2 ? devicePixelRatio : 1;
+      var dpiScale =
+        strategy.canvasResolutionScaleMode == 2 ? devicePixelRatio : 1;
       if (strategy.canvasResolutionScaleMode != 0) {
         var newWidth = (cssWidth * dpiScale) | 0;
         var newHeight = (cssHeight * dpiScale) | 0;
         __set_canvas_element_size(target, newWidth, newHeight);
-        if (target.GLctxObject) target.GLctxObject.GLctx.viewport(0, 0, newWidth, newHeight);
+        if (target.GLctxObject)
+          target.GLctxObject.GLctx.viewport(0, 0, newWidth, newHeight);
       }
       return restoreOldStyle;
     }
@@ -6772,13 +7894,18 @@ var Engine = {
       if (!target) return -4;
       var strategy = {};
       strategy.scaleMode = HEAP32[fullscreenStrategy >> 2];
-      strategy.canvasResolutionScaleMode = HEAP32[(fullscreenStrategy + 4) >> 2];
+      strategy.canvasResolutionScaleMode =
+        HEAP32[(fullscreenStrategy + 4) >> 2];
       strategy.filteringMode = HEAP32[(fullscreenStrategy + 8) >> 2];
       strategy.canvasResizedCallback = HEAP32[(fullscreenStrategy + 12) >> 2];
-      strategy.canvasResizedCallbackUserData = HEAP32[(fullscreenStrategy + 16) >> 2];
+      strategy.canvasResizedCallbackUserData =
+        HEAP32[(fullscreenStrategy + 16) >> 2];
       strategy.target = target;
       strategy.softFullscreen = true;
-      var restoreOldStyle = _JSEvents_resizeCanvasForFullscreen(target, strategy);
+      var restoreOldStyle = _JSEvents_resizeCanvasForFullscreen(
+        target,
+        strategy
+      );
       document.documentElement.style.overflow = "hidden";
       document.body.scroll = "no";
       document.body.style.margin = "0px";
@@ -6788,7 +7915,12 @@ var Engine = {
         __restoreHiddenElements(hiddenElements);
         removeEventListener("resize", __softFullscreenResizeWebGLRenderTarget);
         if (strategy.canvasResizedCallback) {
-          dynCall_iiii(strategy.canvasResizedCallback, 37, 0, strategy.canvasResizedCallbackUserData);
+          dynCall_iiii(
+            strategy.canvasResizedCallback,
+            37,
+            0,
+            strategy.canvasResizedCallbackUserData
+          );
         }
         __currentFullscreenStrategy = 0;
       }
@@ -6796,7 +7928,12 @@ var Engine = {
       __currentFullscreenStrategy = strategy;
       addEventListener("resize", __softFullscreenResizeWebGLRenderTarget);
       if (strategy.canvasResizedCallback) {
-        dynCall_iiii(strategy.canvasResizedCallback, 37, 0, strategy.canvasResizedCallbackUserData);
+        dynCall_iiii(
+          strategy.canvasResizedCallback,
+          37,
+          0,
+          strategy.canvasResizedCallbackUserData
+        );
       }
       return 0;
     }
@@ -6818,7 +7955,12 @@ var Engine = {
         return JSEvents.fullscreenEnabled() ? -3 : -1;
       }
       if (strategy.canvasResizedCallback) {
-        dynCall_iiii(strategy.canvasResizedCallback, 37, 0, strategy.canvasResizedCallbackUserData);
+        dynCall_iiii(
+          strategy.canvasResizedCallback,
+          37,
+          0,
+          strategy.canvasResizedCallbackUserData
+        );
       }
       return 0;
     }
@@ -6838,7 +7980,12 @@ var Engine = {
         return -1;
       }
       if (__currentFullscreenStrategy.canvasResizedCallback) {
-        dynCall_iiii(__currentFullscreenStrategy.canvasResizedCallback, 37, 0, __currentFullscreenStrategy.canvasResizedCallbackUserData);
+        dynCall_iiii(
+          __currentFullscreenStrategy.canvasResizedCallback,
+          37,
+          0,
+          __currentFullscreenStrategy.canvasResizedCallbackUserData
+        );
         __currentFullscreenStrategy = 0;
       }
       return 0;
@@ -6853,7 +8000,12 @@ var Engine = {
       } else if (target.msRequestPointerLock) {
         target.msRequestPointerLock();
       } else {
-        if (document.body.requestPointerLock || document.body.mozRequestPointerLock || document.body.webkitRequestPointerLock || document.body.msRequestPointerLock) {
+        if (
+          document.body.requestPointerLock ||
+          document.body.mozRequestPointerLock ||
+          document.body.webkitRequestPointerLock ||
+          document.body.msRequestPointerLock
+        ) {
           return -3;
         } else {
           return -1;
@@ -6895,17 +8047,27 @@ var Engine = {
       return 0;
     }
     function __fillFullscreenChangeEventData(eventStruct, e) {
-      var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+      var fullscreenElement =
+        document.fullscreenElement ||
+        document.mozFullScreenElement ||
+        document.webkitFullscreenElement ||
+        document.msFullscreenElement;
       var isFullscreen = !!fullscreenElement;
       HEAP32[eventStruct >> 2] = isFullscreen;
       HEAP32[(eventStruct + 4) >> 2] = JSEvents.fullscreenEnabled();
-      var reportedElement = isFullscreen ? fullscreenElement : JSEvents.previousFullscreenElement;
+      var reportedElement = isFullscreen
+        ? fullscreenElement
+        : JSEvents.previousFullscreenElement;
       var nodeName = JSEvents.getNodeNameForTarget(reportedElement);
       var id = reportedElement && reportedElement.id ? reportedElement.id : "";
       stringToUTF8(nodeName, eventStruct + 8, 128);
       stringToUTF8(id, eventStruct + 136, 128);
-      HEAP32[(eventStruct + 264) >> 2] = reportedElement ? reportedElement.clientWidth : 0;
-      HEAP32[(eventStruct + 268) >> 2] = reportedElement ? reportedElement.clientHeight : 0;
+      HEAP32[(eventStruct + 264) >> 2] = reportedElement
+        ? reportedElement.clientWidth
+        : 0;
+      HEAP32[(eventStruct + 268) >> 2] = reportedElement
+        ? reportedElement.clientHeight
+        : 0;
       HEAP32[(eventStruct + 272) >> 2] = screen.width;
       HEAP32[(eventStruct + 276) >> 2] = screen.height;
       if (isFullscreen) {
@@ -6956,17 +8118,31 @@ var Engine = {
       return JSEvents.lastGamepadState.length;
     }
     function __fillPointerlockChangeEventData(eventStruct, e) {
-      var pointerLockElement = document.pointerLockElement || document.mozPointerLockElement || document.webkitPointerLockElement || document.msPointerLockElement;
+      var pointerLockElement =
+        document.pointerLockElement ||
+        document.mozPointerLockElement ||
+        document.webkitPointerLockElement ||
+        document.msPointerLockElement;
       var isPointerlocked = !!pointerLockElement;
       HEAP32[eventStruct >> 2] = isPointerlocked;
       var nodeName = JSEvents.getNodeNameForTarget(pointerLockElement);
-      var id = pointerLockElement && pointerLockElement.id ? pointerLockElement.id : "";
+      var id =
+        pointerLockElement && pointerLockElement.id
+          ? pointerLockElement.id
+          : "";
       stringToUTF8(nodeName, eventStruct + 4, 128);
       stringToUTF8(id, eventStruct + 132, 128);
     }
     function _emscripten_get_pointerlock_status(pointerlockStatus) {
-      if (pointerlockStatus) __fillPointerlockChangeEventData(pointerlockStatus);
-      if (!document.body || (!document.body.requestPointerLock && !document.body.mozRequestPointerLock && !document.body.webkitRequestPointerLock && !document.body.msRequestPointerLock)) {
+      if (pointerlockStatus)
+        __fillPointerlockChangeEventData(pointerlockStatus);
+      if (
+        !document.body ||
+        (!document.body.requestPointerLock &&
+          !document.body.mozRequestPointerLock &&
+          !document.body.webkitRequestPointerLock &&
+          !document.body.msRequestPointerLock)
+      ) {
         return -1;
       }
       return 0;
@@ -7020,27 +8196,45 @@ var Engine = {
         var source = "";
         for (var i = 0; i < count; ++i) {
           var len = length ? HEAP32[(length + i * 4) >> 2] : -1;
-          source += UTF8ToString(HEAP32[(string + i * 4) >> 2], len < 0 ? undefined : len);
+          source += UTF8ToString(
+            HEAP32[(string + i * 4) >> 2],
+            len < 0 ? undefined : len
+          );
         }
         return source;
       },
       createContext: function (canvas, webGLContextAttributes) {
-        var ctx = webGLContextAttributes.majorVersion > 1 ? canvas.getContext("webgl2", webGLContextAttributes) : canvas.getContext("webgl", webGLContextAttributes) || canvas.getContext("experimental-webgl", webGLContextAttributes);
+        var ctx =
+          webGLContextAttributes.majorVersion > 1
+            ? canvas.getContext("webgl2", webGLContextAttributes)
+            : canvas.getContext("webgl", webGLContextAttributes) ||
+              canvas.getContext("experimental-webgl", webGLContextAttributes);
         if (!ctx) return 0;
         var handle = GL.registerContext(ctx, webGLContextAttributes);
         return handle;
       },
       registerContext: function (ctx, webGLContextAttributes) {
         var handle = _malloc(8);
-        var context = { handle: handle, attributes: webGLContextAttributes, version: webGLContextAttributes.majorVersion, GLctx: ctx };
+        var context = {
+          handle: handle,
+          attributes: webGLContextAttributes,
+          version: webGLContextAttributes.majorVersion,
+          GLctx: ctx,
+        };
         function getChromeVersion() {
           var raw = navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
           return raw ? parseInt(raw[2], 10) : false;
         }
-        context.supportsWebGL2EntryPoints = context.version >= 2 && (getChromeVersion() === false || getChromeVersion() >= 58);
+        context.supportsWebGL2EntryPoints =
+          context.version >= 2 &&
+          (getChromeVersion() === false || getChromeVersion() >= 58);
         if (ctx.canvas) ctx.canvas.GLctxObject = context;
         GL.contexts[handle] = context;
-        if (typeof webGLContextAttributes.enableExtensionsByDefault === "undefined" || webGLContextAttributes.enableExtensionsByDefault) {
+        if (
+          typeof webGLContextAttributes.enableExtensionsByDefault ===
+            "undefined" ||
+          webGLContextAttributes.enableExtensionsByDefault
+        ) {
           GL.initExtensions(context);
         }
         return handle;
@@ -7054,9 +8248,17 @@ var Engine = {
         return GL.contexts[contextHandle];
       },
       deleteContext: function (contextHandle) {
-        if (GL.currentContext === GL.contexts[contextHandle]) GL.currentContext = null;
-        if (typeof JSEvents === "object") JSEvents.removeAllHandlersOnTarget(GL.contexts[contextHandle].GLctx.canvas);
-        if (GL.contexts[contextHandle] && GL.contexts[contextHandle].GLctx.canvas) GL.contexts[contextHandle].GLctx.canvas.GLctxObject = undefined;
+        if (GL.currentContext === GL.contexts[contextHandle])
+          GL.currentContext = null;
+        if (typeof JSEvents === "object")
+          JSEvents.removeAllHandlersOnTarget(
+            GL.contexts[contextHandle].GLctx.canvas
+          );
+        if (
+          GL.contexts[contextHandle] &&
+          GL.contexts[contextHandle].GLctx.canvas
+        )
+          GL.contexts[contextHandle].GLctx.canvas.GLctxObject = undefined;
         _free(GL.contexts[contextHandle]);
         GL.contexts[contextHandle] = null;
       },
@@ -7066,11 +8268,28 @@ var Engine = {
           ctx["vertexAttribDivisor"] = function (index, divisor) {
             ext["vertexAttribDivisorANGLE"](index, divisor);
           };
-          ctx["drawArraysInstanced"] = function (mode, first, count, primcount) {
+          ctx["drawArraysInstanced"] = function (
+            mode,
+            first,
+            count,
+            primcount
+          ) {
             ext["drawArraysInstancedANGLE"](mode, first, count, primcount);
           };
-          ctx["drawElementsInstanced"] = function (mode, count, type, indices, primcount) {
-            ext["drawElementsInstancedANGLE"](mode, count, type, indices, primcount);
+          ctx["drawElementsInstanced"] = function (
+            mode,
+            count,
+            type,
+            indices,
+            primcount
+          ) {
+            ext["drawElementsInstancedANGLE"](
+              mode,
+              count,
+              type,
+              indices,
+              primcount
+            );
           };
         }
       },
@@ -7109,7 +8328,9 @@ var Engine = {
           GL.acquireVertexArrayObjectExtension(GLctx);
           GL.acquireDrawBuffersExtension(GLctx);
         }
-        GLctx.disjointTimerQueryExt = GLctx.getExtension("EXT_disjoint_timer_query");
+        GLctx.disjointTimerQueryExt = GLctx.getExtension(
+          "EXT_disjoint_timer_query"
+        );
         var automaticallyEnabledExtensions = [
           "OES_texture_float",
           "OES_texture_half_float",
@@ -7147,13 +8368,21 @@ var Engine = {
       },
       populateUniformTable: function (program) {
         var p = GL.programs[program];
-        var ptable = (GL.programInfos[program] = { uniforms: {}, maxUniformLength: 0, maxAttributeLength: -1, maxUniformBlockNameLength: -1 });
+        var ptable = (GL.programInfos[program] = {
+          uniforms: {},
+          maxUniformLength: 0,
+          maxAttributeLength: -1,
+          maxUniformBlockNameLength: -1,
+        });
         var utable = ptable.uniforms;
         var numUniforms = GLctx.getProgramParameter(p, 35718);
         for (var i = 0; i < numUniforms; ++i) {
           var u = GLctx.getActiveUniform(p, i);
           var name = u.name;
-          ptable.maxUniformLength = Math.max(ptable.maxUniformLength, name.length + 1);
+          ptable.maxUniformLength = Math.max(
+            ptable.maxUniformLength,
+            name.length + 1
+          );
           if (name.slice(-1) == "]") {
             name = name.slice(0, name.lastIndexOf("["));
           }
@@ -7182,7 +8411,10 @@ var Engine = {
       GLctx["beginQuery"](target, GL.queries[id]);
     }
     function _emscripten_glBeginQueryEXT(target, id) {
-      GLctx.disjointTimerQueryExt["beginQueryEXT"](target, GL.timerQueriesEXT[id]);
+      GLctx.disjointTimerQueryExt["beginQueryEXT"](
+        target,
+        GL.timerQueriesEXT[id]
+      );
     }
     function _emscripten_glBeginTransformFeedback(x0) {
       GLctx["beginTransformFeedback"](x0);
@@ -7201,8 +8433,20 @@ var Engine = {
     function _emscripten_glBindBufferBase(target, index, buffer) {
       GLctx["bindBufferBase"](target, index, GL.buffers[buffer]);
     }
-    function _emscripten_glBindBufferRange(target, index, buffer, offset, ptrsize) {
-      GLctx["bindBufferRange"](target, index, GL.buffers[buffer], offset, ptrsize);
+    function _emscripten_glBindBufferRange(
+      target,
+      index,
+      buffer,
+      offset,
+      ptrsize
+    ) {
+      GLctx["bindBufferRange"](
+        target,
+        index,
+        GL.buffers[buffer],
+        offset,
+        ptrsize
+      );
     }
     function _emscripten_glBindFramebuffer(target, framebuffer) {
       GLctx.bindFramebuffer(target, GL.framebuffers[framebuffer]);
@@ -7240,7 +8484,18 @@ var Engine = {
     function _emscripten_glBlendFuncSeparate(x0, x1, x2, x3) {
       GLctx["blendFuncSeparate"](x0, x1, x2, x3);
     }
-    function _emscripten_glBlitFramebuffer(x0, x1, x2, x3, x4, x5, x6, x7, x8, x9) {
+    function _emscripten_glBlitFramebuffer(
+      x0,
+      x1,
+      x2,
+      x3,
+      x4,
+      x5,
+      x6,
+      x7,
+      x8,
+      x9
+    ) {
       GLctx["blitFramebuffer"](x0, x1, x2, x3, x4, x5, x6, x7, x8, x9);
     }
     function _emscripten_glBufferData(target, size, data, usage) {
@@ -7251,7 +8506,11 @@ var Engine = {
           GLctx.bufferData(target, size, usage);
         }
       } else {
-        GLctx.bufferData(target, data ? HEAPU8.subarray(data, data + size) : size, usage);
+        GLctx.bufferData(
+          target,
+          data ? HEAPU8.subarray(data, data + size) : size,
+          usage
+        );
       }
     }
     function _emscripten_glBufferSubData(target, offset, size, data) {
@@ -7291,7 +8550,10 @@ var Engine = {
     function _emscripten_glClientWaitSync(sync, flags, timeoutLo, timeoutHi) {
       timeoutLo = timeoutLo >>> 0;
       timeoutHi = timeoutHi >>> 0;
-      var timeout = timeoutLo == 4294967295 && timeoutHi == 4294967295 ? -1 : makeBigInt(timeoutLo, timeoutHi, true);
+      var timeout =
+        timeoutLo == 4294967295 && timeoutHi == 4294967295
+          ? -1
+          : makeBigInt(timeoutLo, timeoutHi, true);
       return GLctx.clientWaitSync(GL.syncs[sync], flags, timeout);
     }
     function _emscripten_glColorMask(red, green, blue, alpha) {
@@ -7300,48 +8562,212 @@ var Engine = {
     function _emscripten_glCompileShader(shader) {
       GLctx.compileShader(GL.shaders[shader]);
     }
-    function _emscripten_glCompressedTexImage2D(target, level, internalFormat, width, height, border, imageSize, data) {
+    function _emscripten_glCompressedTexImage2D(
+      target,
+      level,
+      internalFormat,
+      width,
+      height,
+      border,
+      imageSize,
+      data
+    ) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
         if (GLctx.currentPixelUnpackBufferBinding) {
-          GLctx["compressedTexImage2D"](target, level, internalFormat, width, height, border, imageSize, data);
+          GLctx["compressedTexImage2D"](
+            target,
+            level,
+            internalFormat,
+            width,
+            height,
+            border,
+            imageSize,
+            data
+          );
         } else {
-          GLctx["compressedTexImage2D"](target, level, internalFormat, width, height, border, HEAPU8, data, imageSize);
+          GLctx["compressedTexImage2D"](
+            target,
+            level,
+            internalFormat,
+            width,
+            height,
+            border,
+            HEAPU8,
+            data,
+            imageSize
+          );
         }
         return;
       }
-      GLctx["compressedTexImage2D"](target, level, internalFormat, width, height, border, data ? HEAPU8.subarray(data, data + imageSize) : null);
+      GLctx["compressedTexImage2D"](
+        target,
+        level,
+        internalFormat,
+        width,
+        height,
+        border,
+        data ? HEAPU8.subarray(data, data + imageSize) : null
+      );
     }
-    function _emscripten_glCompressedTexImage3D(target, level, internalFormat, width, height, depth, border, imageSize, data) {
+    function _emscripten_glCompressedTexImage3D(
+      target,
+      level,
+      internalFormat,
+      width,
+      height,
+      depth,
+      border,
+      imageSize,
+      data
+    ) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
         if (GLctx.currentPixelUnpackBufferBinding) {
-          GLctx["compressedTexImage3D"](target, level, internalFormat, width, height, depth, border, imageSize, data);
+          GLctx["compressedTexImage3D"](
+            target,
+            level,
+            internalFormat,
+            width,
+            height,
+            depth,
+            border,
+            imageSize,
+            data
+          );
         } else {
-          GLctx["compressedTexImage3D"](target, level, internalFormat, width, height, depth, border, HEAPU8, data, imageSize);
+          GLctx["compressedTexImage3D"](
+            target,
+            level,
+            internalFormat,
+            width,
+            height,
+            depth,
+            border,
+            HEAPU8,
+            data,
+            imageSize
+          );
         }
       } else {
-        GLctx["compressedTexImage3D"](target, level, internalFormat, width, height, depth, border, data ? HEAPU8.subarray(data, data + imageSize) : null);
+        GLctx["compressedTexImage3D"](
+          target,
+          level,
+          internalFormat,
+          width,
+          height,
+          depth,
+          border,
+          data ? HEAPU8.subarray(data, data + imageSize) : null
+        );
       }
     }
-    function _emscripten_glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data) {
+    function _emscripten_glCompressedTexSubImage2D(
+      target,
+      level,
+      xoffset,
+      yoffset,
+      width,
+      height,
+      format,
+      imageSize,
+      data
+    ) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
         if (GLctx.currentPixelUnpackBufferBinding) {
-          GLctx["compressedTexSubImage2D"](target, level, xoffset, yoffset, width, height, format, imageSize, data);
+          GLctx["compressedTexSubImage2D"](
+            target,
+            level,
+            xoffset,
+            yoffset,
+            width,
+            height,
+            format,
+            imageSize,
+            data
+          );
         } else {
-          GLctx["compressedTexSubImage2D"](target, level, xoffset, yoffset, width, height, format, HEAPU8, data, imageSize);
+          GLctx["compressedTexSubImage2D"](
+            target,
+            level,
+            xoffset,
+            yoffset,
+            width,
+            height,
+            format,
+            HEAPU8,
+            data,
+            imageSize
+          );
         }
         return;
       }
-      GLctx["compressedTexSubImage2D"](target, level, xoffset, yoffset, width, height, format, data ? HEAPU8.subarray(data, data + imageSize) : null);
+      GLctx["compressedTexSubImage2D"](
+        target,
+        level,
+        xoffset,
+        yoffset,
+        width,
+        height,
+        format,
+        data ? HEAPU8.subarray(data, data + imageSize) : null
+      );
     }
-    function _emscripten_glCompressedTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data) {
+    function _emscripten_glCompressedTexSubImage3D(
+      target,
+      level,
+      xoffset,
+      yoffset,
+      zoffset,
+      width,
+      height,
+      depth,
+      format,
+      imageSize,
+      data
+    ) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
         if (GLctx.currentPixelUnpackBufferBinding) {
-          GLctx["compressedTexSubImage3D"](target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
+          GLctx["compressedTexSubImage3D"](
+            target,
+            level,
+            xoffset,
+            yoffset,
+            zoffset,
+            width,
+            height,
+            depth,
+            format,
+            imageSize,
+            data
+          );
         } else {
-          GLctx["compressedTexSubImage3D"](target, level, xoffset, yoffset, zoffset, width, height, depth, format, HEAPU8, data, imageSize);
+          GLctx["compressedTexSubImage3D"](
+            target,
+            level,
+            xoffset,
+            yoffset,
+            zoffset,
+            width,
+            height,
+            depth,
+            format,
+            HEAPU8,
+            data,
+            imageSize
+          );
         }
       } else {
-        GLctx["compressedTexSubImage3D"](target, level, xoffset, yoffset, zoffset, width, height, depth, format, data ? HEAPU8.subarray(data, data + imageSize) : null);
+        GLctx["compressedTexSubImage3D"](
+          target,
+          level,
+          xoffset,
+          yoffset,
+          zoffset,
+          width,
+          height,
+          depth,
+          format,
+          data ? HEAPU8.subarray(data, data + imageSize) : null
+        );
       }
     }
     function _emscripten_glCopyBufferSubData(x0, x1, x2, x3, x4) {
@@ -7353,7 +8779,17 @@ var Engine = {
     function _emscripten_glCopyTexSubImage2D(x0, x1, x2, x3, x4, x5, x6, x7) {
       GLctx["copyTexSubImage2D"](x0, x1, x2, x3, x4, x5, x6, x7);
     }
-    function _emscripten_glCopyTexSubImage3D(x0, x1, x2, x3, x4, x5, x6, x7, x8) {
+    function _emscripten_glCopyTexSubImage3D(
+      x0,
+      x1,
+      x2,
+      x3,
+      x4,
+      x5,
+      x6,
+      x7,
+      x8
+    ) {
       GLctx["copyTexSubImage3D"](x0, x1, x2, x3, x4, x5, x6, x7, x8);
     }
     function _emscripten_glCreateProgram() {
@@ -7381,8 +8817,10 @@ var Engine = {
         GL.buffers[id] = null;
         if (id == GL.currArrayBuffer) GL.currArrayBuffer = 0;
         if (id == GL.currElementArrayBuffer) GL.currElementArrayBuffer = 0;
-        if (id == GLctx.currentPixelPackBufferBinding) GLctx.currentPixelPackBufferBinding = 0;
-        if (id == GLctx.currentPixelUnpackBufferBinding) GLctx.currentPixelUnpackBufferBinding = 0;
+        if (id == GLctx.currentPixelPackBufferBinding)
+          GLctx.currentPixelPackBufferBinding = 0;
+        if (id == GLctx.currentPixelUnpackBufferBinding)
+          GLctx.currentPixelUnpackBufferBinding = 0;
       }
     }
     function _emscripten_glDeleteFramebuffers(n, framebuffers) {
@@ -7524,16 +8962,36 @@ var Engine = {
     function _emscripten_glDrawArraysInstanced(mode, first, count, primcount) {
       GLctx["drawArraysInstanced"](mode, first, count, primcount);
     }
-    function _emscripten_glDrawArraysInstancedANGLE(mode, first, count, primcount) {
+    function _emscripten_glDrawArraysInstancedANGLE(
+      mode,
+      first,
+      count,
+      primcount
+    ) {
       GLctx["drawArraysInstanced"](mode, first, count, primcount);
     }
-    function _emscripten_glDrawArraysInstancedARB(mode, first, count, primcount) {
+    function _emscripten_glDrawArraysInstancedARB(
+      mode,
+      first,
+      count,
+      primcount
+    ) {
       GLctx["drawArraysInstanced"](mode, first, count, primcount);
     }
-    function _emscripten_glDrawArraysInstancedEXT(mode, first, count, primcount) {
+    function _emscripten_glDrawArraysInstancedEXT(
+      mode,
+      first,
+      count,
+      primcount
+    ) {
       GLctx["drawArraysInstanced"](mode, first, count, primcount);
     }
-    function _emscripten_glDrawArraysInstancedNV(mode, first, count, primcount) {
+    function _emscripten_glDrawArraysInstancedNV(
+      mode,
+      first,
+      count,
+      primcount
+    ) {
       GLctx["drawArraysInstanced"](mode, first, count, primcount);
     }
     var __tempFixedLengthArray = [];
@@ -7561,25 +9019,62 @@ var Engine = {
     function _emscripten_glDrawElements(mode, count, type, indices) {
       GLctx.drawElements(mode, count, type, indices);
     }
-    function _emscripten_glDrawElementsInstanced(mode, count, type, indices, primcount) {
+    function _emscripten_glDrawElementsInstanced(
+      mode,
+      count,
+      type,
+      indices,
+      primcount
+    ) {
       GLctx["drawElementsInstanced"](mode, count, type, indices, primcount);
     }
-    function _emscripten_glDrawElementsInstancedANGLE(mode, count, type, indices, primcount) {
+    function _emscripten_glDrawElementsInstancedANGLE(
+      mode,
+      count,
+      type,
+      indices,
+      primcount
+    ) {
       GLctx["drawElementsInstanced"](mode, count, type, indices, primcount);
     }
-    function _emscripten_glDrawElementsInstancedARB(mode, count, type, indices, primcount) {
+    function _emscripten_glDrawElementsInstancedARB(
+      mode,
+      count,
+      type,
+      indices,
+      primcount
+    ) {
       GLctx["drawElementsInstanced"](mode, count, type, indices, primcount);
     }
-    function _emscripten_glDrawElementsInstancedEXT(mode, count, type, indices, primcount) {
+    function _emscripten_glDrawElementsInstancedEXT(
+      mode,
+      count,
+      type,
+      indices,
+      primcount
+    ) {
       GLctx["drawElementsInstanced"](mode, count, type, indices, primcount);
     }
-    function _emscripten_glDrawElementsInstancedNV(mode, count, type, indices, primcount) {
+    function _emscripten_glDrawElementsInstancedNV(
+      mode,
+      count,
+      type,
+      indices,
+      primcount
+    ) {
       GLctx["drawElementsInstanced"](mode, count, type, indices, primcount);
     }
     function _glDrawElements(mode, count, type, indices) {
       GLctx.drawElements(mode, count, type, indices);
     }
-    function _emscripten_glDrawRangeElements(mode, start, end, count, type, indices) {
+    function _emscripten_glDrawRangeElements(
+      mode,
+      start,
+      end,
+      count,
+      type,
+      indices
+    ) {
       _glDrawElements(mode, count, type, indices);
     }
     function _emscripten_glEnable(x0) {
@@ -7618,14 +9113,48 @@ var Engine = {
       err("missing function: emscripten_glFlushMappedBufferRange");
       abort(-1);
     }
-    function _emscripten_glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer) {
-      GLctx.framebufferRenderbuffer(target, attachment, renderbuffertarget, GL.renderbuffers[renderbuffer]);
+    function _emscripten_glFramebufferRenderbuffer(
+      target,
+      attachment,
+      renderbuffertarget,
+      renderbuffer
+    ) {
+      GLctx.framebufferRenderbuffer(
+        target,
+        attachment,
+        renderbuffertarget,
+        GL.renderbuffers[renderbuffer]
+      );
     }
-    function _emscripten_glFramebufferTexture2D(target, attachment, textarget, texture, level) {
-      GLctx.framebufferTexture2D(target, attachment, textarget, GL.textures[texture], level);
+    function _emscripten_glFramebufferTexture2D(
+      target,
+      attachment,
+      textarget,
+      texture,
+      level
+    ) {
+      GLctx.framebufferTexture2D(
+        target,
+        attachment,
+        textarget,
+        GL.textures[texture],
+        level
+      );
     }
-    function _emscripten_glFramebufferTextureLayer(target, attachment, texture, level, layer) {
-      GLctx.framebufferTextureLayer(target, attachment, GL.textures[texture], level, layer);
+    function _emscripten_glFramebufferTextureLayer(
+      target,
+      attachment,
+      texture,
+      level,
+      layer
+    ) {
+      GLctx.framebufferTextureLayer(
+        target,
+        attachment,
+        GL.textures[texture],
+        level,
+        layer
+      );
     }
     function _emscripten_glFrontFace(x0) {
       GLctx["frontFace"](x0);
@@ -7687,36 +9216,72 @@ var Engine = {
     function _emscripten_glGenerateMipmap(x0) {
       GLctx["generateMipmap"](x0);
     }
-    function _emscripten_glGetActiveAttrib(program, index, bufSize, length, size, type, name) {
+    function _emscripten_glGetActiveAttrib(
+      program,
+      index,
+      bufSize,
+      length,
+      size,
+      type,
+      name
+    ) {
       program = GL.programs[program];
       var info = GLctx.getActiveAttrib(program, index);
       if (!info) return;
-      var numBytesWrittenExclNull = bufSize > 0 && name ? stringToUTF8(info.name, name, bufSize) : 0;
+      var numBytesWrittenExclNull =
+        bufSize > 0 && name ? stringToUTF8(info.name, name, bufSize) : 0;
       if (length) HEAP32[length >> 2] = numBytesWrittenExclNull;
       if (size) HEAP32[size >> 2] = info.size;
       if (type) HEAP32[type >> 2] = info.type;
     }
-    function _emscripten_glGetActiveUniform(program, index, bufSize, length, size, type, name) {
+    function _emscripten_glGetActiveUniform(
+      program,
+      index,
+      bufSize,
+      length,
+      size,
+      type,
+      name
+    ) {
       program = GL.programs[program];
       var info = GLctx.getActiveUniform(program, index);
       if (!info) return;
-      var numBytesWrittenExclNull = bufSize > 0 && name ? stringToUTF8(info.name, name, bufSize) : 0;
+      var numBytesWrittenExclNull =
+        bufSize > 0 && name ? stringToUTF8(info.name, name, bufSize) : 0;
       if (length) HEAP32[length >> 2] = numBytesWrittenExclNull;
       if (size) HEAP32[size >> 2] = info.size;
       if (type) HEAP32[type >> 2] = info.type;
     }
-    function _emscripten_glGetActiveUniformBlockName(program, uniformBlockIndex, bufSize, length, uniformBlockName) {
+    function _emscripten_glGetActiveUniformBlockName(
+      program,
+      uniformBlockIndex,
+      bufSize,
+      length,
+      uniformBlockName
+    ) {
       program = GL.programs[program];
-      var result = GLctx["getActiveUniformBlockName"](program, uniformBlockIndex);
+      var result = GLctx["getActiveUniformBlockName"](
+        program,
+        uniformBlockIndex
+      );
       if (!result) return;
       if (uniformBlockName && bufSize > 0) {
-        var numBytesWrittenExclNull = stringToUTF8(result, uniformBlockName, bufSize);
+        var numBytesWrittenExclNull = stringToUTF8(
+          result,
+          uniformBlockName,
+          bufSize
+        );
         if (length) HEAP32[length >> 2] = numBytesWrittenExclNull;
       } else {
         if (length) HEAP32[length >> 2] = 0;
       }
     }
-    function _emscripten_glGetActiveUniformBlockiv(program, uniformBlockIndex, pname, params) {
+    function _emscripten_glGetActiveUniformBlockiv(
+      program,
+      uniformBlockIndex,
+      pname,
+      params
+    ) {
       if (!params) {
         GL.recordError(1281);
         return;
@@ -7724,11 +9289,18 @@ var Engine = {
       program = GL.programs[program];
       switch (pname) {
         case 35393:
-          var name = GLctx["getActiveUniformBlockName"](program, uniformBlockIndex);
+          var name = GLctx["getActiveUniformBlockName"](
+            program,
+            uniformBlockIndex
+          );
           HEAP32[params >> 2] = name.length + 1;
           return;
         default:
-          var result = GLctx["getActiveUniformBlockParameter"](program, uniformBlockIndex, pname);
+          var result = GLctx["getActiveUniformBlockParameter"](
+            program,
+            uniformBlockIndex,
+            pname
+          );
           if (!result) return;
           if (typeof result == "number") {
             HEAP32[params >> 2] = result;
@@ -7739,7 +9311,13 @@ var Engine = {
           }
       }
     }
-    function _emscripten_glGetActiveUniformsiv(program, uniformCount, uniformIndices, pname, params) {
+    function _emscripten_glGetActiveUniformsiv(
+      program,
+      uniformCount,
+      uniformIndices,
+      pname,
+      params
+    ) {
       if (!params) {
         GL.recordError(1281);
         return;
@@ -7760,7 +9338,12 @@ var Engine = {
         HEAP32[(params + i * 4) >> 2] = result[i];
       }
     }
-    function _emscripten_glGetAttachedShaders(program, maxCount, count, shaders) {
+    function _emscripten_glGetAttachedShaders(
+      program,
+      maxCount,
+      count,
+      shaders
+    ) {
       var result = GLctx.getAttachedShaders(GL.programs[program]);
       var len = result.length;
       if (len > maxCount) {
@@ -7848,7 +9431,12 @@ var Engine = {
                   return;
                 }
               }
-            } else if (result instanceof Float32Array || result instanceof Uint32Array || result instanceof Int32Array || result instanceof Array) {
+            } else if (
+              result instanceof Float32Array ||
+              result instanceof Uint32Array ||
+              result instanceof Int32Array ||
+              result instanceof Array
+            ) {
               for (var i = 0; i < result.length; ++i) {
                 switch (type) {
                   case 0:
@@ -7868,14 +9456,34 @@ var Engine = {
                 ret = result.name | 0;
               } catch (e) {
                 GL.recordError(1280);
-                err("GL_INVALID_ENUM in glGet" + type + "v: Unknown object returned from WebGL getParameter(" + name_ + ")! (error: " + e + ")");
+                err(
+                  "GL_INVALID_ENUM in glGet" +
+                    type +
+                    "v: Unknown object returned from WebGL getParameter(" +
+                    name_ +
+                    ")! (error: " +
+                    e +
+                    ")"
+                );
                 return;
               }
             }
             break;
           default:
             GL.recordError(1280);
-            err("GL_INVALID_ENUM in glGet" + type + "v: Native code calling glGet" + type + "v(" + name_ + ") and it returns " + result + " of type " + typeof result + "!");
+            err(
+              "GL_INVALID_ENUM in glGet" +
+                type +
+                "v: Native code calling glGet" +
+                type +
+                "v(" +
+                name_ +
+                ") and it returns " +
+                result +
+                " of type " +
+                typeof result +
+                "!"
+            );
             return;
         }
       }
@@ -7883,7 +9491,16 @@ var Engine = {
         case 1:
           (tempI64 = [
             ret >>> 0,
-            ((tempDouble = ret), +Math_abs(tempDouble) >= 1 ? (tempDouble > 0 ? (Math_min(+Math_floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math_ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0) : 0),
+            ((tempDouble = ret),
+            +Math_abs(tempDouble) >= 1
+              ? tempDouble > 0
+                ? (Math_min(+Math_floor(tempDouble / 4294967296), 4294967295) |
+                    0) >>>
+                  0
+                : ~~+Math_ceil(
+                    (tempDouble - +(~~tempDouble >>> 0)) / 4294967296
+                  ) >>> 0
+              : 0),
           ]),
             (HEAP32[p >> 2] = tempI64[0]),
             (HEAP32[(p + 4) >> 2] = tempI64[1]);
@@ -7910,7 +9527,15 @@ var Engine = {
       (tempI64 = [
         GLctx.getBufferParameter(target, value) >>> 0,
         ((tempDouble = GLctx.getBufferParameter(target, value)),
-        +Math_abs(tempDouble) >= 1 ? (tempDouble > 0 ? (Math_min(+Math_floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math_ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0) : 0),
+        +Math_abs(tempDouble) >= 1
+          ? tempDouble > 0
+            ? (Math_min(+Math_floor(tempDouble / 4294967296), 4294967295) |
+                0) >>>
+              0
+            : ~~+Math_ceil(
+                (tempDouble - +(~~tempDouble >>> 0)) / 4294967296
+              ) >>> 0
+          : 0),
       ]),
         (HEAP32[data >> 2] = tempI64[0]),
         (HEAP32[(data + 4) >> 2] = tempI64[1]);
@@ -7935,11 +9560,26 @@ var Engine = {
       emscriptenWebGLGet(name_, p, 2);
     }
     function _emscripten_glGetFragDataLocation(program, name) {
-      return GLctx["getFragDataLocation"](GL.programs[program], UTF8ToString(name));
+      return GLctx["getFragDataLocation"](
+        GL.programs[program],
+        UTF8ToString(name)
+      );
     }
-    function _emscripten_glGetFramebufferAttachmentParameteriv(target, attachment, pname, params) {
-      var result = GLctx.getFramebufferAttachmentParameter(target, attachment, pname);
-      if (result instanceof WebGLRenderbuffer || result instanceof WebGLTexture) {
+    function _emscripten_glGetFramebufferAttachmentParameteriv(
+      target,
+      attachment,
+      pname,
+      params
+    ) {
+      var result = GLctx.getFramebufferAttachmentParameter(
+        target,
+        attachment,
+        pname
+      );
+      if (
+        result instanceof WebGLRenderbuffer ||
+        result instanceof WebGLTexture
+      ) {
         result = result.name | 0;
       }
       HEAP32[params >> 2] = result;
@@ -7985,7 +9625,16 @@ var Engine = {
         case 1:
           (tempI64 = [
             ret >>> 0,
-            ((tempDouble = ret), +Math_abs(tempDouble) >= 1 ? (tempDouble > 0 ? (Math_min(+Math_floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math_ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0) : 0),
+            ((tempDouble = ret),
+            +Math_abs(tempDouble) >= 1
+              ? tempDouble > 0
+                ? (Math_min(+Math_floor(tempDouble / 4294967296), 4294967295) |
+                    0) >>>
+                  0
+                : ~~+Math_ceil(
+                    (tempDouble - +(~~tempDouble >>> 0)) / 4294967296
+                  ) >>> 0
+              : 0),
           ]),
             (HEAP32[data >> 2] = tempI64[0]),
             (HEAP32[(data + 4) >> 2] = tempI64[1]);
@@ -8015,7 +9664,13 @@ var Engine = {
     function _emscripten_glGetIntegerv(name_, p) {
       emscriptenWebGLGet(name_, p, 0);
     }
-    function _emscripten_glGetInternalformativ(target, internalformat, pname, bufSize, params) {
+    function _emscripten_glGetInternalformativ(
+      target,
+      internalformat,
+      pname,
+      bufSize,
+      params
+    ) {
       if (bufSize < 0) {
         GL.recordError(1281);
         return;
@@ -8024,19 +9679,35 @@ var Engine = {
         GL.recordError(1281);
         return;
       }
-      var ret = GLctx["getInternalformatParameter"](target, internalformat, pname);
+      var ret = GLctx["getInternalformatParameter"](
+        target,
+        internalformat,
+        pname
+      );
       if (ret === null) return;
       for (var i = 0; i < ret.length && i < bufSize; ++i) {
         HEAP32[(params + i) >> 2] = ret[i];
       }
     }
-    function _emscripten_glGetProgramBinary(program, bufSize, length, binaryFormat, binary) {
+    function _emscripten_glGetProgramBinary(
+      program,
+      bufSize,
+      length,
+      binaryFormat,
+      binary
+    ) {
       GL.recordError(1282);
     }
-    function _emscripten_glGetProgramInfoLog(program, maxLength, length, infoLog) {
+    function _emscripten_glGetProgramInfoLog(
+      program,
+      maxLength,
+      length,
+      infoLog
+    ) {
       var log = GLctx.getProgramInfoLog(GL.programs[program]);
       if (log === null) log = "(unknown error)";
-      var numBytesWrittenExclNull = maxLength > 0 && infoLog ? stringToUTF8(log, infoLog, maxLength) : 0;
+      var numBytesWrittenExclNull =
+        maxLength > 0 && infoLog ? stringToUTF8(log, infoLog, maxLength) : 0;
       if (length) HEAP32[length >> 2] = numBytesWrittenExclNull;
     }
     function _emscripten_glGetProgramiv(program, pname, p) {
@@ -8066,7 +9737,10 @@ var Engine = {
           ptable.maxAttributeLength = 0;
           for (var i = 0; i < numAttribs; ++i) {
             var activeAttrib = GLctx.getActiveAttrib(program, i);
-            ptable.maxAttributeLength = Math.max(ptable.maxAttributeLength, activeAttrib.name.length + 1);
+            ptable.maxAttributeLength = Math.max(
+              ptable.maxAttributeLength,
+              activeAttrib.name.length + 1
+            );
           }
         }
         HEAP32[p >> 2] = ptable.maxAttributeLength;
@@ -8077,7 +9751,10 @@ var Engine = {
           ptable.maxUniformBlockNameLength = 0;
           for (var i = 0; i < numBlocks; ++i) {
             var activeBlockName = GLctx.getActiveUniformBlockName(program, i);
-            ptable.maxUniformBlockNameLength = Math.max(ptable.maxUniformBlockNameLength, activeBlockName.length + 1);
+            ptable.maxUniformBlockNameLength = Math.max(
+              ptable.maxUniformBlockNameLength,
+              activeBlockName.length + 1
+            );
           }
         }
         HEAP32[p >> 2] = ptable.maxUniformBlockNameLength;
@@ -8091,7 +9768,10 @@ var Engine = {
         return;
       }
       var query = GL.timerQueriesEXT[id];
-      var param = GLctx.disjointTimerQueryExt["getQueryObjectEXT"](query, pname);
+      var param = GLctx.disjointTimerQueryExt["getQueryObjectEXT"](
+        query,
+        pname
+      );
       var ret;
       if (typeof param == "boolean") {
         ret = param ? 1 : 0;
@@ -8100,7 +9780,16 @@ var Engine = {
       }
       (tempI64 = [
         ret >>> 0,
-        ((tempDouble = ret), +Math_abs(tempDouble) >= 1 ? (tempDouble > 0 ? (Math_min(+Math_floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math_ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0) : 0),
+        ((tempDouble = ret),
+        +Math_abs(tempDouble) >= 1
+          ? tempDouble > 0
+            ? (Math_min(+Math_floor(tempDouble / 4294967296), 4294967295) |
+                0) >>>
+              0
+            : ~~+Math_ceil(
+                (tempDouble - +(~~tempDouble >>> 0)) / 4294967296
+              ) >>> 0
+          : 0),
       ]),
         (HEAP32[params >> 2] = tempI64[0]),
         (HEAP32[(params + 4) >> 2] = tempI64[1]);
@@ -8111,7 +9800,10 @@ var Engine = {
         return;
       }
       var query = GL.timerQueriesEXT[id];
-      var param = GLctx.disjointTimerQueryExt["getQueryObjectEXT"](query, pname);
+      var param = GLctx.disjointTimerQueryExt["getQueryObjectEXT"](
+        query,
+        pname
+      );
       var ret;
       if (typeof param == "boolean") {
         ret = param ? 1 : 0;
@@ -8126,7 +9818,10 @@ var Engine = {
         return;
       }
       var query = GL.timerQueriesEXT[id];
-      var param = GLctx.disjointTimerQueryExt["getQueryObjectEXT"](query, pname);
+      var param = GLctx.disjointTimerQueryExt["getQueryObjectEXT"](
+        query,
+        pname
+      );
       var ret;
       if (typeof param == "boolean") {
         ret = param ? 1 : 0;
@@ -8135,7 +9830,16 @@ var Engine = {
       }
       (tempI64 = [
         ret >>> 0,
-        ((tempDouble = ret), +Math_abs(tempDouble) >= 1 ? (tempDouble > 0 ? (Math_min(+Math_floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math_ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0) : 0),
+        ((tempDouble = ret),
+        +Math_abs(tempDouble) >= 1
+          ? tempDouble > 0
+            ? (Math_min(+Math_floor(tempDouble / 4294967296), 4294967295) |
+                0) >>>
+              0
+            : ~~+Math_ceil(
+                (tempDouble - +(~~tempDouble >>> 0)) / 4294967296
+              ) >>> 0
+          : 0),
       ]),
         (HEAP32[params >> 2] = tempI64[0]),
         (HEAP32[(params + 4) >> 2] = tempI64[1]);
@@ -8161,7 +9865,10 @@ var Engine = {
         return;
       }
       var query = GL.timerQueriesEXT[id];
-      var param = GLctx.disjointTimerQueryExt["getQueryObjectEXT"](query, pname);
+      var param = GLctx.disjointTimerQueryExt["getQueryObjectEXT"](
+        query,
+        pname
+      );
       var ret;
       if (typeof param == "boolean") {
         ret = param ? 1 : 0;
@@ -8182,7 +9889,10 @@ var Engine = {
         GL.recordError(1281);
         return;
       }
-      HEAP32[params >> 2] = GLctx.disjointTimerQueryExt["getQueryEXT"](target, pname);
+      HEAP32[params >> 2] = GLctx.disjointTimerQueryExt["getQueryEXT"](
+        target,
+        pname
+      );
     }
     function _emscripten_glGetRenderbufferParameteriv(target, pname, params) {
       if (!params) {
@@ -8207,13 +9917,24 @@ var Engine = {
       sampler = GL.samplers[sampler];
       HEAP32[params >> 2] = GLctx["getSamplerParameter"](sampler, pname);
     }
-    function _emscripten_glGetShaderInfoLog(shader, maxLength, length, infoLog) {
+    function _emscripten_glGetShaderInfoLog(
+      shader,
+      maxLength,
+      length,
+      infoLog
+    ) {
       var log = GLctx.getShaderInfoLog(GL.shaders[shader]);
       if (log === null) log = "(unknown error)";
-      var numBytesWrittenExclNull = maxLength > 0 && infoLog ? stringToUTF8(log, infoLog, maxLength) : 0;
+      var numBytesWrittenExclNull =
+        maxLength > 0 && infoLog ? stringToUTF8(log, infoLog, maxLength) : 0;
       if (length) HEAP32[length >> 2] = numBytesWrittenExclNull;
     }
-    function _emscripten_glGetShaderPrecisionFormat(shaderType, precisionType, range, precision) {
+    function _emscripten_glGetShaderPrecisionFormat(
+      shaderType,
+      precisionType,
+      range,
+      precision
+    ) {
       var result = GLctx.getShaderPrecisionFormat(shaderType, precisionType);
       HEAP32[range >> 2] = result.rangeMin;
       HEAP32[(range + 4) >> 2] = result.rangeMax;
@@ -8222,7 +9943,8 @@ var Engine = {
     function _emscripten_glGetShaderSource(shader, bufSize, length, source) {
       var result = GLctx.getShaderSource(GL.shaders[shader]);
       if (!result) return;
-      var numBytesWrittenExclNull = bufSize > 0 && source ? stringToUTF8(result, source, bufSize) : 0;
+      var numBytesWrittenExclNull =
+        bufSize > 0 && source ? stringToUTF8(result, source, bufSize) : 0;
       if (length) HEAP32[length >> 2] = numBytesWrittenExclNull;
     }
     function _emscripten_glGetShaderiv(shader, pname, p) {
@@ -8236,7 +9958,8 @@ var Engine = {
         HEAP32[p >> 2] = log.length + 1;
       } else if (pname == 35720) {
         var source = GLctx.getShaderSource(GL.shaders[shader]);
-        var sourceLength = source === null || source.length == 0 ? 0 : source.length + 1;
+        var sourceLength =
+          source === null || source.length == 0 ? 0 : source.length + 1;
         HEAP32[p >> 2] = sourceLength;
       } else {
         HEAP32[p >> 2] = GLctx.getShaderParameter(GL.shaders[shader], pname);
@@ -8273,7 +9996,8 @@ var Engine = {
           break;
         case 7938:
           var glVersion = GLctx.getParameter(GLctx.VERSION);
-          if (GL.currentContext.version >= 2) glVersion = "OpenGL ES 3.0 (" + glVersion + ")";
+          if (GL.currentContext.version >= 2)
+            glVersion = "OpenGL ES 3.0 (" + glVersion + ")";
           else {
             glVersion = "OpenGL ES 2.0 (" + glVersion + ")";
           }
@@ -8285,7 +10009,8 @@ var Engine = {
           var ver_num = glslVersion.match(ver_re);
           if (ver_num !== null) {
             if (ver_num[1].length == 3) ver_num[1] = ver_num[1] + "0";
-            glslVersion = "OpenGL ES GLSL ES " + ver_num[1] + " (" + glslVersion + ")";
+            glslVersion =
+              "OpenGL ES GLSL ES " + ver_num[1] + " (" + glslVersion + ")";
           }
           ret = stringToNewUTF8(glslVersion);
           break;
@@ -8358,7 +10083,15 @@ var Engine = {
       }
       HEAP32[params >> 2] = GLctx.getTexParameter(target, pname);
     }
-    function _emscripten_glGetTransformFeedbackVarying(program, index, bufSize, length, size, type, name) {
+    function _emscripten_glGetTransformFeedbackVarying(
+      program,
+      index,
+      bufSize,
+      length,
+      size,
+      type,
+      name
+    ) {
       program = GL.programs[program];
       var info = GLctx["getTransformFeedbackVarying"](program, index);
       if (!info) return;
@@ -8372,9 +10105,17 @@ var Engine = {
       if (type) HEAP32[type >> 2] = info.type;
     }
     function _emscripten_glGetUniformBlockIndex(program, uniformBlockName) {
-      return GLctx["getUniformBlockIndex"](GL.programs[program], UTF8ToString(uniformBlockName));
+      return GLctx["getUniformBlockIndex"](
+        GL.programs[program],
+        UTF8ToString(uniformBlockName)
+      );
     }
-    function _emscripten_glGetUniformIndices(program, uniformCount, uniformNames, uniformIndices) {
+    function _emscripten_glGetUniformIndices(
+      program,
+      uniformCount,
+      uniformNames,
+      uniformIndices
+    ) {
       if (!uniformIndices) {
         GL.recordError(1281);
         return;
@@ -8385,7 +10126,8 @@ var Engine = {
       }
       program = GL.programs[program];
       var names = [];
-      for (var i = 0; i < uniformCount; i++) names.push(UTF8ToString(HEAP32[(uniformNames + i * 4) >> 2]));
+      for (var i = 0; i < uniformCount; i++)
+        names.push(UTF8ToString(HEAP32[(uniformNames + i * 4) >> 2]));
       var result = GLctx["getUniformIndices"](program, names);
       if (!result) return;
       var len = result.length;
@@ -8398,10 +10140,12 @@ var Engine = {
       var arrayIndex = 0;
       if (name[name.length - 1] == "]") {
         var leftBrace = name.lastIndexOf("[");
-        arrayIndex = name[leftBrace + 1] != "]" ? parseInt(name.slice(leftBrace + 1)) : 0;
+        arrayIndex =
+          name[leftBrace + 1] != "]" ? parseInt(name.slice(leftBrace + 1)) : 0;
         name = name.slice(0, leftBrace);
       }
-      var uniformInfo = GL.programInfos[program] && GL.programInfos[program].uniforms[name];
+      var uniformInfo =
+        GL.programInfos[program] && GL.programInfos[program].uniforms[name];
       if (uniformInfo && arrayIndex >= 0 && arrayIndex < uniformInfo[0]) {
         return uniformInfo[1] + arrayIndex;
       } else {
@@ -8423,7 +10167,9 @@ var Engine = {
             HEAPF32[params >> 2] = data;
             break;
           default:
-            throw "internal emscriptenWebGLGetUniform() error, bad type: " + type;
+            throw (
+              "internal emscriptenWebGLGetUniform() error, bad type: " + type
+            );
         }
       } else {
         for (var i = 0; i < data.length; i++) {
@@ -8435,7 +10181,9 @@ var Engine = {
               HEAPF32[(params + i * 4) >> 2] = data[i];
               break;
             default:
-              throw "internal emscriptenWebGLGetUniform() error, bad type: " + type;
+              throw (
+                "internal emscriptenWebGLGetUniform() error, bad type: " + type
+              );
           }
         }
       }
@@ -8469,7 +10217,10 @@ var Engine = {
             HEAP32[params >> 2] = Math.fround(data);
             break;
           default:
-            throw "internal emscriptenWebGLGetVertexAttrib() error, bad type: " + type;
+            throw (
+              "internal emscriptenWebGLGetVertexAttrib() error, bad type: " +
+              type
+            );
         }
       } else {
         for (var i = 0; i < data.length; i++) {
@@ -8484,7 +10235,10 @@ var Engine = {
               HEAP32[(params + i * 4) >> 2] = Math.fround(data[i]);
               break;
             default:
-              throw "internal emscriptenWebGLGetVertexAttrib() error, bad type: " + type;
+              throw (
+                "internal emscriptenWebGLGetVertexAttrib() error, bad type: " +
+                type
+              );
           }
         }
       }
@@ -8511,14 +10265,26 @@ var Engine = {
     function _emscripten_glHint(x0, x1) {
       GLctx["hint"](x0, x1);
     }
-    function _emscripten_glInvalidateFramebuffer(target, numAttachments, attachments) {
+    function _emscripten_glInvalidateFramebuffer(
+      target,
+      numAttachments,
+      attachments
+    ) {
       var list = __tempFixedLengthArray[numAttachments];
       for (var i = 0; i < numAttachments; i++) {
         list[i] = HEAP32[(attachments + i * 4) >> 2];
       }
       GLctx["invalidateFramebuffer"](target, list);
     }
-    function _emscripten_glInvalidateSubFramebuffer(target, numAttachments, attachments, x, y, width, height) {
+    function _emscripten_glInvalidateSubFramebuffer(
+      target,
+      numAttachments,
+      attachments,
+      x,
+      y,
+      width,
+      height
+    ) {
       var list = __tempFixedLengthArray[numAttachments];
       for (var i = 0; i < numAttachments; i++) {
         list[i] = HEAP32[(attachments + i * 4) >> 2];
@@ -8614,19 +10380,32 @@ var Engine = {
     function _emscripten_glPolygonOffset(x0, x1) {
       GLctx["polygonOffset"](x0, x1);
     }
-    function _emscripten_glProgramBinary(program, binaryFormat, binary, length) {
+    function _emscripten_glProgramBinary(
+      program,
+      binaryFormat,
+      binary,
+      length
+    ) {
       GL.recordError(1280);
     }
     function _emscripten_glProgramParameteri(program, pname, value) {
       GL.recordError(1280);
     }
     function _emscripten_glQueryCounterEXT(id, target) {
-      GLctx.disjointTimerQueryExt["queryCounterEXT"](GL.timerQueriesEXT[id], target);
+      GLctx.disjointTimerQueryExt["queryCounterEXT"](
+        GL.timerQueriesEXT[id],
+        target
+      );
     }
     function _emscripten_glReadBuffer(x0) {
       GLctx["readBuffer"](x0);
     }
-    function __computeUnpackAlignedImageSize(width, height, sizePerPixel, alignment) {
+    function __computeUnpackAlignedImageSize(
+      width,
+      height,
+      sizePerPixel,
+      alignment
+    ) {
       function roundedToNextMultipleOf(x, y) {
         return (x + y - 1) & -y;
       }
@@ -8634,15 +10413,61 @@ var Engine = {
       var alignedRowSize = roundedToNextMultipleOf(plainRowSize, alignment);
       return height * alignedRowSize;
     }
-    var __colorChannelsInGlTextureFormat = { 6402: 1, 6403: 1, 6406: 1, 6407: 3, 6408: 4, 6409: 1, 6410: 2, 33319: 2, 33320: 2, 35904: 3, 35906: 4, 36244: 1, 36248: 3, 36249: 4 };
-    var __sizeOfGlTextureElementType = { 5120: 1, 5121: 1, 5122: 2, 5123: 2, 5124: 4, 5125: 4, 5126: 4, 5131: 2, 32819: 2, 32820: 2, 33635: 2, 33640: 4, 34042: 4, 35899: 4, 35902: 4, 36193: 2 };
-    function emscriptenWebGLGetTexPixelData(type, format, width, height, pixels, internalFormat) {
-      var sizePerPixel = __colorChannelsInGlTextureFormat[format] * __sizeOfGlTextureElementType[type];
+    var __colorChannelsInGlTextureFormat = {
+      6402: 1,
+      6403: 1,
+      6406: 1,
+      6407: 3,
+      6408: 4,
+      6409: 1,
+      6410: 2,
+      33319: 2,
+      33320: 2,
+      35904: 3,
+      35906: 4,
+      36244: 1,
+      36248: 3,
+      36249: 4,
+    };
+    var __sizeOfGlTextureElementType = {
+      5120: 1,
+      5121: 1,
+      5122: 2,
+      5123: 2,
+      5124: 4,
+      5125: 4,
+      5126: 4,
+      5131: 2,
+      32819: 2,
+      32820: 2,
+      33635: 2,
+      33640: 4,
+      34042: 4,
+      35899: 4,
+      35902: 4,
+      36193: 2,
+    };
+    function emscriptenWebGLGetTexPixelData(
+      type,
+      format,
+      width,
+      height,
+      pixels,
+      internalFormat
+    ) {
+      var sizePerPixel =
+        __colorChannelsInGlTextureFormat[format] *
+        __sizeOfGlTextureElementType[type];
       if (!sizePerPixel) {
         GL.recordError(1280);
         return;
       }
-      var bytes = __computeUnpackAlignedImageSize(width, height, sizePerPixel, GL.unpackAlignment);
+      var bytes = __computeUnpackAlignedImageSize(
+        width,
+        height,
+        sizePerPixel,
+        GL.unpackAlignment
+      );
       var end = pixels + bytes;
       switch (type) {
         case 5120:
@@ -8700,17 +10525,56 @@ var Engine = {
           return HEAPF32;
       }
     }
-    var __heapAccessShiftForWebGLType = { 5122: 1, 5123: 1, 5124: 2, 5125: 2, 5126: 2, 5131: 1, 32819: 1, 32820: 1, 33635: 1, 33640: 2, 34042: 2, 35899: 2, 35902: 2, 36193: 1 };
-    function _emscripten_glReadPixels(x, y, width, height, format, type, pixels) {
+    var __heapAccessShiftForWebGLType = {
+      5122: 1,
+      5123: 1,
+      5124: 2,
+      5125: 2,
+      5126: 2,
+      5131: 1,
+      32819: 1,
+      32820: 1,
+      33635: 1,
+      33640: 2,
+      34042: 2,
+      35899: 2,
+      35902: 2,
+      36193: 1,
+    };
+    function _emscripten_glReadPixels(
+      x,
+      y,
+      width,
+      height,
+      format,
+      type,
+      pixels
+    ) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
         if (GLctx.currentPixelPackBufferBinding) {
           GLctx.readPixels(x, y, width, height, format, type, pixels);
         } else {
-          GLctx.readPixels(x, y, width, height, format, type, __heapObjectForWebGLType(type), pixels >> (__heapAccessShiftForWebGLType[type] | 0));
+          GLctx.readPixels(
+            x,
+            y,
+            width,
+            height,
+            format,
+            type,
+            __heapObjectForWebGLType(type),
+            pixels >> (__heapAccessShiftForWebGLType[type] | 0)
+          );
         }
         return;
       }
-      var pixelData = emscriptenWebGLGetTexPixelData(type, format, width, height, pixels, format);
+      var pixelData = emscriptenWebGLGetTexPixelData(
+        type,
+        format,
+        width,
+        height,
+        pixels,
+        format
+      );
       if (!pixelData) {
         GL.recordError(1280);
         return;
@@ -8772,26 +10636,131 @@ var Engine = {
     function _emscripten_glStencilOpSeparate(x0, x1, x2, x3) {
       GLctx["stencilOpSeparate"](x0, x1, x2, x3);
     }
-    function _emscripten_glTexImage2D(target, level, internalFormat, width, height, border, format, type, pixels) {
+    function _emscripten_glTexImage2D(
+      target,
+      level,
+      internalFormat,
+      width,
+      height,
+      border,
+      format,
+      type,
+      pixels
+    ) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
         if (GLctx.currentPixelUnpackBufferBinding) {
-          GLctx.texImage2D(target, level, internalFormat, width, height, border, format, type, pixels);
+          GLctx.texImage2D(
+            target,
+            level,
+            internalFormat,
+            width,
+            height,
+            border,
+            format,
+            type,
+            pixels
+          );
         } else if (pixels != 0) {
-          GLctx.texImage2D(target, level, internalFormat, width, height, border, format, type, __heapObjectForWebGLType(type), pixels >> (__heapAccessShiftForWebGLType[type] | 0));
+          GLctx.texImage2D(
+            target,
+            level,
+            internalFormat,
+            width,
+            height,
+            border,
+            format,
+            type,
+            __heapObjectForWebGLType(type),
+            pixels >> (__heapAccessShiftForWebGLType[type] | 0)
+          );
         } else {
-          GLctx.texImage2D(target, level, internalFormat, width, height, border, format, type, null);
+          GLctx.texImage2D(
+            target,
+            level,
+            internalFormat,
+            width,
+            height,
+            border,
+            format,
+            type,
+            null
+          );
         }
         return;
       }
-      GLctx.texImage2D(target, level, internalFormat, width, height, border, format, type, pixels ? emscriptenWebGLGetTexPixelData(type, format, width, height, pixels, internalFormat) : null);
+      GLctx.texImage2D(
+        target,
+        level,
+        internalFormat,
+        width,
+        height,
+        border,
+        format,
+        type,
+        pixels
+          ? emscriptenWebGLGetTexPixelData(
+              type,
+              format,
+              width,
+              height,
+              pixels,
+              internalFormat
+            )
+          : null
+      );
     }
-    function _emscripten_glTexImage3D(target, level, internalFormat, width, height, depth, border, format, type, pixels) {
+    function _emscripten_glTexImage3D(
+      target,
+      level,
+      internalFormat,
+      width,
+      height,
+      depth,
+      border,
+      format,
+      type,
+      pixels
+    ) {
       if (GLctx.currentPixelUnpackBufferBinding) {
-        GLctx["texImage3D"](target, level, internalFormat, width, height, depth, border, format, type, pixels);
+        GLctx["texImage3D"](
+          target,
+          level,
+          internalFormat,
+          width,
+          height,
+          depth,
+          border,
+          format,
+          type,
+          pixels
+        );
       } else if (pixels != 0) {
-        GLctx["texImage3D"](target, level, internalFormat, width, height, depth, border, format, type, __heapObjectForWebGLType(type), pixels >> (__heapAccessShiftForWebGLType[type] | 0));
+        GLctx["texImage3D"](
+          target,
+          level,
+          internalFormat,
+          width,
+          height,
+          depth,
+          border,
+          format,
+          type,
+          __heapObjectForWebGLType(type),
+          pixels >> (__heapAccessShiftForWebGLType[type] | 0)
+        );
       } else {
-        GLctx["texImage3D"](target, level, internalFormat, width, height, depth, border, format, type, null);
+        GLctx["texImage3D"](
+          target,
+          level,
+          internalFormat,
+          width,
+          height,
+          depth,
+          border,
+          format,
+          type,
+          null
+        );
       }
     }
     function _emscripten_glTexParameterf(x0, x1, x2) {
@@ -8814,34 +10783,148 @@ var Engine = {
     function _emscripten_glTexStorage3D(x0, x1, x2, x3, x4, x5) {
       GLctx["texStorage3D"](x0, x1, x2, x3, x4, x5);
     }
-    function _emscripten_glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels) {
+    function _emscripten_glTexSubImage2D(
+      target,
+      level,
+      xoffset,
+      yoffset,
+      width,
+      height,
+      format,
+      type,
+      pixels
+    ) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
         if (GLctx.currentPixelUnpackBufferBinding) {
-          GLctx.texSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels);
+          GLctx.texSubImage2D(
+            target,
+            level,
+            xoffset,
+            yoffset,
+            width,
+            height,
+            format,
+            type,
+            pixels
+          );
         } else if (pixels != 0) {
-          GLctx.texSubImage2D(target, level, xoffset, yoffset, width, height, format, type, __heapObjectForWebGLType(type), pixels >> (__heapAccessShiftForWebGLType[type] | 0));
+          GLctx.texSubImage2D(
+            target,
+            level,
+            xoffset,
+            yoffset,
+            width,
+            height,
+            format,
+            type,
+            __heapObjectForWebGLType(type),
+            pixels >> (__heapAccessShiftForWebGLType[type] | 0)
+          );
         } else {
-          GLctx.texSubImage2D(target, level, xoffset, yoffset, width, height, format, type, null);
+          GLctx.texSubImage2D(
+            target,
+            level,
+            xoffset,
+            yoffset,
+            width,
+            height,
+            format,
+            type,
+            null
+          );
         }
         return;
       }
       var pixelData = null;
-      if (pixels) pixelData = emscriptenWebGLGetTexPixelData(type, format, width, height, pixels, 0);
-      GLctx.texSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixelData);
+      if (pixels)
+        pixelData = emscriptenWebGLGetTexPixelData(
+          type,
+          format,
+          width,
+          height,
+          pixels,
+          0
+        );
+      GLctx.texSubImage2D(
+        target,
+        level,
+        xoffset,
+        yoffset,
+        width,
+        height,
+        format,
+        type,
+        pixelData
+      );
     }
-    function _emscripten_glTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels) {
+    function _emscripten_glTexSubImage3D(
+      target,
+      level,
+      xoffset,
+      yoffset,
+      zoffset,
+      width,
+      height,
+      depth,
+      format,
+      type,
+      pixels
+    ) {
       if (GLctx.currentPixelUnpackBufferBinding) {
-        GLctx["texSubImage3D"](target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
+        GLctx["texSubImage3D"](
+          target,
+          level,
+          xoffset,
+          yoffset,
+          zoffset,
+          width,
+          height,
+          depth,
+          format,
+          type,
+          pixels
+        );
       } else if (pixels != 0) {
-        GLctx["texSubImage3D"](target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, __heapObjectForWebGLType(type), pixels >> (__heapAccessShiftForWebGLType[type] | 0));
+        GLctx["texSubImage3D"](
+          target,
+          level,
+          xoffset,
+          yoffset,
+          zoffset,
+          width,
+          height,
+          depth,
+          format,
+          type,
+          __heapObjectForWebGLType(type),
+          pixels >> (__heapAccessShiftForWebGLType[type] | 0)
+        );
       } else {
-        GLctx["texSubImage3D"](target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, null);
+        GLctx["texSubImage3D"](
+          target,
+          level,
+          xoffset,
+          yoffset,
+          zoffset,
+          width,
+          height,
+          depth,
+          format,
+          type,
+          null
+        );
       }
     }
-    function _emscripten_glTransformFeedbackVaryings(program, count, varyings, bufferMode) {
+    function _emscripten_glTransformFeedbackVaryings(
+      program,
+      count,
+      varyings,
+      bufferMode
+    ) {
       program = GL.programs[program];
       var vars = [];
-      for (var i = 0; i < count; i++) vars.push(UTF8ToString(HEAP32[(varyings + i * 4) >> 2]));
+      for (var i = 0; i < count; i++)
+        vars.push(UTF8ToString(HEAP32[(varyings + i * 4) >> 2]));
       GLctx["transformFeedbackVaryings"](program, vars, bufferMode);
     }
     function _emscripten_glUniform1f(location, v0) {
@@ -8870,7 +10953,10 @@ var Engine = {
         GLctx.uniform1iv(GL.uniforms[location], HEAP32, value >> 2, count);
         return;
       }
-      GLctx.uniform1iv(GL.uniforms[location], HEAP32.subarray(value >> 2, (value + count * 4) >> 2));
+      GLctx.uniform1iv(
+        GL.uniforms[location],
+        HEAP32.subarray(value >> 2, (value + count * 4) >> 2)
+      );
     }
     function _emscripten_glUniform1ui(location, v0) {
       GLctx.uniform1ui(GL.uniforms[location], v0);
@@ -8879,7 +10965,10 @@ var Engine = {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
         GLctx.uniform1uiv(GL.uniforms[location], HEAPU32, value >> 2, count);
       } else {
-        GLctx.uniform1uiv(GL.uniforms[location], HEAPU32.subarray(value >> 2, (value + count * 4) >> 2));
+        GLctx.uniform1uiv(
+          GL.uniforms[location],
+          HEAPU32.subarray(value >> 2, (value + count * 4) >> 2)
+        );
       }
     }
     function _emscripten_glUniform2f(location, v0, v1) {
@@ -8909,16 +10998,27 @@ var Engine = {
         GLctx.uniform2iv(GL.uniforms[location], HEAP32, value >> 2, count * 2);
         return;
       }
-      GLctx.uniform2iv(GL.uniforms[location], HEAP32.subarray(value >> 2, (value + count * 8) >> 2));
+      GLctx.uniform2iv(
+        GL.uniforms[location],
+        HEAP32.subarray(value >> 2, (value + count * 8) >> 2)
+      );
     }
     function _emscripten_glUniform2ui(location, v0, v1) {
       GLctx.uniform2ui(GL.uniforms[location], v0, v1);
     }
     function _emscripten_glUniform2uiv(location, count, value) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
-        GLctx.uniform2uiv(GL.uniforms[location], HEAPU32, value >> 2, count * 2);
+        GLctx.uniform2uiv(
+          GL.uniforms[location],
+          HEAPU32,
+          value >> 2,
+          count * 2
+        );
       } else {
-        GLctx.uniform2uiv(GL.uniforms[location], HEAPU32.subarray(value >> 2, (value + count * 8) >> 2));
+        GLctx.uniform2uiv(
+          GL.uniforms[location],
+          HEAPU32.subarray(value >> 2, (value + count * 8) >> 2)
+        );
       }
     }
     function _emscripten_glUniform3f(location, v0, v1, v2) {
@@ -8949,16 +11049,27 @@ var Engine = {
         GLctx.uniform3iv(GL.uniforms[location], HEAP32, value >> 2, count * 3);
         return;
       }
-      GLctx.uniform3iv(GL.uniforms[location], HEAP32.subarray(value >> 2, (value + count * 12) >> 2));
+      GLctx.uniform3iv(
+        GL.uniforms[location],
+        HEAP32.subarray(value >> 2, (value + count * 12) >> 2)
+      );
     }
     function _emscripten_glUniform3ui(location, v0, v1, v2) {
       GLctx.uniform3ui(GL.uniforms[location], v0, v1, v2);
     }
     function _emscripten_glUniform3uiv(location, count, value) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
-        GLctx.uniform3uiv(GL.uniforms[location], HEAPU32, value >> 2, count * 3);
+        GLctx.uniform3uiv(
+          GL.uniforms[location],
+          HEAPU32,
+          value >> 2,
+          count * 3
+        );
       } else {
-        GLctx.uniform3uiv(GL.uniforms[location], HEAPU32.subarray(value >> 2, (value + count * 12) >> 2));
+        GLctx.uniform3uiv(
+          GL.uniforms[location],
+          HEAPU32.subarray(value >> 2, (value + count * 12) >> 2)
+        );
       }
     }
     function _emscripten_glUniform4f(location, v0, v1, v2, v3) {
@@ -8990,25 +11101,50 @@ var Engine = {
         GLctx.uniform4iv(GL.uniforms[location], HEAP32, value >> 2, count * 4);
         return;
       }
-      GLctx.uniform4iv(GL.uniforms[location], HEAP32.subarray(value >> 2, (value + count * 16) >> 2));
+      GLctx.uniform4iv(
+        GL.uniforms[location],
+        HEAP32.subarray(value >> 2, (value + count * 16) >> 2)
+      );
     }
     function _emscripten_glUniform4ui(location, v0, v1, v2, v3) {
       GLctx.uniform4ui(GL.uniforms[location], v0, v1, v2, v3);
     }
     function _emscripten_glUniform4uiv(location, count, value) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
-        GLctx.uniform4uiv(GL.uniforms[location], HEAPU32, value >> 2, count * 4);
+        GLctx.uniform4uiv(
+          GL.uniforms[location],
+          HEAPU32,
+          value >> 2,
+          count * 4
+        );
       } else {
-        GLctx.uniform4uiv(GL.uniforms[location], HEAPU32.subarray(value >> 2, (value + count * 16) >> 2));
+        GLctx.uniform4uiv(
+          GL.uniforms[location],
+          HEAPU32.subarray(value >> 2, (value + count * 16) >> 2)
+        );
       }
     }
-    function _emscripten_glUniformBlockBinding(program, uniformBlockIndex, uniformBlockBinding) {
+    function _emscripten_glUniformBlockBinding(
+      program,
+      uniformBlockIndex,
+      uniformBlockBinding
+    ) {
       program = GL.programs[program];
-      GLctx["uniformBlockBinding"](program, uniformBlockIndex, uniformBlockBinding);
+      GLctx["uniformBlockBinding"](
+        program,
+        uniformBlockIndex,
+        uniformBlockBinding
+      );
     }
     function _emscripten_glUniformMatrix2fv(location, count, transpose, value) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
-        GLctx.uniformMatrix2fv(GL.uniforms[location], !!transpose, HEAPF32, value >> 2, count * 4);
+        GLctx.uniformMatrix2fv(
+          GL.uniforms[location],
+          !!transpose,
+          HEAPF32,
+          value >> 2,
+          count * 4
+        );
         return;
       }
       if (4 * count <= GL.MINI_TEMP_BUFFER_SIZE) {
@@ -9024,23 +11160,59 @@ var Engine = {
       }
       GLctx.uniformMatrix2fv(GL.uniforms[location], !!transpose, view);
     }
-    function _emscripten_glUniformMatrix2x3fv(location, count, transpose, value) {
+    function _emscripten_glUniformMatrix2x3fv(
+      location,
+      count,
+      transpose,
+      value
+    ) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
-        GLctx.uniformMatrix2x3fv(GL.uniforms[location], !!transpose, HEAPF32, value >> 2, count * 6);
+        GLctx.uniformMatrix2x3fv(
+          GL.uniforms[location],
+          !!transpose,
+          HEAPF32,
+          value >> 2,
+          count * 6
+        );
       } else {
-        GLctx.uniformMatrix2x3fv(GL.uniforms[location], !!transpose, HEAPF32.subarray(value >> 2, (value + count * 24) >> 2));
+        GLctx.uniformMatrix2x3fv(
+          GL.uniforms[location],
+          !!transpose,
+          HEAPF32.subarray(value >> 2, (value + count * 24) >> 2)
+        );
       }
     }
-    function _emscripten_glUniformMatrix2x4fv(location, count, transpose, value) {
+    function _emscripten_glUniformMatrix2x4fv(
+      location,
+      count,
+      transpose,
+      value
+    ) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
-        GLctx.uniformMatrix2x4fv(GL.uniforms[location], !!transpose, HEAPF32, value >> 2, count * 8);
+        GLctx.uniformMatrix2x4fv(
+          GL.uniforms[location],
+          !!transpose,
+          HEAPF32,
+          value >> 2,
+          count * 8
+        );
       } else {
-        GLctx.uniformMatrix2x4fv(GL.uniforms[location], !!transpose, HEAPF32.subarray(value >> 2, (value + count * 32) >> 2));
+        GLctx.uniformMatrix2x4fv(
+          GL.uniforms[location],
+          !!transpose,
+          HEAPF32.subarray(value >> 2, (value + count * 32) >> 2)
+        );
       }
     }
     function _emscripten_glUniformMatrix3fv(location, count, transpose, value) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
-        GLctx.uniformMatrix3fv(GL.uniforms[location], !!transpose, HEAPF32, value >> 2, count * 9);
+        GLctx.uniformMatrix3fv(
+          GL.uniforms[location],
+          !!transpose,
+          HEAPF32,
+          value >> 2,
+          count * 9
+        );
         return;
       }
       if (9 * count <= GL.MINI_TEMP_BUFFER_SIZE) {
@@ -9061,23 +11233,59 @@ var Engine = {
       }
       GLctx.uniformMatrix3fv(GL.uniforms[location], !!transpose, view);
     }
-    function _emscripten_glUniformMatrix3x2fv(location, count, transpose, value) {
+    function _emscripten_glUniformMatrix3x2fv(
+      location,
+      count,
+      transpose,
+      value
+    ) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
-        GLctx.uniformMatrix3x2fv(GL.uniforms[location], !!transpose, HEAPF32, value >> 2, count * 6);
+        GLctx.uniformMatrix3x2fv(
+          GL.uniforms[location],
+          !!transpose,
+          HEAPF32,
+          value >> 2,
+          count * 6
+        );
       } else {
-        GLctx.uniformMatrix3x2fv(GL.uniforms[location], !!transpose, HEAPF32.subarray(value >> 2, (value + count * 24) >> 2));
+        GLctx.uniformMatrix3x2fv(
+          GL.uniforms[location],
+          !!transpose,
+          HEAPF32.subarray(value >> 2, (value + count * 24) >> 2)
+        );
       }
     }
-    function _emscripten_glUniformMatrix3x4fv(location, count, transpose, value) {
+    function _emscripten_glUniformMatrix3x4fv(
+      location,
+      count,
+      transpose,
+      value
+    ) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
-        GLctx.uniformMatrix3x4fv(GL.uniforms[location], !!transpose, HEAPF32, value >> 2, count * 12);
+        GLctx.uniformMatrix3x4fv(
+          GL.uniforms[location],
+          !!transpose,
+          HEAPF32,
+          value >> 2,
+          count * 12
+        );
       } else {
-        GLctx.uniformMatrix3x4fv(GL.uniforms[location], !!transpose, HEAPF32.subarray(value >> 2, (value + count * 48) >> 2));
+        GLctx.uniformMatrix3x4fv(
+          GL.uniforms[location],
+          !!transpose,
+          HEAPF32.subarray(value >> 2, (value + count * 48) >> 2)
+        );
       }
     }
     function _emscripten_glUniformMatrix4fv(location, count, transpose, value) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
-        GLctx.uniformMatrix4fv(GL.uniforms[location], !!transpose, HEAPF32, value >> 2, count * 16);
+        GLctx.uniformMatrix4fv(
+          GL.uniforms[location],
+          !!transpose,
+          HEAPF32,
+          value >> 2,
+          count * 16
+        );
         return;
       }
       if (16 * count <= GL.MINI_TEMP_BUFFER_SIZE) {
@@ -9105,18 +11313,48 @@ var Engine = {
       }
       GLctx.uniformMatrix4fv(GL.uniforms[location], !!transpose, view);
     }
-    function _emscripten_glUniformMatrix4x2fv(location, count, transpose, value) {
+    function _emscripten_glUniformMatrix4x2fv(
+      location,
+      count,
+      transpose,
+      value
+    ) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
-        GLctx.uniformMatrix4x2fv(GL.uniforms[location], !!transpose, HEAPF32, value >> 2, count * 8);
+        GLctx.uniformMatrix4x2fv(
+          GL.uniforms[location],
+          !!transpose,
+          HEAPF32,
+          value >> 2,
+          count * 8
+        );
       } else {
-        GLctx.uniformMatrix4x2fv(GL.uniforms[location], !!transpose, HEAPF32.subarray(value >> 2, (value + count * 32) >> 2));
+        GLctx.uniformMatrix4x2fv(
+          GL.uniforms[location],
+          !!transpose,
+          HEAPF32.subarray(value >> 2, (value + count * 32) >> 2)
+        );
       }
     }
-    function _emscripten_glUniformMatrix4x3fv(location, count, transpose, value) {
+    function _emscripten_glUniformMatrix4x3fv(
+      location,
+      count,
+      transpose,
+      value
+    ) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
-        GLctx.uniformMatrix4x3fv(GL.uniforms[location], !!transpose, HEAPF32, value >> 2, count * 12);
+        GLctx.uniformMatrix4x3fv(
+          GL.uniforms[location],
+          !!transpose,
+          HEAPF32,
+          value >> 2,
+          count * 12
+        );
       } else {
-        GLctx.uniformMatrix4x3fv(GL.uniforms[location], !!transpose, HEAPF32.subarray(value >> 2, (value + count * 48) >> 2));
+        GLctx.uniformMatrix4x3fv(
+          GL.uniforms[location],
+          !!transpose,
+          HEAPF32.subarray(value >> 2, (value + count * 48) >> 2)
+        );
       }
     }
     function _emscripten_glUnmapBuffer() {
@@ -9145,13 +11383,24 @@ var Engine = {
       GLctx["vertexAttrib3f"](x0, x1, x2, x3);
     }
     function _emscripten_glVertexAttrib3fv(index, v) {
-      GLctx.vertexAttrib3f(index, HEAPF32[v >> 2], HEAPF32[(v + 4) >> 2], HEAPF32[(v + 8) >> 2]);
+      GLctx.vertexAttrib3f(
+        index,
+        HEAPF32[v >> 2],
+        HEAPF32[(v + 4) >> 2],
+        HEAPF32[(v + 8) >> 2]
+      );
     }
     function _emscripten_glVertexAttrib4f(x0, x1, x2, x3, x4) {
       GLctx["vertexAttrib4f"](x0, x1, x2, x3, x4);
     }
     function _emscripten_glVertexAttrib4fv(index, v) {
-      GLctx.vertexAttrib4f(index, HEAPF32[v >> 2], HEAPF32[(v + 4) >> 2], HEAPF32[(v + 8) >> 2], HEAPF32[(v + 12) >> 2]);
+      GLctx.vertexAttrib4f(
+        index,
+        HEAPF32[v >> 2],
+        HEAPF32[(v + 4) >> 2],
+        HEAPF32[(v + 8) >> 2],
+        HEAPF32[(v + 12) >> 2]
+      );
     }
     function _emscripten_glVertexAttribDivisor(index, divisor) {
       GLctx["vertexAttribDivisor"](index, divisor);
@@ -9172,18 +11421,43 @@ var Engine = {
       GLctx["vertexAttribI4i"](x0, x1, x2, x3, x4);
     }
     function _emscripten_glVertexAttribI4iv(index, v) {
-      GLctx.vertexAttribI4i(index, HEAP32[v >> 2], HEAP32[(v + 4) >> 2], HEAP32[(v + 8) >> 2], HEAP32[(v + 12) >> 2]);
+      GLctx.vertexAttribI4i(
+        index,
+        HEAP32[v >> 2],
+        HEAP32[(v + 4) >> 2],
+        HEAP32[(v + 8) >> 2],
+        HEAP32[(v + 12) >> 2]
+      );
     }
     function _emscripten_glVertexAttribI4ui(x0, x1, x2, x3, x4) {
       GLctx["vertexAttribI4ui"](x0, x1, x2, x3, x4);
     }
     function _emscripten_glVertexAttribI4uiv(index, v) {
-      GLctx.vertexAttribI4ui(index, HEAPU32[v >> 2], HEAPU32[(v + 4) >> 2], HEAPU32[(v + 8) >> 2], HEAPU32[(v + 12) >> 2]);
+      GLctx.vertexAttribI4ui(
+        index,
+        HEAPU32[v >> 2],
+        HEAPU32[(v + 4) >> 2],
+        HEAPU32[(v + 8) >> 2],
+        HEAPU32[(v + 12) >> 2]
+      );
     }
-    function _emscripten_glVertexAttribIPointer(index, size, type, stride, ptr) {
+    function _emscripten_glVertexAttribIPointer(
+      index,
+      size,
+      type,
+      stride,
+      ptr
+    ) {
       GLctx["vertexAttribIPointer"](index, size, type, stride, ptr);
     }
-    function _emscripten_glVertexAttribPointer(index, size, type, normalized, stride, ptr) {
+    function _emscripten_glVertexAttribPointer(
+      index,
+      size,
+      type,
+      normalized,
+      stride,
+      ptr
+    ) {
       GLctx.vertexAttribPointer(index, size, type, !!normalized, stride, ptr);
     }
     function _emscripten_glViewport(x0, x1, x2, x3) {
@@ -9192,7 +11466,10 @@ var Engine = {
     function _emscripten_glWaitSync(sync, flags, timeoutLo, timeoutHi) {
       timeoutLo = timeoutLo >>> 0;
       timeoutHi = timeoutHi >>> 0;
-      var timeout = timeoutLo == 4294967295 && timeoutHi == 4294967295 ? -1 : makeBigInt(timeoutLo, timeoutHi, true);
+      var timeout =
+        timeoutLo == 4294967295 && timeoutHi == 4294967295
+          ? -1
+          : makeBigInt(timeoutLo, timeoutHi, true);
       GLctx.waitSync(GL.syncs[sync], flags, timeout);
     }
     var setjmpId = 0;
@@ -9251,13 +11528,22 @@ var Engine = {
       if (!target) target = "#canvas";
       target = __findEventTarget(target);
       if (!target) return -4;
-      if (!target.requestFullscreen && !target.msRequestFullscreen && !target.mozRequestFullScreen && !target.mozRequestFullscreen && !target.webkitRequestFullscreen) {
+      if (
+        !target.requestFullscreen &&
+        !target.msRequestFullscreen &&
+        !target.mozRequestFullScreen &&
+        !target.mozRequestFullscreen &&
+        !target.webkitRequestFullscreen
+      ) {
         return -3;
       }
       var canPerformRequests = JSEvents.canPerformEventHandlerRequests();
       if (!canPerformRequests) {
         if (strategy.deferUntilInEventHandler) {
-          JSEvents.deferCall(_JSEvents_requestFullscreen, 1, [target, strategy]);
+          JSEvents.deferCall(_JSEvents_requestFullscreen, 1, [
+            target,
+            strategy,
+          ]);
           return 1;
         } else {
           return -2;
@@ -9265,14 +11551,20 @@ var Engine = {
       }
       return _JSEvents_requestFullscreen(target, strategy);
     }
-    function _emscripten_request_fullscreen_strategy(target, deferUntilInEventHandler, fullscreenStrategy) {
+    function _emscripten_request_fullscreen_strategy(
+      target,
+      deferUntilInEventHandler,
+      fullscreenStrategy
+    ) {
       var strategy = {};
       strategy.scaleMode = HEAP32[fullscreenStrategy >> 2];
-      strategy.canvasResolutionScaleMode = HEAP32[(fullscreenStrategy + 4) >> 2];
+      strategy.canvasResolutionScaleMode =
+        HEAP32[(fullscreenStrategy + 4) >> 2];
       strategy.filteringMode = HEAP32[(fullscreenStrategy + 8) >> 2];
       strategy.deferUntilInEventHandler = deferUntilInEventHandler;
       strategy.canvasResizedCallback = HEAP32[(fullscreenStrategy + 12) >> 2];
-      strategy.canvasResizedCallbackUserData = HEAP32[(fullscreenStrategy + 16) >> 2];
+      strategy.canvasResizedCallbackUserData =
+        HEAP32[(fullscreenStrategy + 16) >> 2];
       __currentFullscreenStrategy = strategy;
       return __emscripten_do_request_fullscreen(target, strategy);
     }
@@ -9280,7 +11572,12 @@ var Engine = {
       if (!target) target = "#canvas";
       target = __findEventTarget(target);
       if (!target) return -4;
-      if (!target.requestPointerLock && !target.mozRequestPointerLock && !target.webkitRequestPointerLock && !target.msRequestPointerLock) {
+      if (
+        !target.requestPointerLock &&
+        !target.mozRequestPointerLock &&
+        !target.webkitRequestPointerLock &&
+        !target.msRequestPointerLock
+      ) {
         return -1;
       }
       var canPerformRequests = JSEvents.canPerformEventHandlerRequests();
@@ -9314,7 +11611,10 @@ var Engine = {
         if (newSize <= 536870912) {
           newSize = alignUp(2 * newSize, PAGE_MULTIPLE);
         } else {
-          newSize = Math.min(alignUp((3 * newSize + 2147483648) / 4, PAGE_MULTIPLE), LIMIT);
+          newSize = Math.min(
+            alignUp((3 * newSize + 2147483648) / 4, PAGE_MULTIPLE),
+            LIMIT
+          );
         }
       }
       var replacement = emscripten_realloc_buffer(newSize);
@@ -9324,51 +11624,169 @@ var Engine = {
       return true;
     }
     function _emscripten_sample_gamepad_data() {
-      return (JSEvents.lastGamepadState = navigator.getGamepads ? navigator.getGamepads() : navigator.webkitGetGamepads ? navigator.webkitGetGamepads() : null) ? 0 : -1;
+      return (JSEvents.lastGamepadState = navigator.getGamepads
+        ? navigator.getGamepads()
+        : navigator.webkitGetGamepads
+        ? navigator.webkitGetGamepads()
+        : null)
+        ? 0
+        : -1;
     }
-    function __registerFullscreenChangeEventCallback(target, userData, useCapture, callbackfunc, eventTypeId, eventTypeString, targetThread) {
-      if (!JSEvents.fullscreenChangeEvent) JSEvents.fullscreenChangeEvent = _malloc(280);
+    function __registerFullscreenChangeEventCallback(
+      target,
+      userData,
+      useCapture,
+      callbackfunc,
+      eventTypeId,
+      eventTypeString,
+      targetThread
+    ) {
+      if (!JSEvents.fullscreenChangeEvent)
+        JSEvents.fullscreenChangeEvent = _malloc(280);
       var fullscreenChangeEventhandlerFunc = function (ev) {
         var e = ev || event;
         var fullscreenChangeEvent = JSEvents.fullscreenChangeEvent;
         __fillFullscreenChangeEventData(fullscreenChangeEvent, e);
-        if (dynCall_iiii(callbackfunc, eventTypeId, fullscreenChangeEvent, userData)) e.preventDefault();
+        if (
+          dynCall_iiii(
+            callbackfunc,
+            eventTypeId,
+            fullscreenChangeEvent,
+            userData
+          )
+        )
+          e.preventDefault();
       };
-      var eventHandler = { target: target, allowsDeferredCalls: false, eventTypeString: eventTypeString, callbackfunc: callbackfunc, handlerFunc: fullscreenChangeEventhandlerFunc, useCapture: useCapture };
+      var eventHandler = {
+        target: target,
+        allowsDeferredCalls: false,
+        eventTypeString: eventTypeString,
+        callbackfunc: callbackfunc,
+        handlerFunc: fullscreenChangeEventhandlerFunc,
+        useCapture: useCapture,
+      };
       JSEvents.registerOrRemoveHandler(eventHandler);
     }
-    function _emscripten_set_fullscreenchange_callback_on_thread(target, userData, useCapture, callbackfunc, targetThread) {
+    function _emscripten_set_fullscreenchange_callback_on_thread(
+      target,
+      userData,
+      useCapture,
+      callbackfunc,
+      targetThread
+    ) {
       if (!JSEvents.fullscreenEnabled()) return -1;
       target = target ? __findEventTarget(target) : __specialEventTargets[1];
       if (!target) return -4;
-      __registerFullscreenChangeEventCallback(target, userData, useCapture, callbackfunc, 19, "fullscreenchange", targetThread);
-      __registerFullscreenChangeEventCallback(target, userData, useCapture, callbackfunc, 19, "mozfullscreenchange", targetThread);
-      __registerFullscreenChangeEventCallback(target, userData, useCapture, callbackfunc, 19, "webkitfullscreenchange", targetThread);
-      __registerFullscreenChangeEventCallback(target, userData, useCapture, callbackfunc, 19, "msfullscreenchange", targetThread);
+      __registerFullscreenChangeEventCallback(
+        target,
+        userData,
+        useCapture,
+        callbackfunc,
+        19,
+        "fullscreenchange",
+        targetThread
+      );
+      __registerFullscreenChangeEventCallback(
+        target,
+        userData,
+        useCapture,
+        callbackfunc,
+        19,
+        "mozfullscreenchange",
+        targetThread
+      );
+      __registerFullscreenChangeEventCallback(
+        target,
+        userData,
+        useCapture,
+        callbackfunc,
+        19,
+        "webkitfullscreenchange",
+        targetThread
+      );
+      __registerFullscreenChangeEventCallback(
+        target,
+        userData,
+        useCapture,
+        callbackfunc,
+        19,
+        "msfullscreenchange",
+        targetThread
+      );
       return 0;
     }
-    function __registerGamepadEventCallback(target, userData, useCapture, callbackfunc, eventTypeId, eventTypeString, targetThread) {
+    function __registerGamepadEventCallback(
+      target,
+      userData,
+      useCapture,
+      callbackfunc,
+      eventTypeId,
+      eventTypeString,
+      targetThread
+    ) {
       if (!JSEvents.gamepadEvent) JSEvents.gamepadEvent = _malloc(1432);
       var gamepadEventHandlerFunc = function (ev) {
         var e = ev || event;
         var gamepadEvent = JSEvents.gamepadEvent;
         __fillGamepadEventData(gamepadEvent, e["gamepad"]);
-        if (dynCall_iiii(callbackfunc, eventTypeId, gamepadEvent, userData)) e.preventDefault();
+        if (dynCall_iiii(callbackfunc, eventTypeId, gamepadEvent, userData))
+          e.preventDefault();
       };
-      var eventHandler = { target: __findEventTarget(target), allowsDeferredCalls: true, eventTypeString: eventTypeString, callbackfunc: callbackfunc, handlerFunc: gamepadEventHandlerFunc, useCapture: useCapture };
+      var eventHandler = {
+        target: __findEventTarget(target),
+        allowsDeferredCalls: true,
+        eventTypeString: eventTypeString,
+        callbackfunc: callbackfunc,
+        handlerFunc: gamepadEventHandlerFunc,
+        useCapture: useCapture,
+      };
       JSEvents.registerOrRemoveHandler(eventHandler);
     }
-    function _emscripten_set_gamepadconnected_callback_on_thread(userData, useCapture, callbackfunc, targetThread) {
+    function _emscripten_set_gamepadconnected_callback_on_thread(
+      userData,
+      useCapture,
+      callbackfunc,
+      targetThread
+    ) {
       if (!navigator.getGamepads && !navigator.webkitGetGamepads) return -1;
-      __registerGamepadEventCallback(2, userData, useCapture, callbackfunc, 26, "gamepadconnected", targetThread);
+      __registerGamepadEventCallback(
+        2,
+        userData,
+        useCapture,
+        callbackfunc,
+        26,
+        "gamepadconnected",
+        targetThread
+      );
       return 0;
     }
-    function _emscripten_set_gamepaddisconnected_callback_on_thread(userData, useCapture, callbackfunc, targetThread) {
+    function _emscripten_set_gamepaddisconnected_callback_on_thread(
+      userData,
+      useCapture,
+      callbackfunc,
+      targetThread
+    ) {
       if (!navigator.getGamepads && !navigator.webkitGetGamepads) return -1;
-      __registerGamepadEventCallback(2, userData, useCapture, callbackfunc, 27, "gamepaddisconnected", targetThread);
+      __registerGamepadEventCallback(
+        2,
+        userData,
+        useCapture,
+        callbackfunc,
+        27,
+        "gamepaddisconnected",
+        targetThread
+      );
       return 0;
     }
-    function __registerKeyEventCallback(target, userData, useCapture, callbackfunc, eventTypeId, eventTypeString, targetThread) {
+    function __registerKeyEventCallback(
+      target,
+      userData,
+      useCapture,
+      callbackfunc,
+      eventTypeId,
+      eventTypeString,
+      targetThread
+    ) {
       if (!JSEvents.keyEvent) JSEvents.keyEvent = _malloc(164);
       var keyEventHandlerFunc = function (ev) {
         var e = ev || event;
@@ -9386,7 +11804,8 @@ var Engine = {
         HEAP32[(keyEventData + 152) >> 2] = e.charCode;
         HEAP32[(keyEventData + 156) >> 2] = e.keyCode;
         HEAP32[(keyEventData + 160) >> 2] = e.which;
-        if (dynCall_iiii(callbackfunc, eventTypeId, keyEventData, userData)) e.preventDefault();
+        if (dynCall_iiii(callbackfunc, eventTypeId, keyEventData, userData))
+          e.preventDefault();
       };
       var eventHandler = {
         target: __findEventTarget(target),
@@ -9398,16 +11817,58 @@ var Engine = {
       };
       JSEvents.registerOrRemoveHandler(eventHandler);
     }
-    function _emscripten_set_keydown_callback_on_thread(target, userData, useCapture, callbackfunc, targetThread) {
-      __registerKeyEventCallback(target, userData, useCapture, callbackfunc, 2, "keydown", targetThread);
+    function _emscripten_set_keydown_callback_on_thread(
+      target,
+      userData,
+      useCapture,
+      callbackfunc,
+      targetThread
+    ) {
+      __registerKeyEventCallback(
+        target,
+        userData,
+        useCapture,
+        callbackfunc,
+        2,
+        "keydown",
+        targetThread
+      );
       return 0;
     }
-    function _emscripten_set_keypress_callback_on_thread(target, userData, useCapture, callbackfunc, targetThread) {
-      __registerKeyEventCallback(target, userData, useCapture, callbackfunc, 1, "keypress", targetThread);
+    function _emscripten_set_keypress_callback_on_thread(
+      target,
+      userData,
+      useCapture,
+      callbackfunc,
+      targetThread
+    ) {
+      __registerKeyEventCallback(
+        target,
+        userData,
+        useCapture,
+        callbackfunc,
+        1,
+        "keypress",
+        targetThread
+      );
       return 0;
     }
-    function _emscripten_set_keyup_callback_on_thread(target, userData, useCapture, callbackfunc, targetThread) {
-      __registerKeyEventCallback(target, userData, useCapture, callbackfunc, 3, "keyup", targetThread);
+    function _emscripten_set_keyup_callback_on_thread(
+      target,
+      userData,
+      useCapture,
+      callbackfunc,
+      targetThread
+    ) {
+      __registerKeyEventCallback(
+        target,
+        userData,
+        useCapture,
+        callbackfunc,
+        3,
+        "keyup",
+        targetThread
+      );
       return 0;
     }
     function __fillMouseEventData(eventStruct, e, target) {
@@ -9422,8 +11883,16 @@ var Engine = {
       HEAP32[(eventStruct + 36) >> 2] = e.metaKey;
       HEAP16[(eventStruct + 40) >> 1] = e.button;
       HEAP16[(eventStruct + 42) >> 1] = e.buttons;
-      HEAP32[(eventStruct + 44) >> 2] = e["movementX"] || e["mozMovementX"] || e["webkitMovementX"] || e.screenX - JSEvents.previousScreenX;
-      HEAP32[(eventStruct + 48) >> 2] = e["movementY"] || e["mozMovementY"] || e["webkitMovementY"] || e.screenY - JSEvents.previousScreenY;
+      HEAP32[(eventStruct + 44) >> 2] =
+        e["movementX"] ||
+        e["mozMovementX"] ||
+        e["webkitMovementX"] ||
+        e.screenX - JSEvents.previousScreenX;
+      HEAP32[(eventStruct + 48) >> 2] =
+        e["movementY"] ||
+        e["mozMovementY"] ||
+        e["webkitMovementY"] ||
+        e.screenY - JSEvents.previousScreenY;
       if (Module["canvas"]) {
         var rect = Module["canvas"].getBoundingClientRect();
         HEAP32[(eventStruct + 60) >> 2] = e.clientX - rect.left;
@@ -9445,38 +11914,103 @@ var Engine = {
         JSEvents.previousScreenY = e.screenY;
       }
     }
-    function __registerMouseEventCallback(target, userData, useCapture, callbackfunc, eventTypeId, eventTypeString, targetThread) {
+    function __registerMouseEventCallback(
+      target,
+      userData,
+      useCapture,
+      callbackfunc,
+      eventTypeId,
+      eventTypeString,
+      targetThread
+    ) {
       if (!JSEvents.mouseEvent) JSEvents.mouseEvent = _malloc(72);
       target = __findEventTarget(target);
       var mouseEventHandlerFunc = function (ev) {
         var e = ev || event;
         __fillMouseEventData(JSEvents.mouseEvent, e, target);
-        if (dynCall_iiii(callbackfunc, eventTypeId, JSEvents.mouseEvent, userData)) e.preventDefault();
+        if (
+          dynCall_iiii(callbackfunc, eventTypeId, JSEvents.mouseEvent, userData)
+        )
+          e.preventDefault();
       };
       var eventHandler = {
         target: target,
-        allowsDeferredCalls: eventTypeString != "mousemove" && eventTypeString != "mouseenter" && eventTypeString != "mouseleave",
+        allowsDeferredCalls:
+          eventTypeString != "mousemove" &&
+          eventTypeString != "mouseenter" &&
+          eventTypeString != "mouseleave",
         eventTypeString: eventTypeString,
         callbackfunc: callbackfunc,
         handlerFunc: mouseEventHandlerFunc,
         useCapture: useCapture,
       };
-      if (JSEvents.isInternetExplorer() && eventTypeString == "mousedown") eventHandler.allowsDeferredCalls = false;
+      if (JSEvents.isInternetExplorer() && eventTypeString == "mousedown")
+        eventHandler.allowsDeferredCalls = false;
       JSEvents.registerOrRemoveHandler(eventHandler);
     }
-    function _emscripten_set_mousedown_callback_on_thread(target, userData, useCapture, callbackfunc, targetThread) {
-      __registerMouseEventCallback(target, userData, useCapture, callbackfunc, 5, "mousedown", targetThread);
+    function _emscripten_set_mousedown_callback_on_thread(
+      target,
+      userData,
+      useCapture,
+      callbackfunc,
+      targetThread
+    ) {
+      __registerMouseEventCallback(
+        target,
+        userData,
+        useCapture,
+        callbackfunc,
+        5,
+        "mousedown",
+        targetThread
+      );
       return 0;
     }
-    function _emscripten_set_mousemove_callback_on_thread(target, userData, useCapture, callbackfunc, targetThread) {
-      __registerMouseEventCallback(target, userData, useCapture, callbackfunc, 8, "mousemove", targetThread);
+    function _emscripten_set_mousemove_callback_on_thread(
+      target,
+      userData,
+      useCapture,
+      callbackfunc,
+      targetThread
+    ) {
+      __registerMouseEventCallback(
+        target,
+        userData,
+        useCapture,
+        callbackfunc,
+        8,
+        "mousemove",
+        targetThread
+      );
       return 0;
     }
-    function _emscripten_set_mouseup_callback_on_thread(target, userData, useCapture, callbackfunc, targetThread) {
-      __registerMouseEventCallback(target, userData, useCapture, callbackfunc, 6, "mouseup", targetThread);
+    function _emscripten_set_mouseup_callback_on_thread(
+      target,
+      userData,
+      useCapture,
+      callbackfunc,
+      targetThread
+    ) {
+      __registerMouseEventCallback(
+        target,
+        userData,
+        useCapture,
+        callbackfunc,
+        6,
+        "mouseup",
+        targetThread
+      );
       return 0;
     }
-    function __registerTouchEventCallback(target, userData, useCapture, callbackfunc, eventTypeId, eventTypeString, targetThread) {
+    function __registerTouchEventCallback(
+      target,
+      userData,
+      useCapture,
+      callbackfunc,
+      eventTypeId,
+      eventTypeString,
+      targetThread
+    ) {
       if (!JSEvents.touchEvent) JSEvents.touchEvent = _malloc(1684);
       target = __findEventTarget(target);
       var touchEventHandlerFunc = function (ev) {
@@ -9503,7 +12037,9 @@ var Engine = {
         HEAP32[(ptr + 12) >> 2] = e.altKey;
         HEAP32[(ptr + 16) >> 2] = e.metaKey;
         ptr += 20;
-        var canvasRect = Module["canvas"] ? Module["canvas"].getBoundingClientRect() : undefined;
+        var canvasRect = Module["canvas"]
+          ? Module["canvas"].getBoundingClientRect()
+          : undefined;
         var targetRect = JSEvents.getBoundingClientRectOrZeros(target);
         var numTouches = 0;
         for (var i in touches) {
@@ -9532,11 +12068,13 @@ var Engine = {
           }
         }
         HEAP32[touchEvent >> 2] = numTouches;
-        if (dynCall_iiii(callbackfunc, eventTypeId, touchEvent, userData)) e.preventDefault();
+        if (dynCall_iiii(callbackfunc, eventTypeId, touchEvent, userData))
+          e.preventDefault();
       };
       var eventHandler = {
         target: target,
-        allowsDeferredCalls: eventTypeString == "touchstart" || eventTypeString == "touchend",
+        allowsDeferredCalls:
+          eventTypeString == "touchstart" || eventTypeString == "touchend",
         eventTypeString: eventTypeString,
         callbackfunc: callbackfunc,
         handlerFunc: touchEventHandlerFunc,
@@ -9544,23 +12082,87 @@ var Engine = {
       };
       JSEvents.registerOrRemoveHandler(eventHandler);
     }
-    function _emscripten_set_touchcancel_callback_on_thread(target, userData, useCapture, callbackfunc, targetThread) {
-      __registerTouchEventCallback(target, userData, useCapture, callbackfunc, 25, "touchcancel", targetThread);
+    function _emscripten_set_touchcancel_callback_on_thread(
+      target,
+      userData,
+      useCapture,
+      callbackfunc,
+      targetThread
+    ) {
+      __registerTouchEventCallback(
+        target,
+        userData,
+        useCapture,
+        callbackfunc,
+        25,
+        "touchcancel",
+        targetThread
+      );
       return 0;
     }
-    function _emscripten_set_touchend_callback_on_thread(target, userData, useCapture, callbackfunc, targetThread) {
-      __registerTouchEventCallback(target, userData, useCapture, callbackfunc, 23, "touchend", targetThread);
+    function _emscripten_set_touchend_callback_on_thread(
+      target,
+      userData,
+      useCapture,
+      callbackfunc,
+      targetThread
+    ) {
+      __registerTouchEventCallback(
+        target,
+        userData,
+        useCapture,
+        callbackfunc,
+        23,
+        "touchend",
+        targetThread
+      );
       return 0;
     }
-    function _emscripten_set_touchmove_callback_on_thread(target, userData, useCapture, callbackfunc, targetThread) {
-      __registerTouchEventCallback(target, userData, useCapture, callbackfunc, 24, "touchmove", targetThread);
+    function _emscripten_set_touchmove_callback_on_thread(
+      target,
+      userData,
+      useCapture,
+      callbackfunc,
+      targetThread
+    ) {
+      __registerTouchEventCallback(
+        target,
+        userData,
+        useCapture,
+        callbackfunc,
+        24,
+        "touchmove",
+        targetThread
+      );
       return 0;
     }
-    function _emscripten_set_touchstart_callback_on_thread(target, userData, useCapture, callbackfunc, targetThread) {
-      __registerTouchEventCallback(target, userData, useCapture, callbackfunc, 22, "touchstart", targetThread);
+    function _emscripten_set_touchstart_callback_on_thread(
+      target,
+      userData,
+      useCapture,
+      callbackfunc,
+      targetThread
+    ) {
+      __registerTouchEventCallback(
+        target,
+        userData,
+        useCapture,
+        callbackfunc,
+        22,
+        "touchstart",
+        targetThread
+      );
       return 0;
     }
-    function __registerWheelEventCallback(target, userData, useCapture, callbackfunc, eventTypeId, eventTypeString, targetThread) {
+    function __registerWheelEventCallback(
+      target,
+      userData,
+      useCapture,
+      callbackfunc,
+      eventTypeId,
+      eventTypeString,
+      targetThread
+    ) {
       if (!JSEvents.wheelEvent) JSEvents.wheelEvent = _malloc(104);
       var wheelHandlerFunc = function (ev) {
         var e = ev || event;
@@ -9570,16 +12172,24 @@ var Engine = {
         HEAPF64[(wheelEvent + 80) >> 3] = e["deltaY"];
         HEAPF64[(wheelEvent + 88) >> 3] = e["deltaZ"];
         HEAP32[(wheelEvent + 96) >> 2] = e["deltaMode"];
-        if (dynCall_iiii(callbackfunc, eventTypeId, wheelEvent, userData)) e.preventDefault();
+        if (dynCall_iiii(callbackfunc, eventTypeId, wheelEvent, userData))
+          e.preventDefault();
       };
       var mouseWheelHandlerFunc = function (ev) {
         var e = ev || event;
         __fillMouseEventData(JSEvents.wheelEvent, e, target);
         HEAPF64[(JSEvents.wheelEvent + 72) >> 3] = e["wheelDeltaX"] || 0;
-        HEAPF64[(JSEvents.wheelEvent + 80) >> 3] = -(e["wheelDeltaY"] || e["wheelDelta"]);
+        HEAPF64[(JSEvents.wheelEvent + 80) >> 3] = -(
+          e["wheelDeltaY"] || e["wheelDelta"]
+        );
         HEAPF64[(JSEvents.wheelEvent + 88) >> 3] = 0;
         HEAP32[(JSEvents.wheelEvent + 96) >> 2] = 0;
-        var shouldCancel = dynCall_iiii(callbackfunc, eventTypeId, JSEvents.wheelEvent, userData);
+        var shouldCancel = dynCall_iiii(
+          callbackfunc,
+          eventTypeId,
+          JSEvents.wheelEvent,
+          userData
+        );
         if (shouldCancel) {
           e.preventDefault();
         }
@@ -9589,24 +12199,51 @@ var Engine = {
         allowsDeferredCalls: true,
         eventTypeString: eventTypeString,
         callbackfunc: callbackfunc,
-        handlerFunc: eventTypeString == "wheel" ? wheelHandlerFunc : mouseWheelHandlerFunc,
+        handlerFunc:
+          eventTypeString == "wheel" ? wheelHandlerFunc : mouseWheelHandlerFunc,
         useCapture: useCapture,
       };
       JSEvents.registerOrRemoveHandler(eventHandler);
     }
-    function _emscripten_set_wheel_callback_on_thread(target, userData, useCapture, callbackfunc, targetThread) {
+    function _emscripten_set_wheel_callback_on_thread(
+      target,
+      userData,
+      useCapture,
+      callbackfunc,
+      targetThread
+    ) {
       target = __findEventTarget(target);
       if (typeof target.onwheel !== "undefined") {
-        __registerWheelEventCallback(target, userData, useCapture, callbackfunc, 9, "wheel", targetThread);
+        __registerWheelEventCallback(
+          target,
+          userData,
+          useCapture,
+          callbackfunc,
+          9,
+          "wheel",
+          targetThread
+        );
         return 0;
       } else if (typeof target.onmousewheel !== "undefined") {
-        __registerWheelEventCallback(target, userData, useCapture, callbackfunc, 9, "mousewheel", targetThread);
+        __registerWheelEventCallback(
+          target,
+          userData,
+          useCapture,
+          callbackfunc,
+          9,
+          "mousewheel",
+          targetThread
+        );
         return 0;
       } else {
         return -1;
       }
     }
-    var __emscripten_webgl_power_preferences = ["default", "low-power", "high-performance"];
+    var __emscripten_webgl_power_preferences = [
+      "default",
+      "low-power",
+      "high-performance",
+    ];
     function _emscripten_webgl_do_create_context(target, attributes) {
       var contextAttributes = {};
       var a = attributes >> 2;
@@ -9617,8 +12254,10 @@ var Engine = {
       contextAttributes["premultipliedAlpha"] = !!HEAP32[a + (16 >> 2)];
       contextAttributes["preserveDrawingBuffer"] = !!HEAP32[a + (20 >> 2)];
       var powerPreference = HEAP32[a + (24 >> 2)];
-      contextAttributes["powerPreference"] = __emscripten_webgl_power_preferences[powerPreference];
-      contextAttributes["failIfMajorPerformanceCaveat"] = !!HEAP32[a + (28 >> 2)];
+      contextAttributes["powerPreference"] =
+        __emscripten_webgl_power_preferences[powerPreference];
+      contextAttributes["failIfMajorPerformanceCaveat"] =
+        !!HEAP32[a + (28 >> 2)];
       contextAttributes.majorVersion = HEAP32[a + (32 >> 2)];
       contextAttributes.minorVersion = HEAP32[a + (36 >> 2)];
       contextAttributes.enableExtensionsByDefault = HEAP32[a + (40 >> 2)];
@@ -9643,7 +12282,13 @@ var Engine = {
       for (var i = 0; i < 56 >> 2; ++i) {
         HEAP32[a + i] = 0;
       }
-      HEAP32[a + (0 >> 2)] = HEAP32[a + (4 >> 2)] = HEAP32[a + (12 >> 2)] = HEAP32[a + (16 >> 2)] = HEAP32[a + (32 >> 2)] = HEAP32[a + (40 >> 2)] = 1;
+      HEAP32[a + (0 >> 2)] =
+        HEAP32[a + (4 >> 2)] =
+        HEAP32[a + (12 >> 2)] =
+        HEAP32[a + (16 >> 2)] =
+        HEAP32[a + (32 >> 2)] =
+        HEAP32[a + (40 >> 2)] =
+          1;
     }
     function _emscripten_webgl_make_context_current(contextHandle) {
       var success = GL.makeContextCurrent(contextHandle);
@@ -9656,7 +12301,13 @@ var Engine = {
         ENV["PATH"] = "/";
         ENV["PWD"] = "/";
         ENV["HOME"] = "/home/web_user";
-        ENV["LANG"] = ((typeof navigator === "object" && navigator.languages && navigator.languages[0]) || "C").replace("-", "_") + ".UTF-8";
+        ENV["LANG"] =
+          (
+            (typeof navigator === "object" &&
+              navigator.languages &&
+              navigator.languages[0]) ||
+            "C"
+          ).replace("-", "_") + ".UTF-8";
         ENV["_"] = thisProgram;
         var strings = [];
         for (var key in ENV) {
@@ -9696,7 +12347,8 @@ var Engine = {
         FS.close(stream);
         return 0;
       } catch (e) {
-        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError))
+          abort(e);
         return e.errno;
       }
     }
@@ -9707,7 +12359,8 @@ var Engine = {
         HEAP32[pnum >> 2] = num;
         return 0;
       } catch (e) {
-        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+        if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError))
+          abort(e);
         return e.errno;
       }
     }
@@ -9968,7 +12621,11 @@ var Engine = {
           GLctx.bufferData(target, size, usage);
         }
       } else {
-        GLctx.bufferData(target, data ? HEAPU8.subarray(data, data + size) : size, usage);
+        GLctx.bufferData(
+          target,
+          data ? HEAPU8.subarray(data, data + size) : size,
+          usage
+        );
       }
     }
     function _glBufferSubData(target, offset, size, data) {
@@ -9999,48 +12656,212 @@ var Engine = {
     function _glCompileShader(shader) {
       GLctx.compileShader(GL.shaders[shader]);
     }
-    function _glCompressedTexImage2D(target, level, internalFormat, width, height, border, imageSize, data) {
+    function _glCompressedTexImage2D(
+      target,
+      level,
+      internalFormat,
+      width,
+      height,
+      border,
+      imageSize,
+      data
+    ) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
         if (GLctx.currentPixelUnpackBufferBinding) {
-          GLctx["compressedTexImage2D"](target, level, internalFormat, width, height, border, imageSize, data);
+          GLctx["compressedTexImage2D"](
+            target,
+            level,
+            internalFormat,
+            width,
+            height,
+            border,
+            imageSize,
+            data
+          );
         } else {
-          GLctx["compressedTexImage2D"](target, level, internalFormat, width, height, border, HEAPU8, data, imageSize);
+          GLctx["compressedTexImage2D"](
+            target,
+            level,
+            internalFormat,
+            width,
+            height,
+            border,
+            HEAPU8,
+            data,
+            imageSize
+          );
         }
         return;
       }
-      GLctx["compressedTexImage2D"](target, level, internalFormat, width, height, border, data ? HEAPU8.subarray(data, data + imageSize) : null);
+      GLctx["compressedTexImage2D"](
+        target,
+        level,
+        internalFormat,
+        width,
+        height,
+        border,
+        data ? HEAPU8.subarray(data, data + imageSize) : null
+      );
     }
-    function _glCompressedTexImage3D(target, level, internalFormat, width, height, depth, border, imageSize, data) {
+    function _glCompressedTexImage3D(
+      target,
+      level,
+      internalFormat,
+      width,
+      height,
+      depth,
+      border,
+      imageSize,
+      data
+    ) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
         if (GLctx.currentPixelUnpackBufferBinding) {
-          GLctx["compressedTexImage3D"](target, level, internalFormat, width, height, depth, border, imageSize, data);
+          GLctx["compressedTexImage3D"](
+            target,
+            level,
+            internalFormat,
+            width,
+            height,
+            depth,
+            border,
+            imageSize,
+            data
+          );
         } else {
-          GLctx["compressedTexImage3D"](target, level, internalFormat, width, height, depth, border, HEAPU8, data, imageSize);
+          GLctx["compressedTexImage3D"](
+            target,
+            level,
+            internalFormat,
+            width,
+            height,
+            depth,
+            border,
+            HEAPU8,
+            data,
+            imageSize
+          );
         }
       } else {
-        GLctx["compressedTexImage3D"](target, level, internalFormat, width, height, depth, border, data ? HEAPU8.subarray(data, data + imageSize) : null);
+        GLctx["compressedTexImage3D"](
+          target,
+          level,
+          internalFormat,
+          width,
+          height,
+          depth,
+          border,
+          data ? HEAPU8.subarray(data, data + imageSize) : null
+        );
       }
     }
-    function _glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data) {
+    function _glCompressedTexSubImage2D(
+      target,
+      level,
+      xoffset,
+      yoffset,
+      width,
+      height,
+      format,
+      imageSize,
+      data
+    ) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
         if (GLctx.currentPixelUnpackBufferBinding) {
-          GLctx["compressedTexSubImage2D"](target, level, xoffset, yoffset, width, height, format, imageSize, data);
+          GLctx["compressedTexSubImage2D"](
+            target,
+            level,
+            xoffset,
+            yoffset,
+            width,
+            height,
+            format,
+            imageSize,
+            data
+          );
         } else {
-          GLctx["compressedTexSubImage2D"](target, level, xoffset, yoffset, width, height, format, HEAPU8, data, imageSize);
+          GLctx["compressedTexSubImage2D"](
+            target,
+            level,
+            xoffset,
+            yoffset,
+            width,
+            height,
+            format,
+            HEAPU8,
+            data,
+            imageSize
+          );
         }
         return;
       }
-      GLctx["compressedTexSubImage2D"](target, level, xoffset, yoffset, width, height, format, data ? HEAPU8.subarray(data, data + imageSize) : null);
+      GLctx["compressedTexSubImage2D"](
+        target,
+        level,
+        xoffset,
+        yoffset,
+        width,
+        height,
+        format,
+        data ? HEAPU8.subarray(data, data + imageSize) : null
+      );
     }
-    function _glCompressedTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data) {
+    function _glCompressedTexSubImage3D(
+      target,
+      level,
+      xoffset,
+      yoffset,
+      zoffset,
+      width,
+      height,
+      depth,
+      format,
+      imageSize,
+      data
+    ) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
         if (GLctx.currentPixelUnpackBufferBinding) {
-          GLctx["compressedTexSubImage3D"](target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
+          GLctx["compressedTexSubImage3D"](
+            target,
+            level,
+            xoffset,
+            yoffset,
+            zoffset,
+            width,
+            height,
+            depth,
+            format,
+            imageSize,
+            data
+          );
         } else {
-          GLctx["compressedTexSubImage3D"](target, level, xoffset, yoffset, zoffset, width, height, depth, format, HEAPU8, data, imageSize);
+          GLctx["compressedTexSubImage3D"](
+            target,
+            level,
+            xoffset,
+            yoffset,
+            zoffset,
+            width,
+            height,
+            depth,
+            format,
+            HEAPU8,
+            data,
+            imageSize
+          );
         }
       } else {
-        GLctx["compressedTexSubImage3D"](target, level, xoffset, yoffset, zoffset, width, height, depth, format, data ? HEAPU8.subarray(data, data + imageSize) : null);
+        GLctx["compressedTexSubImage3D"](
+          target,
+          level,
+          xoffset,
+          yoffset,
+          zoffset,
+          width,
+          height,
+          depth,
+          format,
+          data ? HEAPU8.subarray(data, data + imageSize) : null
+        );
       }
     }
     function _glCopyBufferSubData(x0, x1, x2, x3, x4) {
@@ -10074,8 +12895,10 @@ var Engine = {
         GL.buffers[id] = null;
         if (id == GL.currArrayBuffer) GL.currArrayBuffer = 0;
         if (id == GL.currElementArrayBuffer) GL.currElementArrayBuffer = 0;
-        if (id == GLctx.currentPixelPackBufferBinding) GLctx.currentPixelPackBufferBinding = 0;
-        if (id == GLctx.currentPixelUnpackBufferBinding) GLctx.currentPixelUnpackBufferBinding = 0;
+        if (id == GLctx.currentPixelPackBufferBinding)
+          GLctx.currentPixelPackBufferBinding = 0;
+        if (id == GLctx.currentPixelUnpackBufferBinding)
+          GLctx.currentPixelUnpackBufferBinding = 0;
       }
     }
     function _glDeleteFramebuffers(n, framebuffers) {
@@ -10177,14 +13000,48 @@ var Engine = {
     function _glFinish() {
       GLctx["finish"]();
     }
-    function _glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer) {
-      GLctx.framebufferRenderbuffer(target, attachment, renderbuffertarget, GL.renderbuffers[renderbuffer]);
+    function _glFramebufferRenderbuffer(
+      target,
+      attachment,
+      renderbuffertarget,
+      renderbuffer
+    ) {
+      GLctx.framebufferRenderbuffer(
+        target,
+        attachment,
+        renderbuffertarget,
+        GL.renderbuffers[renderbuffer]
+      );
     }
-    function _glFramebufferTexture2D(target, attachment, textarget, texture, level) {
-      GLctx.framebufferTexture2D(target, attachment, textarget, GL.textures[texture], level);
+    function _glFramebufferTexture2D(
+      target,
+      attachment,
+      textarget,
+      texture,
+      level
+    ) {
+      GLctx.framebufferTexture2D(
+        target,
+        attachment,
+        textarget,
+        GL.textures[texture],
+        level
+      );
     }
-    function _glFramebufferTextureLayer(target, attachment, texture, level, layer) {
-      GLctx.framebufferTextureLayer(target, attachment, GL.textures[texture], level, layer);
+    function _glFramebufferTextureLayer(
+      target,
+      attachment,
+      texture,
+      level,
+      layer
+    ) {
+      GLctx.framebufferTextureLayer(
+        target,
+        attachment,
+        GL.textures[texture],
+        level,
+        layer
+      );
     }
     function _glFrontFace(x0) {
       GLctx["frontFace"](x0);
@@ -10216,7 +13073,8 @@ var Engine = {
     function _glGetProgramInfoLog(program, maxLength, length, infoLog) {
       var log = GLctx.getProgramInfoLog(GL.programs[program]);
       if (log === null) log = "(unknown error)";
-      var numBytesWrittenExclNull = maxLength > 0 && infoLog ? stringToUTF8(log, infoLog, maxLength) : 0;
+      var numBytesWrittenExclNull =
+        maxLength > 0 && infoLog ? stringToUTF8(log, infoLog, maxLength) : 0;
       if (length) HEAP32[length >> 2] = numBytesWrittenExclNull;
     }
     function _glGetProgramiv(program, pname, p) {
@@ -10246,7 +13104,10 @@ var Engine = {
           ptable.maxAttributeLength = 0;
           for (var i = 0; i < numAttribs; ++i) {
             var activeAttrib = GLctx.getActiveAttrib(program, i);
-            ptable.maxAttributeLength = Math.max(ptable.maxAttributeLength, activeAttrib.name.length + 1);
+            ptable.maxAttributeLength = Math.max(
+              ptable.maxAttributeLength,
+              activeAttrib.name.length + 1
+            );
           }
         }
         HEAP32[p >> 2] = ptable.maxAttributeLength;
@@ -10257,7 +13118,10 @@ var Engine = {
           ptable.maxUniformBlockNameLength = 0;
           for (var i = 0; i < numBlocks; ++i) {
             var activeBlockName = GLctx.getActiveUniformBlockName(program, i);
-            ptable.maxUniformBlockNameLength = Math.max(ptable.maxUniformBlockNameLength, activeBlockName.length + 1);
+            ptable.maxUniformBlockNameLength = Math.max(
+              ptable.maxUniformBlockNameLength,
+              activeBlockName.length + 1
+            );
           }
         }
         HEAP32[p >> 2] = ptable.maxUniformBlockNameLength;
@@ -10268,7 +13132,8 @@ var Engine = {
     function _glGetShaderInfoLog(shader, maxLength, length, infoLog) {
       var log = GLctx.getShaderInfoLog(GL.shaders[shader]);
       if (log === null) log = "(unknown error)";
-      var numBytesWrittenExclNull = maxLength > 0 && infoLog ? stringToUTF8(log, infoLog, maxLength) : 0;
+      var numBytesWrittenExclNull =
+        maxLength > 0 && infoLog ? stringToUTF8(log, infoLog, maxLength) : 0;
       if (length) HEAP32[length >> 2] = numBytesWrittenExclNull;
     }
     function _glGetShaderiv(shader, pname, p) {
@@ -10282,7 +13147,8 @@ var Engine = {
         HEAP32[p >> 2] = log.length + 1;
       } else if (pname == 35720) {
         var source = GLctx.getShaderSource(GL.shaders[shader]);
-        var sourceLength = source === null || source.length == 0 ? 0 : source.length + 1;
+        var sourceLength =
+          source === null || source.length == 0 ? 0 : source.length + 1;
         HEAP32[p >> 2] = sourceLength;
       } else {
         HEAP32[p >> 2] = GLctx.getShaderParameter(GL.shaders[shader], pname);
@@ -10313,7 +13179,8 @@ var Engine = {
           break;
         case 7938:
           var glVersion = GLctx.getParameter(GLctx.VERSION);
-          if (GL.currentContext.version >= 2) glVersion = "OpenGL ES 3.0 (" + glVersion + ")";
+          if (GL.currentContext.version >= 2)
+            glVersion = "OpenGL ES 3.0 (" + glVersion + ")";
           else {
             glVersion = "OpenGL ES 2.0 (" + glVersion + ")";
           }
@@ -10325,7 +13192,8 @@ var Engine = {
           var ver_num = glslVersion.match(ver_re);
           if (ver_num !== null) {
             if (ver_num[1].length == 3) ver_num[1] = ver_num[1] + "0";
-            glslVersion = "OpenGL ES GLSL ES " + ver_num[1] + " (" + glslVersion + ")";
+            glslVersion =
+              "OpenGL ES GLSL ES " + ver_num[1] + " (" + glslVersion + ")";
           }
           ret = stringToNewUTF8(glslVersion);
           break;
@@ -10372,17 +13240,22 @@ var Engine = {
       }
     }
     function _glGetUniformBlockIndex(program, uniformBlockName) {
-      return GLctx["getUniformBlockIndex"](GL.programs[program], UTF8ToString(uniformBlockName));
+      return GLctx["getUniformBlockIndex"](
+        GL.programs[program],
+        UTF8ToString(uniformBlockName)
+      );
     }
     function _glGetUniformLocation(program, name) {
       name = UTF8ToString(name);
       var arrayIndex = 0;
       if (name[name.length - 1] == "]") {
         var leftBrace = name.lastIndexOf("[");
-        arrayIndex = name[leftBrace + 1] != "]" ? parseInt(name.slice(leftBrace + 1)) : 0;
+        arrayIndex =
+          name[leftBrace + 1] != "]" ? parseInt(name.slice(leftBrace + 1)) : 0;
         name = name.slice(0, leftBrace);
       }
-      var uniformInfo = GL.programInfos[program] && GL.programInfos[program].uniforms[name];
+      var uniformInfo =
+        GL.programInfos[program] && GL.programInfos[program].uniforms[name];
       if (uniformInfo && arrayIndex >= 0 && arrayIndex < uniformInfo[0]) {
         return uniformInfo[1] + arrayIndex;
       } else {
@@ -10414,11 +13287,27 @@ var Engine = {
         if (GLctx.currentPixelPackBufferBinding) {
           GLctx.readPixels(x, y, width, height, format, type, pixels);
         } else {
-          GLctx.readPixels(x, y, width, height, format, type, __heapObjectForWebGLType(type), pixels >> (__heapAccessShiftForWebGLType[type] | 0));
+          GLctx.readPixels(
+            x,
+            y,
+            width,
+            height,
+            format,
+            type,
+            __heapObjectForWebGLType(type),
+            pixels >> (__heapAccessShiftForWebGLType[type] | 0)
+          );
         }
         return;
       }
-      var pixelData = emscriptenWebGLGetTexPixelData(type, format, width, height, pixels, format);
+      var pixelData = emscriptenWebGLGetTexPixelData(
+        type,
+        format,
+        width,
+        height,
+        pixels,
+        format
+      );
       if (!pixelData) {
         GL.recordError(1280);
         return;
@@ -10438,26 +13327,131 @@ var Engine = {
       var source = GL.getSource(shader, count, string, length);
       GLctx.shaderSource(GL.shaders[shader], source);
     }
-    function _glTexImage2D(target, level, internalFormat, width, height, border, format, type, pixels) {
+    function _glTexImage2D(
+      target,
+      level,
+      internalFormat,
+      width,
+      height,
+      border,
+      format,
+      type,
+      pixels
+    ) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
         if (GLctx.currentPixelUnpackBufferBinding) {
-          GLctx.texImage2D(target, level, internalFormat, width, height, border, format, type, pixels);
+          GLctx.texImage2D(
+            target,
+            level,
+            internalFormat,
+            width,
+            height,
+            border,
+            format,
+            type,
+            pixels
+          );
         } else if (pixels != 0) {
-          GLctx.texImage2D(target, level, internalFormat, width, height, border, format, type, __heapObjectForWebGLType(type), pixels >> (__heapAccessShiftForWebGLType[type] | 0));
+          GLctx.texImage2D(
+            target,
+            level,
+            internalFormat,
+            width,
+            height,
+            border,
+            format,
+            type,
+            __heapObjectForWebGLType(type),
+            pixels >> (__heapAccessShiftForWebGLType[type] | 0)
+          );
         } else {
-          GLctx.texImage2D(target, level, internalFormat, width, height, border, format, type, null);
+          GLctx.texImage2D(
+            target,
+            level,
+            internalFormat,
+            width,
+            height,
+            border,
+            format,
+            type,
+            null
+          );
         }
         return;
       }
-      GLctx.texImage2D(target, level, internalFormat, width, height, border, format, type, pixels ? emscriptenWebGLGetTexPixelData(type, format, width, height, pixels, internalFormat) : null);
+      GLctx.texImage2D(
+        target,
+        level,
+        internalFormat,
+        width,
+        height,
+        border,
+        format,
+        type,
+        pixels
+          ? emscriptenWebGLGetTexPixelData(
+              type,
+              format,
+              width,
+              height,
+              pixels,
+              internalFormat
+            )
+          : null
+      );
     }
-    function _glTexImage3D(target, level, internalFormat, width, height, depth, border, format, type, pixels) {
+    function _glTexImage3D(
+      target,
+      level,
+      internalFormat,
+      width,
+      height,
+      depth,
+      border,
+      format,
+      type,
+      pixels
+    ) {
       if (GLctx.currentPixelUnpackBufferBinding) {
-        GLctx["texImage3D"](target, level, internalFormat, width, height, depth, border, format, type, pixels);
+        GLctx["texImage3D"](
+          target,
+          level,
+          internalFormat,
+          width,
+          height,
+          depth,
+          border,
+          format,
+          type,
+          pixels
+        );
       } else if (pixels != 0) {
-        GLctx["texImage3D"](target, level, internalFormat, width, height, depth, border, format, type, __heapObjectForWebGLType(type), pixels >> (__heapAccessShiftForWebGLType[type] | 0));
+        GLctx["texImage3D"](
+          target,
+          level,
+          internalFormat,
+          width,
+          height,
+          depth,
+          border,
+          format,
+          type,
+          __heapObjectForWebGLType(type),
+          pixels >> (__heapAccessShiftForWebGLType[type] | 0)
+        );
       } else {
-        GLctx["texImage3D"](target, level, internalFormat, width, height, depth, border, format, type, null);
+        GLctx["texImage3D"](
+          target,
+          level,
+          internalFormat,
+          width,
+          height,
+          depth,
+          border,
+          format,
+          type,
+          null
+        );
       }
     }
     function _glTexParameterf(x0, x1, x2) {
@@ -10469,34 +13463,148 @@ var Engine = {
     function _glTexStorage2D(x0, x1, x2, x3, x4) {
       GLctx["texStorage2D"](x0, x1, x2, x3, x4);
     }
-    function _glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels) {
+    function _glTexSubImage2D(
+      target,
+      level,
+      xoffset,
+      yoffset,
+      width,
+      height,
+      format,
+      type,
+      pixels
+    ) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
         if (GLctx.currentPixelUnpackBufferBinding) {
-          GLctx.texSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels);
+          GLctx.texSubImage2D(
+            target,
+            level,
+            xoffset,
+            yoffset,
+            width,
+            height,
+            format,
+            type,
+            pixels
+          );
         } else if (pixels != 0) {
-          GLctx.texSubImage2D(target, level, xoffset, yoffset, width, height, format, type, __heapObjectForWebGLType(type), pixels >> (__heapAccessShiftForWebGLType[type] | 0));
+          GLctx.texSubImage2D(
+            target,
+            level,
+            xoffset,
+            yoffset,
+            width,
+            height,
+            format,
+            type,
+            __heapObjectForWebGLType(type),
+            pixels >> (__heapAccessShiftForWebGLType[type] | 0)
+          );
         } else {
-          GLctx.texSubImage2D(target, level, xoffset, yoffset, width, height, format, type, null);
+          GLctx.texSubImage2D(
+            target,
+            level,
+            xoffset,
+            yoffset,
+            width,
+            height,
+            format,
+            type,
+            null
+          );
         }
         return;
       }
       var pixelData = null;
-      if (pixels) pixelData = emscriptenWebGLGetTexPixelData(type, format, width, height, pixels, 0);
-      GLctx.texSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixelData);
+      if (pixels)
+        pixelData = emscriptenWebGLGetTexPixelData(
+          type,
+          format,
+          width,
+          height,
+          pixels,
+          0
+        );
+      GLctx.texSubImage2D(
+        target,
+        level,
+        xoffset,
+        yoffset,
+        width,
+        height,
+        format,
+        type,
+        pixelData
+      );
     }
-    function _glTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels) {
+    function _glTexSubImage3D(
+      target,
+      level,
+      xoffset,
+      yoffset,
+      zoffset,
+      width,
+      height,
+      depth,
+      format,
+      type,
+      pixels
+    ) {
       if (GLctx.currentPixelUnpackBufferBinding) {
-        GLctx["texSubImage3D"](target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
+        GLctx["texSubImage3D"](
+          target,
+          level,
+          xoffset,
+          yoffset,
+          zoffset,
+          width,
+          height,
+          depth,
+          format,
+          type,
+          pixels
+        );
       } else if (pixels != 0) {
-        GLctx["texSubImage3D"](target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, __heapObjectForWebGLType(type), pixels >> (__heapAccessShiftForWebGLType[type] | 0));
+        GLctx["texSubImage3D"](
+          target,
+          level,
+          xoffset,
+          yoffset,
+          zoffset,
+          width,
+          height,
+          depth,
+          format,
+          type,
+          __heapObjectForWebGLType(type),
+          pixels >> (__heapAccessShiftForWebGLType[type] | 0)
+        );
       } else {
-        GLctx["texSubImage3D"](target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, null);
+        GLctx["texSubImage3D"](
+          target,
+          level,
+          xoffset,
+          yoffset,
+          zoffset,
+          width,
+          height,
+          depth,
+          format,
+          type,
+          null
+        );
       }
     }
-    function _glTransformFeedbackVaryings(program, count, varyings, bufferMode) {
+    function _glTransformFeedbackVaryings(
+      program,
+      count,
+      varyings,
+      bufferMode
+    ) {
       program = GL.programs[program];
       var vars = [];
-      for (var i = 0; i < count; i++) vars.push(UTF8ToString(HEAP32[(varyings + i * 4) >> 2]));
+      for (var i = 0; i < count; i++)
+        vars.push(UTF8ToString(HEAP32[(varyings + i * 4) >> 2]));
       GLctx["transformFeedbackVaryings"](program, vars, bufferMode);
     }
     function _glUniform1f(location, v0) {
@@ -10510,7 +13618,10 @@ var Engine = {
         GLctx.uniform1iv(GL.uniforms[location], HEAP32, value >> 2, count);
         return;
       }
-      GLctx.uniform1iv(GL.uniforms[location], HEAP32.subarray(value >> 2, (value + count * 4) >> 2));
+      GLctx.uniform1iv(
+        GL.uniforms[location],
+        HEAP32.subarray(value >> 2, (value + count * 4) >> 2)
+      );
     }
     function _glUniform1ui(location, v0) {
       GLctx.uniform1ui(GL.uniforms[location], v0);
@@ -10542,7 +13653,10 @@ var Engine = {
         GLctx.uniform2iv(GL.uniforms[location], HEAP32, value >> 2, count * 2);
         return;
       }
-      GLctx.uniform2iv(GL.uniforms[location], HEAP32.subarray(value >> 2, (value + count * 8) >> 2));
+      GLctx.uniform2iv(
+        GL.uniforms[location],
+        HEAP32.subarray(value >> 2, (value + count * 8) >> 2)
+      );
     }
     function _glUniform3f(location, v0, v1, v2) {
       GLctx.uniform3f(GL.uniforms[location], v0, v1, v2);
@@ -10591,13 +13705,27 @@ var Engine = {
     function _glUniform4i(location, v0, v1, v2, v3) {
       GLctx.uniform4i(GL.uniforms[location], v0, v1, v2, v3);
     }
-    function _glUniformBlockBinding(program, uniformBlockIndex, uniformBlockBinding) {
+    function _glUniformBlockBinding(
+      program,
+      uniformBlockIndex,
+      uniformBlockBinding
+    ) {
       program = GL.programs[program];
-      GLctx["uniformBlockBinding"](program, uniformBlockIndex, uniformBlockBinding);
+      GLctx["uniformBlockBinding"](
+        program,
+        uniformBlockIndex,
+        uniformBlockBinding
+      );
     }
     function _glUniformMatrix2fv(location, count, transpose, value) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
-        GLctx.uniformMatrix2fv(GL.uniforms[location], !!transpose, HEAPF32, value >> 2, count * 4);
+        GLctx.uniformMatrix2fv(
+          GL.uniforms[location],
+          !!transpose,
+          HEAPF32,
+          value >> 2,
+          count * 4
+        );
         return;
       }
       if (4 * count <= GL.MINI_TEMP_BUFFER_SIZE) {
@@ -10615,7 +13743,13 @@ var Engine = {
     }
     function _glUniformMatrix3fv(location, count, transpose, value) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
-        GLctx.uniformMatrix3fv(GL.uniforms[location], !!transpose, HEAPF32, value >> 2, count * 9);
+        GLctx.uniformMatrix3fv(
+          GL.uniforms[location],
+          !!transpose,
+          HEAPF32,
+          value >> 2,
+          count * 9
+        );
         return;
       }
       if (9 * count <= GL.MINI_TEMP_BUFFER_SIZE) {
@@ -10638,7 +13772,13 @@ var Engine = {
     }
     function _glUniformMatrix4fv(location, count, transpose, value) {
       if (GL.currentContext.supportsWebGL2EntryPoints) {
-        GLctx.uniformMatrix4fv(GL.uniforms[location], !!transpose, HEAPF32, value >> 2, count * 16);
+        GLctx.uniformMatrix4fv(
+          GL.uniforms[location],
+          !!transpose,
+          HEAPF32,
+          value >> 2,
+          count * 16
+        );
         return;
       }
       if (16 * count <= GL.MINI_TEMP_BUFFER_SIZE) {
@@ -10673,7 +13813,13 @@ var Engine = {
       GLctx["vertexAttrib4f"](x0, x1, x2, x3, x4);
     }
     function _glVertexAttrib4fv(index, v) {
-      GLctx.vertexAttrib4f(index, HEAPF32[v >> 2], HEAPF32[(v + 4) >> 2], HEAPF32[(v + 8) >> 2], HEAPF32[(v + 12) >> 2]);
+      GLctx.vertexAttrib4f(
+        index,
+        HEAPF32[v >> 2],
+        HEAPF32[(v + 4) >> 2],
+        HEAPF32[(v + 8) >> 2],
+        HEAPF32[(v + 12) >> 2]
+      );
     }
     function _glVertexAttribDivisor(index, divisor) {
       GLctx["vertexAttribDivisor"](index, divisor);
@@ -10684,7 +13830,14 @@ var Engine = {
     function _glVertexAttribIPointer(index, size, type, stride, ptr) {
       GLctx["vertexAttribIPointer"](index, size, type, stride, ptr);
     }
-    function _glVertexAttribPointer(index, size, type, normalized, stride, ptr) {
+    function _glVertexAttribPointer(
+      index,
+      size,
+      type,
+      normalized,
+      stride,
+      ptr
+    ) {
       GLctx.vertexAttribPointer(index, size, type, !!normalized, stride, ptr);
     }
     function _glViewport(x0, x1, x2, x3) {
@@ -10717,7 +13870,9 @@ var Engine = {
       getUnusedRequestId: function () {
         var idMax = GodotHTTPRequest.requests.length;
         for (var potentialId = 0; potentialId < idMax; ++potentialId) {
-          if (GodotHTTPRequest.requests[potentialId] instanceof XMLHttpRequest) {
+          if (
+            GodotHTTPRequest.requests[potentialId] instanceof XMLHttpRequest
+          ) {
             continue;
           }
           return potentialId;
@@ -10770,7 +13925,13 @@ var Engine = {
     function _godot_xhr_open(xhrId, method, url, user, password) {
       user = user > 0 ? UTF8ToString(user) : null;
       password = password > 0 ? UTF8ToString(password) : null;
-      GodotHTTPRequest.requests[xhrId].open(UTF8ToString(method), UTF8ToString(url), true, user, password);
+      GodotHTTPRequest.requests[xhrId].open(
+        UTF8ToString(method),
+        UTF8ToString(url),
+        true,
+        user,
+        password
+      );
     }
     function _godot_xhr_reset(xhrId) {
       GodotHTTPRequest.requests[xhrId] = new XMLHttpRequest();
@@ -10795,7 +13956,10 @@ var Engine = {
       GodotHTTPRequest.requests[xhrId].send(UTF8ToString(strPtr));
     }
     function _godot_xhr_set_request_header(xhrId, header, value) {
-      GodotHTTPRequest.requests[xhrId].setRequestHeader(UTF8ToString(header), UTF8ToString(value));
+      GodotHTTPRequest.requests[xhrId].setRequestHeader(
+        UTF8ToString(header),
+        UTF8ToString(value)
+      );
     }
     function _inet_addr(ptr) {
       var addr = __inet_pton4_raw(UTF8ToString(ptr));
@@ -10815,15 +13979,25 @@ var Engine = {
       var currentYear = new Date().getFullYear();
       var winter = new Date(currentYear, 0, 1);
       var summer = new Date(currentYear, 6, 1);
-      HEAP32[__get_daylight() >> 2] = Number(winter.getTimezoneOffset() != summer.getTimezoneOffset());
+      HEAP32[__get_daylight() >> 2] = Number(
+        winter.getTimezoneOffset() != summer.getTimezoneOffset()
+      );
       function extractZone(date) {
         var match = date.toTimeString().match(/\(([A-Za-z ]+)\)$/);
         return match ? match[1] : "GMT";
       }
       var winterName = extractZone(winter);
       var summerName = extractZone(summer);
-      var winterNamePtr = allocate(intArrayFromString(winterName), "i8", ALLOC_NORMAL);
-      var summerNamePtr = allocate(intArrayFromString(summerName), "i8", ALLOC_NORMAL);
+      var winterNamePtr = allocate(
+        intArrayFromString(winterName),
+        "i8",
+        ALLOC_NORMAL
+      );
+      var summerNamePtr = allocate(
+        intArrayFromString(summerName),
+        "i8",
+        ALLOC_NORMAL
+      );
       if (summer.getTimezoneOffset() < winter.getTimezoneOffset()) {
         HEAP32[__get_tzname() >> 2] = winterNamePtr;
         HEAP32[(__get_tzname() + 4) >> 2] = summerNamePtr;
@@ -10843,12 +14017,15 @@ var Engine = {
       HEAP32[(tmPtr + 20) >> 2] = date.getFullYear() - 1900;
       HEAP32[(tmPtr + 24) >> 2] = date.getDay();
       var start = new Date(date.getFullYear(), 0, 1);
-      var yday = ((date.getTime() - start.getTime()) / (1e3 * 60 * 60 * 24)) | 0;
+      var yday =
+        ((date.getTime() - start.getTime()) / (1e3 * 60 * 60 * 24)) | 0;
       HEAP32[(tmPtr + 28) >> 2] = yday;
       HEAP32[(tmPtr + 36) >> 2] = -(date.getTimezoneOffset() * 60);
       var summerOffset = new Date(date.getFullYear(), 6, 1).getTimezoneOffset();
       var winterOffset = start.getTimezoneOffset();
-      var dst = (summerOffset != winterOffset && date.getTimezoneOffset() == Math.min(winterOffset, summerOffset)) | 0;
+      var dst =
+        (summerOffset != winterOffset &&
+          date.getTimezoneOffset() == Math.min(winterOffset, summerOffset)) | 0;
       HEAP32[(tmPtr + 32) >> 2] = dst;
       var zonePtr = HEAP32[(__get_tzname() + (dst ? 4 : 0)) >> 2];
       HEAP32[(tmPtr + 40) >> 2] = zonePtr;
@@ -10859,7 +14036,11 @@ var Engine = {
     }
     function _usleep(useconds) {
       var msec = useconds / 1e3;
-      if ((ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER) && self["performance"] && self["performance"]["now"]) {
+      if (
+        (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER) &&
+        self["performance"] &&
+        self["performance"]["now"]
+      ) {
         var start = self["performance"]["now"]();
         while (self["performance"]["now"]() - start < msec) {}
       } else {
@@ -10910,7 +14091,9 @@ var Engine = {
       while (days > 0) {
         var leap = __isLeapYear(newDate.getFullYear());
         var currentMonth = newDate.getMonth();
-        var daysInCurrentMonth = (leap ? __MONTH_DAYS_LEAP : __MONTH_DAYS_REGULAR)[currentMonth];
+        var daysInCurrentMonth = (
+          leap ? __MONTH_DAYS_LEAP : __MONTH_DAYS_REGULAR
+        )[currentMonth];
         if (days > daysInCurrentMonth - newDate.getDate()) {
           days -= daysInCurrentMonth - newDate.getDate() + 1;
           newDate.setDate(1);
@@ -10974,10 +14157,34 @@ var Engine = {
         "%Oy": "%y",
       };
       for (var rule in EXPANSION_RULES_1) {
-        pattern = pattern.replace(new RegExp(rule, "g"), EXPANSION_RULES_1[rule]);
+        pattern = pattern.replace(
+          new RegExp(rule, "g"),
+          EXPANSION_RULES_1[rule]
+        );
       }
-      var WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-      var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      var WEEKDAYS = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ];
+      var MONTHS = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
       function leadingSomething(value, digits, character) {
         var str = typeof value === "number" ? value.toString() : value || "";
         while (str.length < digits) {
@@ -11019,7 +14226,10 @@ var Engine = {
         }
       }
       function getWeekBasedYear(date) {
-        var thisDate = __addDays(new Date(date.tm_year + 1900, 0, 1), date.tm_yday);
+        var thisDate = __addDays(
+          new Date(date.tm_year + 1900, 0, 1),
+          date.tm_yday
+        );
         var janFourthThisYear = new Date(thisDate.getFullYear(), 0, 4);
         var janFourthNextYear = new Date(thisDate.getFullYear() + 1, 0, 4);
         var firstWeekStartThisYear = getFirstWeekStartDate(janFourthThisYear);
@@ -11073,7 +14283,16 @@ var Engine = {
           return leadingNulls(twelveHour, 2);
         },
         "%j": function (date) {
-          return leadingNulls(date.tm_mday + __arraySum(__isLeapYear(date.tm_year + 1900) ? __MONTH_DAYS_LEAP : __MONTH_DAYS_REGULAR, date.tm_mon - 1), 3);
+          return leadingNulls(
+            date.tm_mday +
+              __arraySum(
+                __isLeapYear(date.tm_year + 1900)
+                  ? __MONTH_DAYS_LEAP
+                  : __MONTH_DAYS_REGULAR,
+                date.tm_mon - 1
+              ),
+            3
+          );
         },
         "%m": function (date) {
           return leadingNulls(date.tm_mon + 1, 2);
@@ -11102,12 +14321,28 @@ var Engine = {
         },
         "%U": function (date) {
           var janFirst = new Date(date.tm_year + 1900, 0, 1);
-          var firstSunday = janFirst.getDay() === 0 ? janFirst : __addDays(janFirst, 7 - janFirst.getDay());
-          var endDate = new Date(date.tm_year + 1900, date.tm_mon, date.tm_mday);
+          var firstSunday =
+            janFirst.getDay() === 0
+              ? janFirst
+              : __addDays(janFirst, 7 - janFirst.getDay());
+          var endDate = new Date(
+            date.tm_year + 1900,
+            date.tm_mon,
+            date.tm_mday
+          );
           if (compareByDay(firstSunday, endDate) < 0) {
-            var februaryFirstUntilEndMonth = __arraySum(__isLeapYear(endDate.getFullYear()) ? __MONTH_DAYS_LEAP : __MONTH_DAYS_REGULAR, endDate.getMonth() - 1) - 31;
+            var februaryFirstUntilEndMonth =
+              __arraySum(
+                __isLeapYear(endDate.getFullYear())
+                  ? __MONTH_DAYS_LEAP
+                  : __MONTH_DAYS_REGULAR,
+                endDate.getMonth() - 1
+              ) - 31;
             var firstSundayUntilEndJanuary = 31 - firstSunday.getDate();
-            var days = firstSundayUntilEndJanuary + februaryFirstUntilEndMonth + endDate.getDate();
+            var days =
+              firstSundayUntilEndJanuary +
+              februaryFirstUntilEndMonth +
+              endDate.getDate();
             return leadingNulls(Math.ceil(days / 7), 2);
           }
           return compareByDay(firstSunday, janFirst) === 0 ? "01" : "00";
@@ -11117,7 +14352,10 @@ var Engine = {
           var janFourthNextYear = new Date(date.tm_year + 1901, 0, 4);
           var firstWeekStartThisYear = getFirstWeekStartDate(janFourthThisYear);
           var firstWeekStartNextYear = getFirstWeekStartDate(janFourthNextYear);
-          var endDate = __addDays(new Date(date.tm_year + 1900, 0, 1), date.tm_yday);
+          var endDate = __addDays(
+            new Date(date.tm_year + 1900, 0, 1),
+            date.tm_yday
+          );
           if (compareByDay(endDate, firstWeekStartThisYear) < 0) {
             return "53";
           }
@@ -11126,9 +14364,11 @@ var Engine = {
           }
           var daysDifference;
           if (firstWeekStartThisYear.getFullYear() < date.tm_year + 1900) {
-            daysDifference = date.tm_yday + 32 - firstWeekStartThisYear.getDate();
+            daysDifference =
+              date.tm_yday + 32 - firstWeekStartThisYear.getDate();
           } else {
-            daysDifference = date.tm_yday + 1 - firstWeekStartThisYear.getDate();
+            daysDifference =
+              date.tm_yday + 1 - firstWeekStartThisYear.getDate();
           }
           return leadingNulls(Math.ceil(daysDifference / 7), 2);
         },
@@ -11137,12 +14377,31 @@ var Engine = {
         },
         "%W": function (date) {
           var janFirst = new Date(date.tm_year, 0, 1);
-          var firstMonday = janFirst.getDay() === 1 ? janFirst : __addDays(janFirst, janFirst.getDay() === 0 ? 1 : 7 - janFirst.getDay() + 1);
-          var endDate = new Date(date.tm_year + 1900, date.tm_mon, date.tm_mday);
+          var firstMonday =
+            janFirst.getDay() === 1
+              ? janFirst
+              : __addDays(
+                  janFirst,
+                  janFirst.getDay() === 0 ? 1 : 7 - janFirst.getDay() + 1
+                );
+          var endDate = new Date(
+            date.tm_year + 1900,
+            date.tm_mon,
+            date.tm_mday
+          );
           if (compareByDay(firstMonday, endDate) < 0) {
-            var februaryFirstUntilEndMonth = __arraySum(__isLeapYear(endDate.getFullYear()) ? __MONTH_DAYS_LEAP : __MONTH_DAYS_REGULAR, endDate.getMonth() - 1) - 31;
+            var februaryFirstUntilEndMonth =
+              __arraySum(
+                __isLeapYear(endDate.getFullYear())
+                  ? __MONTH_DAYS_LEAP
+                  : __MONTH_DAYS_REGULAR,
+                endDate.getMonth() - 1
+              ) - 31;
             var firstMondayUntilEndJanuary = 31 - firstMonday.getDate();
-            var days = firstMondayUntilEndJanuary + februaryFirstUntilEndMonth + endDate.getDate();
+            var days =
+              firstMondayUntilEndJanuary +
+              februaryFirstUntilEndMonth +
+              endDate.getDate();
             return leadingNulls(Math.ceil(days / 7), 2);
           }
           return compareByDay(firstMonday, janFirst) === 0 ? "01" : "00";
@@ -11169,7 +14428,10 @@ var Engine = {
       };
       for (var rule in EXPANSION_RULES_2) {
         if (pattern.indexOf(rule) >= 0) {
-          pattern = pattern.replace(new RegExp(rule, "g"), EXPANSION_RULES_2[rule](date));
+          pattern = pattern.replace(
+            new RegExp(rule, "g"),
+            EXPANSION_RULES_2[rule](date)
+          );
         }
       }
       var bytes = intArrayFromString(pattern, false);
@@ -11335,7 +14597,8 @@ var Engine = {
         case 73:
           return 4;
         case 84: {
-          if (typeof navigator === "object") return navigator["hardwareConcurrency"] || 1;
+          if (typeof navigator === "object")
+            return navigator["hardwareConcurrency"] || 1;
           return 1;
         }
       }
@@ -11359,25 +14622,45 @@ var Engine = {
     FS.staticInit();
     if (typeof dateNow !== "undefined") {
       _emscripten_get_now = dateNow;
-    } else if (typeof performance === "object" && performance && typeof performance["now"] === "function") {
+    } else if (
+      typeof performance === "object" &&
+      performance &&
+      typeof performance["now"] === "function"
+    ) {
       _emscripten_get_now = function () {
         return performance["now"]();
       };
     } else {
       _emscripten_get_now = Date.now;
     }
-    Module["requestFullScreen"] = function Module_requestFullScreen(lockPointer, resizeCanvas, vrDevice) {
-      err("Module.requestFullScreen is deprecated. Please call Module.requestFullscreen instead.");
+    Module["requestFullScreen"] = function Module_requestFullScreen(
+      lockPointer,
+      resizeCanvas,
+      vrDevice
+    ) {
+      err(
+        "Module.requestFullScreen is deprecated. Please call Module.requestFullscreen instead."
+      );
       Module["requestFullScreen"] = Module["requestFullscreen"];
       Browser.requestFullScreen(lockPointer, resizeCanvas, vrDevice);
     };
-    Module["requestFullscreen"] = function Module_requestFullscreen(lockPointer, resizeCanvas, vrDevice) {
+    Module["requestFullscreen"] = function Module_requestFullscreen(
+      lockPointer,
+      resizeCanvas,
+      vrDevice
+    ) {
       Browser.requestFullscreen(lockPointer, resizeCanvas, vrDevice);
     };
-    Module["requestAnimationFrame"] = function Module_requestAnimationFrame(func) {
+    Module["requestAnimationFrame"] = function Module_requestAnimationFrame(
+      func
+    ) {
       Browser.requestAnimationFrame(func);
     };
-    Module["setCanvasSize"] = function Module_setCanvasSize(width, height, noUpdates) {
+    Module["setCanvasSize"] = function Module_setCanvasSize(
+      width,
+      height,
+      noUpdates
+    ) {
       Browser.setCanvasSize(width, height, noUpdates);
     };
     Module["pauseMainLoop"] = function Module_pauseMainLoop() {
@@ -11389,8 +14672,18 @@ var Engine = {
     Module["getUserMedia"] = function Module_getUserMedia() {
       Browser.getUserMedia();
     };
-    Module["createContext"] = function Module_createContext(canvas, useWebGL, setInModule, webGLContextAttributes) {
-      return Browser.createContext(canvas, useWebGL, setInModule, webGLContextAttributes);
+    Module["createContext"] = function Module_createContext(
+      canvas,
+      useWebGL,
+      setInModule,
+      webGLContextAttributes
+    ) {
+      return Browser.createContext(
+        canvas,
+        useWebGL,
+        setInModule,
+        webGLContextAttributes
+      );
     };
     var GLctx;
     GL.init();
@@ -11398,7 +14691,12 @@ var Engine = {
     function intArrayFromString(stringy, dontAddNull, length) {
       var len = length > 0 ? length : lengthBytesUTF8(stringy) + 1;
       var u8array = new Array(len);
-      var numBytesWritten = stringToUTF8Array(stringy, u8array, 0, u8array.length);
+      var numBytesWritten = stringToUTF8Array(
+        stringy,
+        u8array,
+        0,
+        u8array.length
+      );
       if (dontAddNull) u8array.length = numBytesWritten;
       return u8array;
     }
@@ -11929,10 +15227,14 @@ var Engine = {
     var _audio_driver_js_mix = (Module["_audio_driver_js_mix"] = function () {
       return Module["asm"]["Fi"].apply(null, arguments);
     });
-    var _audio_driver_process_capture = (Module["_audio_driver_process_capture"] = function () {
+    var _audio_driver_process_capture = (Module[
+      "_audio_driver_process_capture"
+    ] = function () {
       return Module["asm"]["Gi"].apply(null, arguments);
     });
-    var _resize_poolbytearray_and_open_write = (Module["_resize_poolbytearray_and_open_write"] = function () {
+    var _resize_poolbytearray_and_open_write = (Module[
+      "_resize_poolbytearray_and_open_write"
+    ] = function () {
       return Module["asm"]["Hi"].apply(null, arguments);
     });
     var _main_after_fs_sync = (Module["_main_after_fs_sync"] = function () {
@@ -11980,13 +15282,18 @@ var Engine = {
     var __emrtc_on_ch_message = (Module["__emrtc_on_ch_message"] = function () {
       return Module["asm"]["Wi"].apply(null, arguments);
     });
-    var __emrtc_on_ice_candidate = (Module["__emrtc_on_ice_candidate"] = function () {
-      return Module["asm"]["Xi"].apply(null, arguments);
-    });
-    var __emrtc_session_description_created = (Module["__emrtc_session_description_created"] = function () {
+    var __emrtc_on_ice_candidate = (Module["__emrtc_on_ice_candidate"] =
+      function () {
+        return Module["asm"]["Xi"].apply(null, arguments);
+      });
+    var __emrtc_session_description_created = (Module[
+      "__emrtc_session_description_created"
+    ] = function () {
       return Module["asm"]["Yi"].apply(null, arguments);
     });
-    var __emrtc_on_connection_state_changed = (Module["__emrtc_on_connection_state_changed"] = function () {
+    var __emrtc_on_connection_state_changed = (Module[
+      "__emrtc_on_connection_state_changed"
+    ] = function () {
       return Module["asm"]["Zi"].apply(null, arguments);
     });
     var __emrtc_on_error = (Module["__emrtc_on_error"] = function () {
@@ -12019,9 +15326,10 @@ var Engine = {
     var _setThrew = (Module["_setThrew"] = function () {
       return Module["asm"]["hj"].apply(null, arguments);
     });
-    var _emscripten_GetProcAddress = (Module["_emscripten_GetProcAddress"] = function () {
-      return Module["asm"]["ij"].apply(null, arguments);
-    });
+    var _emscripten_GetProcAddress = (Module["_emscripten_GetProcAddress"] =
+      function () {
+        return Module["asm"]["ij"].apply(null, arguments);
+      });
     var dynCall_i = (Module["dynCall_i"] = function () {
       return Module["asm"]["jj"].apply(null, arguments);
     });
@@ -12313,7 +15621,8 @@ var Engine = {
       quit_(status, new ExitStatus(status));
     }
     if (Module["preInit"]) {
-      if (typeof Module["preInit"] == "function") Module["preInit"] = [Module["preInit"]];
+      if (typeof Module["preInit"] == "function")
+        Module["preInit"] = [Module["preInit"]];
       while (Module["preInit"].length > 0) {
         Module["preInit"].pop()();
       }
@@ -12350,7 +15659,8 @@ var Engine = {
 
   function getBasePath(path) {
     if (path.endsWith("/")) path = path.slice(0, -1);
-    if (path.lastIndexOf(".") > path.lastIndexOf("/")) path = path.slice(0, path.lastIndexOf("."));
+    if (path.lastIndexOf(".") > path.lastIndexOf("/"))
+      path = path.slice(0, path.lastIndexOf("."));
     return path;
   }
 
@@ -12423,7 +15733,9 @@ var Engine = {
         });
         return Promise.resolve();
       } else if (typeof pathOrBuffer === "string") {
-        return loadPromise(pathOrBuffer, preloadProgressTracker).then(function (xhr) {
+        return loadPromise(pathOrBuffer, preloadProgressTracker).then(function (
+          xhr
+        ) {
           preloadedFiles.push({
             path: destPath || pathOrBuffer,
             buffer: xhr.response,
@@ -12435,14 +15747,19 @@ var Engine = {
     };
 
     this.start = function () {
-      return this.init().then(Function.prototype.apply.bind(synchronousStart, this, arguments));
+      return this.init().then(
+        Function.prototype.apply.bind(synchronousStart, this, arguments)
+      );
     };
 
     this.startGame = function (execName, mainPack) {
       executableName = execName;
       var mainArgs = ["--main-pack", getPathLeaf(mainPack)];
 
-      return Promise.all([this.init(getBasePath(execName)), this.preloadFile(mainPack, getPathLeaf(mainPack))]).then(Function.prototype.apply.bind(synchronousStart, this, mainArgs));
+      return Promise.all([
+        this.init(getBasePath(execName)),
+        this.preloadFile(mainPack, getPathLeaf(mainPack)),
+      ]).then(Function.prototype.apply.bind(synchronousStart, this, mainArgs));
     };
 
     function synchronousStart() {
@@ -12487,7 +15804,9 @@ var Engine = {
       if (locale) {
         this.rtenv.locale = locale;
       } else {
-        this.rtenv.locale = navigator.languages ? navigator.languages[0] : navigator.language;
+        this.rtenv.locale = navigator.languages
+          ? navigator.languages[0]
+          : navigator.language;
       }
       this.rtenv.locale = this.rtenv.locale.split(".")[0];
       this.rtenv.resizeCanvasOnStart = resizeCanvasOnStart;
@@ -12503,7 +15822,14 @@ var Engine = {
           LIBS.FS.mkdirTree(dir);
         }
         // With memory growth, canOwn should be false.
-        LIBS.FS.createDataFile(file.path, null, new Uint8Array(file.buffer), true, true, false);
+        LIBS.FS.createDataFile(
+          file.path,
+          null,
+          new Uint8Array(file.buffer),
+          true,
+          true,
+          false
+        );
       }, this);
 
       preloadedFiles = null;
@@ -12577,7 +15903,8 @@ var Engine = {
 
     this.setStderrFunc = function (func) {
       var printErr = function (text) {
-        if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(" ");
+        if (arguments.length > 1)
+          text = Array.prototype.slice.call(arguments).join(" ");
         func(text);
       };
       if (this.rtenv) this.rtenv.printErr = printErr;
@@ -12592,9 +15919,13 @@ var Engine = {
     try {
       var testCanvas = document.createElement("canvas");
       if (majorVersion === 1) {
-        testContext = testCanvas.getContext("webgl") || testCanvas.getContext("experimental-webgl");
+        testContext =
+          testCanvas.getContext("webgl") ||
+          testCanvas.getContext("experimental-webgl");
       } else if (majorVersion === 2) {
-        testContext = testCanvas.getContext("webgl2") || testCanvas.getContext("experimental-webgl2");
+        testContext =
+          testCanvas.getContext("webgl2") ||
+          testCanvas.getContext("experimental-webgl2");
       }
     } catch (e) {}
     return !!testContext;
@@ -12610,9 +15941,12 @@ var Engine = {
   Engine.load = function (newBasePath) {
     if (newBasePath !== undefined) basePath = getBasePath(newBasePath);
     if (engineLoadPromise === null) {
-      if (typeof WebAssembly !== "object") return Promise.reject(new Error("Browser doesn't support WebAssembly"));
+      if (typeof WebAssembly !== "object")
+        return Promise.reject(new Error("Browser doesn't support WebAssembly"));
       // TODO cache/retrieve module to/from idb
-      engineLoadPromise = loadPromise(basePath + "." + (wasmFilenameExtensionOverride || "wasm")).then(function (xhr) {
+      engineLoadPromise = loadPromise(
+        basePath + "." + (wasmFilenameExtensionOverride || "wasm")
+      ).then(function (xhr) {
         return xhr.response;
       });
       engineLoadPromise = engineLoadPromise.catch(function (err) {
@@ -12641,15 +15975,23 @@ var Engine = {
       xhr.responseType = "arraybuffer";
     }
     ["loadstart", "progress", "load", "error", "abort"].forEach(function (ev) {
-      xhr.addEventListener(ev, onXHREvent.bind(xhr, resolve, reject, file, tracker));
+      xhr.addEventListener(
+        ev,
+        onXHREvent.bind(xhr, resolve, reject, file, tracker)
+      );
     });
     xhr.send();
   }
 
   function onXHREvent(resolve, reject, file, tracker, ev) {
     if (this.status >= 400) {
-      if (this.status < 500 || ++tracker[file].attempts >= DOWNLOAD_ATTEMPTS_MAX) {
-        reject(new Error("Failed loading file '" + file + "': " + this.statusText));
+      if (
+        this.status < 500 ||
+        ++tracker[file].attempts >= DOWNLOAD_ATTEMPTS_MAX
+      ) {
+        reject(
+          new Error("Failed loading file '" + file + "': " + this.statusText)
+        );
         this.abort();
         return;
       } else {
