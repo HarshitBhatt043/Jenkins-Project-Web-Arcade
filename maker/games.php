@@ -341,7 +341,7 @@ $games = [
     ],
     'Townscaper' => [
         'name' => 'Build',
-        'tag' => 'by your imagination',
+        'tag' => 'imagination',
         'git' => $repo,
         'branch' => 'Townscaper',
         'mobile' => true,
