@@ -347,4 +347,12 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
+    'Scrapmetal-3' => [
+        'name' => 'Destroy car',
+        'tag' => 'simulation',
+        'git' => $repo,
+        'branch' => 'Scrapmetal-3',
+        'mobile' => false,
+        'desktop' => true,
+    ],
 ];
