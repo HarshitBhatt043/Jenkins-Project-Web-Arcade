@@ -355,4 +355,12 @@ $games = [
         'mobile' => false,
         'desktop' => true,
     ],
+    'Superhot' => [
+        'name' => 'Time is',
+        'tag' => 'everything',
+        'git' => $repo,
+        'branch' => 'Superhot',
+        'mobile' => false,
+        'desktop' => true,
+    ],
 ];
