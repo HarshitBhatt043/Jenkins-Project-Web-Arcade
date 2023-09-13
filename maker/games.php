@@ -363,4 +363,12 @@ $games = [
         'mobile' => false,
         'desktop' => true,
     ],
+    'Kitchen-Gun' => [
+        'name' => 'shoot',
+        'tag' => 'items',
+        'git' => $repo,
+        'branch' => 'Kitchen-Gun',
+        'mobile' => false,
+        'desktop' => true,
+    ],
 ];
