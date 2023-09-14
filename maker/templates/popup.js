@@ -89,10 +89,4 @@ document.getElementById("popup").addEventListener("click", function (event) {
   }
 });
 
-document.addEventListener("keydown", function (event) {
-  if (event.key === "Escape") {
-    closePopup();
-  }
-});
-
 window.onload = checkLocalStorage;
