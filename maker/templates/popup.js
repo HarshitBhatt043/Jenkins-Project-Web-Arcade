@@ -1,6 +1,6 @@
-function checkCookie() {
-  const visited = getCookie("visited");
-  if (visited === "") {
+function checkLocalStorage() {
+  const visited = localStorage.getItem("visited");
+  if (visited !== "no") {
     const popup = document.getElementById("popup");
     const popupContent = document.querySelector(".popup-content");
     popup.style.display = "block";
@@ -8,17 +8,6 @@ function checkCookie() {
       "popIn 0.5s ease forwards, fadeIn 0.5s ease forwards";
     startTypingAnimation();
   }
-}
-
-function getCookie(name) {
-  const cookies = document.cookie.split("; ");
-  for (let i = 0; i < cookies.length; i++) {
-    const cookie = cookies[i].split("=");
-    if (cookie[0] === name) {
-      return cookie[1];
-    }
-  }
-  return "";
 }
 
 function startTypingAnimation() {
@@ -32,8 +21,7 @@ function startTypingAnimation() {
     "This is your first visit. Enjoy your stay.",
     "Desktop games are denoted by" + "\n" + keyboardEmoji,
     "Mobile games are denoted by" + mobileEmoji,
-    "This is a one-time announcement for your first visit.",
-    "To see this again clear your website local cache.",
+    "Do you want to see this announcement again?",
   ];
 
   const typingSpeed = 50;
@@ -83,13 +71,17 @@ function closePopup() {
   setTimeout(function () {
     popup.style.display = "none";
   }, 500);
-  const date = new Date();
-  date.setTime(date.getTime() + 30 * 24 * 60 * 60 * 1000);
-  const expires = "expires=" + date.toUTCString();
-  document.cookie = "visited=true; " + expires + "; path=/";
 }
 
-document.getElementById("closePopup").addEventListener("click", closePopup);
+document.getElementById("yesButton").addEventListener("click", function () {
+  localStorage.setItem("visited", "yes");
+  closePopup();
+});
+
+document.getElementById("noButton").addEventListener("click", function () {
+  localStorage.setItem("visited", "no");
+  closePopup();
+});
 
 document.getElementById("popup").addEventListener("click", function (event) {
   if (event.target === this) {
@@ -103,4 +95,4 @@ document.addEventListener("keydown", function (event) {
   }
 });
 
-window.onload = checkCookie;
+window.onload = checkLocalStorage;
