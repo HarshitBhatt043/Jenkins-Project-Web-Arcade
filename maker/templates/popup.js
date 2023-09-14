@@ -1,8 +1,8 @@
 function checkCookie() {
-  var visited = getCookie("visited");
+  const visited = getCookie("visited");
   if (visited === "") {
-    var popup = document.getElementById("popup");
-    var popupContent = document.querySelector(".popup-content");
+    const popup = document.getElementById("popup");
+    const popupContent = document.querySelector(".popup-content");
     popup.style.display = "block";
     popupContent.style.animation =
       "popIn 0.5s ease forwards, fadeIn 0.5s ease forwards";
@@ -11,9 +11,9 @@ function checkCookie() {
 }
 
 function getCookie(name) {
-  var cookies = document.cookie.split("; ");
-  for (var i = 0; i < cookies.length; i++) {
-    var cookie = cookies[i].split("=");
+  const cookies = document.cookie.split("; ");
+  for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i].split("=");
     if (cookie[0] === name) {
       return cookie[1];
     }
@@ -22,29 +22,29 @@ function getCookie(name) {
 }
 
 function startTypingAnimation() {
-  var title = document.getElementById("popup-title");
-  var message = document.getElementById("popup-message");
-  var mobileEmoji = "\u{1F4F1}";
-  var keyboardEmoji = "\u{2328}";
+  const title = document.getElementById("popup-title");
+  const message = document.getElementById("popup-message");
+  const mobileEmoji = "\u{1F4F1}";
+  const keyboardEmoji = "\u{2328}";
 
-  var titleText = "Welcome to Arcade!";
-  var messageText = [
+  const titleText = "Welcome to Arcade!";
+  const messageText = [
     "This is your first visit. Enjoy your stay.",
     "Desktop games are denoted by" + "\n" + keyboardEmoji,
     "Mobile games are denoted by" + mobileEmoji,
-    "This is an one time announcement for your first visit.",
+    "This is a one-time announcement for your first visit.",
     "To see this again clear your website local cache.",
   ];
 
-  var typingSpeed = 50;
-  var currentIndex = 0;
+  const typingSpeed = 50;
+  let currentIndex = 0;
 
   function typeNextLine() {
     if (currentIndex < messageText.length) {
-      var line = document.createElement("div");
+      const line = document.createElement("div");
       message.appendChild(line);
-      var lineText = messageText[currentIndex];
-      var lineIndex = 0;
+      const lineText = messageText[currentIndex];
+      let lineIndex = 0;
 
       function typeNextCharacter() {
         if (lineIndex < lineText.length) {
@@ -76,16 +76,16 @@ function typeText(element, text, index, speed) {
 }
 
 function closePopup() {
-  var popup = document.getElementById("popup");
-  var popupContent = document.querySelector(".popup-content");
+  const popup = document.getElementById("popup");
+  const popupContent = document.querySelector(".popup-content");
   popupContent.style.animation =
     "popOut 0.5s ease forwards, fadeOut 0.5s ease forwards";
   setTimeout(function () {
     popup.style.display = "none";
   }, 500);
-  var date = new Date();
+  const date = new Date();
   date.setTime(date.getTime() + 30 * 24 * 60 * 60 * 1000);
-  var expires = "expires=" + date.toUTCString();
+  const expires = "expires=" + date.toUTCString();
   document.cookie = "visited=true; " + expires + "; path=/";
 }
 
