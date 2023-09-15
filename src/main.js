@@ -29,7 +29,6 @@ MG.init = function () {
     MG.game.update(dt);
     MG.hud.update(dt);
     MG.banner.update(dt);
-
     MG.fog.updateDOM();
     MG.game.updateDOM();
     MG.hud.updateDOM();

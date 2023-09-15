@@ -12,7 +12,6 @@ MG.BarrierType = {
   START: "start",
   FINISH: "finish",
 };
-
 MG.NUM_RANDOM_BARRIERS = 6;
 
 /* TODO find nicer way of initalising MG.BARRIER_PATH_IDS */

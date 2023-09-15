@@ -12,12 +12,9 @@ MG.banner = (function () {
   var mText = "";
 
   var mRootNode;
-
   var mTitleNode;
   var mTextNode;
-
   var mVisibility;
-
   var mState;
 
   return {
