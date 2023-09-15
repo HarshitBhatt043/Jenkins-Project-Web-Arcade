@@ -8,7 +8,7 @@ function loadUnityGame() {
 function startTypingAnimation() {
   const title = document.getElementById("popup-title");
   const message = document.getElementById("popup-message");
-  const titleText = "Welcome to Arcade!";
+  const titleText = "WAIT!";
   const messageText = [
     "Make sure you give this game time to load; it takes some time.",
     "If it takes more than 5 minutes, refresh the page!",
