@@ -1,3 +1,4 @@
+const popupStorageKey = "popup_visited";
 let popupClosed = false;
 
 function loadUnityGame() {
@@ -7,7 +8,7 @@ function loadUnityGame() {
 function startTypingAnimation() {
   const title = document.getElementById("popup-title");
   const message = document.getElementById("popup-message");
-  const titleText = "WAIT!";
+  const titleText = "Welcome to Arcade!";
   const messageText = [
     "Make sure you give this game time to load; it takes some time.",
     "If it takes more than 5 minutes, refresh the page!",
@@ -67,12 +68,12 @@ function closePopup() {
 }
 
 document.getElementById("yesButton").addEventListener("click", function () {
-  localStorage.setItem("visited", "yes");
+  localStorage.setItem(popupStorageKey, "yes");
   closePopup();
 });
 
 document.getElementById("noButton").addEventListener("click", function () {
-  localStorage.setItem("visited", "no");
+  localStorage.setItem(popupStorageKey, "no");
   closePopup();
 });
 
@@ -83,7 +84,7 @@ document.getElementById("popup").addEventListener("click", function (event) {
 });
 
 function checkLocalStorage() {
-  const visited = localStorage.getItem("visited");
+  const visited = localStorage.getItem(popupStorageKey);
   if (visited !== "no") {
     const popup = document.getElementById("popup");
     const popupContent = document.querySelector(".popup-content");
@@ -96,7 +97,6 @@ function checkLocalStorage() {
   }
 }
 
-window.addEventListener('load', function () {
+window.addEventListener("load", function () {
   checkLocalStorage();
 });
-
