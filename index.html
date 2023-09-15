@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>Missile Game</title>
+    <link rel="stylesheet" href="style.css" />
     <meta name="description" content="A 3D game using SVG and javascript" />
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
@@ -722,6 +723,16 @@
       </button>
     </div>
 
+    <div id="popup" class="popup">
+      <div class="popup-content">
+        <h2 id="popup-title" style="color: blue"></h2>
+        <p id="popup-message" style="color: green"></p>
+        <div class="popup-buttons">
+          <button id="yesButton" class="popup-button">Yes</button>
+          <button id="noButton" class="popup-button">No</button>
+        </div>
+      </div>
+    </div>
     <!--== SCRIPTS ==============================================================-->
 
     <!-- 2d geometry SVG library -->
@@ -740,5 +751,6 @@
     <script type="application/javascript" src="src/banner.js"></script>
     <script type="application/javascript" src="src/fog.js"></script>
     <script type="application/javascript" src="src/main.js"></script>
+    <script src="src/popup.js"></script>
   </body>
 </html>
