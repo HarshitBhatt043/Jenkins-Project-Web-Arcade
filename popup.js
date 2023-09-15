@@ -97,7 +97,7 @@
       : (a.$script = s);
 })(this, document, setTimeout);
 
-const pond = "popup_visited";
+const pond = "popup_visited1";
 
 function startTypingAnimation() {
   const title = document.getElementById("popup-title");
