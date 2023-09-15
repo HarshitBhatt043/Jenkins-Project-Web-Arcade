@@ -97,7 +97,7 @@
       : (a.$script = s);
 })(this, document, setTimeout);
 
-const popupStorageKey1 = "popup_visited";
+const pond = "popup_visited";
 
 function startTypingAnimation() {
   const title = document.getElementById("popup-title");
@@ -160,12 +160,12 @@ function closePopup() {
 }
 
 document.getElementById("yesButton").addEventListener("click", function () {
-  localStorage.setItem(popupStorageKey1, "yes");
+  localStorage.setItem(pond, "yes");
   closePopup();
 });
 
 document.getElementById("noButton").addEventListener("click", function () {
-  localStorage.setItem(popupStorageKey1, "no");
+  localStorage.setItem(pond, "no");
   closePopup();
 });
 
@@ -176,7 +176,7 @@ document.getElementById("popup").addEventListener("click", function (event) {
 });
 
 function checkLocalStorage() {
-  const visited = localStorage.getItem(popupStorageKey1);
+  const visited = localStorage.getItem(pond);
   if (visited !== "no") {
     const popup = document.getElementById("popup");
     const popupContent = document.querySelector(".popup-content");
