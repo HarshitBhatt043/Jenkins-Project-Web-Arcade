@@ -67,23 +67,22 @@ MG.game = (function () {
     }
 
     var playCrashAnimation = function () {
-    // TODO move drawing out of the update loop
+        // TODO move drawing out of the update loop
 
-    // create a copy of the explosion path element
-    var explosionPath = document.getElementById('explosion');
+        // create a copy of the explosion element
+        var explosion = document.getElementById('explosion');
 
-    // play the animation on the path element
-    explosionPath.firstChild.beginElement();
-    explosionPath.setAttribute('visibility', 'visible');
+        // play the animation
+        explosion.firstChild.beginElement();
+        explosion.setAttribute('visibility', 'visible');
 
-    // TODO can't seem to get a callback to fire when the animation
-    // finishes. Use timeout instead
-    setTimeout(function (){
-        var explosionPath = document.getElementById('explosion');
-        explosionPath.setAttribute('visibility', 'hidden');
-    }, 400);
+        // TODO can't seem to get a callback to fire when the animation
+        // finishes. Use timeout instead
+        setTimeout(function (){
+            var explosion = document.getElementById('explosion');
+            explosion.setAttribute('visibility', 'hidden');
+        }, 400);
     }
-
 
     var goWaitStartLevel = function () {
         MG.banner.show(Messages.START.title(), Messages.START.text());
