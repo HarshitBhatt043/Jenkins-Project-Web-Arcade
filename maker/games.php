@@ -184,7 +184,7 @@ $games = [
         'tag' => 'sunset',
         'git' => $repo,
         'branch' => 'Tanuki-sunset',
-        'mobile' => true,
+        'mobile' => false,
         'desktop' => true,
     ],
     'Elasticman' => [
