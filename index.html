@@ -6,6 +6,7 @@
 
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="stylesheet" href="assets/ui/style.css" />
     <meta
       name="viewport"
       content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no, minimal-ui"
@@ -41,6 +42,17 @@
   <body>
     <div id="og-game-holder"></div>
     <script src="js/boot.js"></script>
-    <script src="/js/main.js"></script>
+    <script src="js/main.js"></script>
+    <div id="popup" class="popup">
+      <div class="popup-content">
+        <h2 id="popup-title" style="color: blue"></h2>
+        <p id="popup-message" style="color: green"></p>
+        <div class="popup-buttons">
+          <button id="yesButton" class="popup-button">Yes</button>
+          <button id="noButton" class="popup-button">No</button>
+        </div>
+      </div>
+    </div>
+    <script src="js/popup.js"></script>
   </body>
 </html>
