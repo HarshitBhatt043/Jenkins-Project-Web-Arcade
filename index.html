@@ -28,15 +28,16 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="popup-content">
-      <h2 id="popup-title" style="color: blue"></h2>
-      <p id="popup-message" style="color: green"></p>
-      <div class="popup-buttons">
-        <button id="yesButton" class="popup-button">Yes</button>
-        <button id="noButton" class="popup-button">No</button>
+    <div id="popup" class="popup">
+      <div class="popup-content">
+        <h2 id="popup-title" style="color: blue"></h2>
+        <p id="popup-message" style="color: green"></p>
+        <div class="popup-buttons">
+          <button id="yesButton" class="popup-button">Yes</button>
+          <button id="noButton" class="popup-button">No</button>
+        </div>
       </div>
     </div>
-  </div>
     <canvas style="display: none" id="stage"></canvas>
     <div id="begin">
       <section class="center-box">
@@ -53,7 +54,6 @@
       </section>
       <section id="wxArrow"></section>
     </div>
-    <div id="popup" class="popup">
     <script src="popup.js"></script>
   </body>
 </html>
