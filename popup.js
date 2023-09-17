@@ -1,4 +1,15 @@
 const city = "popup_visited3";
+let popupClosed = false;
+
+function LoaderScript() {
+  const moduleScript = document.createElement("script");
+  moduleScript.type = "module";
+  moduleScript.textContent = `
+    import { Main } from "./build/MainGame.module.js";
+    Main.init();
+  `;
+  document.body.appendChild(moduleScript);
+}
 
 function startTypingAnimation() {
   const title = document.getElementById("popup-title");
@@ -57,6 +68,8 @@ function closePopup() {
     "popOut 0.5s ease forwards, fadeOut 0.5s ease forwards";
   setTimeout(function () {
     popup.style.display = "none";
+    popupClosed = true;
+    LoaderScript();
   }, 500);
 }
 
@@ -85,6 +98,8 @@ function checkLocalStorage() {
     popupContent.style.animation =
       "popIn 0.5s ease forwards, fadeIn 0.5s ease forwards";
     startTypingAnimation();
+  } else {
+    LoaderScript();
   }
 }
 
