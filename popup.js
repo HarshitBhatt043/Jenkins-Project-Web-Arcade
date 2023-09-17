@@ -101,6 +101,34 @@ function LoaderScript() {
         ? (module.exports = s)
         : (a.$script = s);
   })(this, document, setTimeout);
+
+  $script(
+    [
+      "libs/stats.js",
+      "util.js",
+      "menu.js",
+      "sound.js",
+      "levelbar.js",
+      "spawner.js",
+      "levelballs.js",
+      "spawner.js",
+      "levelballs.js",
+      "fish.js",
+      "particle.js",
+      "color.js",
+    ],
+    "modules"
+  );
+  
+  $script.ready("modules", function () {
+    $script("main.js", function () {
+      $script("bindings.js", function () {
+        $script("cards.js", function () {
+          // done
+        });
+      });
+    });
+  });
   `;
   document.body.appendChild(script);
 }
@@ -199,32 +227,4 @@ function checkLocalStorage() {
 
 window.addEventListener("load", function () {
   checkLocalStorage();
-});
-
-$script(
-  [
-    "libs/stats.js",
-    "util.js",
-    "menu.js",
-    "sound.js",
-    "levelbar.js",
-    "spawner.js",
-    "levelballs.js",
-    "spawner.js",
-    "levelballs.js",
-    "fish.js",
-    "particle.js",
-    "color.js",
-  ],
-  "modules"
-);
-
-$script.ready("modules", function () {
-  $script("main.js", function () {
-    $script("bindings.js", function () {
-      $script("cards.js", function () {
-        // done
-      });
-    });
-  });
 });
