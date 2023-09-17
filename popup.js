@@ -5,7 +5,6 @@ function startTypingAnimation() {
   const message = document.getElementById("popup-message");
   const titleText = "WAIT";
   const messageText = [
-    "Give this game time to load.",
     "If the game still not started after 5 mins. Refresh!.",
     "Use arrow keys to move, spacebar to jump.",
     "Do you want to see this announcement again?",
