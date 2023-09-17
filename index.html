@@ -95,6 +95,16 @@
     </style>
   </head>
   <body>
+    <div id="popup" class="popup">
+      <div class="popup-content">
+        <h2 id="popup-title" style="color: blue"></h2>
+        <p id="popup-message" style="color: green"></p>
+        <div class="popup-buttons">
+          <button id="yesButton" class="popup-button">Yes</button>
+          <button id="noButton" class="popup-button">No</button>
+        </div>
+      </div>
+    </div>
     <svg
       version="1.1"
       baseProfile="full"
@@ -710,7 +720,6 @@
         <line id="collision-line" x1="-300" y1="100" x2="100" y2="100" />
       </defs>
     </svg>
-
     <div id="fullscreen">
       <button
         onclick="
@@ -721,17 +730,6 @@
       >
         ENTER FULLSCREEN
       </button>
-    </div>
-
-    <div id="popup" class="popup">
-      <div class="popup-content">
-        <h2 id="popup-title" style="color: blue"></h2>
-        <p id="popup-message" style="color: green"></p>
-        <div class="popup-buttons">
-          <button id="yesButton" class="popup-button">Yes</button>
-          <button id="noButton" class="popup-button">No</button>
-        </div>
-      </div>
     </div>
     <script src="src/popup.js"></script>
   </body>
