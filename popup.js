@@ -91,10 +91,10 @@ function LoaderScript() {
 function startTypingAnimation() {
   const title = document.getElementById("popup-title");
   const message = document.getElementById("popup-message");
-  const titleText = "WAIT";
+  const titleText = "INSTRUCTIONS";
   const messageText = [
-    "Make sure you give this game time to load.",
-    "If it takes more than 5 minutes, refresh the page!",
+    "For desktop use W,A,S,D to move.",
+    "For mobile use swipe to move.",
     "Do you want to see this announcement again?",
   ];
 
