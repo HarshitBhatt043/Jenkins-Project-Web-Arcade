@@ -4,6 +4,75 @@ let popupClosed = false;
 function loadUnityLoaderScript() {
   var script = document.createElement("script");
   script.src = "PacMan-HTML.loader.js";
+  script.onload = function () {
+    loadAdditionalScript();
+  };
+  document.body.appendChild(script);
+}
+
+function loadAdditionalScript() {
+  var script = document.createElement("script");
+  script.textContent = `
+    var canvas = document.querySelector("#unity-canvas");
+    var config = {
+      dataUrl: "PacMan-HTML.data.gz",
+      frameworkUrl: "PacMan-HTML.framework.js",
+      codeUrl: "PacMan-HTML.wasm.gz",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "DefaultCompany",
+      productName: "Pac-Man",
+      productVersion: "0.1",
+    };
+    var scaleToFit;
+    try {
+      scaleToFit = !!JSON.parse("true");
+    } catch (e) {
+      scaleToFit = true;
+    }
+    function progressHandler(progress) {
+      var percent = progress * 100 + "%";
+      canvas.style.background =
+        "linear-gradient(to right, white, white " +
+        percent +
+        ", transparent " +
+        percent +
+        ", transparent) no-repeat center";
+      canvas.style.backgroundSize = "100% 1rem";
+    }
+    function onResize() {
+      var container = canvas.parentElement;
+      var w;
+      var h;
+
+      if (scaleToFit) {
+        w = window.innerWidth;
+        h = window.innerHeight;
+
+        var r = 1020 / 1980;
+
+        if (w * r > window.innerHeight) {
+          w = Math.min(w, Math.ceil(h / r));
+        }
+        h = Math.floor(w * r);
+      } else {
+        w = 1980;
+        h = 1920;
+      }
+
+      container.style.width = canvas.style.width = w + "px";
+      container.style.height = canvas.style.height = h + "px";
+      container.style.top = Math.floor((window.innerHeight - h) / 2) + "px";
+      container.style.left = Math.floor((window.innerWidth - w) / 2) + "px";
+    }
+    createUnityInstance(canvas, config, progressHandler).then(function (
+      instance
+    ) {
+      canvas = instance.Module.canvas;
+      onResize();
+    });
+    window.addEventListener("resize", onResize);
+    onResize();
+  `;
   document.body.appendChild(script);
 }
 
