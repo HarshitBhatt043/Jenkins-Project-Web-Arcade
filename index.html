@@ -10,6 +10,17 @@
     </style>
   </head>
   <body>
+    <div id="popup" class="popup">
+      <div class="popup-content">
+        <h2 id="popup-title" style="color: blue"></h2>
+        <p id="popup-message" style="color: green"></p>
+        <div class="popup-buttons">
+          <button id="yesButton" class="popup-button">Yes</button>
+          <button id="noButton" class="popup-button">No</button>
+        </div>
+      </div>
+    </div>
+    <script src="popup.js"></script>
     <canvas
       class="emscripten"
       id="canvas"
@@ -32,16 +43,5 @@
       console.log("If the file NG.mem returns a 404 error, that is ok!");
     </script>
     <script src="Release/UnityLoader.js"></script>
-    <div id="popup" class="popup">
-      <div class="popup-content">
-        <h2 id="popup-title" style="color: blue"></h2>
-        <p id="popup-message" style="color: green"></p>
-        <div class="popup-buttons">
-          <button id="yesButton" class="popup-button">Yes</button>
-          <button id="noButton" class="popup-button">No</button>
-        </div>
-      </div>
-    </div>
-    <script src="popup.js"></script>
   </body>
 </html>
