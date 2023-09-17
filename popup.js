@@ -1,4 +1,11 @@
 const pacman = "popup_visited7";
+let popupClosed = false;
+
+function loadUnityLoaderScript() {
+  var script = document.createElement("script");
+  script.src = "PacMan-HTML.loader.js";
+  document.body.appendChild(script);
+}
 
 function startTypingAnimation() {
   const title = document.getElementById("popup-title");
@@ -56,6 +63,8 @@ function closePopup() {
     "popOut 0.5s ease forwards, fadeOut 0.5s ease forwards";
   setTimeout(function () {
     popup.style.display = "none";
+    popupClosed = true;
+    loadUnityLoaderScript();
   }, 500);
 }
 
@@ -76,7 +85,7 @@ document.getElementById("popup").addEventListener("click", function (event) {
 });
 
 function checkLocalStorage() {
-  const visited = localStorage.getItem(pacman);
+  const visited = localStorage.getItem(cluster);
   if (visited !== "no") {
     const popup = document.getElementById("popup");
     const popupContent = document.querySelector(".popup-content");
@@ -84,6 +93,8 @@ function checkLocalStorage() {
     popupContent.style.animation =
       "popIn 0.5s ease forwards, fadeIn 0.5s ease forwards";
     startTypingAnimation();
+  } else {
+    loadUnityLoaderScript();
   }
 }
 
