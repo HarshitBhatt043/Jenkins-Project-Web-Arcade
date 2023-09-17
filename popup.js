@@ -1,12 +1,20 @@
 const cluster = "popup_visited9";
+let popupClosed = false;
+
+function loadUnityLoaderScript() {
+  var script = document.createElement("script");
+  script.src = "Release/UnityLoader.js";
+  document.body.appendChild(script);
+}
 
 function startTypingAnimation() {
   const title = document.getElementById("popup-title");
   const message = document.getElementById("popup-message");
-  const titleText = "WAIT";
+  const titleText = "WAIT!";
   const messageText = [
-    "If the game still not started after 5 mins. Refresh!.",
-    "Use arrow keys to move, spacebar to jump.",
+    "Make sure you give this game time to load; it takes some time.",
+    "If it takes more than 5 minutes, refresh the page!",
+    "Use arrow keys to move and spacebar to jump.",
     "Do you want to see this announcement again?",
   ];
 
@@ -56,6 +64,8 @@ function closePopup() {
     "popOut 0.5s ease forwards, fadeOut 0.5s ease forwards";
   setTimeout(function () {
     popup.style.display = "none";
+    popupClosed = true;
+    loadUnityLoaderScript();
   }, 500);
 }
 
@@ -84,6 +94,8 @@ function checkLocalStorage() {
     popupContent.style.animation =
       "popIn 0.5s ease forwards, fadeIn 0.5s ease forwards";
     startTypingAnimation();
+  } else {
+    loadUnityLoaderScript();
   }
 }
 
