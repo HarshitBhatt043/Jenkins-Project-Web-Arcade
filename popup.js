@@ -86,7 +86,7 @@ document.getElementById("popup").addEventListener("click", function (event) {
 });
 
 function checkLocalStorage() {
-  const visited = localStorage.getItem(pacman);
+  const visited = localStorage.getItem(elastic);
   if (visited !== "no") {
     const popup = document.getElementById("popup");
     const popupContent = document.querySelector(".popup-content");
