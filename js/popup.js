@@ -2,9 +2,20 @@ const swipe = "popup_visited2";
 let popupClosed = false;
 
 function LoaderScript() {
-  var script = document.createElement("script");
-  script.src = "js/script.js";
-  document.body.appendChild(script);
+  var appDiv = document.createElement("div");
+  appDiv.id = "app";
+  appDiv.innerHTML = `
+    <span>Score: <span class="score">1</span></span>
+    <span>Highest Score: <span class="h">0</span></span>
+    &nbsp;&nbsp;&nbsp;
+    <span class="ball">Ball: <span class="b">1</span></span>
+    <canvas id="canvas" width="450" height="450"></canvas>
+  `;
+  document.body.appendChild(appDiv);
+
+  var scriptElement = document.createElement("script");
+  scriptElement.src = "js/script.js";
+  document.body.appendChild(scriptElement);
 }
 
 function startTypingAnimation() {
