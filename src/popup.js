@@ -1,30 +1,4 @@
 const missile = "popup_visited4";
-let popupClosed = false;
-
-function LoaderScript() {
-  const scriptFiles = [
-    "lib/2D.js",
-    "lib/Path.js",
-    "src/base.js",
-    "src/util.js",
-    "src/missile.js",
-    "src/wall.js",
-    "src/barrier.js",
-    "src/barrierQueue.js",
-    "src/game.js",
-    "src/hud.js",
-    "src/banner.js",
-    "src/fog.js",
-    "src/main.js"
-  ];
-
-  scriptFiles.forEach(function (file) {
-    var script = document.createElement("script");
-    script.type = "application/javascript";
-    script.src = file;
-    document.body.appendChild(script);
-  });
-}
 
 function startTypingAnimation() {
   const title = document.getElementById("popup-title");
@@ -82,8 +56,6 @@ function closePopup() {
     "popOut 0.5s ease forwards, fadeOut 0.5s ease forwards";
   setTimeout(function () {
     popup.style.display = "none";
-    popupClosed = true;
-    LoaderScript();
   }, 500);
 }
 
@@ -112,8 +84,6 @@ function checkLocalStorage() {
     popupContent.style.animation =
       "popIn 0.5s ease forwards, fadeIn 0.5s ease forwards";
     startTypingAnimation();
-  } else {
-    LoaderScript();
   }
 }
 
