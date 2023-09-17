@@ -3,9 +3,23 @@
   <head>
     <meta charset="utf-8" />
     <title>Core Ball</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./favicon-16x16.png"
+    />
     <link rel="manifest" href="./site.webmanifest" />
     <meta
       name="viewport"
@@ -30,6 +44,16 @@
       </section>
       <section id="wxArrow"></section>
     </div>
-    <script type="text/javascript" src="index.js"></script>
+    <div id="popup" class="popup">
+      <div class="popup-content">
+        <h2 id="popup-title" style="color: blue"></h2>
+        <p id="popup-message" style="color: green"></p>
+        <div class="popup-buttons">
+          <button id="yesButton" class="popup-button">Yes</button>
+          <button id="noButton" class="popup-button">No</button>
+        </div>
+      </div>
+    </div>
+    <script src="popup.js"></script>
   </body>
 </html>
