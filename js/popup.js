@@ -1,4 +1,11 @@
 const swipe = "popup_visited2";
+let popupClosed = false;
+
+function LoaderScript() {
+  var script = document.createElement("script");
+  script.src = "js/script.js";
+  document.body.appendChild(script);
+}
 
 function startTypingAnimation() {
   const title = document.getElementById("popup-title");
@@ -56,6 +63,8 @@ function closePopup() {
     "popOut 0.5s ease forwards, fadeOut 0.5s ease forwards";
   setTimeout(function () {
     popup.style.display = "none";
+    popupClosed = true;
+    LoaderScript();
   }, 500);
 }
 
@@ -84,6 +93,8 @@ function checkLocalStorage() {
     popupContent.style.animation =
       "popIn 0.5s ease forwards, fadeIn 0.5s ease forwards";
     startTypingAnimation();
+  } else {
+    LoaderScript();
   }
 }
 
