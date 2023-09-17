@@ -1,4 +1,11 @@
 const elastic = "popup_visited5";
+let popupClosed = false;
+
+function LoaderScript() {
+  var script = document.createElement("script");
+  script.src = "app.js";
+  document.body.appendChild(script);
+}
 
 function startTypingAnimation() {
   const title = document.getElementById("popup-title");
@@ -57,6 +64,8 @@ function closePopup() {
     "popOut 0.5s ease forwards, fadeOut 0.5s ease forwards";
   setTimeout(function () {
     popup.style.display = "none";
+    popupClosed = true;
+    LoaderScript();
   }, 500);
 }
 
@@ -77,7 +86,7 @@ document.getElementById("popup").addEventListener("click", function (event) {
 });
 
 function checkLocalStorage() {
-  const visited = localStorage.getItem(elastic);
+  const visited = localStorage.getItem(pacman);
   if (visited !== "no") {
     const popup = document.getElementById("popup");
     const popupContent = document.querySelector(".popup-content");
@@ -85,6 +94,8 @@ function checkLocalStorage() {
     popupContent.style.animation =
       "popIn 0.5s ease forwards, fadeIn 0.5s ease forwards";
     startTypingAnimation();
+  } else {
+    LoaderScript();
   }
 }
 
