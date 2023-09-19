@@ -7,3 +7,58 @@ services:
     ports:
       - 127.0.0.1:5000:80
     restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    user: "1001:1001"
+    container_name: grafana
+    ports:
+      - 127.0.0.1:5010:3000
+    environment:
+      - GF_FEATURE_TOGGLES_ENABLE=publicDashboards
+    volumes:
+      - ./docker/grafana/data:/var/lib/grafana
+      - ./docker/grafana/provisioning/:/etc/grafana/provisioning/
+    depends_on:
+      - netdata
+      - prometheus
+    restart: unless-stopped
+
+  netdata:
+    image: netdata/netdata
+    user: "1001:1001"
+    container_name: netdata
+    ports:
+      - 127.0.0.1:5020:19999
+    cap_add:
+      - SYS_PTRACE
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - ./docker/netdata/netdataconfig:/etc/netdata
+      - ./docker/netdata/netdatalib:/var/lib/netdata
+      - ./docker/netdata/netdatacache:/var/cache/netdata
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /etc/os-release:/host/etc/os-release:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:latest
+    user: "1001:1001"
+    container_name: prometheus
+    ports:
+      - 127.0.0.1:5030:9090
+    volumes:
+      - ./docker/prometheus:/etc/prometheus/
+      - ./docker/prometheus/data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/usr/share/prometheus/console_libraries"
+      - "--web.console.templates=/usr/share/prometheus/consoles"
+    restart: unless-stopped
