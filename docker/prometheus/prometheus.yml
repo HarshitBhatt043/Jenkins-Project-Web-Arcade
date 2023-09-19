@@ -14,3 +14,17 @@ scrape_configs:
     honor_labels: true
     static_configs:
       - targets: ["netdata:19999"]
+
+  - job_name: 'jenkins'
+    metrics_path: '/prometheus/'
+    scheme: https
+    tls_config:
+      insecure_skip_verify: true
+    static_configs:
+        - targets: ['jenkins.pearl9.cloud:443']
+    metric_relabel_configs:
+    - action: replace
+      source_labels: [exported_job]
+      target_label: jenkins_job
+    - action: labeldrop
+      regex: exported_job
