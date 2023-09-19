@@ -136,7 +136,7 @@ ${text_break}
         stage('Deploying Project Arcade') {
             steps {
                 echo 'Finalising and starting project ARCADE'
-                sh 'docker compose down && docker compose up -d'
+                sh 'docker compose stop arcade && docker compose pull arcade && docker compose up -d arcade'
             }
         }
         stage('Health Checks') {
