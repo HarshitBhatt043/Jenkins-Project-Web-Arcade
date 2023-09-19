@@ -10,7 +10,6 @@ services:
 
   grafana:
     image: grafana/grafana:latest
-    user: "1001:1001"
     container_name: grafana
     ports:
       - 127.0.0.1:5010:3000
@@ -26,7 +25,6 @@ services:
 
   netdata:
     image: netdata/netdata
-    user: "1001:1001"
     container_name: netdata
     ports:
       - 127.0.0.1:5020:19999
@@ -49,7 +47,6 @@ services:
 
   prometheus:
     image: prom/prometheus:latest
-    user: "1001:1001"
     container_name: prometheus
     ports:
       - 127.0.0.1:5030:9090
