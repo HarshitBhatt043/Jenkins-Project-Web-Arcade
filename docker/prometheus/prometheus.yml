@@ -21,7 +21,7 @@ scrape_configs:
     tls_config:
       insecure_skip_verify: true
     static_configs:
-        - targets: ['jenkins.pearl9.cloud:443']
+        - targets: ['jenkins.pearl9.xyz:443']
     metric_relabel_configs:
     - action: replace
       source_labels: [exported_job]
