@@ -9,7 +9,6 @@ pipeline {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
         TOKEN = credentials('telegramToken')
         CHAT_ID = credentials('telegramChatid')
-        SONARNOTIFY = credentials('sonarnotify')
         SONARURL = credentials('sonarurl')
     }
 
@@ -66,7 +65,7 @@ pipeline {
                     def sonarPropertiesFile = "${WORKSPACE}/sonar-project.properties"
                     def projectKey = sh(script: "grep '^sonar.projectKey=' \"${sonarPropertiesFile}\" | cut -d'=' -f2 | tr -d '[:space:]'", returnStdout: true).trim()
                     def metricKeys = 'bugs,vulnerabilities,security_hotspots,code_smells,duplicated_lines_density,ncloc,cognitive_complexity,critical_violations,major_violations,sqale_index,alert_status'
-                    def sonarQubeResult = sh(script: "curl --user ${SONARNOTIFY}: '${SONARURL}api/measures/component?component=${projectKey}&metricKeys=${metricKeys}'", returnStdout: true).trim()
+                    def sonarQubeResult = sh(script: "curl '${SONARURL}api/measures/component?component=${projectKey}&metricKeys=${metricKeys}'", returnStdout: true).trim()
                     def metricsMap = readJSON text: sonarQubeResult
                     def text_break = '------------------------------------------------------------------------'
                     def info_break = '------------------------------------'
@@ -93,7 +92,7 @@ Major Violations: ${metricsMap.component.measures.find { it.metric == 'major_vio
 Code Smells: ${metricsMap.component.measures.find { it.metric == 'code_smells' }?.value ?: 'N/A'}
 Code Complexity: ${metricsMap.component.measures.find { it.metric == 'cognitive_complexity' }?.value ?: 'N/A'}
 Technical debt: ${metricsMap.component.measures.find { it.metric == 'sqale_index' }?.value ?: 'N/A'} minutes
-SonarQube URL: [${projectKey}](${SONARURL}/dashboard?id=${projectKey})
+SonarQube URL: [${projectKey}](${SONARURL}dashboard?id=${projectKey})
 ${text_break}
 """
                     sh "curl -sL --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${notificationMessage}' --form chat_id='${CHAT_ID}' --form parse_mode='Markdown'"
@@ -112,7 +111,7 @@ ${text_break}
                         echo 'rclone is already installed.'
                     }
                     }
-                sh 'rclone --config=/root/rclone.conf sync "project:" "${WORKSPACE}/cloud" --transfers=20 --checkers=20 --tpslimit 12 --size-only --fast-list --stats-one-line -P'
+                sh 'rclone --config=/home/jenkins/rclone.conf sync "project:" "${WORKSPACE}/cloud" --transfers=20 --checkers=20 --tpslimit 12 --size-only --fast-list --stats-one-line -P'
             }
         }
         stage('Building Docker Image') {
