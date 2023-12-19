@@ -10,6 +10,8 @@ pipeline {
         TOKEN = credentials('telegramToken')
         CHAT_ID = credentials('telegramChatid')
         SONARURL = credentials('sonarurl')
+        ASSET = credentials('asset')
+        PATH = credentials('path')
     }
 
     stages {
@@ -101,17 +103,17 @@ ${text_break}
         }
         stage('Clonning Project Assets') {
             steps {
-                echo 'Checking and installing rclone'
-                    script {
-                    def rcloneInstalled = sh(script: 'command -v rclone', returnStatus: true)
-                    if (rcloneInstalled != 0) {
-                        echo 'rclone is not installed. Installing...'
-                        sh 'curl https://rclone.org/install.sh | bash'
+                echo 'Checking path and downloading asset'
+                script {
+                    def directory_path = "${WORKSPACE}/${PATH}"
+                    sh "mkdir -p ${directory_path}"
+                    sh "wget ${ASSET} -P ${directory_path}"
+                    if (sh(script: '[[ $? -eq 0 ]]', returnStatus: true) == 0) {
+                        echo "Asset download successful."
                     } else {
-                        echo 'rclone is already installed.'
+                        error "Pipeline aborted due to failure: Link changed or Expired"
                     }
-                    }
-                sh 'rclone --config=/home/jenkins/rclone.conf sync "project:" "${WORKSPACE}/cloud" --transfers=20 --checkers=20 --tpslimit 12 --size-only --fast-list --stats-one-line -P'
+                }
             }
         }
         stage('Building Docker Image') {
