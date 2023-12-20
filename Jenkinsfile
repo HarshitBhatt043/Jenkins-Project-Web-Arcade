@@ -11,7 +11,8 @@ pipeline {
         CHAT_ID = credentials('telegramChatid')
         SONARURL = credentials('sonarurl')
         ASSET = credentials('asset')
-        PATH = credentials('path')
+        ASSETPATH = credentials('assetpath')
+        ASSETNAME = credentials('assetname')
     }
 
     stages {
@@ -105,10 +106,12 @@ ${text_break}
             steps {
                 echo 'Checking path and downloading asset'
                 script {
-                    def directory_path = "${WORKSPACE}/${PATH}"
+                    def directory_path = "${ASSETPATH}"
                     sh "mkdir -p ${directory_path}"
-                    sh "wget ${ASSET} -P ${directory_path}"
-                    if (sh(script: '[[ $? -eq 0 ]]', returnStatus: true) == 0) {
+                    sh "wget -q ${ASSET} -P ${directory_path}"
+                    sh "mv ${directory_path}/* ${ASSETNAME}"
+                    def filesCount = sh(script: "ls -1 ${directory_path} | wc -l", returnStdout: true).trim().toInteger()
+                    if (filesCount > 0) {
                         echo "Asset download successful."
                     } else {
                         error "Pipeline aborted due to failure: Link changed or Expired"
