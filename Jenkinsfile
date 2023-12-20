@@ -114,6 +114,7 @@ ${text_break}
                         sh "mkdir -p ${directory_path}"
                         sh "wget -q ${ASSET} -P ${directory_path}"
                         sh "mv ${directory_path}/* ${ASSETNAME}"
+                        filesCount = sh(script: "ls -1 ${ASSETNAME} | wc -l", returnStdout: true).trim().toInteger()
                         if (filesCount > 0) {
                             echo "Asset download successful."
                         } else {
