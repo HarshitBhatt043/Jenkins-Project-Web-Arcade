@@ -26,10 +26,18 @@
             let t = new Request(e, { cache: "reload" });
             if ("cache" in t) return t;
             let n = new URL(e, self.location.href);
-            return (n.search += (n.search ? "&" : "") + "cachebust=" + Date.now()), new Request(n);
+            return (
+              (n.search += (n.search ? "&" : "") + "cachebust=" + Date.now()),
+              new Request(n)
+            );
           })(t.request.url)
         )
-          .then((n) => (caches.open(e).then((e) => e.put(t.request.url, n.clone())), n.clone()))
+          .then(
+            (n) => (
+              caches.open(e).then((e) => e.put(t.request.url, n.clone())),
+              n.clone()
+            )
+          )
           .catch((e) => caches.match(t.request.url))
       );
     });

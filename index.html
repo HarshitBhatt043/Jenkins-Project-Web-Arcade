@@ -4,16 +4,16 @@
     <meta charset="utf-8" />
     <title>Black Hole Square</title>
     <meta name="description" content="Clean the universe!" />
-    <meta name="author" content="Quinten" />
-    <meta name="monetization" content="$ilp.uphold.com/N3GyWXpENLq4" />
     <meta name="viewport" content="initial-scale=1,width=device-width" />
     <link rel="manifest" href="manifest.json" />
     <meta name="theme-color" content="#0E181B" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
     <link rel="icon" type="image/png" href="icon.png" />
     <link rel="apple-touch-icon" href="icon.png" />
-    <script src="/js/main.js"></script>
     <style>
       body {
         background-color: #0e181b;
@@ -141,8 +141,13 @@
                     (l = e.canvas.tW / e.canvas.tH),
                     (u = e.canvas.w / e.canvas.h),
                     l < u
-                      ? ((e.canvas.zoom = e.canvas.h / e.canvas.tH), (e.canvas.gH = e.canvas.tH), (e.canvas.gW = (e.canvas.tH * e.canvas.w) / e.canvas.h))
-                      : ((e.canvas.zoom = e.canvas.w / e.canvas.tW), (e.canvas.gW = e.canvas.tW), (e.canvas.gH = (e.canvas.tW * e.canvas.h) / e.canvas.w)),
+                      ? ((e.canvas.zoom = e.canvas.h / e.canvas.tH),
+                        (e.canvas.gH = e.canvas.tH),
+                        (e.canvas.gW = (e.canvas.tH * e.canvas.w) / e.canvas.h))
+                      : ((e.canvas.zoom = e.canvas.w / e.canvas.tW),
+                        (e.canvas.gW = e.canvas.tW),
+                        (e.canvas.gH =
+                          (e.canvas.tW * e.canvas.h) / e.canvas.w)),
                     (p = (e.canvas.gW - e.canvas.tW) / 2),
                     (d = (e.canvas.gH - e.canvas.tH) / 2),
                     (e.canvas.gX = p),
@@ -161,16 +166,33 @@
                     c = e.pointer,
                     l = !1,
                     u = (e, t) => {
-                      (c.x = e), (c.y = t), (c.downX = e), (c.downY = t), (c.justDown = !0), (c.isDown = !0), (l = !1);
+                      (c.x = e),
+                        (c.y = t),
+                        (c.downX = e),
+                        (c.downY = t),
+                        (c.justDown = !0),
+                        (c.isDown = !0),
+                        (l = !1);
                     },
                     p = (e, t) => {
                       (c.x = e), (c.y = t);
                     },
                     d = (e, t) => {
-                      l ? (l = !1) : ((c.x = e), (c.y = t), (c.justUp = !0), (c.isDown = !1));
+                      l
+                        ? (l = !1)
+                        : ((c.x = e),
+                          (c.y = t),
+                          (c.justUp = !0),
+                          (c.isDown = !1));
                     };
                   t.addEventListener("mousedown", (c) => {
-                    (a = t.getBoundingClientRect()), (o = a.left), (r = a.top), (s = e.canvas.zoom / window.devicePixelRatio), (n = (c.clientX - o) / s), (i = (c.clientY - r) / s), u(n, i);
+                    (a = t.getBoundingClientRect()),
+                      (o = a.left),
+                      (r = a.top),
+                      (s = e.canvas.zoom / window.devicePixelRatio),
+                      (n = (c.clientX - o) / s),
+                      (i = (c.clientY - r) / s),
+                      u(n, i);
                   }),
                     t.addEventListener("touchstart", (c) => {
                       c.preventDefault(),
@@ -184,7 +206,13 @@
                         g.Z.playSong({ melody: ["8-"] });
                     }),
                     t.addEventListener("mousemove", (c) => {
-                      (a = t.getBoundingClientRect()), (o = a.left), (r = a.top), (s = e.canvas.zoom / window.devicePixelRatio), (n = (c.clientX - o) / s), (i = (c.clientY - r) / s), p(n, i);
+                      (a = t.getBoundingClientRect()),
+                        (o = a.left),
+                        (r = a.top),
+                        (s = e.canvas.zoom / window.devicePixelRatio),
+                        (n = (c.clientX - o) / s),
+                        (i = (c.clientY - r) / s),
+                        p(n, i);
                     }),
                     t.addEventListener("touchmove", (c) => {
                       c.preventDefault(),
@@ -197,10 +225,23 @@
                         p(n, i);
                     }),
                     t.addEventListener("mouseup", (c) => {
-                      (a = t.getBoundingClientRect()), (o = a.left), (r = a.top), (s = e.canvas.zoom / window.devicePixelRatio), (n = (c.clientX - o) / s), (i = (c.clientY - r) / s), d(n, i);
+                      (a = t.getBoundingClientRect()),
+                        (o = a.left),
+                        (r = a.top),
+                        (s = e.canvas.zoom / window.devicePixelRatio),
+                        (n = (c.clientX - o) / s),
+                        (i = (c.clientY - r) / s),
+                        d(n, i);
                     }),
                     t.addEventListener("touchend", (c) => {
-                      c.preventDefault(), (a = t.getBoundingClientRect()), (o = a.left), (r = a.top), (s = e.canvas.zoom / window.devicePixelRatio), (n = c.changedTouches[0].clientX / s), (i = c.changedTouches[0].clientY / s), d(n, i);
+                      c.preventDefault(),
+                        (a = t.getBoundingClientRect()),
+                        (o = a.left),
+                        (r = a.top),
+                        (s = e.canvas.zoom / window.devicePixelRatio),
+                        (n = c.changedTouches[0].clientX / s),
+                        (i = c.changedTouches[0].clientY / s),
+                        d(n, i);
                     }),
                     t.addEventListener("mouseout", (e) => {
                       c.isDown && ((c.justUp = !0), (c.isDown = !1));
@@ -212,9 +253,12 @@
               });
               var z = a(8520);
               document.monetization &&
-                document.monetization.addEventListener("monetizationstart", (e) => {
-                  z.Z.save("payed", !0);
-                });
+                document.monetization.addEventListener(
+                  "monetizationstart",
+                  (e) => {
+                    z.Z.save("payed", !0);
+                  }
+                );
               const x = Object.freeze({
                   setup: (e) => {
                     let t,
@@ -233,12 +277,18 @@
                           d = [];
                         a.statemachine.active.forEach((t) => {
                           let a = e[t];
-                          void 0 !== a.state && ((p = [...p, ...a.state.updates]), (d = [...d, ...a.state.draws]));
+                          void 0 !== a.state &&
+                            ((p = [...p, ...a.state.updates]),
+                            (d = [...d, ...a.state.draws]));
                         }),
                           s.process(e, p, r, i),
                           (a.pointer.justDown = !1),
                           (a.pointer.justUp = !1),
-                          u && !a.pointer.pointing ? (o.style.cursor = "default") : !u && a.pointer.pointing && (o.style.cursor = "pointer"),
+                          u && !a.pointer.pointing
+                            ? (o.style.cursor = "default")
+                            : !u &&
+                              a.pointer.pointing &&
+                              (o.style.cursor = "pointer"),
                           t.clearRect(0, 0, a.canvas.w, a.canvas.h),
                           c.process(e, d, t, r, i),
                           requestAnimationFrame(l);
@@ -252,7 +302,9 @@
               let y = z.Z.load("current");
               if (void 0 !== y) {
                 w.game.levels.current = y;
-                let e = (z.Z.load("payed") ? w.game.levels.wm : w.game.levels.sequence)[y];
+                let e = (
+                  z.Z.load("payed") ? w.game.levels.wm : w.game.levels.sequence
+                )[y];
                 w.level.state.updates = [e];
               }
               x.setup(w),
@@ -273,7 +325,8 @@
               null !== s && (r = JSON.parse(s));
               const n = Object.freeze({
                 save: (e, t) => {
-                  (r[e] = t), localStorage.setItem(o.u2 + " Data", JSON.stringify(r));
+                  (r[e] = t),
+                    localStorage.setItem(o.u2 + " Data", JSON.stringify(r));
                 },
                 load: (e) => r[e],
               });
@@ -340,7 +393,9 @@
               const o = Object.freeze({
                 draw: (e, t, a) => {
                   a.globalCompositeOperation = "destination-over";
-                  let o = new Path2D("M6 288h276c3.311 0 6-2.689 6-6V6c0-3.311-2.689-6-6-6H6C2.689 0 0 2.689 0 6v276c0 3.311 2.689 6 6 6z");
+                  let o = new Path2D(
+                    "M6 288h276c3.311 0 6-2.689 6-6V6c0-3.311-2.689-6-6-6H6C2.689 0 0 2.689 0 6v276c0 3.311 2.689 6 6 6z"
+                  );
                   (a.fillStyle = t.bgcut.fill), a.fill(o);
                 },
               });
@@ -350,8 +405,16 @@
               a.r(t), a.d(t, { default: () => o });
               const o = Object.freeze({
                 draw: (e, t, a) => {
-                  let o = new Path2D("M44 12c0-3.311-2.689-6-6-6H10c-3.311 0-6 2.689-6 6v28c0 3.311 2.689 6 6 6h28c3.311 0 6-2.689 6-6V12z");
-                  (a.fillStyle = "#000"), a.fill(o), (o = new Path2D("M4 16c0-3.311 2.689-6 6-6h28c3.311 0 6 2.689 6 6v-4c0-3.311-2.689-6-6-6H10c-3.311 0-6 2.689-6 6v4z")), (a.fillStyle = "#16272C"), a.fill(o);
+                  let o = new Path2D(
+                    "M44 12c0-3.311-2.689-6-6-6H10c-3.311 0-6 2.689-6 6v28c0 3.311 2.689 6 6 6h28c3.311 0 6-2.689 6-6V12z"
+                  );
+                  (a.fillStyle = "#000"),
+                    a.fill(o),
+                    (o = new Path2D(
+                      "M4 16c0-3.311 2.689-6 6-6h28c3.311 0 6 2.689 6 6v-4c0-3.311-2.689-6-6-6H10c-3.311 0-6 2.689-6 6v4z"
+                    )),
+                    (a.fillStyle = "#16272C"),
+                    a.fill(o);
                 },
               });
             },
@@ -362,8 +425,17 @@
                 draw: (e, t, a) => {
                   let o = t.clicked ? "#AECBD6" : "#c3dad5",
                     r = t.clicked ? "#C9DDE4" : "#f2f7f6",
-                    s = new Path2D("M44 12c0-3.311-2.689-6-6-6H10c-3.311 0-6 2.689-6 6v28c0 3.311 2.689 6 6 6h28c3.311 0 6-2.689 6-6V12z");
-                  (a.fillStyle = o), a.fill(s), (s = new Path2D("M44 8c0-3.311-2.689-6-6-6H10C6.689 2 4 4.689 4 8v28c0 3.311 2.689 6 6 6h28c3.311 0 6-2.689 6-6V8z")), (a.fillStyle = r), a.fill(s), t.clicked && (t.clicked = t.clicked - 1);
+                    s = new Path2D(
+                      "M44 12c0-3.311-2.689-6-6-6H10c-3.311 0-6 2.689-6 6v28c0 3.311 2.689 6 6 6h28c3.311 0 6-2.689 6-6V12z"
+                    );
+                  (a.fillStyle = o),
+                    a.fill(s),
+                    (s = new Path2D(
+                      "M44 8c0-3.311-2.689-6-6-6H10C6.689 2 4 4.689 4 8v28c0 3.311 2.689 6 6 6h28c3.311 0 6-2.689 6-6V8z"
+                    )),
+                    (a.fillStyle = r),
+                    a.fill(s),
+                    t.clicked && (t.clicked = t.clicked - 1);
                 },
               });
             },
@@ -374,7 +446,9 @@
                 draw: (e, t, a) => {
                   let o = e.game.canvas.gW,
                     r = e.game.canvas.gH;
-                  void 0 !== t.size && ((o = t.size.w), (r = t.size.h)), (a.fillStyle = t.fillrect.fill), a.fillRect(0, 0, o, r);
+                  void 0 !== t.size && ((o = t.size.w), (r = t.size.h)),
+                    (a.fillStyle = t.fillrect.fill),
+                    a.fillRect(0, 0, o, r);
                 },
               });
             },
@@ -400,7 +474,9 @@
               ].map((e) => {
                 let t = new Path2D(e),
                   a = 2 + Math.random();
-                return (a *= Math.random() > 0.5 ? 1 : -1), { path: t, speed: a };
+                return (
+                  (a *= Math.random() > 0.5 ? 1 : -1), { path: t, speed: a }
+                );
               });
               const r = Object.freeze({
                 draw: (e, t, a) => {
@@ -420,7 +496,9 @@
               const r = Object.freeze({
                 draw: (e, t, a) => {
                   o.default.draw(e, t, a);
-                  let r = new Path2D("M39 14.5c0-4.14-3.36-7.5-7.5-7.5h-15C12.36 7 9 10.36 9 14.5v15c0 4.14 3.36 7.5 7.5 7.5h15c4.14 0 7.5-3.36 7.5-7.5v-15z");
+                  let r = new Path2D(
+                    "M39 14.5c0-4.14-3.36-7.5-7.5-7.5h-15C12.36 7 9 10.36 9 14.5v15c0 4.14 3.36 7.5 7.5 7.5h15c4.14 0 7.5-3.36 7.5-7.5v-15z"
+                  );
                   (a.fillStyle = "#878e88"), a.fill(r);
                 },
               });
@@ -430,9 +508,15 @@
               a.r(t), a.d(t, { default: () => r });
               let o = [
                 (e, t) => [(e.fillStyle = "#4B8495"), e.fillRect(t, 0, 8, 8)],
-                (e, t) => [(e.strokeStyle = "#4B8495"), e.strokeRect(t + 0.5, 0.5, 7, 7)],
+                (e, t) => [
+                  (e.strokeStyle = "#4B8495"),
+                  e.strokeRect(t + 0.5, 0.5, 7, 7),
+                ],
                 (e, t) => [(e.fillStyle = "#F2F7F6"), e.fillRect(t, 0, 8, 8)],
-                (e, t) => [(e.strokeStyle = "#F2F7F6"), e.strokeRect(t + 0.5, 0.5, 7, 7)],
+                (e, t) => [
+                  (e.strokeStyle = "#F2F7F6"),
+                  e.strokeRect(t + 0.5, 0.5, 7, 7),
+                ],
               ];
               const r = Object.freeze({
                 draw: (e, t, a) => {
@@ -448,7 +532,8 @@
               a.r(t), a.d(t, { default: () => o });
               const o = Object.freeze({
                 draw: (e, t, a) => {
-                  t.text.behind && (a.globalCompositeOperation = "destination-over"),
+                  t.text.behind &&
+                    (a.globalCompositeOperation = "destination-over"),
                     (a.textAlign = t.text.align || "left"),
                     (a.textBaseline = t.text.base || "top"),
                     (a.fillStyle = "#f2f7f6"),
@@ -463,7 +548,11 @@
               let o = 400,
                 r = [];
               for (let e = 0; e < 42; e++) {
-                let e = { start: Math.random() * o * 7, length: o + Math.random() * o * 2, rotation: Math.random() * Math.PI * 2 };
+                let e = {
+                  start: Math.random() * o * 7,
+                  length: o + Math.random() * o * 2,
+                  rotation: Math.random() * Math.PI * 2,
+                };
                 r.push(e);
               }
               const s = Object.freeze({
@@ -471,20 +560,67 @@
                   (a.globalCompositeOperation = "destination-over"),
                     (a.fillStyle = t.tunnel.fill),
                     r.forEach((t) => {
-                      (t.start -= (8 * n) / 17), t.start < -398 && ((t.length = 200 + (Math.random() * o) / 2), (t.start = t.start + 3200), (t.rotation = Math.random() * Math.PI * 2)), (t.rotation = t.rotation + (-0.005 * n) / 17);
+                      (t.start -= (8 * n) / 17),
+                        t.start < -398 &&
+                          ((t.length = 200 + (Math.random() * o) / 2),
+                          (t.start = t.start + 3200),
+                          (t.rotation = Math.random() * Math.PI * 2)),
+                        (t.rotation = t.rotation + (-0.005 * n) / 17);
                       let r = [
                           { x: -4, y: 80, z: t.start },
                           { x: 4, y: 80, z: t.start },
-                          { x: 4, y: 80, z: Math.max(t.start - t.length, -399) },
-                          { x: -4, y: 80, z: Math.max(t.start - t.length, -399) },
+                          {
+                            x: 4,
+                            y: 80,
+                            z: Math.max(t.start - t.length, -399),
+                          },
+                          {
+                            x: -4,
+                            y: 80,
+                            z: Math.max(t.start - t.length, -399),
+                          },
                         ],
                         s = [];
                       r.forEach((a) => {
-                        let [r, n] = ((e, t, a, o = Math.cos(a), r = Math.sin(a)) => [o * e - r * t, r * e + o * t])(a.x, a.y, t.rotation);
-                        s.push(...((e, t, a, o, r, s, n = 1, i = (a / (a + s)) * n) => [e + o * i, t + r * i])(e.game.canvas.gW / 2, e.game.canvas.gH / 2, o, r, n, a.z));
+                        let [r, n] = ((
+                          e,
+                          t,
+                          a,
+                          o = Math.cos(a),
+                          r = Math.sin(a)
+                        ) => [o * e - r * t, r * e + o * t])(
+                          a.x,
+                          a.y,
+                          t.rotation
+                        );
+                        s.push(
+                          ...((
+                            e,
+                            t,
+                            a,
+                            o,
+                            r,
+                            s,
+                            n = 1,
+                            i = (a / (a + s)) * n
+                          ) => [e + o * i, t + r * i])(
+                            e.game.canvas.gW / 2,
+                            e.game.canvas.gH / 2,
+                            o,
+                            r,
+                            n,
+                            a.z
+                          )
+                        );
                       }),
                         ((e, t, a, o, r, s, n, i, c) => {
-                          e.beginPath(), e.moveTo(t, a), e.lineTo(o, r), e.lineTo(s, n), e.lineTo(i, c), e.closePath(), e.fill();
+                          e.beginPath(),
+                            e.moveTo(t, a),
+                            e.lineTo(o, r),
+                            e.lineTo(s, n),
+                            e.lineTo(i, c),
+                            e.closePath(),
+                            e.fill();
                         })(a, ...s);
                     });
                 },
@@ -497,7 +633,9 @@
               const r = Object.freeze({
                 draw: (e, t, a) => {
                   o.default.draw(e, t, a);
-                  let r = new Path2D("M24 17.757l-9.879-9.878a3 3 0 00-4.242 4.242L19.757 22l-9.878 9.879a3 3 0 004.242 4.242L24 26.243l9.879 9.878a3 3 0 004.242-4.242L28.243 22l9.878-9.879a3 3 0 00-4.242-4.242L24 17.757z");
+                  let r = new Path2D(
+                    "M24 17.757l-9.879-9.878a3 3 0 00-4.242 4.242L19.757 22l-9.878 9.879a3 3 0 004.242 4.242L24 26.243l9.879 9.878a3 3 0 004.242-4.242L28.243 22l9.878-9.879a3 3 0 00-4.242-4.242L24 17.757z"
+                  );
                   (a.fillStyle = "#878e88"), a.fill(r);
                 },
               });
@@ -575,10 +713,19 @@
                     v = !a,
                     f = !p;
                   if (void 0 === o || "running" !== o.state) {
-                    if (((o = new AudioContext()), /(iPhone|iPad)/i.test(navigator.userAgent) && 48e3 !== o.sampleRate)) {
+                    if (
+                      ((o = new AudioContext()),
+                      /(iPhone|iPad)/i.test(navigator.userAgent) &&
+                        48e3 !== o.sampleRate)
+                    ) {
                       let e = o.createBuffer(1, 1, 48e3),
                         t = o.createBufferSource();
-                      (t.buffer = e), t.connect(o.destination), t.start(0), t.disconnect(), o.close(), (o = new AudioContext());
+                      (t.buffer = e),
+                        t.connect(o.destination),
+                        t.start(0),
+                        t.disconnect(),
+                        o.close(),
+                        (o = new AudioContext());
                     }
                     (s = o.createBiquadFilter()),
                       s.connect(o.destination),
@@ -609,14 +756,31 @@
                     w = (60 / d) * 7,
                     y = 0,
                     b = () => {
-                      if ("closed" !== o.state && !(0 !== y && o.currentTime > y)) {
-                        for (((!v && o.currentTime > m + 0.35) || (!f && o.currentTime > x + 0.35)) && ((g = 0), (z = 0), (m = x = o.currentTime)); !v && m < o.currentTime + w; ) {
+                      if (
+                        "closed" !== o.state &&
+                        !(0 !== y && o.currentTime > y)
+                      ) {
+                        for (
+                          ((!v && o.currentTime > m + 0.35) ||
+                            (!f && o.currentTime > x + 0.35)) &&
+                          ((g = 0), (z = 0), (m = x = o.currentTime));
+                          !v && m < o.currentTime + w;
+
+                        ) {
                           let e = t(r[u], a[g], m, d);
-                          (u = (u + 1) % r.length), (g = (g + 1) % a.length), (m += e), 0 === g && (h || (v = !0)), (y = y < m + w ? m + w : y);
+                          (u = (u + 1) % r.length),
+                            (g = (g + 1) % a.length),
+                            (m += e),
+                            0 === g && (h || (v = !0)),
+                            (y = y < m + w ? m + w : y);
                         }
                         for (; !f && x < o.currentTime + w; ) {
                           let e = t(r[u], p[z], x, d);
-                          (u = (u + 1) % r.length), (z = (z + 1) % p.length), (x += e), 0 === z && (h || (f = !0)), (y = y < x + w ? x + w : y);
+                          (u = (u + 1) % r.length),
+                            (z = (z + 1) % p.length),
+                            (x += e),
+                            0 === z && (h || (f = !0)),
+                            (y = y < x + w ? x + w : y);
                         }
                         requestAnimationFrame(b);
                       }
@@ -679,19 +843,35 @@
               const o = Object.freeze({
                 update: (e, t, a, o) => {
                   if (void 0 !== t.position) {
-                    (t.position.x = t.position.x + (((t.home.x - t.position.x) / 3) * o) / 17), Math.abs(t.home.x - t.position.x) < 1 / e.game.canvas.zoom && (t.position.x = t.home.x);
+                    (t.position.x =
+                      t.position.x +
+                      (((t.home.x - t.position.x) / 3) * o) / 17),
+                      Math.abs(t.home.x - t.position.x) <
+                        1 / e.game.canvas.zoom && (t.position.x = t.home.x);
                     let a = t.home.y;
                     t.home.drop && (a += 48),
-                      (t.position.y = t.position.y + (((a - t.position.y) / 3) * o) / 17),
+                      (t.position.y =
+                        t.position.y + (((a - t.position.y) / 3) * o) / 17),
                       Math.abs(a - t.position.y) < 1 / e.game.canvas.zoom &&
                         ((t.position.y = a),
                         t.home.drop &&
                           (delete t.mask,
-                          ["blanksquare", "xsquare", "arrowup", "arrowright", "arrowdown", "arrowleft", "neutronstar"].forEach((e) => {
+                          [
+                            "blanksquare",
+                            "xsquare",
+                            "arrowup",
+                            "arrowright",
+                            "arrowdown",
+                            "arrowleft",
+                            "neutronstar",
+                          ].forEach((e) => {
                             delete t[e];
                           }),
                           (t.home.drop = !1))),
-                      t.position.x === t.home.x && t.position.y === t.home.y && t.home.suck && ((t.mask = {}), (t.home.suck = !1), (t.home.drop = !0));
+                      t.position.x === t.home.x &&
+                        t.position.y === t.home.y &&
+                        t.home.suck &&
+                        ((t.mask = {}), (t.home.suck = !1), (t.home.drop = !0));
                   }
                 },
               });
@@ -703,23 +883,35 @@
               const r = Object.freeze({
                 update: (e, t, a, r) => {
                   let s = o.Z.load("solved") || [],
-                    n = o.Z.load("payed") ? e.game.levels.wm : e.game.levels.sequence,
+                    n = o.Z.load("payed")
+                      ? e.game.levels.wm
+                      : e.game.levels.sequence,
                     i = n[e.game.levels.current],
                     c = [],
                     l = [];
                   n.forEach((t) => {
                     if (e[t].puzzle.grid.length) {
                       let e = 0;
-                      s.indexOf(t) > -1 && (e += 1), t === i && (e += 2), c.push(e), l.push(t);
+                      s.indexOf(t) > -1 && (e += 1),
+                        t === i && (e += 2),
+                        c.push(e),
+                        l.push(t);
                     }
                   }),
                     (t.progress.dots = c);
-                  let u = e.game.pointer.x - e.game.canvas.gW / 2 + 6 * c.length,
+                  let u =
+                      e.game.pointer.x - e.game.canvas.gW / 2 + 6 * c.length,
                     p = e.game.pointer.y - e.game.canvas.gH / 2 - t.position.y;
-                  if (!(p < 0 || p > 8 || u < 0 || u > 12 * c.length) && ((e.game.pointer.pointing = !0), e.game.pointer.justUp)) {
+                  if (
+                    !(p < 0 || p > 8 || u < 0 || u > 12 * c.length) &&
+                    ((e.game.pointer.pointing = !0), e.game.pointer.justUp)
+                  ) {
                     let t = l[(u / 12) | 0],
                       a = e.game.levels;
-                    (a.current = n.indexOf(t)), o.Z.save("current", a.current), (e[t].puzzle.init = !0), (e.level.state.updates = [t]);
+                    (a.current = n.indexOf(t)),
+                      o.Z.save("current", a.current),
+                      (e[t].puzzle.init = !0),
+                      (e.level.state.updates = [t]);
                   }
                 },
               });
@@ -733,7 +925,9 @@
                 let t = e.replace(/\.\/(.+)\.json$/, "$1");
                 o[t] = r(e);
               });
-              const s = Object.freeze({ add: (e, t) => ((e[t] = JSON.parse(JSON.stringify(o[t]))), e) }),
+              const s = Object.freeze({
+                  add: (e, t) => ((e[t] = JSON.parse(JSON.stringify(o[t]))), e),
+                }),
                 n = Object.freeze({
                   add: (e, t, ...a) => {
                     let o = {};
@@ -759,15 +953,31 @@
                   ["position", "size", "home", "arrowleft"],
                   ["position", "size", "home", "neutronstar"],
                 ],
-                u = ["xsquare", "arrowup", "arrowright", "arrowdown", "arrowleft", "neutronstar"],
-                p = ["blanksquare", "xsquare", "arrowup", "arrowright", "arrowdown", "arrowleft", "neutronstar"],
+                u = [
+                  "xsquare",
+                  "arrowup",
+                  "arrowright",
+                  "arrowdown",
+                  "arrowleft",
+                  "neutronstar",
+                ],
+                p = [
+                  "blanksquare",
+                  "xsquare",
+                  "arrowup",
+                  "arrowright",
+                  "arrowdown",
+                  "arrowleft",
+                  "neutronstar",
+                ],
                 d = { bass: ["4-", "2e3", "6a2"] },
                 h = { melody: ["4-", "2C3", "2D3", "4G3"] },
                 v = ["C3", "e3", "a3", "D3", "G3", "b3"],
                 f = {},
                 g = {};
               u.forEach((e, t) => {
-                (f[e] = { melody: ["2" + v[t]] }), (g[e] = { melody: ["1" + v[t]] });
+                (f[e] = { melody: ["2" + v[t]] }),
+                  (g[e] = { melody: ["1" + v[t]] });
               });
               let m = !1,
                 z = !1,
@@ -784,8 +994,16 @@
               const S = Object.freeze({
                 update: (e, t, a, o) => {
                   if (!0 === t.puzzle.init) {
-                    (t.puzzle.init = !1), (j = []), (e.tapstext.text.text = t.puzzle.taps ? t.puzzle.taps + " moves" : "");
-                    let a = (c.Z.load("payed") ? e.game.levels.wm : e.game.levels.sequence)[e.game.levels.current];
+                    (t.puzzle.init = !1),
+                      (j = []),
+                      (e.tapstext.text.text = t.puzzle.taps
+                        ? t.puzzle.taps + " moves"
+                        : "");
+                    let a = (
+                      c.Z.load("payed")
+                        ? e.game.levels.wm
+                        : e.game.levels.sequence
+                    )[e.game.levels.current];
                     e.titletext.text.text = t.puzzle.taps ? "The " + a : "";
                     let o = e.level.state;
                     (o.draws = []),
@@ -794,69 +1012,164 @@
                           s = (a / 6) | 0,
                           i = "piece" + a,
                           c = n.add(e, i, ...l[t]);
-                        (c.position.x = c.home.x = 16 + 48 * r), (c.position.y = c.home.y = 62 + 48 * s), o.draws.push(i), o.updates.push(i);
+                        (c.position.x = c.home.x = 16 + 48 * r),
+                          (c.position.y = c.home.y = 62 + 48 * s),
+                          o.draws.push(i),
+                          o.updates.push(i);
                         let u = "top" + a,
                           p = n.add(e, u, ...l[0]);
-                        (p.position.x = p.home.x = 16 + 48 * r), (p.position.y = p.home.y = 62 + 48 * s), o.draws.push(u), o.updates.push(u);
+                        (p.position.x = p.home.x = 16 + 48 * r),
+                          (p.position.y = p.home.y = 62 + 48 * s),
+                          o.draws.push(u),
+                          o.updates.push(u);
                       }),
                       void 0 !== t.puzzle.text &&
                         t.puzzle.text.forEach((t, a, r) => {
                           let s = "text" + a,
                             i = n.add(e, s, "position", "text");
-                          (i.position.x = 160), (i.position.y = 208 - 12 * r.length + 24 * a), (i.text.text = t), (i.text.align = "center"), o.draws.push(s), o.updates.push(s);
+                          (i.position.x = 160),
+                            (i.position.y = 208 - 12 * r.length + 24 * a),
+                            (i.text.text = t),
+                            (i.text.align = "center"),
+                            o.draws.push(s),
+                            o.updates.push(s);
                           let c = "top" + a;
                           n.add(e, c, ...l[0]);
                         }),
                       !0 === t.puzzle.noBoard
-                        ? ((e.controls.state.draws = ["tunnel", "maintitle"]), (e.controls.state.updates = []))
+                        ? ((e.controls.state.draws = ["tunnel", "maintitle"]),
+                          (e.controls.state.updates = []))
                         : void 0 !== t.puzzle.text
-                        ? ((e.controls.state.draws = ["bgcut", "bgout", "feedback", "tunnel"]), (e.controls.state.updates = []))
-                        : ((e.controls.state.draws = ["bgcut", "bgout", "feedback", "tunnel", "tapstext", "titletext", "progress"]), (e.controls.state.updates = ["progress"]));
+                        ? ((e.controls.state.draws = [
+                            "bgcut",
+                            "bgout",
+                            "feedback",
+                            "tunnel",
+                          ]),
+                          (e.controls.state.updates = []))
+                        : ((e.controls.state.draws = [
+                            "bgcut",
+                            "bgout",
+                            "feedback",
+                            "tunnel",
+                            "tapstext",
+                            "titletext",
+                            "progress",
+                          ]),
+                          (e.controls.state.updates = ["progress"]));
                   }
                   let r = e.game;
-                  if (b) return t.puzzle.lT ? (e.feedback.text.text = t.puzzle.lT) : 0 === j.length ? (e.feedback.text.text = "Back") : (e.feedback.text.text = "Reset"), (m = !0), (x = 0), (w = !0), void (b = !1);
-                  if (y) return t.puzzle.rT ? (e.feedback.text.text = t.puzzle.rT) : (e.feedback.text.text = "Skip"), (z = !0), (x = 0), (w = !0), void (y = !1);
-                  if (!w && !0 === r.pointer.isDown && (j.length < t.puzzle.taps || t.puzzle.text)) {
+                  if (b)
+                    return (
+                      t.puzzle.lT
+                        ? (e.feedback.text.text = t.puzzle.lT)
+                        : 0 === j.length
+                        ? (e.feedback.text.text = "Back")
+                        : (e.feedback.text.text = "Reset"),
+                      (m = !0),
+                      (x = 0),
+                      (w = !0),
+                      void (b = !1)
+                    );
+                  if (y)
+                    return (
+                      t.puzzle.rT
+                        ? (e.feedback.text.text = t.puzzle.rT)
+                        : (e.feedback.text.text = "Skip"),
+                      (z = !0),
+                      (x = 0),
+                      (w = !0),
+                      void (y = !1)
+                    );
+                  if (
+                    !w &&
+                    !0 === r.pointer.isDown &&
+                    (j.length < t.puzzle.taps || t.puzzle.text)
+                  ) {
                     let a = r.pointer.x - r.pointer.downX;
                     (r.canvas.oX = r.canvas.gX + a),
                       (r.canvas.oY = r.canvas.gY),
-                      a > 48 && (t.puzzle.lT ? (e.feedback.text.text = t.puzzle.lT) : 0 === j.length ? (e.feedback.text.text = "Back") : (e.feedback.text.text = "Reset")),
-                      a < -48 && (t.puzzle.rT ? (e.feedback.text.text = t.puzzle.rT) : (e.feedback.text.text = "Skip"));
+                      a > 48 &&
+                        (t.puzzle.lT
+                          ? (e.feedback.text.text = t.puzzle.lT)
+                          : 0 === j.length
+                          ? (e.feedback.text.text = "Back")
+                          : (e.feedback.text.text = "Reset")),
+                      a < -48 &&
+                        (t.puzzle.rT
+                          ? (e.feedback.text.text = t.puzzle.rT)
+                          : (e.feedback.text.text = "Skip"));
                   } else {
                     let t = r.canvas.gX,
                       a = 1;
-                    if ((x <= 0 && z && (t -= r.canvas.gW), x <= 0 && m && ((t += r.canvas.gW), (a = -1)), (r.canvas.oX = r.canvas.oX + (((t - r.canvas.oX) / 7) * o) / 17), (r.canvas.oY = r.canvas.gY), x <= 0 && (z || m))) {
+                    if (
+                      (x <= 0 && z && (t -= r.canvas.gW),
+                      x <= 0 && m && ((t += r.canvas.gW), (a = -1)),
+                      (r.canvas.oX =
+                        r.canvas.oX + (((t - r.canvas.oX) / 7) * o) / 17),
+                      (r.canvas.oY = r.canvas.gY),
+                      x <= 0 && (z || m))
+                    ) {
                       if (Math.abs(t - r.canvas.oX) < 1 / e.game.canvas.zoom) {
                         let t = e.game.levels,
-                          o = c.Z.load("payed") ? e.game.levels.wm : e.game.levels.sequence;
+                          o = c.Z.load("payed")
+                            ? e.game.levels.wm
+                            : e.game.levels.sequence;
                         if (z || 0 === j.length) {
                           let e = t.current;
-                          (t.current = Math.min(Math.max(t.current + a, 0), o.length - 1)), c.Z.save("current", t.current), e === t.current && (a = -a);
+                          (t.current = Math.min(
+                            Math.max(t.current + a, 0),
+                            o.length - 1
+                          )),
+                            c.Z.save("current", t.current),
+                            e === t.current && (a = -a);
                         }
                         let s = o[t.current];
-                        (e[s].puzzle.init = !0), (e.level.state.updates = [s]), (r.canvas.oX = r.canvas.oX + 2 * r.canvas.gW * a), (z = !1), (m = !1);
+                        (e[s].puzzle.init = !0),
+                          (e.level.state.updates = [s]),
+                          (r.canvas.oX = r.canvas.oX + 2 * r.canvas.gW * a),
+                          (z = !1),
+                          (m = !1);
                       }
                       return;
                     }
-                    x > 0 ? (x -= o) : Math.abs(t - r.canvas.oX) < 1 / e.game.canvas.zoom && (w = !1);
+                    x > 0
+                      ? (x -= o)
+                      : Math.abs(t - r.canvas.oX) < 1 / e.game.canvas.zoom &&
+                        (w = !1);
                   }
                   if (!0 === e.game.pointer.justUp) {
                     let a = r.pointer.x - r.pointer.downX;
                     if (a > 48) return (m = !0), (x = 0), void (w = !0);
                     if (a < -48) return (z = !0), (x = 0), void (w = !0);
-                    let o = e.game.pointer.x - 16 - (e.game.canvas.gW - e.game.canvas.tW) / 2,
-                      s = e.game.pointer.y - 62 - (e.game.canvas.gH - e.game.canvas.tH) / 2;
+                    let o =
+                        e.game.pointer.x -
+                        16 -
+                        (e.game.canvas.gW - e.game.canvas.tW) / 2,
+                      s =
+                        e.game.pointer.y -
+                        62 -
+                        (e.game.canvas.gH - e.game.canvas.tH) / 2;
                     if (j.length >= t.puzzle.taps) return;
                     if (o < 0 || o > 288 || s < 0 || s > 288) return;
                     (o = (o / 48) | 0), (s = (s / 48) | 0);
                     let n = o + 6 * s,
                       l = {
                         arrowup: (e) => v(-6, 35, 0, e),
-                        arrowright: (e) => v(1, n + (5 - (n % 6)), n - (n % 6), e),
+                        arrowright: (e) =>
+                          v(1, n + (5 - (n % 6)), n - (n % 6), e),
                         arrowdown: (e) => v(6, 35, 0, e),
-                        arrowleft: (e) => v(-1, n + (5 - (n % 6)), n - (n % 6), e),
+                        arrowleft: (e) =>
+                          v(-1, n + (5 - (n % 6)), n - (n % 6), e),
                         xsquare: (t) => (t && delete e["piece" + n].xsquare, 1),
-                        neutronstar: (t) => (t && (delete e["piece" + n].neutronstar, (e["piece" + n].blackhole = {}), (e["top" + n].neutronstar = {}), (e["top" + n].home.suck = !0)), 1),
+                        neutronstar: (t) => (
+                          t &&
+                            (delete e["piece" + n].neutronstar,
+                            (e["piece" + n].blackhole = {}),
+                            (e["top" + n].neutronstar = {}),
+                            (e["top" + n].home.suck = !0)),
+                          1
+                        ),
                       },
                       v = (t, a, o, r = !0) => {
                         let s = e["piece" + n],
@@ -864,11 +1177,20 @@
                           c = [],
                           l = !1;
                         for (; !l; ) {
-                          if (((s = e["piece" + i]), !p.some((e) => void 0 !== s[e]))) {
-                            void 0 !== s.blackhole ? c.unshift("top" + i) : (c.unshift("top" + i), c.push("piece" + i)), (l = !0);
+                          if (
+                            ((s = e["piece" + i]),
+                            !p.some((e) => void 0 !== s[e]))
+                          ) {
+                            void 0 !== s.blackhole
+                              ? c.unshift("top" + i)
+                              : (c.unshift("top" + i), c.push("piece" + i)),
+                              (l = !0);
                             break;
                           }
-                          c.unshift("top" + i), c.push("piece" + i), (i += t), (i > a || i < o) && ((c = []), (l = !0));
+                          c.unshift("top" + i),
+                            c.push("piece" + i),
+                            (i += t),
+                            (i > a || i < o) && ((c = []), (l = !0));
                         }
                         if (!r) return c.length;
                         if (c.length < 1) return 0;
@@ -879,7 +1201,11 @@
                           f = v.home;
                         return (
                           c.forEach((t) => {
-                            (d = e[t]), (u = d.home), (e[t] = v), (e[t].home = u), (v = d);
+                            (d = e[t]),
+                              (u = d.home),
+                              (e[t] = v),
+                              (e[t].home = u),
+                              (v = d);
                           }),
                           (e[h] = v),
                           (e[h].home = f),
@@ -890,11 +1216,28 @@
                       y = e["piece" + n];
                     Object.keys(l).forEach((a) => {
                       if (y[a]) {
-                        (y.clicked = 16), l[a](!0) > 0 ? (j.push(n), i.Z.playSong(f[a])) : i.Z.playSong(g[a]);
+                        (y.clicked = 16),
+                          l[a](!0) > 0
+                            ? (j.push(n), i.Z.playSong(f[a]))
+                            : i.Z.playSong(g[a]);
                         let o = t.puzzle.taps - j.length;
-                        if (((e.tapstext.text.text = o + " moves"), t.puzzle.grid.some((t, a) => p.some((t) => void 0 !== e["piece" + a][t]))))
-                          if (o <= 0) (m = !0), (x = 750), (w = !0), i.Z.playSong(d), (e.feedback.text.text = "Out of moves!");
-                          else if (t.puzzle.grid.some((t, a) => u.some((t) => void 0 !== e["piece" + a][t]))) {
+                        if (
+                          ((e.tapstext.text.text = o + " moves"),
+                          t.puzzle.grid.some((t, a) =>
+                            p.some((t) => void 0 !== e["piece" + a][t])
+                          ))
+                        )
+                          if (o <= 0)
+                            (m = !0),
+                              (x = 750),
+                              (w = !0),
+                              i.Z.playSong(d),
+                              (e.feedback.text.text = "Out of moves!");
+                          else if (
+                            t.puzzle.grid.some((t, a) =>
+                              u.some((t) => void 0 !== e["piece" + a][t])
+                            )
+                          ) {
                             n = 0;
                             let t = !0;
                             for (; n < 36 && t; ) {
@@ -904,31 +1247,63 @@
                               }),
                                 (n += 1);
                             }
-                            t && ((m = !0), (x = 750), (w = !0), i.Z.playSong(d), (e.feedback.text.text = "Stuck"));
-                          } else (m = !0), (x = 750), (w = !0), i.Z.playSong(d), (e.feedback.text.text = "Not clean...");
+                            t &&
+                              ((m = !0),
+                              (x = 750),
+                              (w = !0),
+                              i.Z.playSong(d),
+                              (e.feedback.text.text = "Stuck"));
+                          } else
+                            (m = !0),
+                              (x = 750),
+                              (w = !0),
+                              i.Z.playSong(d),
+                              (e.feedback.text.text = "Not clean...");
                         else {
-                          (z = !0), (x = 750), (w = !0), i.Z.playSong(h), (e.feedback.text.text = "Clean!");
+                          (z = !0),
+                            (x = 750),
+                            (w = !0),
+                            i.Z.playSong(h),
+                            (e.feedback.text.text = "Clean!");
                           let t = e.game.levels,
-                            a = (c.Z.load("payed") ? t.wm : t.sequence)[t.current];
-                          k.indexOf(a) < 0 && (k.push(a), c.Z.save("solved", k)), void 0 === O[a] && (O[a] = []);
+                            a = (c.Z.load("payed") ? t.wm : t.sequence)[
+                              t.current
+                            ];
+                          k.indexOf(a) < 0 &&
+                            (k.push(a), c.Z.save("solved", k)),
+                            void 0 === O[a] && (O[a] = []);
                           let o = JSON.stringify(j);
-                          -1 === O[a].indexOf(o) && (O[a].push(o), c.Z.save("solutions", O));
+                          -1 === O[a].indexOf(o) &&
+                            (O[a].push(o), c.Z.save("solutions", O));
                         }
                       }
                     });
                   } else if (!e.game.pointer.isDown) {
-                    let t = e.game.pointer.x - 16 - (e.game.canvas.gW - e.game.canvas.tW) / 2,
-                      a = e.game.pointer.y - 62 - (e.game.canvas.gH - e.game.canvas.tH) / 2;
+                    let t =
+                        e.game.pointer.x -
+                        16 -
+                        (e.game.canvas.gW - e.game.canvas.tW) / 2,
+                      a =
+                        e.game.pointer.y -
+                        62 -
+                        (e.game.canvas.gH - e.game.canvas.tH) / 2;
                     if (t < 0 || t > 288 || a < 0 || a > 288) return;
                     (t = (t / 48) | 0), (a = (a / 48) | 0);
                     let o = t + 6 * a;
-                    void 0 !== e["piece" + o] && u.some((t) => void 0 !== e["piece" + o][t]) && ((e.game.pointer.pointing = !0), (e["piece" + o].clicked = 1));
+                    void 0 !== e["piece" + o] &&
+                      u.some((t) => void 0 !== e["piece" + o][t]) &&
+                      ((e.game.pointer.pointing = !0),
+                      (e["piece" + o].clicked = 1));
                   }
                 },
               });
             },
             106: (e, t, a) => {
-              var o = { "./home.js": 9189, "./progress.js": 2673, "./puzzle.js": 6282 };
+              var o = {
+                "./home.js": 9189,
+                "./progress.js": 2673,
+                "./puzzle.js": 6282,
+              };
               function r(e) {
                 var t = s(e);
                 return a(t);
@@ -977,7 +1352,9 @@
             },
             3961: (e) => {
               "use strict";
-              e.exports = JSON.parse('{"w":320,"h":320,"tW":320,"tH":320,"gW":320,"gH":320,"zoom":1,"parentSelector":"body"}');
+              e.exports = JSON.parse(
+                '{"w":320,"h":320,"tW":320,"tH":320,"gW":320,"gH":320,"zoom":1,"parentSelector":"body"}'
+              );
             },
             8298: (e) => {
               "use strict";
@@ -1005,7 +1382,9 @@
             },
             7865: (e) => {
               "use strict";
-              e.exports = JSON.parse('{"x":0,"y":0,"downX":0,"downY":0,"justDown":false,"justUp":false,"isDown":false,"pointing":false}');
+              e.exports = JSON.parse(
+                '{"x":0,"y":0,"downX":0,"downY":0,"justDown":false,"justUp":false,"isDown":false,"pointing":false}'
+              );
             },
             9043: (e) => {
               "use strict";
@@ -1052,11 +1431,17 @@
           return e[o](s, s.exports, a), s.exports;
         }
         (a.d = (e, t) => {
-          for (var o in t) a.o(t, o) && !a.o(e, o) && Object.defineProperty(e, o, { enumerable: !0, get: t[o] });
+          for (var o in t)
+            a.o(t, o) &&
+              !a.o(e, o) &&
+              Object.defineProperty(e, o, { enumerable: !0, get: t[o] });
         }),
           (a.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t)),
           (a.r = (e) => {
-            "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(e, "__esModule", { value: !0 });
+            "undefined" != typeof Symbol &&
+              Symbol.toStringTag &&
+              Object.defineProperty(e, Symbol.toStringTag, { value: "Module" }),
+              Object.defineProperty(e, "__esModule", { value: !0 });
           }),
           a(588);
       })();
