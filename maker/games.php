@@ -379,4 +379,12 @@ $games = [
         'mobile' => false,
         'desktop' => true,
     ],
+    'Station-141' => [
+        'name' => 'Station 141',
+        'tag' => 'shooting',
+        'git' => $repo,
+        'branch' => 'Station-141',
+        'mobile' => false,
+        'desktop' => true,
+    ],
 ];
