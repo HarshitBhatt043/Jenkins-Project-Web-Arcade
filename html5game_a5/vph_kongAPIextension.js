@@ -54,18 +54,40 @@ function kongInit() {
   // Initialization Function for the whole extension
   try {
     parent.kongregate.services.connect();
-    console.log("GameMaker:Studio <KongAPI Extension " + version + " by Afrodynamics> - Kongregate API initialized!");
-    console.log("GameMaker:Studio <KongAPI Extension " + version + " by Afrodynamics> - Succesfully connected to Kongregate services!");
+    console.log(
+      "GameMaker:Studio <KongAPI Extension " +
+        version +
+        " by Afrodynamics> - Kongregate API initialized!"
+    );
+    console.log(
+      "GameMaker:Studio <KongAPI Extension " +
+        version +
+        " by Afrodynamics> - Succesfully connected to Kongregate services!"
+    );
   } catch (e) {
-    console.error("GameMaker:Studio <KongAPI Extension " + version + " by Afrodynamics> - ERROR! Kongregate API not initialized!");
-    console.error("GameMaker:Studio <KongAPI Extension " + version + " by Afrodynamics> - You are not playing on kongregate.com!");
+    console.error(
+      "GameMaker:Studio <KongAPI Extension " +
+        version +
+        " by Afrodynamics> - ERROR! Kongregate API not initialized!"
+    );
+    console.error(
+      "GameMaker:Studio <KongAPI Extension " +
+        version +
+        " by Afrodynamics> - You are not playing on kongregate.com!"
+    );
     return -1;
   }
 }
 
 function logError() {
-  console.error("GameMaker:Studio <KongAPI Extension " + version + " by Afrodynamics> - Kongregate API not loaded!");
-  console.error("Play the game on Kongregate's website in a preview window to avoid this error.");
+  console.error(
+    "GameMaker:Studio <KongAPI Extension " +
+      version +
+      " by Afrodynamics> - Kongregate API not loaded!"
+  );
+  console.error(
+    "Play the game on Kongregate's website in a preview window to avoid this error."
+  );
 }
 
 /*

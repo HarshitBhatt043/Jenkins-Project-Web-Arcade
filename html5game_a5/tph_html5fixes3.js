@@ -1,7 +1,14 @@
 //Source: http://stackoverflow.com/questions/8603656/html5-canvas-arcs-not-rendering-correctly-in-google-chrome
 var is_chrome = navigator.userAgent.toLowerCase().indexOf("chrome") > -1;
 if (is_chrome) {
-  CanvasRenderingContext2D.prototype.arc = function (x, y, radius, startAngle, endAngle, anticlockwise) {
+  CanvasRenderingContext2D.prototype.arc = function (
+    x,
+    y,
+    radius,
+    startAngle,
+    endAngle,
+    anticlockwise
+  ) {
     // Signed length of curve
     var signedLength;
     var tau = 2 * Math.PI;
@@ -35,9 +42,21 @@ if (is_chrome) {
     var step = signedLength / numCurves;
 
     // Draw the circle
-    this.lineTo(x + radius * Math.cos(startAngle), y + radius * Math.sin(startAngle));
-    for (var i = 0, a = startAngle + step, a2 = startAngle + step / 2; i < numCurves; ++i, a += step, a2 += step)
-      this.quadraticCurveTo(x + cpRadius * Math.cos(a2), y + cpRadius * Math.sin(a2), x + radius * Math.cos(a), y + radius * Math.sin(a));
+    this.lineTo(
+      x + radius * Math.cos(startAngle),
+      y + radius * Math.sin(startAngle)
+    );
+    for (
+      var i = 0, a = startAngle + step, a2 = startAngle + step / 2;
+      i < numCurves;
+      ++i, a += step, a2 += step
+    )
+      this.quadraticCurveTo(
+        x + cpRadius * Math.cos(a2),
+        y + cpRadius * Math.sin(a2),
+        x + radius * Math.cos(a),
+        y + radius * Math.sin(a)
+      );
   };
 }
 
@@ -71,7 +90,11 @@ function addLinkHandler(url) {
   urlOpenFunction = function (e) {
     var keyCode = e.keyCode;
     if (keyCode == 13 || keyCode == 32) {
-      window.open(url, "_blank", "width=1000, height=500, location=yes, resizable=yes, scrollbars=yes, toolbar=yes");
+      window.open(
+        url,
+        "_blank",
+        "width=1000, height=500, location=yes, resizable=yes, scrollbars=yes, toolbar=yes"
+      );
       document.getElementById("canvas").focus();
     }
   };
