@@ -387,4 +387,12 @@ $games = [
         'mobile' => false,
         'desktop' => true,
     ],
+    'Game-Inside' => [
+        'name' => 'Game Inside',
+        'tag' => 'Game',
+        'git' => $repo,
+        'branch' => 'Game-Inside',
+        'mobile' => false,
+        'desktop' => true,
+    ],
 ];
