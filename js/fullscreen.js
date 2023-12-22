@@ -1,4 +1,4 @@
-var fullScreenCanvas= null;
+var fullScreenCanvas = null;
 
 function fullScreenClick() {
   console.log("--fullScreenClick--");
@@ -15,8 +15,8 @@ function fullScreenClick() {
 }
 
 function fullScreenGetCanvas() {
-  fullScreenCanvas= document.querySelector("canvas");
-  if (fullScreenCanvas=== null) {
+  fullScreenCanvas = document.querySelector("canvas");
+  if (fullScreenCanvas === null) {
     console.log("--fullScreenCanvas--null--");
     setTimeout(fullScreenGetCanvas, 1000);
   } else {
@@ -26,8 +26,8 @@ function fullScreenGetCanvas() {
 }
 
 function fullScreenInit(event) {
-    console.log("--fullScreenInit--", event);
-    fullScreenGetCanvas();
+  console.log("--fullScreenInit--", event);
+  fullScreenGetCanvas();
 }
 
-window.addEventListener('load', fullScreenInit);
+window.addEventListener("load", fullScreenInit);
