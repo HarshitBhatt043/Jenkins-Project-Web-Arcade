@@ -1,3 +1,3 @@
-function unlockAllLevels(){
-gameInstance.SendMessage("CMG", "unlockAll");
+function unlockAllLevels() {
+  gameInstance.SendMessage("CMG", "unlockAll");
 }
