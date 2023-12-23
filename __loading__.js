@@ -1,14 +1,12 @@
 /* jshint esversion: 6 */
 pc.script.createLoadingScreen(function (app) {
-    
-    var showSplash = function () {
-        if(document.getElementById('application-splash-wrapper')) {
-            //wrapper presents, do not create
-            return;
-        }
+  var showSplash = function () {
+    if (document.getElementById("application-splash-wrapper")) {
+      //wrapper presents, do not create
+      return;
+    }
 
-        var css =
-            `
+    var css = `
             body {
                 user-select: none;
                 -webkit-user-select: none;
@@ -105,199 +103,218 @@ pc.script.createLoadingScreen(function (app) {
             }
         `;
 
-        var style = document.createElement('style');
-        style.type = 'text/css';
-        if (style.styleSheet) {
-            style.styleSheet.cssText = css;
-        } else {
-            style.appendChild(document.createTextNode(css));
-        }
+    var style = document.createElement("style");
+    style.type = "text/css";
+    if (style.styleSheet) {
+      style.styleSheet.cssText = css;
+    } else {
+      style.appendChild(document.createTextNode(css));
+    }
 
-        document.head.appendChild(style);
+    document.head.appendChild(style);
 
-        // splash wrapper
-        var wrapper = document.createElement('div');
-        wrapper.id = 'application-splash-wrapper';
-        document.body.appendChild(wrapper);
+    // splash wrapper
+    var wrapper = document.createElement("div");
+    wrapper.id = "application-splash-wrapper";
+    document.body.appendChild(wrapper);
 
-        // splash
-        var splash = document.createElement('div');
-        splash.id = 'application-splash';
-        wrapper.appendChild(splash);
-        splash.style.display = 'block';
+    // splash
+    var splash = document.createElement("div");
+    splash.id = "application-splash";
+    wrapper.appendChild(splash);
+    splash.style.display = "block";
 
-        var loaderBar = document.createElement('div');
-        loaderBar.id = 'loaderBar';
-        splash.appendChild(loaderBar);
+    var loaderBar = document.createElement("div");
+    loaderBar.id = "loaderBar";
+    splash.appendChild(loaderBar);
 
-        var loadingText = document.createElement('span');
-        loadingText.innerHTML = '0%';
-        loadingText.id = 'loadingText';
-        splash.appendChild(loadingText);
-    };
+    var loadingText = document.createElement("span");
+    loadingText.innerHTML = "0%";
+    loadingText.id = "loadingText";
+    splash.appendChild(loadingText);
+  };
 
+  var hideSplash = function () {
+    famobi.log("v1.0; ©Famobi/IFGD, 2021");
+    var splash = document.getElementById("application-splash-wrapper");
+    if (splash && splash.parentElement) {
+      splash.parentElement.removeChild(splash);
+    }
+  };
 
-    var hideSplash = function () {
-        famobi.log('v1.0; ©Famobi/IFGD, 2021');        
-        var splash = document.getElementById('application-splash-wrapper');
-        if(splash && splash.parentElement) {
-            splash.parentElement.removeChild(splash);
-        }
-    };
-    
-    var lastPreloaderProgressValue = '';
-    var preloaderBar = document.getElementById('loaderBar');
-    var preloaderText = document.getElementById('loadingText');
+  var lastPreloaderProgressValue = "";
+  var preloaderBar = document.getElementById("loaderBar");
+  var preloaderText = document.getElementById("loadingText");
 
-    var setVisibleProgress = function(value) {
-        if(typeof displayProgress === "function") {
-            stopPreloaderSimulation();
-            displayProgress(value);
-            if(typeof famobi !== 'undefined') famobi.setPreloadProgress(Math.floor(value * 99));
-        } else {
-            preloaderBar = preloaderBar || document.getElementById('loaderBar');
-            preloaderText = preloaderText || document.getElementById('loadingText');
+  var setVisibleProgress = function (value) {
+    if (typeof displayProgress === "function") {
+      stopPreloaderSimulation();
+      displayProgress(value);
+      if (typeof famobi !== "undefined")
+        famobi.setPreloadProgress(Math.floor(value * 99));
+    } else {
+      preloaderBar = preloaderBar || document.getElementById("loaderBar");
+      preloaderText = preloaderText || document.getElementById("loadingText");
 
-            let currentProgressValue = Math.round(value * 100) + '%';
-            if(lastPreloaderProgressValue != currentProgressValue) {
-                lastPreloaderProgressValue = currentProgressValue;
-                if(preloaderBar) preloaderBar.style.width = lastPreloaderProgressValue;
-                if(preloaderText) preloaderText.innerHTML = lastPreloaderProgressValue;
-                if(typeof famobi !== 'undefined') famobi.setPreloadProgress(Math.floor(value * 99));
-            }
-        }       
-    };
-        
-    var skipTitleScreenEnabled = window.famobi && window.famobi.hasFeature("skip_title");
-    
-    var loadingProgressMultiplier = skipTitleScreenEnabled ? 0.75 : 0.85;
-    var levelAssetsProgressValue = skipTitleScreenEnabled ? 0.1 : 0.0;
-    var postLoadingProgressValue = 1 - levelAssetsProgressValue - loadingProgressMultiplier;
-    var postLoadingPhase = 1; // 1 means general assets, 2 means level-related assets
-    
-    var setProgress = function (value) {
-        const displayValueScale = loadingProgressMultiplier;
-        const displayValue = Math.min(1, Math.max(0, value)) * displayValueScale;
-        setVisibleProgress(displayValue);
-    };
-    
-    var hidePreloader = function() {        
-        hideSplash();
-    };
-        
-    var updatePostLoadingProgress = function(progress) {
-        if(postLoadingPhase === 1) {
-            setVisibleProgress(loadingProgressMultiplier + postLoadingProgressValue * progress);   
-        } else {
-            setVisibleProgress(loadingProgressMultiplier + postLoadingProgressValue + levelAssetsProgressValue * progress);   
-        }
-    };
-    
-    
-    var injectForcedModeProperties = function() {
-        if(!isForcedMode()) {
-            return;
-        }
-        famobi.log('Injecting forced mode properties...');
-        const forcedModeProperties = getForcedModeProperties();
-        
-        if(forcedModeProperties.state.level >= 0) {
-            MissionsManager.CURRENT_MISSION = forcedModeProperties.state.level;         
-            MissionsManager.MAX_UNLOCKED_MISSION = Math.max(MissionsManager.MAX_UNLOCKED_MISSION, MissionsManager.CURRENT_MISSION);
-        } 
-        
-        if(forcedModeProperties.state.coins >= 0) {
-            CoinsStorage.getInstance().setTotalCoins(forcedModeProperties.state.coins);
-        }
-    };
-    
-    var doAPIHandshake = function(startGameCallback) {   
-        if(isExternalStart()) {
-            app.timeScale = 0.0;
-            famobi.onRequest("startGame", function() {
-                app.timeScale = 1.0;                               
-                if(startGameCallback) startGameCallback();
-            });
-        } else {
-            if(startGameCallback) startGameCallback();
-        }
-        
-        /* game ready report */
-        famobi.gameReady();
-    };
-    
-    var startLevelDirectly = function() {
-        famobi.log("Starting level " + MissionsManager.CURRENT_MISSION + " directly");
-        
-        postLoadingPhase = 2;
-        
-        app.fire(EventTypes.START_GAMEPLAY_MUSIC);
-        MissionsManager.getInstance().launchSelectedMode(isEndlessMode(), false, 0.0);
-        
-        app.once(EventTypes.LEVEL_READY, () => {
-            app.off(EventTypes.ASSETS_LOADER_PROGRESS, updatePostLoadingProgress);  
+      let currentProgressValue = Math.round(value * 100) + "%";
+      if (lastPreloaderProgressValue != currentProgressValue) {
+        lastPreloaderProgressValue = currentProgressValue;
+        if (preloaderBar) preloaderBar.style.width = lastPreloaderProgressValue;
+        if (preloaderText) preloaderText.innerHTML = lastPreloaderProgressValue;
+        if (typeof famobi !== "undefined")
+          famobi.setPreloadProgress(Math.floor(value * 99));
+      }
+    }
+  };
+
+  var skipTitleScreenEnabled =
+    window.famobi && window.famobi.hasFeature("skip_title");
+
+  var loadingProgressMultiplier = skipTitleScreenEnabled ? 0.75 : 0.85;
+  var levelAssetsProgressValue = skipTitleScreenEnabled ? 0.1 : 0.0;
+  var postLoadingProgressValue =
+    1 - levelAssetsProgressValue - loadingProgressMultiplier;
+  var postLoadingPhase = 1; // 1 means general assets, 2 means level-related assets
+
+  var setProgress = function (value) {
+    const displayValueScale = loadingProgressMultiplier;
+    const displayValue = Math.min(1, Math.max(0, value)) * displayValueScale;
+    setVisibleProgress(displayValue);
+  };
+
+  var hidePreloader = function () {
+    hideSplash();
+  };
+
+  var updatePostLoadingProgress = function (progress) {
+    if (postLoadingPhase === 1) {
+      setVisibleProgress(
+        loadingProgressMultiplier + postLoadingProgressValue * progress
+      );
+    } else {
+      setVisibleProgress(
+        loadingProgressMultiplier +
+          postLoadingProgressValue +
+          levelAssetsProgressValue * progress
+      );
+    }
+  };
+
+  var injectForcedModeProperties = function () {
+    if (!isForcedMode()) {
+      return;
+    }
+    famobi.log("Injecting forced mode properties...");
+    const forcedModeProperties = getForcedModeProperties();
+
+    if (forcedModeProperties.state.level >= 0) {
+      MissionsManager.CURRENT_MISSION = forcedModeProperties.state.level;
+      MissionsManager.MAX_UNLOCKED_MISSION = Math.max(
+        MissionsManager.MAX_UNLOCKED_MISSION,
+        MissionsManager.CURRENT_MISSION
+      );
+    }
+
+    if (forcedModeProperties.state.coins >= 0) {
+      CoinsStorage.getInstance().setTotalCoins(
+        forcedModeProperties.state.coins
+      );
+    }
+  };
+
+  var doAPIHandshake = function (startGameCallback) {
+    if (isExternalStart()) {
+      app.timeScale = 0.0;
+      famobi.onRequest("startGame", function () {
+        app.timeScale = 1.0;
+        if (startGameCallback) startGameCallback();
+      });
+    } else {
+      if (startGameCallback) startGameCallback();
+    }
+
+    /* game ready report */
+    famobi.gameReady();
+  };
+
+  var startLevelDirectly = function () {
+    famobi.log(
+      "Starting level " + MissionsManager.CURRENT_MISSION + " directly"
+    );
+
+    postLoadingPhase = 2;
+
+    app.fire(EventTypes.START_GAMEPLAY_MUSIC);
+    MissionsManager.getInstance().launchSelectedMode(
+      isEndlessMode(),
+      false,
+      0.0
+    );
+
+    app.once(EventTypes.LEVEL_READY, () => {
+      app.off(EventTypes.ASSETS_LOADER_PROGRESS, updatePostLoadingProgress);
+      famobi.setPreloadProgress(100);
+      hidePreloader();
+      app.fire(EventTypes.HIDE_TRANSITION_SCREEN, 0.0, () => {});
+      app.timeScale = 0.0;
+
+      doAPIHandshake(() => {
+        app.timeScale = 1.0;
+      });
+    });
+  };
+
+  showSplash();
+
+  app.on("preload:end", function () {
+    app.off("preload:progress");
+  });
+  app.on("preload:progress", setProgress);
+  app.on("start", function () {
+    famobi.log("App started, post loading assets...");
+  });
+  app.on("postinitialize", () => {
+    setTimeout(() => {
+      app.fire(EventTypes.SHOW_TRANSITION_SCREEN, 0.0, () => {});
+      app.on(EventTypes.ASSETS_LOADER_PROGRESS, updatePostLoadingProgress);
+
+      if (skipTitleScreen()) {
+        AssetsLoader.getInstance()
+          .loadPendingAssets()
+          .then(() => {
+            app.fire(EventTypes.APP_LOADED);
+            injectForcedModeProperties();
+            startLevelDirectly();
+          });
+      } else {
+        /* normal start */
+
+        AssetsLoader.getInstance()
+          .loadPendingAssets()
+          .then(() => {
+            app.off(
+              EventTypes.ASSETS_LOADER_PROGRESS,
+              updatePostLoadingProgress
+            );
+            app.fire(EventTypes.APP_LOADED);
+
+            /* game is loaded, send final progress to Famobi API. */
             famobi.setPreloadProgress(100);
+
+            /* inject forced mode properties if needed */
+            injectForcedModeProperties();
+
+            /* hide preloader and navigate to next screen */
             hidePreloader();
-            app.fire(EventTypes.HIDE_TRANSITION_SCREEN, 0.0, () => {});
-            app.timeScale = 0.0;
+            app.fire(EventTypes.HIDE_TRANSITION_SCREEN, 0.35, () => {});
 
+            /* api handshake */
             doAPIHandshake(() => {
-                app.timeScale = 1.0;
+              app.fire(EventTypes.START_MENU_MUSIC);
+              famobi.log("Handshake completed in normal gameplay mode");
             });
-        });
-    };
-    
-    
-    
-
-    showSplash();
-
-    app.on('preload:end', function () {
-        app.off('preload:progress');
-    });
-    app.on('preload:progress', setProgress);
-    app.on('start', function() {
-        famobi.log('App started, post loading assets...');  
-    });
-    app.on('postinitialize', () => {
-                
-        setTimeout(() => {
-            app.fire(EventTypes.SHOW_TRANSITION_SCREEN, 0.0, () => {});
-            app.on(EventTypes.ASSETS_LOADER_PROGRESS, updatePostLoadingProgress);
-            
-            if(skipTitleScreen()) {
-                 AssetsLoader.getInstance().loadPendingAssets().then(() => {
-                    app.fire(EventTypes.APP_LOADED);
-                    injectForcedModeProperties();
-                    startLevelDirectly();                
-                });                  
-            } else {
-                /* normal start */
-                
-                AssetsLoader.getInstance().loadPendingAssets().then(() => {
-                    app.off(EventTypes.ASSETS_LOADER_PROGRESS, updatePostLoadingProgress);                
-                    app.fire(EventTypes.APP_LOADED);
-
-                    /* game is loaded, send final progress to Famobi API. */
-                    famobi.setPreloadProgress(100);
-
-                    /* inject forced mode properties if needed */
-                    injectForcedModeProperties();
-
-                    /* hide preloader and navigate to next screen */
-                    hidePreloader();
-                    app.fire(EventTypes.HIDE_TRANSITION_SCREEN, 0.35, () => {});
-
-                    /* api handshake */
-                    doAPIHandshake(() => {
-                        app.fire(EventTypes.START_MENU_MUSIC);
-                        famobi.log('Handshake completed in normal gameplay mode');
-                    });
-               });  
-           }
-   
-        }, 50);   
-        
-    });
-   
+          });
+      }
+    }, 50);
+  });
 });
