@@ -1,2 +1,2 @@
-version="tc-16";
-libs=[];
+version = "tc-16";
+libs = [];
