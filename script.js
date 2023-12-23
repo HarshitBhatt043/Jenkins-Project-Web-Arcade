@@ -82,7 +82,7 @@ function createScene() {
   renderer.setSize(sceneWidth, sceneHeight);
   dom = document.getElementById("game");
   dom.appendChild(renderer.domElement);
-  
+
   createTreesPool();
   addWorld();
   addBall();
@@ -99,7 +99,7 @@ function createScene() {
   titleText.innerHTML = "ROLLING FORESTS";
   titleText.style.top = 10 + "px";
   titleText.style.color = "#005000";
-  if(window.innerWidth < 600) {
+  if (window.innerWidth < 600) {
     titleText.style.fontSize = 24 + "px";
     titleText.style.left = window.innerWidth / 2 - 142.5 + "px";
   } else {
@@ -113,7 +113,7 @@ function createScene() {
   pausedText.style.fontFamily = "Dela Gothic One";
   pausedText.style.fontWeight = "bold";
   pausedText.style.color = "#000";
-  if(window.innerWidth < 600) {
+  if (window.innerWidth < 600) {
     pausedText.style.fontSize = 12 + "px";
     pausedText.style.top = 45 + "px";
     pausedText.style.left = 15 + "px";
@@ -130,7 +130,7 @@ function createScene() {
   scoreText.style.fontWeight = "bold";
   scoreText.style.color = "#000";
   scoreText.innerHTML = "Score: 0";
-  if(window.innerWidth < 600) {
+  if (window.innerWidth < 600) {
     scoreText.style.fontSize = 12 + "px";
     scoreText.style.top = 65 + "px";
     scoreText.style.left = 15 + "px";
@@ -147,7 +147,7 @@ function createScene() {
   highText.style.fontWeight = "bold";
   highText.style.color = "#000";
   highText.innerHTML = "High Score: 0";
-  if(window.innerWidth < 600) {
+  if (window.innerWidth < 600) {
     highText.style.fontSize = 12 + "px";
     highText.style.top = 85 + "px";
     highText.style.left = 15 + "px";
@@ -212,7 +212,13 @@ function handleKeyDown(keyEvent) {
       paused = true;
     }
   } else {
-    if ((keyEvent.keyCode === 38  || keyEvent.keyCode === 87 || keyEvent.keyCode === 32) && !jumping && !paused) {  
+    if (
+      (keyEvent.keyCode === 38 ||
+        keyEvent.keyCode === 87 ||
+        keyEvent.keyCode === 32) &&
+      !jumping &&
+      !paused
+    ) {
       bounceValue = 0.11;
       jumping = true;
     }
@@ -222,7 +228,7 @@ function handleKeyDown(keyEvent) {
 
 function handleSwipe(direction) {
   var validMove = true;
-  if (direction == 'right' && !paused) {
+  if (direction == "right" && !paused) {
     if (currentLane == middleLane) {
       currentLane = leftLane;
     } else if (currentLane == rightLane) {
@@ -230,7 +236,7 @@ function handleSwipe(direction) {
     } else {
       validMove = false;
     }
-  } else if (direction == 'left' && !paused) {
+  } else if (direction == "left" && !paused) {
     if (currentLane == middleLane) {
       currentLane = rightLane;
     } else if (currentLane == leftLane) {
@@ -238,7 +244,7 @@ function handleSwipe(direction) {
     } else {
       validMove = false;
     }
-  } else if (direction == 'down') {
+  } else if (direction == "down") {
     if (paused) {
       pausedText.innerHTML = "";
       paused = false;
@@ -247,7 +253,7 @@ function handleSwipe(direction) {
       paused = true;
     }
   } else {
-    if (direction == 'up' && !jumping && !paused) {  
+    if (direction == "up" && !jumping && !paused) {
       bounceValue = 0.11;
       jumping = true;
     }
@@ -396,7 +402,7 @@ function createTree() {
     shading: THREE.FlatShading,
   });
   midPointVector = treeGeometry.vertices[0].clone();
-  
+
   blowUpTree(treeGeometry.vertices, sides, 0, scalarMultiplier);
   tightenTree(treeGeometry.vertices, sides, 1);
   blowUpTree(treeGeometry.vertices, sides, 2, scalarMultiplier * 1.1, true);
@@ -486,16 +492,16 @@ function update() {
       ball.position.x,
       currentLane,
       2 * clock.getDelta()
-    ); 
+    );
     bounceValue -= gravity;
     if (clock.getElapsedTime() > treeReleaseInterval) {
       clock.start();
       addPathTree();
-  
+
       score += 1;
       scoreText.innerHTML = `Score: ${score.toString()}`;
     }
-  
+
     doTreeLogic();
     doExplosionLogic();
     render();
@@ -516,7 +522,7 @@ function doTreeLogic() {
     } else {
       if (treePos.distanceTo(ball.position) <= 0.6) {
         if (score > highScore) {
-          highText.innerHTML = `High Score: ${score.toString()}`
+          highText.innerHTML = `High Score: ${score.toString()}`;
           highScore = score;
         }
         score = 0;
@@ -570,13 +576,13 @@ function doDifficultyLogic() {
   if (score === 0) {
     rollingSpeed = 0.008;
   } else if (rollingSpeed < 0.0095) {
-    rollingSpeed += 0.00001
+    rollingSpeed += 0.00001;
   }
-  
+
   if (score === 0) {
     treeReleaseInterval = 0.5;
   } else if (treeReleaseInterval > 0.2) {
-    treeReleaseInterval -= Math.log(score) / 1000
+    treeReleaseInterval -= Math.log(score) / 1000;
   }
 }
 
@@ -588,15 +594,15 @@ function onWindowResize() {
   sceneHeight = window.innerHeight - 20;
   sceneWidth = window.innerWidth - 20;
   titleText.style.left = window.innerWidth / 2 - 190 + "px";
-  if(window.innerWidth < 600) {
+  if (window.innerWidth < 600) {
     titleText.style.fontSize = 24 + "px";
     titleText.style.left = window.innerWidth / 2 - 142.5 + "px";
   } else {
     titleText.style.fontSize = 32 + "px";
     titleText.style.left = window.innerWidth / 2 - 190 + "px";
   }
-  
-  if(window.innerWidth < 600) {
+
+  if (window.innerWidth < 600) {
     pausedText.style.fontSize = 12 + "px";
     pausedText.style.top = 45 + "px";
     pausedText.style.left = 15 + "px";
@@ -605,8 +611,8 @@ function onWindowResize() {
     pausedText.style.top = 50 + "px";
     pausedText.style.left = 30 + "px";
   }
-  
-  if(window.innerWidth < 600) {
+
+  if (window.innerWidth < 600) {
     scoreText.style.fontSize = 12 + "px";
     scoreText.style.top = 65 + "px";
     scoreText.style.left = 15 + "px";
@@ -615,8 +621,8 @@ function onWindowResize() {
     scoreText.style.top = 80 + "px";
     scoreText.style.left = 30 + "px";
   }
-  
-  if(window.innerWidth < 600) {
+
+  if (window.innerWidth < 600) {
     highText.style.fontSize = 12 + "px";
     highText.style.top = 85 + "px";
     highText.style.left = 15 + "px";
@@ -636,43 +642,54 @@ function detectSwipe(id, func, deltaMin = 90) {
     sX: 0,
     sY: 0,
     eX: 0,
-    eY: 0
-  }
+    eY: 0,
+  };
 
   const directions = Object.freeze({
-    UP: 'up',
-    DOWN: 'down',
-    RIGHT: 'right',
-    LEFT: 'left'
-  })
-  let direction = null
-  const el = document.getElementById(id)
-  el.addEventListener('touchstart', function(e) {
-    const t = e.touches[0]
-    swipe_det.sX = t.screenX
-    swipe_det.sY = t.screenY
-  }, false)
-  el.addEventListener('touchmove', function(e) {
-    // e.preventDefault();
-    const t = e.touches[0]
-    swipe_det.eX = t.screenX
-    swipe_det.eY = t.screenY
-  }, false)
-  el.addEventListener('touchend', function(e) {
-    const deltaX = swipe_det.eX - swipe_det.sX
-    const deltaY = swipe_det.eY - swipe_det.sY
+    UP: "up",
+    DOWN: "down",
+    RIGHT: "right",
+    LEFT: "left",
+  });
+  let direction = null;
+  const el = document.getElementById(id);
+  el.addEventListener(
+    "touchstart",
+    function (e) {
+      const t = e.touches[0];
+      swipe_det.sX = t.screenX;
+      swipe_det.sY = t.screenY;
+    },
+    false
+  );
+  el.addEventListener(
+    "touchmove",
+    function (e) {
+      // e.preventDefault();
+      const t = e.touches[0];
+      swipe_det.eX = t.screenX;
+      swipe_det.eY = t.screenY;
+    },
+    false
+  );
+  el.addEventListener(
+    "touchend",
+    function (e) {
+      const deltaX = swipe_det.eX - swipe_det.sX;
+      const deltaY = swipe_det.eY - swipe_det.sY;
 
-    if (deltaX ** 2 + deltaY ** 2 < deltaMin ** 2) return
+      if (deltaX ** 2 + deltaY ** 2 < deltaMin ** 2) return;
 
-    if (deltaY === 0 || Math.abs(deltaX / deltaY) > 1)
-      direction = deltaX > 0 ? directions.LEFT : directions.RIGHT
-    else
-      direction = deltaY > 0 ? directions.DOWN : directions.UP
+      if (deltaY === 0 || Math.abs(deltaX / deltaY) > 1)
+        direction = deltaX > 0 ? directions.LEFT : directions.RIGHT;
+      else direction = deltaY > 0 ? directions.DOWN : directions.UP;
 
-    if (direction && typeof func === 'function') func(el, direction)
+      if (direction && typeof func === "function") func(el, direction);
 
-    direction = null
-  }, false)
+      direction = null;
+    },
+    false
+  );
 }
 
-detectSwipe('body', (el, dir) => handleSwipe(dir));
+detectSwipe("body", (el, dir) => handleSwipe(dir));
