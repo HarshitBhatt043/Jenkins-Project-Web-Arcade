@@ -1,7 +1,7 @@
 {
   "dailyRewardCoins": 10,
   "dailyTaskCollectCoins": [10, 6, 8, 5],
-  
+
   "skinsPrice": [50, 100, 150, 200, 250],
   "skinRareIDs": [8, 36, 11, 12, 56],
   "skinIDs": [
