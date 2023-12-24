@@ -14,7 +14,7 @@
     "goldTime": 35,
     "silverTime": 45,
     "bronzeTime": 60,
-    "hue":130,
+    "hue": 130,
     "fileChallengeName": "level01hard"
   },
   "2": {
@@ -24,7 +24,7 @@
     "goldTime": 70,
     "silverTime": 90,
     "bronzeTime": 120,
-    "hue":170,
+    "hue": 170,
     "fileChallengeName": "level02hard"
   },
   "3": {
@@ -34,7 +34,7 @@
     "goldTime": 65,
     "silverTime": 90,
     "bronzeTime": 120,
-    "hue":190,
+    "hue": 190,
     "fileChallengeName": "level03hard"
   },
   "4": {
@@ -44,7 +44,7 @@
     "goldTime": 65,
     "silverTime": 90,
     "bronzeTime": 120,
-    "hue":-150,
+    "hue": -150,
     "fileChallengeName": "level04hard"
   },
   "5": {
@@ -54,7 +54,7 @@
     "goldTime": 150,
     "silverTime": 180,
     "bronzeTime": 210,
-    "hue":-90,
+    "hue": -90,
     "fileChallengeName": "level05hard"
   },
   "6": {
@@ -64,7 +64,7 @@
     "goldTime": 200,
     "silverTime": 240,
     "bronzeTime": 300,
-    "hue":-40,
+    "hue": -40,
     "fileChallengeName": "level06hard"
   },
   "7": {
@@ -74,7 +74,7 @@
     "goldTime": 120,
     "silverTime": 180,
     "bronzeTime": 200,
-    "hue":1,
+    "hue": 1,
     "fileChallengeName": "level07hard"
   },
   "8": {
@@ -84,7 +84,7 @@
     "goldTime": 180,
     "silverTime": 240,
     "bronzeTime": 300,
-    "hue":30,
+    "hue": 30,
     "fileChallengeName": "level08hard"
   },
   "9": {
@@ -94,7 +94,7 @@
     "goldTime": 130,
     "silverTime": 160,
     "bronzeTime": 200,
-    "hue":70,
+    "hue": 70,
     "fileChallengeName": "level09hard"
   },
   "10": {
@@ -104,7 +104,7 @@
     "goldTime": 240,
     "silverTime": 300,
     "bronzeTime": 360,
-    "hue":100,
+    "hue": 100,
     "fileChallengeName": "level10"
   },
   "edit": {
@@ -114,7 +114,7 @@
     "goldTime": 120,
     "silverTime": 180,
     "bronzeTime": 240,
-    "hue":100,
+    "hue": 100,
     "fileChallengeName": "level10"
   }
 }
