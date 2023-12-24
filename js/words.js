@@ -1,6 +1,6 @@
 (function () {
   window.wordle = window.wordle || {};
-  window.wordle.hash = 'a17965zq';
+  window.wordle.hash = "a17965zq";
 })();
 const words = [
     "cigar",
@@ -12977,4 +12977,4 @@ const words = [
     "zygon",
     "zymes",
     "zymic",
-  ]
+  ];
