@@ -22,7 +22,9 @@ function play(sceneId) {
         }, 2000);
       }
       var giggles = function () {
-        document.querySelector(".active .btn").removeEventListener("click", giggles);
+        document
+          .querySelector(".active .btn")
+          .removeEventListener("click", giggles);
         document.querySelector("#sceneType0").className = "inactive";
         if (scene[2] == "END" || scene[2] == "WIN") {
           document.querySelector("#menu").className = "billyLa";
@@ -54,7 +56,9 @@ function play(sceneId) {
       }
       var giggles = function (e) {
         if (e.target.id.slice(6)) {
-          document.querySelector(".active .choices").removeEventListener("click", giggles);
+          document
+            .querySelector(".active .choices")
+            .removeEventListener("click", giggles);
           document.querySelector("#sceneType1").className = "inactive";
           setTimeout(function () {
             document.querySelector("#sceneType1").className = "";
@@ -73,11 +77,16 @@ function play(sceneId) {
       document.querySelector("#sceneType2").className = "active";
       document.querySelector(".active .message").innerHTML = scene[0];
       var giggles = function () {
-        document.querySelector(".active .btn").removeEventListener("click", giggles);
+        document
+          .querySelector(".active .btn")
+          .removeEventListener("click", giggles);
         document.querySelector("#sceneType2").className = "inactive";
         setTimeout(function () {
           document.querySelector("#sceneType2").className = "";
-          if (scene[2] == document.querySelector("#sceneType2 input[type=number]").value) {
+          if (
+            scene[2] ==
+            document.querySelector("#sceneType2 input[type=number]").value
+          ) {
             play(scene[3]);
           } else {
             play(scene[4]);
@@ -88,4 +97,4 @@ function play(sceneId) {
       break;
   }
 }
-// this is for 3kh0.github.io, stop copying shit you skids
+
