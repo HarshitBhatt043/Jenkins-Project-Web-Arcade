@@ -1,133 +1,161 @@
-
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Zombie Derby Unblocked</title>
-    <link rel="stylesheet" href="TemplateData/style.css">
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Zombie Derby</title>
+    <link rel="stylesheet" href="TemplateData/style.css" />
     <script src="TemplateData/UnityProgress.js"></script>
     <script src="Build/UnityLoader.js"></script>
-	<script src="yandex/yandex-sdk-v2.js"></script>
-  <script src="unity/unity-mod.js"></script>
+    <script src="yandex/yandex-sdk-v2.js"></script>
+    <script src="unity/unity-mod.js"></script>
     <script>
+      function FitScreen() {
+        var w = 800;
+        var h = 480;
+        var availWidth = window.innerWidth;
+        var availHeight = window.innerHeight - 6;
+        var aspectMin = 1.33;
+        var aspectMax = 1.8;
 
-	function FitScreen(){
-       var w=800;
-       var h=480;
-       var availWidth = window.innerWidth;
-       var availHeight = window.innerHeight - 6;
-	   var aspectMin = 1.33;
-	   var aspectMax = 1.8;
+        var canvas = document.getElementById("#canvas");
 
-       var canvas = document.getElementById("#canvas");
+        var aspect = availWidth / availHeight;
+        height = availHeight;
 
-	   var aspect = availWidth/availHeight;
-	   height = availHeight;
+        if (aspect > aspectMin && aspect < aspectMax) {
+          width = availWidth;
+        } else {
+          if (aspect <= aspectMin) width = height * aspectMin;
+          else if (aspect >= aspectMax) width = height * aspectMax;
+        }
 
-       if(aspect > aspectMin && aspect < aspectMax){
-		 width = availWidth;
-      } else {
-		 if (aspect <= aspectMin) width = height * aspectMin;
-		 else if (aspect >= aspectMax)width = height * aspectMax;
+        canvas.width = width;
+        canvas.height = height;
+
+        document.getElementById("unityContainerCentered").style.width =
+          width + "px";
+        document.getElementById("unityContainerCentered").style.height =
+          height + "px";
       }
 
-      canvas.width = width;
-      canvas.height = height;
+      var unityInstance = UnityLoader.instantiate(
+        "unityContainer",
+        "Build/2022_01_14_yandex.json",
+        { onProgress: UnityProgress }
+      );
 
-       document.getElementById("unityContainerCentered").style.width = width + "px";
-       document.getElementById("unityContainerCentered").style.height = height + "px";
+      function OnPlayUnity() {
+        YaGames.init().then((ysdk) => {
+          console.log("Yandex SDK initialized");
+          window.ysdk = ysdk;
 
-    }
+          unityInstance.SendMessage("MenuCamera", "OnYandexInit");
 
-	var unityInstance = UnityLoader.instantiate("unityContainer", "Build/2022_01_14_yandex.json", {onProgress: UnityProgress});
+          ShowFullscreenAdv();
+        });
+      }
 
-	function OnPlayUnity()
-	{
-		YaGames
-		.init()
-		.then(ysdk => {
-			console.log('Yandex SDK initialized');
-			window.ysdk = ysdk;
+      function ShowFullscreenAdv() {
+        console.log("ShowFullscreenAdv");
 
-			unityInstance.SendMessage('MenuCamera', 'OnYandexInit');
+        window.ysdk.adv.showFullscreenAdv({
+          callbacks: {
+            onClose: function () {
+              unityInstance.SendMessage(
+                "MenuCamera",
+                "AdvYandexCallback",
+                "onClose"
+              );
+            },
+            onOpen: function () {
+              unityInstance.SendMessage(
+                "MenuCamera",
+                "AdvYandexCallback",
+                "onOpen"
+              );
+            },
+            onError: function () {
+              unityInstance.SendMessage(
+                "MenuCamera",
+                "AdvYandexCallback",
+                "onError"
+              );
+            },
+            onOffline: function () {
+              unityInstance.SendMessage(
+                "MenuCamera",
+                "AdvYandexCallback",
+                "onOffline"
+              );
+            },
+          },
+        });
+      }
 
-			ShowFullscreenAdv();
-		});
-	}
+      function ShowRewardedAdv() {
+        console.log("ShowRewardedAdv");
 
-	function ShowFullscreenAdv()
-	{
-		console.log('ShowFullscreenAdv');
+        window.ysdk.adv.showRewardedVideo({
+          callbacks: {
+            onOpen: () => {
+              unityInstance.SendMessage(
+                "MenuCamera",
+                "AdvRewardedYandexCallback",
+                "onOpen"
+              );
+            },
+            onRewarded: () => {
+              unityInstance.SendMessage(
+                "MenuCamera",
+                "AdvRewardedYandexCallback",
+                "onRewarded"
+              );
+            },
+            onClose: () => {
+              unityInstance.SendMessage(
+                "MenuCamera",
+                "AdvRewardedYandexCallback",
+                "onClose"
+              );
+            },
+            onError: (e) => {
+              unityInstance.SendMessage(
+                "MenuCamera",
+                "AdvRewardedYandexCallback",
+                "onError"
+              );
+            },
+          },
+        });
+      }
 
-		window.ysdk.adv.showFullscreenAdv({
-			callbacks: {
-				onClose: function() {
-					unityInstance.SendMessage('MenuCamera', 'AdvYandexCallback', 'onClose');
-				},
-				onOpen: function() {
-					unityInstance.SendMessage('MenuCamera', 'AdvYandexCallback', 'onOpen');
-				},
-				onError: function() {
-					unityInstance.SendMessage('MenuCamera', 'AdvYandexCallback', 'onError');
-				},
-				onOffline: function() {
-					unityInstance.SendMessage('MenuCamera', 'AdvYandexCallback', 'onOffline');
-				}
-
-			}
-		});
-	}
-
-
-	function ShowRewardedAdv()
-	{
-		console.log('ShowRewardedAdv');
-
-		window.ysdk.adv.showRewardedVideo({
-			  callbacks: {
-				  onOpen: () => {
-					unityInstance.SendMessage('MenuCamera', 'AdvRewardedYandexCallback', 'onOpen');
-				},
-				  onRewarded: () => {
-					unityInstance.SendMessage('MenuCamera', 'AdvRewardedYandexCallback', 'onRewarded');
-				},
-				  onClose: () => {
-					unityInstance.SendMessage('MenuCamera', 'AdvRewardedYandexCallback', 'onClose');
-				},
-				  onError: (e) => {
-					unityInstance.SendMessage('MenuCamera', 'AdvRewardedYandexCallback', 'onError');
-				}
-			}
-		});
-	}
-
-	function RateMe()
-	{
-		window.ysdk.feedback.canReview()
-			.then(({ value, reason }) => {
-				if (value) {
-					ysdk.feedback.requestReview()
-						.then(({ feedbackSent }) => {
-							console.log(feedbackSent);
-						})
-				} else {
-					console.log(reason);
-				}
-			})
-	}
-
-
-
+      function RateMe() {
+        window.ysdk.feedback.canReview().then(({ value, reason }) => {
+          if (value) {
+            ysdk.feedback.requestReview().then(({ feedbackSent }) => {
+              console.log(feedbackSent);
+            });
+          } else {
+            console.log(reason);
+          }
+        });
+      }
     </script>
   </head>
-  <body onfocus="FitScreen();" onload="FitScreen();" onresize="FitScreen();" style="overflow:hidden; margin:0; padding:0;">
+  <body
+    onfocus="FitScreen();"
+    onload="FitScreen();"
+    onresize="FitScreen();"
+    style="overflow: hidden; margin: 0; padding: 0"
+  >
     <div class="webgl-content">
-	  <div id="unityContainerCentered">
-		<div id="unityContainer" style="width: auto; height: auto; margin: 0;"></div>
-	  </div>
+      <div id="unityContainerCentered">
+        <div
+          id="unityContainer"
+          style="width: auto; height: auto; margin: 0"
+        ></div>
+      </div>
     </div>
-		<script src="js/analytics_ubg_v1_4.js"></script>
-    <script src="js/ubg235_client_v1_1.js"></script>
   </body>
 </html>
