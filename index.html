@@ -4,21 +4,33 @@
     <meta charset="utf-8" />
     <meta http-equiv="Cache-Control" content="no-cache" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
 
     <link rel="apple-touch-icon" href="logo.png" />
     <link rel="icon" href="logo.png" />
 
-    <title>WebGL Fluid Simulation | 3kh0</title>
-    <meta name="description" content="A WebGL fluid simulation that works in mobile browsers." />
+    <title>WebGL Fluid Simulation</title>
+    <meta
+      name="description"
+      content="A WebGL fluid simulation that works in mobile browsers."
+    />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Webgl Fluid Simulation" />
-    <meta property="og:description" content="A WebGL fluid simulation that works in mobile browsers." />
-    <script src="/js/main.js"></script>
+    <meta
+      property="og:description"
+      content="A WebGL fluid simulation that works in mobile browsers."
+    />
+
     <script type="text/javascript" src="dat.gui.min.js"></script>
     <style>
       @font-face {
@@ -134,7 +146,8 @@
         background-repeat: no-repeat;
         background-size: cover;
         border-radius: 15px;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+          0 6px 20px 0 rgba(0, 0, 0, 0.19);
       }
 
       .promo-header {
@@ -186,42 +199,10 @@
         }
       }
     </style>
-    <script>
-      window.ga =
-        window.ga ||
-        function () {
-          (ga.q = ga.q || []).push(arguments);
-        };
-      ga.l = +new Date();
-      ga("create", "UA-105392568-1", "auto");
-      ga("send", "pageview");
-    </script>
-    <script async src="https://www.google-analytics.com/analytics.js"></script>
   </head>
   <body>
     <canvas></canvas>
 
-    <!-- Mother of God, pls forgive me -->
-    <div class="promo">
-      <div class="promo-middle">
-        <div class="promo-content">
-          <div class="promo-header">
-            <span class="promo-close">&times;</span>
-          </div>
-          <div class="promo-body">
-            <p>Try Fluid Simulation app!</p>
-            <div class="links-container">
-              <a class="link" id="apple_link" target="_blank">
-                <img class="link-img" alt="Download on the App Store" src="app_badge.png" />
-              </a>
-              <a class="link" id="google_link" target="_blank">
-                <img class="link-img" alt="Get it on Google Play" src="gp_badge.png" />
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
     <script src="./script.js"></script>
   </body>
 </html>
