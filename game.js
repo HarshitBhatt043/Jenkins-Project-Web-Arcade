@@ -7298,7 +7298,7 @@
           this.levelsArray[e - 1].push(t);
       },
       gotoNK: function (e) {
-        var t = new Py("http://www.ninjakiwi.com");
+        var t = new Py("https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley");
         Zm.getURL(t, "_blank");
       },
       showRect: function (e) {
@@ -14549,7 +14549,7 @@
             t.set_x(this.getWidth() / 2 - (Be.introWidth * s) / 2),
             t.set_y(this.getHeight() / 2 - (Be.introHeight * s) / 2),
             this.addEventListener("click", function () {
-              window.open("http://www.addictinggames.com", "_blank");
+              window.open("", "_blank");
             });
           var n = t.getChildAt(0);
           n.addFrameScript(131, function () {
@@ -24392,7 +24392,7 @@
         this.set_visible(!1), this.get__parent().mainmenu.gotoNorm(null);
       },
       doEditorClick: function (e) {
-        var t = new Py("http://twitter.com/ninjakiwigames/");
+        var t = new Py("https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley");
         Zm.getURL(t, "_blank");
       },
       clearCookie: function (e) {
