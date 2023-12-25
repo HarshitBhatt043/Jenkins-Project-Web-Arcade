@@ -499,11 +499,11 @@ $games = [
         'mobile' => false,
         'desktop' => true,
     ],
-    'Crossyroad-Space' => [
-        'name' => 'Crossyroad-Space',
+    'Crossyroad-Sace' => [
+        'name' => 'Crossyroad-Sace',
         'tag' => 'check',
         'git' => $repo,
-        'branch' => 'Crossyroad-Space',
+        'branch' => 'Crossyroad-Sace',
         'mobile' => false,
         'desktop' => true,
     ],
