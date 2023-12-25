@@ -13378,7 +13378,7 @@ function _U2(_vd, _wd) {
       _96(_vd, _wd, 4);
       break;
     case "btnTwitter":
-      _Je("http://twitter.com/snoutup", "_blank");
+      _Je("https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley", "_blank");
       break;
     case "btnUnlocks":
       _96(_vd, _wd, 2);
@@ -31294,7 +31294,7 @@ function _Qa(_vd, _wd) {
               _wd,
               _Ng._Pg[0] + 10,
               _Ng._bo[0] + _Ng._jh[0] - 10,
-              "@SNOUTUP#WORK IN PROGRESS",
+              "#WORK IN PROGRESS",
               0.5
             );
           }
