@@ -8369,9 +8369,8 @@ quat4.str = function (a) {
     var ext3 = lowername.substr(lowername.length - 4);
     var ext4 = lowername.substr(lowername.length - 5);
     if (ext3 === ".mp4") blobType = "video/mp4";
-    else if (ext4 === ".webm")
-      blobType =
-        "video/webm"; // use video type but hopefully works with audio too
+    else if (ext4 === ".webm") blobType = "video/webm";
+    // use video type but hopefully works with audio too
     else if (ext3 === ".m4a") blobType = "audio/mp4";
     else if (ext3 === ".mp3") blobType = "audio/mpeg";
     this.fetchLocalFileViaCordovaAsArrayBuffer(
@@ -10629,7 +10628,8 @@ window["cr_setSuspended"] = function (s) {
   };
   EventSheet.prototype.init_event = function (m, parent, nontriggers) {
     switch (m[0]) {
-      case 0: { // event block
+      case 0: {
+        // event block
         var block = new cr.eventblock(this, parent, m);
         cr.seal(block);
         if (block.orblock) {
@@ -10644,13 +10644,15 @@ window["cr_setSuspended"] = function (s) {
         }
         break;
       }
-      case 1: { // variable
+      case 1: {
+        // variable
         var v = new cr.eventvariable(this, parent, m);
         cr.seal(v);
         nontriggers.push(v);
         break;
       }
-      case 2: { // include
+      case 2: {
+        // include
         var inc = new cr.eventinclude(this, parent, m);
         cr.seal(inc);
         nontriggers.push(inc);
@@ -14691,11 +14693,8 @@ cr.system_object.prototype.loadFromJSON = function (o) {
     );
     if (this.rendercells.equals(tmprc)) return;
     if (this.rendercells.right < this.rendercells.left)
-      mygrid.update(
-        this,
-        null,
-        tmprc
-      ); // first insertion with invalid rect: don't provide old range
+      mygrid.update(this, null, tmprc);
+    // first insertion with invalid rect: don't provide old range
     else mygrid.update(this, this.rendercells, tmprc);
     this.rendercells.copy(tmprc);
     this.layer.render_list_stale = true;
@@ -14713,11 +14712,8 @@ cr.system_object.prototype.loadFromJSON = function (o) {
     );
     if (this.collcells.equals(tmprc)) return;
     if (this.collcells.right < this.collcells.left)
-      mygrid.update(
-        this,
-        null,
-        tmprc
-      ); // first insertion with invalid rect: don't provide old range
+      mygrid.update(this, null, tmprc);
+    // first insertion with invalid rect: don't provide old range
     else mygrid.update(this, this.collcells, tmprc);
     this.collcells.copy(tmprc);
     this.cell_changed = false;
