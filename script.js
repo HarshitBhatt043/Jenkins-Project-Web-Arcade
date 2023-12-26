@@ -42,14 +42,16 @@ promoPopupClose.addEventListener("click", (e) => {
 const appleLink = document.getElementById("apple_link");
 appleLink.addEventListener("click", (e) => {
   ga("send", "event", "link promo", "app");
-  window.open("https://apps.apple.com/us/app/fluid-simulation/id1443124993");
+  window.open(
+    "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
+  );
 });
 
 const googleLink = document.getElementById("google_link");
 googleLink.addEventListener("click", (e) => {
   ga("send", "event", "link promo", "app");
   window.open(
-    "https://play.google.com/store/apps/details?id=games.paveldogreat.fluidsimfree"
+    "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
   );
 });
 
@@ -279,7 +281,9 @@ function startGUI() {
     .add(
       {
         fun: () => {
-          window.open("https://github.com/PavelDoGreat/WebGL-Fluid-Simulation");
+          window.open(
+            "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
+          );
           ga("send", "event", "link button", "github");
         },
       },
@@ -297,7 +301,9 @@ function startGUI() {
       {
         fun: () => {
           ga("send", "event", "link button", "twitter");
-          window.open("https://twitter.com/PavelDoGreat");
+          window.open(
+            "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
+          );
         },
       },
       "fun"
@@ -314,7 +320,9 @@ function startGUI() {
       {
         fun: () => {
           ga("send", "event", "link button", "discord");
-          window.open("https://discordapp.com/invite/CeqZDDE");
+          window.open(
+            "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
+          );
         },
       },
       "fun"
@@ -331,7 +339,9 @@ function startGUI() {
       {
         fun: () => {
           ga("send", "event", "link button", "app");
-          window.open("http://onelink.to/5b58bn");
+          window.open(
+            "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
+          );
         },
       },
       "fun"
