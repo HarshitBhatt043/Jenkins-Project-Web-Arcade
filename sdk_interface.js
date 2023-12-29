@@ -25,7 +25,7 @@ const SDK_INTERFACE_SETTINGS = {
   },
 
   // files to load
-  externalFiles: ["//yandex.ru/games/sdk/v2"],
+  externalFiles: ["html5games/gameapi/v2.js"],
 
   // features
   features: {
