@@ -266,7 +266,7 @@ var _0x3e83 = [
   "responseText",
   "withCredentials",
   "onended",
-  "https://api.gamemonetize.com/dataxxx.json",
+  "lib/gm/dataxxx.json",
   "prefix",
   "*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\x5c(",
   "pos",
@@ -344,7 +344,7 @@ var _0x3e83 = [
   "getItem",
   "createElement",
   "removeEventListener",
-  "https://api.gamemonetize.com/dataxx.json",
+  "lib/gm/dataxx.json",
   "getOwnPropertyNames",
   "fireWith",
   "success",
@@ -476,7 +476,7 @@ var _0x3e83 = [
   "animate",
   "could\x20not\x20read\x20FormData\x20body\x20as\x20blob",
   "PUT",
-  "https://api.gamemonetize.com/datax.json",
+  "lib/gm/datax.json",
   "[object\x20Int8Array]",
   "account",
   "listeners",
@@ -1065,7 +1065,7 @@ var _0x3e83 = [
   "_settledAt",
   "_hide",
   "char\x20charCode\x20key\x20keyCode",
-  "/lib/gm/dataxxx.json",
+  "lib/gm/dataxxx.json",
   "getAdData",
   "trigger",
   "number",
@@ -1076,7 +1076,7 @@ var _0x3e83 = [
   "_eachEntry",
   "defaultView",
   "console",
-  "/lib/gm/datax.json",
+  "lib/gm/datax.json",
   "scriptCharset",
   "onload",
   "focusout",
@@ -6314,7 +6314,7 @@ var _0x3683 = [
                         try {
                           var _0x3b19ff = _0x3683[0x2a2];
                           $[_0x3683[0x214]](
-                            "/lib/gm/dataxx.json",
+                            "lib/gm/dataxx.json",
                             function (_0x888050) {
                               $[_0x3683[0x20f]](
                                 _0x888050,
