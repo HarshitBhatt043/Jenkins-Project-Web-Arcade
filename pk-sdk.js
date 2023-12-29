@@ -84,6 +84,7 @@ function a2_0x257e() {
     "setDebugTouchOverlayControllers",
     "assign",
     "hasOwnProperty",
+    "https://www.googletagmanager.com/gtm.js?id=GTM-TZCNGV2",
     "enableServices",
     "destroyAd",
     "\x20*/",
