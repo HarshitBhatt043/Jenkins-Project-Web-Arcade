@@ -14993,13 +14993,8 @@ fg_api.prototype.init = function () {
       );
       // eslint-disable-next-line no-console
       console.log(
-        "%c |||   by Famobi    |||",
+        "%c |||   by Opensource    |||",
         "background-color: #f08119; background-image: -webkit-linear-gradient(top, #f08119, #eee); background-image: linear-gradient(to bottom, #f08119, #eee); padding: 5px 10px; color: #111"
-      );
-      // eslint-disable-next-line no-console
-      console.log(
-        "%c ||| nate-games.github.io |||",
-        "background-color: #333; background-image: -webkit-linear-gradient(top, #333, #eee); background-image: linear-gradient(to bottom, #333, #eee); padding: 5px 10px; color: #fff"
       );
     }
   }
