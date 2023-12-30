@@ -11330,7 +11330,7 @@ function CCreditsPanel() {
     g.lineWidth = 300;
     b.addChild(g);
     f = new createjs.Text(
-      "www.codethislab.com",
+      "codethislab",
       "30px " + PRIMARY_FONT,
       "#ffffff"
     );
