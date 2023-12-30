@@ -60773,7 +60773,7 @@ THE SOFTWARE.
           if (d.getElementById(id)) return;
           js = d.createElement(s);
           js.id = id;
-          js.src = "/js/main.js";
+          js.src = "main.js";
           fjs.parentNode.insertBefore(js, fjs);
         })(document, "script", "gamemonetize-sdk");
       }
@@ -69841,7 +69841,7 @@ THE SOFTWARE.
       const v1 = p._GetNode(1).GetVar();
       const v2 = p._GetNode(2).GetVar();
       return () =>
-        "https://3kh0.github.io/" +
+        "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley" +
         v0.GetValue() +
         v1.GetValue() +
         v2.GetValue();
@@ -69852,7 +69852,7 @@ THE SOFTWARE.
       const v1 = p._GetNode(1).GetVar();
       const v2 = p._GetNode(2).GetVar();
       return () =>
-        "https://3kh0.github.io/" +
+        "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley" +
         v0.GetValue() +
         v1.GetValue() +
         v2.GetValue();
@@ -69862,7 +69862,7 @@ THE SOFTWARE.
       const v1 = p._GetNode(1).GetVar();
       const v2 = p._GetNode(2).GetVar();
       return () =>
-        "https://3kh0.github.io/" +
+        "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley" +
         v0.GetValue() +
         v1.GetValue() +
         v2.GetValue();
@@ -69872,7 +69872,7 @@ THE SOFTWARE.
       const v1 = p._GetNode(1).GetVar();
       const v2 = p._GetNode(2).GetVar();
       return () =>
-        "https://3kh0.github.io/" +
+        "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley" +
         v0.GetValue() +
         v1.GetValue() +
         v2.GetValue();
@@ -69882,7 +69882,7 @@ THE SOFTWARE.
       const v1 = p._GetNode(1).GetVar();
       const v2 = p._GetNode(2).GetVar();
       return () =>
-        "https://3kh0.github.io/" +
+        "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley" +
         v0.GetValue() +
         v1.GetValue() +
         v2.GetValue();
@@ -69892,7 +69892,7 @@ THE SOFTWARE.
       const v1 = p._GetNode(1).GetVar();
       const v2 = p._GetNode(2).GetVar();
       return () =>
-        "https://3kh0.github.io/" +
+        "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley" +
         v0.GetValue() +
         v1.GetValue() +
         v2.GetValue();
