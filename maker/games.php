@@ -12,7 +12,7 @@ $games = [
         'desktop' => true,
     ],
     '3d.city' => [
-        'name' => '3 City',
+        'name' => '3D City',
         'tag' => '',
         'git' => $repo,
         'branch' => '3d.city',
