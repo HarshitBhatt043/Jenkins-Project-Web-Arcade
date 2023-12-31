@@ -16,14 +16,10 @@ pipeline {
     }
 
     stages {
-        stage('Getting Code') {
+        stage('Code & SCM Info') {
             steps {
                 echo 'Cloning the project'
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[url: 'https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade.git']]])
-            }
-        }
-        stage('Capture SCM Info') {
-            steps {
                 echo 'Capturing details for later use'
                 script {
                     GIT_COMMIT = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
@@ -34,21 +30,17 @@ pipeline {
                 }
             }
         }
-        stage('SonarQube Analysis') {
+        stage('Tests & Analysis') {
             steps {
-                echo 'Running analysis on the code'
+                echo 'SonarQube Analysis'
                 script {
                     scannerHome = tool 'sonarscanner'
                 }
                 withSonarQubeEnv('sonarserver') {
                     sh "${scannerHome}/bin/sonar-scanner"
                 }
-            }
-        }
-        stage('Quality Gate Check') {
-            steps {
-                echo 'Checking if code has passed or not'
-                timeout(time: 1, unit: 'HOURS') {
+                echo 'Quality Gate Check'
+                timeout(time: 5, unit: 'MINUTES') {
                     script {
                         def qg = waitForQualityGate()
                         if (qg.status != 'OK') {
@@ -124,32 +116,16 @@ ${text_break}
                 }
             }
         }
-        stage('Building Docker Image') {
+        stage('Building & Deploying Project') {
             steps {
-                echo 'Building docker image of the project'
+                echo 'Building Docker Image'
                 sh 'docker build -t harshitbhatt043/arcade:latest .'
-            }
-        }
-        stage('Login Into Dockerhub') {
-            steps {
-                echo 'Loging in into docker hub using provided credentials'
+                echo 'DockerHub Login'
                     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-            }
-        }
-        stage('Pushing Image To Dockerhub') {
-            steps {
-                echo 'Pushing latest docker image of the project to docker hub'
+                echo 'Pushing Docker Image'
                     sh 'docker push harshitbhatt043/arcade:latest'
-            }
-        }
-        stage('Deploying Project Arcade') {
-            steps {
-                echo 'Finalising and starting project ARCADE'
+                echo 'Deploying Project'
                 sh 'docker compose stop arcade && docker compose pull arcade && docker compose up -d arcade'
-            }
-        }
-        stage('Health Checks') {
-            steps {
                 echo 'Performing health checks'
                 script {
                     def appUrl = 'http://localhost:5000'
@@ -188,9 +164,9 @@ ${text_break}
             }
         }
         always {
-            echo 'Logging out of Docker Hub'
+            echo 'Docker Hub Logout'
             sh 'docker logout'
-            echo 'Running Docker cleanup'
+            echo 'Docker cleanup'
             sh 'docker system prune -af'
         }
     }
