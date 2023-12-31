@@ -491,14 +491,6 @@ $games = [
         'mobile' => false,
         'desktop' => true,
     ],
-    'Crossyroad-Sace' => [
-        'name' => 'Crossyroad Space',
-        'tag' => '',
-        'git' => $repo,
-        'branch' => 'Crossyroad-Sace',
-        'mobile' => false,
-        'desktop' => true,
-    ],
     'Cut-The-Rope' => [
         'name' => 'Cut The Rope',
         'tag' => '',
