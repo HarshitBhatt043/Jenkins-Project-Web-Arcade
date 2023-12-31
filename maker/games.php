@@ -823,7 +823,7 @@ $games = [
         'name' => 'Rolling Forests',
         'tag' => '',
         'git' => $repo,
-        'branch' => 'Rolling Forests',
+        'branch' => 'Rolling-Forests',
         'mobile' => false,
         'desktop' => true,
     ],
