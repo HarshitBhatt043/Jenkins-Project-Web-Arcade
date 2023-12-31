@@ -1,8 +1,8 @@
 {
-  "name": "ubg235",
-  "description": "ubg235",
-  "short_name": "ubg235",
-  "icons": [    
+  "name": "Burrito Bison",
+  "description": "Burrito Bison",
+  "short_name": "Burrito Bison",
+  "icons": [
     {
       "src": "/patch/images/null.png",
       "sizes": "512x512",
