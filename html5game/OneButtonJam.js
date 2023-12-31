@@ -13329,7 +13329,7 @@ function _U2(_vd, _wd) {
                 }
               }
               _Ee("I sold this tweet for 5 pig coins.");
-              _Fe("http://games.snoutup.com");
+              _Fe("https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley");
               _Ge();
               _w4(_vd, _wd, _vd._67, _Bd(_vd._ue)._77 - 32, 5);
               break;
