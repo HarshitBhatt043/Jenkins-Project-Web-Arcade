@@ -26,13 +26,18 @@
       Font loader
     </p>
     <script>
-      var WebFontConfig = {
-        classes: false,
-        timeout: 0,
-        active: function () {},
-        custom: { families: ["Gunplay"], urls: ["styles/fonts.css"] },
+      var AT = {
+          // URL where an user will be redirected after clicking "Play" button on the Site lock screen
+          'SITE_LOCK_TARGET': '//www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley/'
       };
-    </script>
+
+      var WebFontConfig = {
+          'classes': false,
+          'timeout': 0,
+          'active': function() {},
+          'custom': {'families': ['Gunplay'], 'urls': ['styles/fonts.css']}
+      };
+  </script>
     <script src="awesome_tanks_2.js"></script>
   </body>
 </html>
