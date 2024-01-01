@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Voltaire");
+@import url("Voltaire");
 #world {
   position: absolute;
   width: 100%;
@@ -21,9 +21,9 @@
   width: 100%;
   transform: translate(-50%, -100%);
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   transition: all 500ms ease-in-out;
 }
 #gameoverInstructions.show {
@@ -38,9 +38,9 @@
   top: 50px;
   transform: translate(-50%, 0%);
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .label {
@@ -76,9 +76,9 @@
   text-transform: uppercase;
   text-align: center;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 #credits a {
@@ -102,9 +102,9 @@
   text-transform: uppercase;
   text-align: center;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .lightInstructions {
