@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   scan:
     docker:
-      - image: node:latest
+      - image: node:18
     steps:
       - run:
           name: Clonning Code
