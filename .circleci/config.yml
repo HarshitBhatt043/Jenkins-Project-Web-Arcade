@@ -75,5 +75,7 @@ jobs:
     steps:
       - run:
           name: Clonning Code
-          command: git clone --no-checkout --single-branch --depth 1 -b "$CIRCLE_BRANCH" << pipeline.trigger_parameters.github_app.repo_url >> .
-      - sonarcloud/scan
+          command: git clone --no-checkout --single-branch --depth 1 -b "$CIRCLE_BRANCH" << pipeline.trigger_parameters.github_app.repo_url >> $CIRCLE_WORKING_DIRECTORY
+      - run:
+          name: scan
+          command: scan
