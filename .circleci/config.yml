@@ -1,5 +1,13 @@
 version: 2.1
 
+parameters:
+  repo-name:
+    type: string
+    default: "Jenkins-Project-Web-Arcade"
+  project_root:
+    default: "$CIRCLE_WORKING_DIRECTORY/$repo-name"
+    type: string
+
 workflows:
   main:
     jobs:
