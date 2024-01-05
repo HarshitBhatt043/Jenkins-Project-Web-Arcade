@@ -10,6 +10,19 @@ jobs:
           command: git clone --single-branch --depth 1 -b "$CIRCLE_BRANCH" << pipeline.trigger_parameters.github_app.repo_url >> $CIRCLE_WORKING_DIRECTORY
       - sonarcloud/scan:
           project_root: $CIRCLE_WORKING_DIRECTORY
+      - run:
+          name: QC Check
+          command: >
+            set -e
+            value=$(curl -s 'https://sonarcloud.io/api/measures/component?component=HarshitBhatt043_Jenkins-Project-Web-Arcade&branch=circleci-project-setup&metricKeys=alert_status' | grep -o '"value":"[^"]*"' | cut -d':' -f2 | tr -d '"')
+
+            if [ "$value" == "OK" ]; then
+                echo "Quality gate passed"
+                exit 0
+            else
+                echo "Quality gate failed"
+                exit 1
+            fi
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
