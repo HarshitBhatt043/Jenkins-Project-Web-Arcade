@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs:
-  scan:
+  Tests And Analysis:
     docker:
       - image: node:18
     steps:
@@ -12,7 +12,7 @@ jobs:
           project_root: $CIRCLE_WORKING_DIRECTORY
       - run:
           name: QC Check
-          command: bash $CIRCLE_WORKING_DIRECTORY/qc.sh
+          command: bash $CIRCLE_WORKING_DIRECTORY/scripts/qc.sh
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
@@ -20,5 +20,5 @@ orbs:
 workflows:
   main:
     jobs:
-      - scan:
+      - Tests And Analysis:
           context: SonarCloud
