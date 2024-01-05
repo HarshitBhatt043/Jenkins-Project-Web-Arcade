@@ -1,0 +1,4 @@
+parameters:
+  repo-name:
+    type: string
+    default: "Jenkins-Project-Web-Arcade"

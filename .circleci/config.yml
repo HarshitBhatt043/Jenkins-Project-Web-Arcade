@@ -1,21 +1,7 @@
 version: 2.1
 
-parameters:
-  repo-name:
-    type: string
-    default: "Jenkins-Project-Web-Arcade"
-
-workflows:
-  main:
-    jobs:
-      - build:
-          context: SonarCloud
-
-orbs:
-  sonarcloud: sonarsource/sonarcloud@2.0.0
-
 jobs:
-  build:
+  scan:
     docker:
       - image: node:latest
     steps:
@@ -24,3 +10,12 @@ jobs:
           command: git clone --single-branch --depth 1 -b "$CIRCLE_BRANCH" << pipeline.trigger_parameters.github_app.repo_url >> $CIRCLE_WORKING_DIRECTORY
       - sonarcloud/scan:
           project_root: $CIRCLE_WORKING_DIRECTORY
+
+orbs:
+  sonarcloud: sonarsource/sonarcloud@2.0.0
+
+workflows:
+  main:
+    jobs:
+      - scan:
+          context: SonarCloud
