@@ -16,5 +16,5 @@ jobs:
     steps:
       - run:
           name: Clonning Code
-          command: git clone --single-branch --depth 1 $CIRCLE_REPOSITORY_URL -b $CIRCLE_BRANCH
+          command: git clone --single-branch --depth 1 https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade.git -b $CIRCLE_BRANCH
       - sonarcloud/scan
