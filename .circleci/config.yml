@@ -16,5 +16,5 @@ jobs:
     steps:
       - run:
           name: Clonning Code
-          command: git clone --single-branch --depth 1 -b "${CIRCLE_BRANCH}"
+          command: git clone --single-branch --depth 1 -b ${CIRCLE_BRANCH}
       - sonarcloud/scan
