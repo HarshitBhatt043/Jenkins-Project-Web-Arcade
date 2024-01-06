@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-directory_path="$CIRCLE_WORKING_DIRECTORY/$ASSETPATH"
+directory_path="$ASSETPATH"
 
 if [ -d "$directory_path" ]; then
     filesCount=$(ls -1 "$directory_path" | wc -l | tr -d '[:space:]')
@@ -11,9 +11,9 @@ if [ -d "$directory_path" ]; then
     else
         mkdir -p "$directory_path"
         wget -q "$ASSET" -P "$directory_path"
-        mv "$directory_path"/* "$CIRCLE_WORKING_DIRECTORY/$ASSETNAME"
+        mv "$directory_path"/* "$ASSETNAME"
 
-        downloadedFilesCount=$(ls -1 "$CIRCLE_WORKING_DIRECTORY/$ASSETNAME" | wc -l | tr -d '[:space:]')
+        downloadedFilesCount=$(ls -1 "$ASSETNAME" | wc -l | tr -d '[:space:]')
 
         if [ "$downloadedFilesCount" -gt 0 ]; then
             echo "Asset download successful."
@@ -25,9 +25,9 @@ if [ -d "$directory_path" ]; then
 else
     mkdir -p "$directory_path"
     wget -q "$ASSET" -P "$directory_path"
-    mv "$directory_path"/* "$CIRCLE_WORKING_DIRECTORY/$ASSETNAME"
+    mv "$directory_path"/* "$ASSETNAME"
 
-    downloadedFilesCount=$(ls -1 "$CIRCLE_WORKING_DIRECTORY/$ASSETNAME" | wc -l | tr -d '[:space:]')
+    downloadedFilesCount=$(ls -1 "$ASSETNAME" | wc -l | tr -d '[:space:]')
 
     if [ "$downloadedFilesCount" -gt 0 ]; then
         echo "Asset download successful."
