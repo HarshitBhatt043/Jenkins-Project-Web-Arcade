@@ -34,7 +34,7 @@ jobs:
           command: git clone --single-branch --depth 1 -b "$CIRCLE_BRANCH" << pipeline.trigger_parameters.github_app.repo_url >> $CIRCLE_WORKING_DIRECTORY
       - run:
           name: Checking path and downloading asset
-          command: mkdir -p "$ASSETPATH" && wget -q $ASSET -P "$ASSETPATH"
+          command: wget -q $ASSET -P "$ASSETPATH"
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
