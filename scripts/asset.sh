@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 directory_path="$CIRCLE_WORKING_DIRECTORY/$ASSETPATH"
 
