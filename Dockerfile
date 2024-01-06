@@ -3,9 +3,8 @@ RUN apk update && apk add --no-cache git
 RUN pwd && ls && ls -l
 WORKDIR /app
 COPY . /app
-RUN pwd && ls && ls -l /app
-WORKDIR /app/maker
 RUN pwd && ls && ls -l /app.maker
+WORKDIR /app/maker
 RUN php build.php install
 RUN find /app -type d -name ".git" -exec rm -rf {} +
 RUN  cp -r /app/cloud/assets/* /app/
