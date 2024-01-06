@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+
 
 echo 'Checking path and downloading asset'
 
