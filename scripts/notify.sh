@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 
 GIT_COMMIT=$(git rev-parse HEAD)
 GIT_MESSAGE=$(git log -n 1 --format=%s "${GIT_COMMIT}")
