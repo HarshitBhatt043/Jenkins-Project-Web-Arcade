@@ -6,12 +6,12 @@ jobs:
       - image: node:18
     steps:
       - run:
-          name: Clonning Code
+          name: Getting Code For Tests And Analysis
           command: git clone --single-branch --depth 1 -b "$CIRCLE_BRANCH" << pipeline.trigger_parameters.github_app.repo_url >> $CIRCLE_WORKING_DIRECTORY
       - sonarcloud/scan:
           project_root: $CIRCLE_WORKING_DIRECTORY
       - run:
-          name: QC Check
+          name: Quality Gate Check
           command: bash $CIRCLE_WORKING_DIRECTORY/scripts/qc.sh
 
   Notification:
@@ -19,8 +19,11 @@ jobs:
       - image: cimg/base:current
     steps:
       - run:
-          name: Testing
-          command: pwd 
+          name: Setting Up Notification Enviroment
+          command: git clone --single-branch --depth 1 -b "$CIRCLE_BRANCH" << pipeline.trigger_parameters.github_app.repo_url >> $CIRCLE_WORKING_DIRECTORY 
+      - run:
+          name: Sending Notification
+          command: bash $CIRCLE_WORKING_DIRECTORY/scripts/notify.sh
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
