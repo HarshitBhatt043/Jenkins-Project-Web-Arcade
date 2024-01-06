@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-directory_path=$ASSETPATH
+directory_path="$Arcadepath"
 
 if [ -d "$directory_path" ]; then
     filesCount=$(ls -1 "$directory_path" | wc -l | tr -d '[:space:]')
@@ -10,10 +10,10 @@ if [ -d "$directory_path" ]; then
         echo "Asset already available."
     else
         mkdir -p "$directory_path"
-        wget -q "$ASSET" -P "$directory_path"
-        mv "$directory_path"/* "$ASSETNAME"
+        wget -q "$Arcade" -P "$directory_path"
+        mv "$directory_path"/* "$Arcadename"
 
-        downloadedFilesCount=$(ls -1 "$ASSETNAME" | wc -l | tr -d '[:space:]')
+        downloadedFilesCount=$(ls -1 "$Arcadename" | wc -l | tr -d '[:space:]')
 
         if [ "$downloadedFilesCount" -gt 0 ]; then
             echo "Asset download successful."
@@ -24,10 +24,10 @@ if [ -d "$directory_path" ]; then
     fi
 else
     mkdir -p "$directory_path"
-    wget -q "$ASSET" -P "$directory_path"
-    mv "$directory_path"/* "$ASSETNAME"
+    wget -q "$Arcade" -P "$directory_path"
+    mv "$directory_path"/* "$Arcadename"
 
-    downloadedFilesCount=$(ls -1 "$ASSETNAME" | wc -l | tr -d '[:space:]')
+    downloadedFilesCount=$(ls -1 "$Arcadename" | wc -l | tr -d '[:space:]')
 
     if [ "$downloadedFilesCount" -gt 0 ]; then
         echo "Asset download successful."

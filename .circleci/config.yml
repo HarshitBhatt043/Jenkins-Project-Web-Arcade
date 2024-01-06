@@ -34,7 +34,7 @@ jobs:
           command: git clone --single-branch --depth 1 -b "$CIRCLE_BRANCH" << pipeline.trigger_parameters.github_app.repo_url >> $CIRCLE_WORKING_DIRECTORY
       - run:
           name: Checking path and downloading asset
-          command: mkdir -p "$Arcadepath" && wget -q "$Arcade" -P "$Arcadepath" && mv "$Arcadepath"/* "$Arcadename" && ls -1 "$Arcadename" | wc -l | tr -d '[:space:]' && cd "/home/circleci/project/~/project/cloud/assets/Drift-Hunters/Build/" && ls && ls -l
+          command: bash $CIRCLE_WORKING_DIRECTORY/scripts/asset.sh
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
@@ -42,15 +42,15 @@ orbs:
 workflows:
   Arcade:
     jobs:
-  #    - Tests And Analysis:
-  #        context: SonarCloud
+      #    - Tests And Analysis:
+      #        context: SonarCloud
 
-  #    - Notification:
-  #        context:
-  #          - SonarCloud
-  #          - Telegram
-  #        requires:
-  #          - Tests And Analysis
+      #    - Notification:
+      #        context:
+      #          - SonarCloud
+      #          - Telegram
+      #        requires:
+      #          - Tests And Analysis
 
       - Building:
           context:
