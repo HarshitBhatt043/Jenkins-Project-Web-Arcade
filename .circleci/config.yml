@@ -1,10 +1,5 @@
 version: 2.1
 
-parameters:
-  sonarPropertiesFile:
-    type: string
-    default: "$CIRCLE_WORKING_DIRECTORY/sonar-project.properties"
-
 jobs:
   Tests And Analysis:
     docker:
