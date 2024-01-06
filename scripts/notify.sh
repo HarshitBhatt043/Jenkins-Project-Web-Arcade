@@ -1,14 +1,12 @@
 #!/bin/bash
 
-GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 GIT_COMMIT=$(git rev-parse HEAD)
 GIT_MESSAGE=$(git log -n 1 --format=%s "${GIT_COMMIT}")
 GIT_AUTHOR=$(git log -n 1 --format=%ae "${GIT_COMMIT}")
 GIT_COMMIT_SHORT=$(git rev-parse --short "${GIT_COMMIT}")
-GIT_COMMIT_DATE=$(git log -n 1 --format=%ci "${GIT_COMMIT}")
 GIT_COMMIT_SHA=$(git rev-parse --verify ${GIT_COMMIT})
 COMMIT_URL="https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade/commit/${GIT_COMMIT_SHA}"
-BRANCH_URL="https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade/tree/${GIT_BRANCH}"
+BRANCH_URL="https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade/tree/$CIRCLE_BRANCH"
 
 projectKey=$(grep '^sonar.projectKey=' "./sonar-project.properties" | cut -d'=' -f2 | tr -d '[:space:]')
 metricKeys='bugs,vulnerabilities,security_hotspots,code_smells,duplicated_lines_density,ncloc,cognitive_complexity,critical_violations,major_violations,sqale_index,alert_status'
@@ -21,15 +19,13 @@ notificationMessage=$(
     cat <<EOF
 ${text_break}
 *Build Information:*
-Job: $CIRCLE_JOB
+CircleCi: [$CIRCLE_JOB]($CIRCLE_BUILD_URL)
 Build Number: $CIRCLE_BUILD_NUM
-Build URL: [$CIRCLE_JOB]($CIRCLE_BUILD_URL)
 ${info_break}
 *SCM Information:*
-Branch: [${GIT_BRANCH}](${BRANCH_URL})
-Commit: [${GIT_COMMIT_SHORT}](${COMMIT_URL}) On ${GIT_COMMIT_DATE}
-Last Message: ${GIT_MESSAGE}
-Author: ${GIT_AUTHOR}
+Branch: [$CIRCLE_BRANCH](${BRANCH_URL})
+Commit: [${GIT_COMMIT_SHORT}](${COMMIT_URL})
+Last Message: ${GIT_MESSAGE} By ${GIT_AUTHOR}
 ${info_break}
 *SonarCloud Information:*
 Quality Gate: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "alert_status") | .value' || echo 'N/A')
@@ -43,7 +39,7 @@ Major Violations: $(echo "${metricsMap}" | jq -r '.component.measures[] | select
 Code Smells: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "code_smells") | .value' || echo 'N/A')
 Code Complexity: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "cognitive_complexity") | .value' || echo 'N/A')
 Technical debt: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "sqale_index") | .value' || echo 'N/A') minutes
-SonarQube URL: [${projectKey}](${SONARURL}dashboard?id=${projectKey})
+Project URL: [${projectKey}](${SONARURL}dashboard?id=${projectKey})
 ${text_break}
 EOF
 )
