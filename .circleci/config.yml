@@ -20,7 +20,7 @@ jobs:
     steps:
       - run:
           name: Testing
-          command: pwd && ls -l && echo $CHAT_ID > tt.txt && cat tt.txt
+          command: pwd 
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
