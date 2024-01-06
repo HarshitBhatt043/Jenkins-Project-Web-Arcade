@@ -20,7 +20,7 @@ jobs:
     steps:
       - run:
           name: Setting Up Notification Enviroment
-          command: git clone --single-branch --depth 1 -b "$CIRCLE_BRANCH" << pipeline.trigger_parameters.github_app.repo_url >> $CIRCLE_WORKING_DIRECTORY 
+          command: git clone --single-branch --depth 1 -b "$CIRCLE_BRANCH" << pipeline.trigger_parameters.github_app.repo_url >> $CIRCLE_WORKING_DIRECTORY
       - run:
           name: Sending Notification
           command: cd $CIRCLE_WORKING_DIRECTORY && bash ./scripts/notify.sh
@@ -35,6 +35,8 @@ workflows:
           context: SonarCloud
 
       - Notification:
-          context: Telegram
+          context:
+            - SonarCloud
+            - Telegram
           requires:
             - Tests And Analysis
