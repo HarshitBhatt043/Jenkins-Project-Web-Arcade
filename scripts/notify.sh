@@ -39,9 +39,6 @@ SonarQube URL: [${projectKey}](${SONARURL}dashboard?id=${projectKey})
 ${text_break}
 EOF
 )
+echo "$notificationMessage"
 
-curl -sL --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' \
-    --form text="${notificationMessage}" \
-    --form chat_id="${CHAT_ID}" \
-    --form parse_mode='Markdown'
 
