@@ -14,11 +14,28 @@ jobs:
           name: QC Check
           command: bash $CIRCLE_WORKING_DIRECTORY/scripts/qc.sh
 
+  Notification:
+    docker:
+      - image: cimg/base:current
+    steps:
+      - run:
+          name: Testing
+          command: pwd && ls -l && echo $CHAT_ID
+
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
 
 workflows:
-  main:
+  Arcade-Prod-Pipeline:
     jobs:
       - Tests And Analysis:
           context: SonarCloud
+      - hold:
+          type: approval
+          requires:
+            - Tests And Analysis
+
+      - Notification:
+          context: Telegram
+          requires:
+            - hold
