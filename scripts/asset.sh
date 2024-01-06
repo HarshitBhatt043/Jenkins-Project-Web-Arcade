@@ -1,15 +1,17 @@
 #!/bin/bash
 set -e
 
-if [ -d "$CIRCLE_WORKING_DIRECTORY/$ASSETPATH" ]; then
-    filesCount=$(ls -1 "$CIRCLE_WORKING_DIRECTORY/$ASSETPATH" | wc -l | tr -d '[:space:]')
+directory_path="$CIRCLE_WORKING_DIRECTORY/$ASSETPATH"
+
+if [ -d "$directory_path" ]; then
+    filesCount=$(ls -1 "$directory_path" | wc -l | tr -d '[:space:]')
 
     if [ "$filesCount" -gt 0 ]; then
         echo "Asset already available."
     else
-        mkdir -p "$CIRCLE_WORKING_DIRECTORY/$ASSETPATH"
-        wget -q "$ASSET" -P "$CIRCLE_WORKING_DIRECTORY/$ASSETPATH"
-        mv "$CIRCLE_WORKING_DIRECTORY/$ASSETPATH"/* "$CIRCLE_WORKING_DIRECTORY/$ASSETNAME"
+        mkdir -p "$directory_path"
+        wget -q "$ASSET" -P "$directory_path"
+        mv "$directory_path"/* "$CIRCLE_WORKING_DIRECTORY/$ASSETNAME"
 
         downloadedFilesCount=$(ls -1 "$CIRCLE_WORKING_DIRECTORY/$ASSETNAME" | wc -l | tr -d '[:space:]')
 
@@ -21,9 +23,9 @@ if [ -d "$CIRCLE_WORKING_DIRECTORY/$ASSETPATH" ]; then
         fi
     fi
 else
-    mkdir -p "$CIRCLE_WORKING_DIRECTORY/$ASSETPATH"
-    wget -q "$ASSET" -P "$CIRCLE_WORKING_DIRECTORY/$ASSETPATH"
-    mv "$CIRCLE_WORKING_DIRECTORY/$ASSETPATH"/* "$CIRCLE_WORKING_DIRECTORY/$ASSETNAME"
+    mkdir -p "$directory_path"
+    wget -q "$ASSET" -P "$directory_path"
+    mv "$directory_path"/* "$CIRCLE_WORKING_DIRECTORY/$ASSETNAME"
 
     downloadedFilesCount=$(ls -1 "$CIRCLE_WORKING_DIRECTORY/$ASSETNAME" | wc -l | tr -d '[:space:]')
 
