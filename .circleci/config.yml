@@ -25,6 +25,17 @@ jobs:
           name: Sending Notification
           command: cd $CIRCLE_WORKING_DIRECTORY && bash ./scripts/notify.sh
 
+  Building:
+    docker:
+      - image: cimg/base:current
+    steps:
+      - run:
+          name: Setting Up Asset Enviroment
+          command: git clone --single-branch --depth 1 -b "$CIRCLE_BRANCH" << pipeline.trigger_parameters.github_app.repo_url >> $CIRCLE_WORKING_DIRECTORY
+      - run:
+          name: Checking path and downloading asset
+          command: bash ./scripts/asset.sh
+
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
 
@@ -40,3 +51,9 @@ workflows:
             - Telegram
           requires:
             - Tests And Analysis
+
+      - Building:
+          context:
+            - Docker
+          requires:
+            - Notification
