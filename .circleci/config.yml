@@ -39,10 +39,9 @@ jobs:
       - run:
           name: Build and Push Arcade Docker image
           command: |
-            TAG=latest
-            docker build -t $DOCKERHUB_USERNAME/arcade:$TAG .
+            docker build -t $DOCKERHUB_USERNAME/arcade .
             echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
-            docker push $DOCKERHUB_USERNAME/arcade:$TAG
+            docker push $DOCKERHUB_USERNAME/arcade
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
