@@ -3,8 +3,7 @@ RUN apk update && apk add --no-cache git
 RUN pwd && ls && ls -l
 WORKDIR /app
 COPY . /app
-RUN  cd ~ && cd ./root && pwd && ls && ls -l /app.maker
-
+RUN pwd && ls -R && ls -l /app.maker
 WORKDIR /app/maker
 RUN php build.php install
 RUN find /app -type d -name ".git" -exec rm -rf {} +
