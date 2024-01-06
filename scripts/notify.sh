@@ -13,7 +13,8 @@ metricsMap=$(echo "$sonarQubeResult" | jq -r '.')
 
 text_break='------------------------------------------------------------------------'
 info_break='------------------------------------'
-notificationMessage=$(cat <<EOF
+notificationMessage=$(
+    cat <<EOF
 ${text_break}
 *Build Information:*
 Job: \$CIRCLE_JOB
@@ -40,8 +41,4 @@ ${text_break}
 EOF
 )
 
-curl -sL --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' \
-    --form text="${notificationMessage}" \
-    --form chat_id="${CHAT_ID}" \
-    --form parse_mode='Markdown'
-
+curl -sL --request POST 'https://api.telegram.org/bot$TOKEN/sendMessage' --form text='${notificationMessage}' --form chat_id='$CHAT_ID' --form parse_mode='Markdown'
