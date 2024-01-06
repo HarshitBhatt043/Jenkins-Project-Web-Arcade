@@ -2,7 +2,6 @@
 
 GIT_COMMIT=$(git rev-parse HEAD)
 GIT_MESSAGE=$(git log -n 1 --format=%s "${GIT_COMMIT}")
-GIT_AUTHOR=$(git log -n 1 --format=%ae "${GIT_COMMIT}")
 GIT_COMMIT_SHORT=$(git rev-parse --short "${GIT_COMMIT}")
 COMMIT_URL="https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade/commit/$CIRCLE_SHA1"
 BRANCH_URL="https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade/tree/$CIRCLE_BRANCH"
@@ -18,14 +17,14 @@ notificationMessage=$(
     cat <<EOF
 ${text_break}
 *Build Information:*
-CircleCi: [$CIRCLE_JOB]($CIRCLE_BUILD_URL)
+CircleCi: [$CIRCLE_PROJECT_REPONAME]($CIRCLE_BUILD_URL)
 Build Number: $CIRCLE_BUILD_NUM
 ${info_break}
 *SCM Information:*
 Branch: [$CIRCLE_BRANCH](${BRANCH_URL})
 Commit: [${GIT_COMMIT_SHORT}](${COMMIT_URL})
 Last Message: ${GIT_MESSAGE}
-Author: ${GIT_AUTHOR}
+Author: $CIRCLE_USERNAME
 ${info_break}
 *SonarCloud Information:*
 Quality Gate: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "alert_status") | .value' || echo 'N/A')
