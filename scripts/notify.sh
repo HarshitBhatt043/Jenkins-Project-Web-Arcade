@@ -6,7 +6,7 @@ GIT_AUTHOR=$(git log -n 1 --format=%ae "${GIT_COMMIT}")
 GIT_COMMIT_SHORT=$(git rev-parse --short "${GIT_COMMIT}")
 GIT_INFO="Branch(Version): main\nLast Message: ${GIT_MESSAGE}\nAuthor: ${GIT_AUTHOR}\nCommit: ${GIT_COMMIT_SHORT}"
 
-projectKey=$(grep '^sonar.projectKey=' "$CIRCLE_WORKING_DIRECTORY/sonar-project.properties" | cut -d'=' -f2 | tr -d '[:space:]')
+projectKey=$(grep '^sonar.projectKey=' "./sonar-project.properties" | cut -d'=' -f2 | tr -d '[:space:]')
 metricKeys='bugs,vulnerabilities,security_hotspots,code_smells,duplicated_lines_density,ncloc,cognitive_complexity,critical_violations,major_violations,sqale_index,alert_status'
 sonarQubeResult=$(curl -s "${SONARURL}api/measures/component?component=${projectKey}&branch=circleci-project-setup&metricKeys=${metricKeys}")
 metricsMap=$(echo "$sonarQubeResult" | jq -r '.')

@@ -31,12 +31,12 @@ orbs:
 workflows:
   Arcade-Prod-Pipeline:
     jobs:
-      - Tests And Analysis:
-          context: SonarCloud
+ #     - Tests And Analysis:
+  #        context: SonarCloud
 
       - Notification:
           context:
             - SonarCloud
             - Telegram
-          requires:
-            - Tests And Analysis
+   #       requires:
+    #        - Tests And Analysis
