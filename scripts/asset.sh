@@ -1,10 +1,12 @@
 #!/bin/bash
-
+set -e
 
 echo 'Checking path and downloading asset'
 
 directory_path="$CIRCLE_WORKING_DIRECTORY/$ASSETPATH"
 filesCount=$(ls -1 "${directory_path}" | wc -l | tr -d '[:space:]')
+
+mkdir -p "${directory_path}"
 
 if [ "$filesCount" -gt 0 ]; then
     echo "Asset already available."
