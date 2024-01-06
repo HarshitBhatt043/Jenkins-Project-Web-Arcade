@@ -23,7 +23,7 @@ jobs:
           command: git clone --single-branch --depth 1 -b "$CIRCLE_BRANCH" << pipeline.trigger_parameters.github_app.repo_url >> $CIRCLE_WORKING_DIRECTORY 
       - run:
           name: Sending Notification
-          command: cd $CIRCLE_WORKING_DIRECTORY && bash ./notify.sh
+          command: cd $CIRCLE_WORKING_DIRECTORY && bash $CIRCLE_WORKING_DIRECTORY/notify.sh
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
