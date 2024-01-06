@@ -40,7 +40,7 @@ ${text_break}
 EOF
 )
 
-curl -sL --request POST 'https://api.telegram.org/bot$TOKEN/sendMessage' \
+curl -sL --request POST "https://api.telegram.org/bot$TOKEN/sendMessage" \
     --form text="${notificationMessage}" \
     --form chat_id="$CHAT_ID" \
     --form parse_mode='Markdown'
