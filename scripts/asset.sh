@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 directory_path="$Arcadepath"
 
