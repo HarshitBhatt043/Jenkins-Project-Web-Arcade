@@ -24,21 +24,22 @@ ${info_break}
 ${GIT_INFO}
 ${info_break}
 *SonarCloud Information:*
-Quality Gate: ${metricsMap.component.measures.find { it.metric == 'alert_status' }?.value ?: 'N/A'}
-Code Lines: ${metricsMap.component.measures.find { it.metric == 'ncloc' }?.value ?: 'N/A'}
-Bugs: ${metricsMap.component.measures.find { it.metric == 'bugs' }?.value ?: 'N/A'}
-Duplications: ${metricsMap.component.measures.find { it.metric == 'duplicated_lines_density' }?.value ?: 'N/A'}%
-Vulnerabilities: ${metricsMap.component.measures.find { it.metric == 'vulnerabilities' }?.value ?: 'N/A'}
-Security Hotspots: ${metricsMap.component.measures.find { it.metric == 'security_hotspots' }?.value ?: 'N/A'}
-Critical Violations: ${metricsMap.component.measures.find { it.metric == 'critical_violations' }?.value ?: 'N/A'}
-Major Violations: ${metricsMap.component.measures.find { it.metric == 'major_violations' }?.value ?: 'N/A'}
-Code Smells: ${metricsMap.component.measures.find { it.metric == 'code_smells' }?.value ?: 'N/A'}
-Code Complexity: ${metricsMap.component.measures.find { it.metric == 'cognitive_complexity' }?.value ?: 'N/A'}
-Technical debt: ${metricsMap.component.measures.find { it.metric == 'sqale_index' }?.value ?: 'N/A'} minutes
+Quality Gate: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "alert_status") | .value' || echo 'N/A')
+Code Lines: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "ncloc") | .value' || echo 'N/A')
+Bugs: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "bugs") | .value' || echo 'N/A')
+Duplications: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "duplicated_lines_density") | .value' || echo 'N/A')%
+Vulnerabilities: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "vulnerabilities") | .value' || echo 'N/A')
+Security Hotspots: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "security_hotspots") | .value' || echo 'N/A')
+Critical Violations: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "critical_violations") | .value' || echo 'N/A')
+Major Violations: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "major_violations") | .value' || echo 'N/A')
+Code Smells: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "code_smells") | .value' || echo 'N/A')
+Code Complexity: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "cognitive_complexity") | .value' || echo 'N/A')
+Technical debt: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "sqale_index") | .value' || echo 'N/A') minutes
 SonarQube URL: [${projectKey}](${SONARURL}dashboard?id=${projectKey})
 ${text_break}
 EOF
 )
+
 echo "$notificationMessage"
 
 
