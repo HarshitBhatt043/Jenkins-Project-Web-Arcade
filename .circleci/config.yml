@@ -35,6 +35,12 @@ jobs:
       - run:
           name: Checking path and downloading asset
           command: bash $CIRCLE_WORKING_DIRECTORY/scripts/asset.sh
+      - run:
+          name: Build and Push Arcade Docker image
+          command: |
+            docker build -t $DOCKERHUB_USERNAME/arcade:test .
+            echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+            docker push $DOCKERHUB_USERNAME/arcade:test
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
