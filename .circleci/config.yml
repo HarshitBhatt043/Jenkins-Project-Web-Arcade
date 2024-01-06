@@ -35,6 +35,7 @@ jobs:
       - run:
           name: Checking path and downloading asset
           command: bash $CIRCLE_WORKING_DIRECTORY/scripts/asset.sh
+      - setup_remote_docker
       - run:
           name: Build and Push Arcade Docker image
           command: |
