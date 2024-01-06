@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-directory_path="$ASSETPATH"
+directory_path=$ASSETPATH
 
 if [ -d "$directory_path" ]; then
     filesCount=$(ls -1 "$directory_path" | wc -l | tr -d '[:space:]')
