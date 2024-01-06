@@ -20,7 +20,7 @@ jobs:
     steps:
       - run:
           name: Testing
-          command: pwd && ls -l && echo $CHAT_ID
+          command: pwd && ls -l && echo $CHAT_ID | tt.txt && cat tt.txt
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
@@ -30,12 +30,8 @@ workflows:
     jobs:
       - Tests And Analysis:
           context: SonarCloud
-      - hold:
-          type: approval
-          requires:
-            - Tests And Analysis
 
       - Notification:
           context: Telegram
           requires:
-            - hold
+            - Tests And Analysis
