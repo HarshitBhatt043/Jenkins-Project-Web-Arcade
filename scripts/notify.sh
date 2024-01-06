@@ -4,8 +4,7 @@ GIT_COMMIT=$(git rev-parse HEAD)
 GIT_MESSAGE=$(git log -n 1 --format=%s "${GIT_COMMIT}")
 GIT_AUTHOR=$(git log -n 1 --format=%ae "${GIT_COMMIT}")
 GIT_COMMIT_SHORT=$(git rev-parse --short "${GIT_COMMIT}")
-GIT_COMMIT_SHA=$(git rev-parse --verify ${GIT_COMMIT})
-COMMIT_URL="https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade/commit/${GIT_COMMIT_SHA}"
+COMMIT_URL="https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade/commit/$CIRCLE_SHA1"
 BRANCH_URL="https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade/tree/$CIRCLE_BRANCH"
 
 projectKey=$(grep '^sonar.projectKey=' "./sonar-project.properties" | cut -d'=' -f2 | tr -d '[:space:]')
@@ -25,7 +24,8 @@ ${info_break}
 *SCM Information:*
 Branch: [$CIRCLE_BRANCH](${BRANCH_URL})
 Commit: [${GIT_COMMIT_SHORT}](${COMMIT_URL})
-Last Message: ${GIT_MESSAGE} By ${GIT_AUTHOR}
+Last Message: ${GIT_MESSAGE}
+Author: ${GIT_AUTHOR}
 ${info_break}
 *SonarCloud Information:*
 Quality Gate: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "alert_status") | .value' || echo 'N/A')
