@@ -55,9 +55,9 @@ jobs:
           name: Add SSH host to known
           command: ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
       - run:
-          name: test
+          name: Deploying Project
           command: |
-            ssh $SSH_USER@$SSH_HOST "curl -sSL "https://raw.githubusercontent.com/HarshitBhatt043/Jenkins-Project-Web-Arcade/circleci-project-setup/scripts/deploy.sh" | bash"
+            ssh $SSH_USER@$SSH_HOST "curl -sSL $Script | bash"
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
