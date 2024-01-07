@@ -67,7 +67,9 @@ jobs:
       - run:
           name: test
           command: |
-            ssh $SSH_USER@$SSH_HOST "GIT_COMMIT=$(git rev-parse HEAD)
+            ssh $SSH_USER@$SSH_HOST "git clone --single-branch --depth 1 -b "$CIRCLE_BRANCH" << pipeline.trigger_parameters.github_app.repo_url >> $CIRCLE_WORKING_DIRECTORY
+            cd $CIRCLE_WORKING_DIRECTORY
+            GIT_COMMIT=$(git rev-parse HEAD)
             GIT_MESSAGE=$(git log -n 1 --format=%s "${GIT_COMMIT}")
             GIT_COMMIT_SHORT=$(git rev-parse --short "${GIT_COMMIT}")
             COMMIT_URL="https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade/commit/$CIRCLE_SHA1"
