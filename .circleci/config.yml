@@ -57,7 +57,7 @@ jobs:
       - run:
           name: test
           command: |
-            ssh $SSH_USER@$SSH_HOST "curl -sSL "https://raw.githubusercontent.com/HarshitBhatt043/Jenkins-Project-Web-Arcade/circleci-project-setup/scripts/deploy-helper.sh" | bash"
+            ssh $SSH_USER@$SSH_HOST "curl -sSL "https://raw.githubusercontent.com/HarshitBhatt043/Jenkins-Project-Web-Arcade/circleci-project-setup/scripts/deploy.sh" | bash"
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
