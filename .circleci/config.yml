@@ -57,15 +57,14 @@ jobs:
       - run:
           name: test
           command: |
-            ssh $SSH_USER@$SSH_HOST "echo "$CIRCLE_WORKING_DIRECTORY" >> tt.txt && echo "$SONARURL" >> tt.txt && echo "ttttt" >> tt.txt && ls -l
-"
+            ssh $SSH_USER@$SSH_HOST "echo "$CIRCLE_WORKING_DIRECTORY" >> tt.txt && echo "$SONARURL" >> tt.txt && echo "ttttt" >> tt.txt && ls -l"
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
 
-workflows:
-  Arcade:
-    jobs:
+#workflows:
+  #Arcade:
+    #jobs:
       #    - Tests And Analysis:
       #        context: SonarCloud
 
@@ -82,8 +81,8 @@ workflows:
       #        requires:
       #          - Notification
 
-      - Deploy:
-          context:
-            - Deploy
+   #   - Deploy:
+   #       context:
+   #         - Deploy
   #        requires:
   #          - Building
