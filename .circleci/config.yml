@@ -60,7 +60,7 @@ jobs:
       - run:
           name: test
           command: |
-            ssh $SSH_USER@$SSH_HOST "bash $CIRCLE_WORKING_DIRECTORY/scripts/deploy.sh"
+            ssh $SSH_USER@$SSH_HOST "hostname && ip a"
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
