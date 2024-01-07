@@ -55,7 +55,10 @@ jobs:
           fingerprints:
             - "14:38:11:21:1b:8d:fb:30:34:5c:2f:f8:a0:ac:e8:49"
       - run:
-          name: Checking path and downloading asset
+          name: Add SSH host to known
+          command: ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
+      - run:
+          name: test
           command: |
             ssh $SSH_USER@$SSH_HOST "bash $CIRCLE_WORKING_DIRECTORY/scripts/deploy.sh"
 
