@@ -6,15 +6,17 @@ command_exists() {
 
 install_netdata() {
     echo "Installing Netdata..."
-    curl https://my-netdata.io/kickstart.sh >/tmp/netdata-kickstart.sh &&
-        sh /tmp/netdata-kickstart.sh --stable-channel --disable-telemetry --claim-token CLAIMTOKEN --claim-rooms ROOMID --claim-url https://app.netdata.cloud
+    curl -sSL https://my-netdata.io/kickstart.sh >/tmp/netdata-kickstart.sh &&
+        sh /tmp/netdata-kickstart.sh --stable-channel --disable-telemetry --claim-token CLAIMTOKEN --claim-rooms ROOMID --claim-url https://app.netdata.cloud ||
+        { echo "Error installing Netdata. Exiting."; exit 1; }
 }
 
 install_cloudflared() {
     echo "Installing Cloudflared..."
-    curl -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb &&
+    curl -sSL --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb &&
         sudo dpkg -i cloudflared.deb &&
-        sudo cloudflared service install CLOUDTOKEN
+        sudo cloudflared service install CLOUDTOKEN ||
+        { echo "Error installing Cloudflared. Exiting."; exit 1; }
 }
 
 if ! command_exists "netdata"; then
