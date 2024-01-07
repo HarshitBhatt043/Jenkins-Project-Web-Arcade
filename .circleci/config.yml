@@ -67,48 +67,41 @@ jobs:
       - run:
           name: test
           command: |
-            ssh $SSH_USER@$SSH_HOST "git clone --single-branch --depth 1 -b "$CIRCLE_BRANCH" << pipeline.trigger_parameters.github_app.repo_url >> $CIRCLE_WORKING_DIRECTORY && cd $CIRCLE_WORKING_DIRECTORY &&
-            GIT_COMMIT=$(git rev-parse HEAD)
-            GIT_MESSAGE=$(git log -n 1 --format=%s "${GIT_COMMIT}")
-            GIT_COMMIT_SHORT=$(git rev-parse --short "${GIT_COMMIT}")
-            COMMIT_URL="https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade/commit/$CIRCLE_SHA1"
-            BRANCH_URL="https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade/tree/$CI  
-            projectKey=$(grep '^sonar.projectKey=' "./sonar-project.properties" | cut -d'=' -f2 | tr -d '[:space:]')
-            metricKeys='bugs,vulnerabilities,security_hotspots,code_smells,duplicated_lines_density,ncloc,cognitive_complexity,critical_violations,major_violations,sqale_index,alert_status'
-            sonarQubeResult=$(curl -s "${SONARURL}api/measures/component?component=${projectKey}&branch=circleci-project-setup&metricKeys=${metricKeys}")
-            metricsMap=$(echo "$sonarQubeResult"  
-            text_break='------------------------------------------------------------------------'
-            info_break='------------------------------------'
-            notificationMessage=$(
-                cat \<<EOF
-            ${text_break}
-            *Build Information:*
-            CircleCi: [$CIRCLE_PROJECT_REPONAME]($CIRCLE_BUILD_URL)
-            Build Number: $CIRCLE_BUILD_NUM
-            ${info_break}
-            *SCM Information:*
-            Branch: [$CIRCLE_BRANCH](${BRANCH_URL})
-            Commit: [${GIT_COMMIT_SHORT}](${COMMIT_URL})
-            Last Message: ${GIT_MESSAGE}
-            Author: $CIRCLE_USERNAME
-            ${info_break}
-            *SonarCloud Information:*
-            Quality Gate: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "alert_status") | .value' || echo 'N/A')
-            Code Lines: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "ncloc") | .value' || echo 'N/A')
-            Bugs: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "bugs") | .value' || echo 'N/A')
-            Duplications: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "duplicated_lines_density") | .value' || echo 'N/A')%
-            Vulnerabilities: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "vulnerabilities") | .value' || echo 'N/A')
-            Security Hotspots: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "security_hotspots") | .value' || echo 'N/A')
-            Critical Violations: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "critical_violations") | .value' || echo 'N/A')
-            Major Violations: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "major_violations") | .value' || echo 'N/A')
-            Code Smells: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "code_smells") | .value' || echo 'N/A')
-            Code Complexity: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "cognitive_complexity") | .value' || echo 'N/A')
-            Technical debt: $(echo "${metricsMap}" | jq -r '.component.measures[] | select(.metric == "sqale_index") | .value' || echo 'N/A') minutes
-            Project URL: [${projectKey}](${SONARURL}dashboard?id=${projectKey})
-            ${text_break}
-            EOF
-            )
-            echo "${notificationMessage}" >> tt.txt"
+            ssh $SSH_USER@$SSH_HOST "directory_path="$Arcadepath"
+
+            if [ -d "$directory_path" ]; then
+                filesCount=$(ls -1 "$directory_path" | wc -l | tr -d '[:space:]')
+
+                if [ "$filesCount" -gt 0 ]; then
+                    echo "Asset already available."
+                else
+                    mkdir -p "$directory_path"
+                    wget -q "$Arcade" -P "$directory_path"
+                    mv "$directory_path"/* "$Arcadename"
+
+                    downloadedFilesCount=$(ls -1 "$Arcadename" | wc -l | tr -d '[:space:]')
+
+                    if [ "$downloadedFilesCount" -gt 0 ]; then
+                        echo "Asset download successful."
+                    else
+                        echo "Pipeline aborted due to failure: Link changed or Expired"
+                        exit 1
+                    fi
+                fi
+            else
+                mkdir -p "$directory_path"
+                wget -q "$Arcade" -P "$directory_path"
+                mv "$directory_path"/* "$Arcadename"
+
+                downloadedFilesCount=$(ls -1 "$Arcadename" | wc -l | tr -d '[:space:]')
+
+                if [ "$downloadedFilesCount" -gt 0 ]; then
+                    echo "Asset download successful."
+                else
+                    echo "Pipeline aborted due to failure: Link changed or Expired"
+                    exit 1
+                fi
+            fi"
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
@@ -132,5 +125,6 @@ workflows:
       - Deploy:
           context:
             - Deploy
+            - Docker
 #          requires:
 #            - Building
