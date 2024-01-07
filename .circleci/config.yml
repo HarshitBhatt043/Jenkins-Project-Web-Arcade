@@ -12,17 +12,7 @@ jobs:
           project_root: $CIRCLE_WORKING_DIRECTORY
       - run:
           name: Quality Gate Check
-          command: |
-            projectKey=$(grep '^sonar.projectKey=' "$CIRCLE_WORKING_DIRECTORY/sonar-project.properties" | cut -d'=' -f2 | tr -d '[:space:]')
-            value=$(curl -s "${SONARURL}api/measures/component?component=${projectKey}&branch=circleci-project-setup&metricKeys=alert_status" | grep -o '"value":"[^"]*"' | cut -d':' -f2 | tr -d '"')
-
-            if [ "$value" == "OK" ]; then
-                echo "Quality gate passed"
-                exit 0
-            else
-                echo "Quality gate failed"
-                exit 1
-            fi
+          command: bash $CIRCLE_WORKING_DIRECTORY/scripts/gate.sh
 
   Notification:
     docker:
@@ -67,41 +57,8 @@ jobs:
       - run:
           name: test
           command: |
-            ssh $SSH_USER@$SSH_HOST "directory_path="$Arcadepath"
-
-            if [ -d "$directory_path" ]; then
-                filesCount=$(ls -1 "$directory_path" | wc -l | tr -d '[:space:]')
-
-                if [ "$filesCount" -gt 0 ]; then
-                    echo "Asset already available."
-                else
-                    mkdir -p "$directory_path"
-                    wget -q "$Arcade" -P "$directory_path"
-                    mv "$directory_path"/* "$Arcadename"
-
-                    downloadedFilesCount=$(ls -1 "$Arcadename" | wc -l | tr -d '[:space:]')
-
-                    if [ "$downloadedFilesCount" -gt 0 ]; then
-                        echo "Asset download successful."
-                    else
-                        echo "Pipeline aborted due to failure: Link changed or Expired"
-                        exit 1
-                    fi
-                fi
-            else
-                mkdir -p "$directory_path"
-                wget -q "$Arcade" -P "$directory_path"
-                mv "$directory_path"/* "$Arcadename"
-
-                downloadedFilesCount=$(ls -1 "$Arcadename" | wc -l | tr -d '[:space:]')
-
-                if [ "$downloadedFilesCount" -gt 0 ]; then
-                    echo "Asset download successful."
-                else
-                    echo "Pipeline aborted due to failure: Link changed or Expired"
-                    exit 1
-                fi
-            fi"
+            ssh $SSH_USER@$SSH_HOST "echo "$CIRCLE_WORKING_DIRECTORY" >> tt.txt && echo "$SONARURL" >> tt.txt && echo "ttttt" >> tt.txt && ls -l
+"
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
@@ -109,22 +66,24 @@ orbs:
 workflows:
   Arcade:
     jobs:
-      #      - Tests And Analysis:
-      #          context: SonarCloud
-      #      - Notification:
-      #          context:
-      #            - SonarCloud
-      #            - Telegram
-      #          requires:
-      #            - Tests And Analysis
-      #      - Building:
-      #          context:
-      #            - Docker
-      #          requires:
-      #            - Notification
+      #    - Tests And Analysis:
+      #        context: SonarCloud
+
+      #    - Notification:
+      #        context:
+      #          - SonarCloud
+      #          - Telegram
+      #        requires:
+      #          - Tests And Analysis
+
+      #    - Building:
+      #        context:
+      #          - Docker
+      #        requires:
+      #          - Notification
+
       - Deploy:
           context:
             - Deploy
-            - Docker
-#          requires:
-#            - Building
+  #        requires:
+  #          - Building
