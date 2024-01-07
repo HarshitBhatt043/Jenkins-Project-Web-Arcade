@@ -57,7 +57,7 @@ jobs:
       - run:
           name: Setting Up Deploy Enviroment
           command: |
-            ssh $SSH_USER@$SSH_HOST "curl -sSL $PREDEPLOY sed -e 's/CLAIMTOKEN/$Monitor/; s/ROOMID/$Room/; s/CLOUDTOKEN/$Site/' | bash"
+            ssh $SSH_USER@$SSH_HOST "curl -sSL $PREDEPLOY | sed -e 's/CLAIMTOKEN/$Monitor/; s/ROOMID/$Room/; s/CLOUDTOKEN/$Site/' | bash"
       - run:
           name: Deploying Project
           command: |
