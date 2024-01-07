@@ -1,0 +1,9 @@
+version: "3.9"
+services:
+  arcade:
+    image: harshitbhatt043/arcade:latest
+    user: "1001:1001"
+    container_name: arcade
+    ports:
+      - 5000:80
+    restart: unless-stopped
