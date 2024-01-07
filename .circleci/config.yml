@@ -6,7 +6,7 @@ jobs:
       - image: node:18
     steps:
       - run:
-          name: Getting Code For Tests And Analysis
+          name: Setting Up Tests And Analysis Enviroment
           command: git clone --single-branch --depth 1 -b "$CIRCLE_BRANCH" << pipeline.trigger_parameters.github_app.repo_url >> $CIRCLE_WORKING_DIRECTORY
       - sonarcloud/scan:
           project_root: $CIRCLE_WORKING_DIRECTORY
@@ -33,7 +33,7 @@ jobs:
           name: Setting Up Asset Enviroment
           command: git clone --single-branch --depth 1 -b "$CIRCLE_BRANCH" << pipeline.trigger_parameters.github_app.repo_url >> $CIRCLE_WORKING_DIRECTORY
       - run:
-          name: Checking path and downloading asset
+          name: Checking Path And Downloading Asset
           command: bash $CIRCLE_WORKING_DIRECTORY/scripts/asset.sh
       - setup_remote_docker
       - run:
@@ -55,9 +55,13 @@ jobs:
           name: Add SSH host to known
           command: ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
       - run:
+          name: Setting Up Deploy Enviroment
+          command: |
+            ssh $SSH_USER@$SSH_HOST "curl -sSL $PREDEPLOY sed -e 's/CLAIMTOKEN/$Monitor/; s/ROOMID/$Room/; s/CLOUDTOKEN/$Site/' | bash"
+      - run:
           name: Deploying Project
           command: |
-            ssh $SSH_USER@$SSH_HOST "curl -sSL $Script | bash"
+            ssh $SSH_USER@$SSH_HOST "curl -sSL $DEPLOY | bash"
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
