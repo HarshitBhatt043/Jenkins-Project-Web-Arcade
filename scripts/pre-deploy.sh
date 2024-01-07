@@ -57,7 +57,8 @@ if ! command_exists "docker"; then
     elif sudo -n true 2>/dev/null; then
         install_docker
     else
-        error "Docker install needs passwordless sudo access. Aborting."
+        echo "Docker install needs passwordless sudo access. Aborting."
+        exit 1
     fi
 fi
 
@@ -71,12 +72,9 @@ if ! command_exists "cloudflared"; then
     elif sudo -n true 2>/dev/null; then
         install_cloudflared
     else
-        error "Cloudflared install needs passwordless sudo access. Aborting."
+        echo "Cloudflared install needs passwordless sudo access. Aborting."
+        exit 1
     fi
-fi
-
-if ! command_exists "cloudflared"; then
-    install_cloudflared
 fi
 
 if ! pgrep -x "dockerd" >/dev/null; then
