@@ -21,7 +21,7 @@ install_docker() {
       $(. /etc/os-release && echo "$VERSION_CODENAME") stable" |
         sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
     sudo apt-get update
-    echo "Installing Docker..."
+
     sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin ||
         {
             echo "Error installing Docker. Exiting."
@@ -53,10 +53,8 @@ install_cloudflared() {
 
 if ! command_exists "docker"; then
     if [ "$EUID" -eq 0 ]; then
-        echo "User is root. Installing Docker..."
         install_docker
     elif sudo -n true 2>/dev/null; then
-        echo "User has passwordless sudo access. Installing Docker..."
         install_docker
     else
         error "Docker install needs passwordless sudo access. Aborting."
@@ -65,6 +63,16 @@ fi
 
 if ! command_exists "netdata"; then
     install_netdata
+fi
+
+if ! command_exists "cloudflared"; then
+    if [ "$EUID" -eq 0 ]; then
+        install_cloudflared
+    elif sudo -n true 2>/dev/null; then
+        install_cloudflared
+    else
+        error "Cloudflared install needs passwordless sudo access. Aborting."
+    fi
 fi
 
 if ! command_exists "cloudflared"; then
