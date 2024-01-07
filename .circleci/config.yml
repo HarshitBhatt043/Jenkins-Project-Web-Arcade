@@ -60,7 +60,7 @@ jobs:
       - run:
           name: test
           command: |
-            ssh $SSH_USER@$SSH_HOST "hostname && ip a"
+            ssh $SSH_USER@$SSH_HOST "hostname && ip a && pwd"
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
