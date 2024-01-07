@@ -48,9 +48,6 @@ jobs:
     docker:
       - image: cimg/base:current
     steps:
-      - run:
-          name: Setting Up Deploy Enviroment
-          command: git clone --single-branch --depth 1 -b "$CIRCLE_BRANCH" << pipeline.trigger_parameters.github_app.repo_url >> $CIRCLE_WORKING_DIRECTORY
       - add_ssh_keys:
           fingerprints:
             - "14:38:11:21:1b:8d:fb:30:34:5c:2f:f8:a0:ac:e8:49"
@@ -60,7 +57,7 @@ jobs:
       - run:
           name: test
           command: |
-            ssh $SSH_USER@$SSH_HOST "bash $CIRCLE_WORKING_DIRECTORY/scripts/deploy.sh"
+            ssh $SSH_USER@$SSH_HOST "bash curl "https://raw.githubusercontent.com/HarshitBhatt043/Jenkins-Project-Web-Arcade/circleci-project-setup/scripts/deploy.sh""
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
