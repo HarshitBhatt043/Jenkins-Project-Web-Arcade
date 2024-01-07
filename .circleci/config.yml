@@ -12,7 +12,17 @@ jobs:
           project_root: $CIRCLE_WORKING_DIRECTORY
       - run:
           name: Quality Gate Check
-          command: bash $CIRCLE_WORKING_DIRECTORY/scripts/gate.sh
+          command: |
+            projectKey=$(grep '^sonar.projectKey=' "$CIRCLE_WORKING_DIRECTORY/sonar-project.properties" | cut -d'=' -f2 | tr -d '[:space:]')
+            value=$(curl -s "${SONARURL}api/measures/component?component=${projectKey}&branch=circleci-project-setup&metricKeys=alert_status" | grep -o '"value":"[^"]*"' | cut -d':' -f2 | tr -d '"')
+
+            if [ "$value" == "OK" ]; then
+                echo "Quality gate passed"
+                exit 0
+            else
+                echo "Quality gate failed"
+                exit 1
+            fi
 
   Notification:
     docker:
@@ -57,7 +67,7 @@ jobs:
       - run:
           name: test
           command: |
-            ssh $SSH_USER@$SSH_HOST "echo "$CIRCLE_WORKING_DIRECTORY" >> tt.txt && echo "$SONARURL" >> tt.txt && echo "ttttt" >> tt.txt && ls -l"
+            ssh $SSH_USER@$SSH_HOST "echo "$CIRCLE_WORKING_DIRECTORY" >> tt.txt && echo $CIRCLE_SHA1 >> tt.txt"
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@2.0.0
@@ -65,8 +75,8 @@ orbs:
 workflows:
   Arcade:
     jobs:
-      #    - Tests And Analysis:
-      #        context: SonarCloud
+      - Tests And Analysis:
+          context: SonarCloud
 
       #    - Notification:
       #        context:
