@@ -1,5 +1,20 @@
 version: 2.1
 
+commands:
+  faliure:
+    description: Notify On Job Faliure
+    parameters:
+      when:
+        type: string
+
+    steps:
+      - run:
+          command: |
+            notificationMessage = "$CIRCLE_JOB Failed: Check [Build Logs]($CIRCLE_BUILD_URL)"
+            curl -sL --request POST 'https://api.telegram.org/bot$TOKEN/sendMessage' --form text='${notificationMessage}' --form chat_id='$CHAT_ID' --form parse_mode='Markdown'
+          name: Notify On Job Faliure
+          when: <<parameters.when>>
+
 jobs:
   Tests And Analysis:
     docker:
@@ -13,10 +28,8 @@ jobs:
       - run:
           name: Quality Gate Check
           command: bash $CIRCLE_WORKING_DIRECTORY/scripts/gate.sh
-          when:
-            condition: on_fail
-            steps:
-              - run: curl -sL --request POST 'https://api.telegram.org/bot$TOKEN/sendMessage' --form text='Pipeline Tests And Analysis Failed' --form chat_id='$CHAT_ID' --form parse_mode='Markdown'
+      - faliure:
+          when: "on_fail"
 
   Notification:
     docker:
