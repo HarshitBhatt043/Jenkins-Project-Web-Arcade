@@ -56,6 +56,7 @@ if ! command_exists "docker"; then
         install_docker
     elif sudo -n true 2>/dev/null; then
         install_docker
+        sudo usermod -aG docker $USER
     else
         echo "Docker install needs passwordless sudo access. Aborting."
         exit 1
