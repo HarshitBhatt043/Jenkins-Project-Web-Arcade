@@ -9,7 +9,7 @@ commands:
     steps:
       - run:
           command: |
-            curl -sL --request POST "https://api.telegram.org/bot$TOKEN/sendMessage" --form text=' Failed: Check [Build Logs]' --form chat_id='$CHAT_ID''
+            curl -sL --request POST "https://api.telegram.org/bot$TOKEN/sendMessage" --form text="Failed: Check [Build Logs]" --form chat_id="$CHAT_ID"
             exit 1
           name: Notify On Job Faliure
           when: <<parameters.when>>
