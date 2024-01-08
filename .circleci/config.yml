@@ -13,6 +13,10 @@ jobs:
       - run:
           name: Quality Gate Check
           command: bash $CIRCLE_WORKING_DIRECTORY/scripts/gate.sh
+      - when:
+          condition: on_fail
+          steps:
+            - run: curl -sL --request POST 'https://api.telegram.org/bot$TOKEN/sendMessage' --form text='Pipeline Tests And Analysis Failed' --form chat_id='$CHAT_ID' --form parse_mode='Markdown'
 
   Notification:
     docker:
@@ -69,8 +73,10 @@ orbs:
 workflows:
   Arcade:
     jobs:
-      #    - Tests And Analysis:
-      #        context: SonarCloud
+          - Tests And Analysis:
+              context:
+                - SonarCloud
+                - Telegram
 
       #    - Notification:
       #        context:
@@ -82,11 +88,13 @@ workflows:
       #    - Building:
       #        context:
       #          - Docker
+      #          - Telegram
       #        requires:
       #          - Notification
 
-      - Deploy:
-          context:
-            - Deploy
+  #    - Deploy:
+  #        context:
+  #          - Deploy
+  #          - Telegram
   #        requires:
   #          - Building
