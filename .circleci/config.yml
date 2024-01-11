@@ -82,7 +82,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "7c:cc:45:1a:3e:76:18:44:1b:71:fd:0a:31:8c:f1:c0"
+            - "db:8b:3d:17:49:4f:dd:d7:aa:44:ff:23:ff:12:70:c4"
       - run:
           name: Add SSH host to known
           command: ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
