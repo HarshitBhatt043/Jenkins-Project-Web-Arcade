@@ -3,3 +3,5 @@ sonar-project.properties
 
 docker/
 scripts/
+.circleci/
+circleci/
