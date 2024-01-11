@@ -2,3 +2,4 @@ Jenkinsfile
 sonar-project.properties
 
 docker/
+scripts/
