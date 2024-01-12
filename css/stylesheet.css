@@ -6,8 +6,8 @@ body {
 
 @font-face {
   font-family: "ComicSansBold";
-  src: url("/css/ComicSansBold.woff2") format("woff2"),
-    url("/css/ComicSansBold.woff") format("woff");
+  src: url("ComicSansBold.woff2") format("woff2"),
+    url("ComicSansBold.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
