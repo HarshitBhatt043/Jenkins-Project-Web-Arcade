@@ -400,7 +400,7 @@ var Module = {
   locateFile: function (path, prefix) {
     if (prefix == "") {
       return (
-        "https://275022854-836183720046385513.preview.editmysite.com/uploads/b/139890129-376454683626216828/files/webapp/" +
+        "./" +
         path
       );
     }

@@ -205,7 +205,7 @@
             )) &&
               decodeURIComponent(e[1].replace(/\+/g, " "))) ||
             "v2");
-        return "https://275022854-836183720046385513.preview.editmysite.com/uploads/b/139890129-376454683626216828/files/core.js";
+        return "./core.js";
       })(),
       i = document.createElement("script");
     i.setAttribute("src", r),
