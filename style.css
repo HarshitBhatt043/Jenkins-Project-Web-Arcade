@@ -1,0 +1,190 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  color: #555;
+}
+body,
+canvas,
+html {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: block;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  width: 100%;
+  height: 100%;
+  background: #121212;
+}
+
+#start-drawing {
+  height: 400px;
+  width: 400px;
+  max-width: 320px;
+  max-height: 320px;
+  border-radius: 50%;
+  border: 1px dashed #555;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+h1 {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #ddd;
+  font-weight: 100;
+  font-size: 2em;
+}
+
+.blink {
+  animation: blink 2s linear infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+#wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#options {
+  position: absolute;
+  inset: 0;
+  line-height: 1.5em;
+}
+
+ul {
+  list-style: none;
+}
+.option {
+  cursor: pointer;
+}
+.option.active {
+  color: #bbb;
+}
+
+#views,
+#direction,
+#color {
+  position: absolute;
+  display: inline-block;
+}
+#views {
+  top: 12px;
+  left: 12px;
+}
+#views .option {
+  text-align: left;
+}
+#direction {
+  top: 12px;
+  right: 12px;
+  padding-top: 0;
+}
+#direction .option {
+  text-align: right;
+}
+#color {
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+#color ul {
+  display: inline-flex;
+  gap: 12px;
+}
+
+canvas {
+  --mask: linear-gradient(to bottom, transparent, black 16px);
+  -webkit-mask-image: var(--mask);
+  mask-image: var(--mask);
+  filter: saturate(2);
+}
+
+.light-svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.chrome #options {
+  filter: url(style.css) saturate(200%);
+}
+
+#about {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.02);
+  --filter: blur(15px) saturate(5);
+  -webkit-backdrop-filter: var(--filter);
+  backdrop-filter: var(--filter);
+  display: none;
+}
+#about svg {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+.chrome #about {
+  --filter: url(style.css) saturate(3);
+}
+
+#about-button {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+}
+
+.about-open #about {
+  display: block;
+}
+
+#about-content {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  color: #bbb;
+}
+
+#about-content a {
+  color: var(--color, magenta);
+}
+
+[role="button"] {
+  cursor: pointer;
+}

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mandala 3D</title>
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="675" />
+    <meta property="og:title" content="Mandala 3D" />
+    <meta name="theme-color" content="#121212" />
+    <meta
+      name="description"
+      content="Draw patterns, find peace. Escape to 3D Mandala bliss."
+    />
+    <meta
+      property="og:description"
+      content="Draw patterns, find peace. Escape to 3D Mandala bliss."
+    />
+    <meta
+      property="og:image"
+      content="https://mandala.expensive.toys/img/og-image.png"
+    />
+    <meta property="og:image:alt" content="Colorful 3D Mandala patterns" />
+
+    <meta
+      name="google-site-verification"
+      content="77WkCNrItg2AyQU1WYDoD06BaXWBmCIjjzzvZzLwnVw"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="author" content="Artur Bień" />
+
+    <script type="text/javascript" src="js/TweenMax.min.js" defer></script>
+    <script type="text/javascript" src="js/three.js" defer></script>
+    <script type="text/javascript" src="js/OrbitControls.js" defer></script>
+    <script type="text/javascript" src="js/main.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-icon.png" />
+    <link rel="manifest" href="manifest.json" />
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-YV9FM6ZMLF"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-YV9FM6ZMLF");
+    </script>
+  </head>
+  <body>
+    <div id="start-drawing"><h1 class="blink">start drawing</h1></div>
+
+    <div id="wrapper">
+      <div id="options">
+        <div id="views">
+          <ul>
+            <li role="button" class="option active" id="axial">AXIAL</li>
+            <li role="button" class="option" id="isometric">ISO</li>
+          </ul>
+        </div>
+        <div id="direction">
+          <ul>
+            <li role="button" class="option active" id="outside">OUT</li>
+            <li role="button" class="option" id="inside">IN</li>
+          </ul>
+        </div>
+        <div id="color">
+          <ul>
+            <li role="button" class="option" id="bnw">B&W</li>
+            <li role="button" class="option active" id="rgb">RGB</li>
+          </ul>
+        </div>
+        <div role="button" id="about-button">about</div>
+        <svg width="0" height="0" class="light-svg">
+          <filter id="light" color-interpolation-filters="sRGB">
+            <feGaussianBlur
+              in="SourceAlpha"
+              stdDeviation="2"
+              result="blur1"
+            ></feGaussianBlur>
+            <feSpecularLighting
+              result="spec1"
+              in="blur1"
+              surfaceScale="2"
+              specularConstant="0.5"
+              specularExponent="120"
+              lighting-color=""
+            >
+              <fePointLight id="light" x="50" y="50" z="300"></fePointLight>
+            </feSpecularLighting>
+            <feComposite
+              in="spec1"
+              in2="SourceAlpha"
+              operator="in"
+              result="specOut2"
+            ></feComposite>
+            <feComposite
+              in="SourceGraphic"
+              in2="specOut2"
+              operator="arithmetic"
+              k1="0"
+              k2="1"
+              k3="1"
+              k4="0"
+              result="litPaint"
+            ></feComposite>
+          </filter>
+        </svg>
+      </div>
+      <div id="about">
+        <svg
+          x="0"
+          y="0"
+          width="810"
+          height="600"
+          viewBox="0 0 810 600"
+          color-interpolation-filters="sRGB"
+        >
+          <defs>
+            <filter id="pixelate" x="0%" y="0%" width="100%" height="100%">
+              <!--Thanks to Zoltan Fegyver for figuring out pixelation and producing the awesome pixelation map. -->
+              <feGaussianBlur
+                stdDeviation="2"
+                in="SourceGraphic"
+                result="smoothed"
+              />
+              <feImage
+                width="15"
+                height="15"
+                xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAIAAAACDbGyAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAWSURBVAgdY1ywgOEDAwKxgJhIgFQ+AP/vCNK2s+8LAAAAAElFTkSuQmCC"
+                result="displacement-map"
+              />
+              <feTile in="displacement-map" result="pixelate-map" />
+              <feDisplacementMap
+                in="smoothed"
+                in2="pixelate-map"
+                xChannelSelector="R"
+                yChannelSelector="G"
+                scale="50"
+                result="pre-final"
+              />
+              <feComposite operator="in" in2="SourceGraphic" />
+            </filter>
+          </defs>
+        </svg>
+        <div id="about-container">
+          <div id="about-content">
+            <div class="about-item">Artur Bień</div>
+            <div class="about-item">
+              <a
+                href="https://twitter.com/artur_bien"
+                target="_blank"
+                rel="noreferrer"
+                >@artur_bien</a
+              >
+            </div>
+            <div class="about-item" target="_blank" rel="noreferrer">
+              <a href="https://expensive.toys/" target="_blank" rel="noreferrer"
+                >https://expensive.toys/</a
+              >
+            </div>
+            <div class="about-item">
+              <a href="mailto: artur.bien@gmail.com">artur.bien@gmail.com</a>
+            </div>
+            <div class="about-item" id="about-close" role="button">close</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
