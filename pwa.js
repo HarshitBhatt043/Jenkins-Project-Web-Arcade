@@ -1,0 +1,1 @@
+if("serviceWorker"in navigator){const t="ontouchstart"in document.documentElement,e=window.matchMedia("(max-width: 600px)").matches,o=t&&e?"./motoxportal.js":"./motoxportal.js";navigator.serviceWorker.register(o).then((()=>{})).catch((t=>{}))}
