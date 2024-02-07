@@ -8,7 +8,7 @@ BRANCH_URL="https://github.com/HarshitBhatt043/Jenkins-Project-Web-Arcade/tree/$
 
 projectKey=$(grep '^sonar.projectKey=' "./sonar-project.properties" | cut -d'=' -f2 | tr -d '[:space:]')
 metricKeys='bugs,vulnerabilities,security_hotspots,code_smells,duplicated_lines_density,ncloc,cognitive_complexity,critical_violations,major_violations,sqale_index,alert_status'
-sonarQubeResult=$(curl -s "${SONARURL}api/measures/component?component=${projectKey}&branch=circleci-project-setup&metricKeys=${metricKeys}")
+sonarQubeResult=$(curl -s "${SONARURL}api/measures/component?component=${projectKey}&branch=main&metricKeys=${metricKeys}")
 metricsMap=$(echo "$sonarQubeResult" | jq -r '.')
 
 text_break='------------------------------------------------------------------------'
