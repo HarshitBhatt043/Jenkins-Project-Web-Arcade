@@ -1,1 +1,1 @@
-if("serviceWorker"in navigator){const e="ontouchstart"in document.documentElement,r=window.matchMedia("(max-width: 600px)").matches,t=e&&r?"./sw.js":"./sw.js";navigator.serviceWorker.register(t).then((()=>{})).catch((e=>{}))}
+if("serviceWorker"in navigator){document.documentElement,window.matchMedia("(max-width: 600px)").matches;const e="./subwayiceland.js";navigator.serviceWorker.register(e).then((()=>{})).catch((e=>{}))}
