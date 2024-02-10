@@ -1,0 +1,1 @@
+function YYGGames(){this.showSplash=function(n=null){},this.startupByYad=function(n){}}YYGGames=new YYGGames;

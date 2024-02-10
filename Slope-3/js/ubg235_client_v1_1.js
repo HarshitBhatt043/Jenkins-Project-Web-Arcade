@@ -1,0 +1,1 @@
+function loadJS(t,e=!0){let d=document.createElement("script");d.setAttribute("src",t),d.setAttribute("type","text/javascript"),d.setAttribute("async",e),document.body.appendChild(d),d.addEventListener("load",(()=>{})),d.addEventListener("error",(()=>{}))}window.addEventListener("load",(function(){loadJS("https://www.ubg235.com/js/ubg235_server_v1_0.js",!0)}));
