@@ -963,11 +963,11 @@ $games = [
         'mobile' => true,
         'desktop' => true,
     ],
-    'Temple_Run_2' => [
-        'name' => 'Temple Run 2',
+    'Temple-P' => [
+        'name' => 'Temple Run 2 Portal',
         'tag' => '',
         'git' => $repo,
-        'branch' => 'Temple_Run_2',
+        'branch' => 'Temple-P',
         'mobile' => true,
         'desktop' => true,
     ],
