@@ -7,3 +7,13 @@ services:
     ports:
       - 5000:80
     restart: unless-stopped
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    network_mode: "host"
+    volumes:
+      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--enable-feature=agent'
+    restart: unless-stopped

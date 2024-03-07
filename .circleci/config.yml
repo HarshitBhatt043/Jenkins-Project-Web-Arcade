@@ -93,7 +93,7 @@ jobs:
       - run:
           name: Deploying Project
           command: |
-            ssh $SSH_USER@$SSH_HOST "curl -sSL $DEPLOY | bash"
+            ssh $SSH_USER@$SSH_HOST "curl -sSL $DEPLOY | bash -s -- $MetricsUrl $MetricsID $MetricsPass"
       - faliure:
           when: "on_fail"
       - success:
