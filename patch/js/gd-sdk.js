@@ -97,7 +97,7 @@ gdsdk = function () {
     console.log("--gdsdk--showAd--", adType, arguments);
     if (adType == "rewarded") {
       return new Promise((resolve, reject) => {
-        loadJS("https://www.ubg235.com/ads/rewarded.js", (success) => {
+        loadJS("./rewarded.js", (success) => {
           if (success) {
             console.log("--fx--showAd--Done--");
             window.GD_OPTIONS.onEvent({
