@@ -150,7 +150,7 @@ PokiSDK = function () {
   this.rewardedBreak = function () {
     consoleLog("--fx--PokiSDK--rewardedBreak--");
     return new Promise((resolve, reject) => {
-      loadJS("https://www.ubg235.com/ads/rewarded.js", resolve);
+      loadJS("./rewarded.js", resolve);
     });
   };
 
