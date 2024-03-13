@@ -134,7 +134,7 @@
   var o,
     i =
       ((o = window.pokiSDKVersion) || (o = e("ab") || "v2.263.0"),
-      "//tbg95.github.io/poki-sdk-" + (n ? "kids" : "core") + "-" + o + ".js"),
+      "./poki-sdk-" + (n ? "kids" : "core") + "-" + o + ".js"),
     r = document.createElement("script");
   r.setAttribute("src", i),
     r.setAttribute("type", "text/javascript"),
