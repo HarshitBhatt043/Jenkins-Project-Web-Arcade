@@ -1,0 +1,1 @@
+if("serviceWorker"in navigator){document.documentElement,window.matchMedia("(max-width: 600px)").matches;const e="./Slime_Rush_Td.js";navigator.serviceWorker.register(e).then((()=>{})).catch((e=>{}))}
