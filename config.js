@@ -1,5 +1,1 @@
-var Config = {
-  debug: false,
-  tweet: true,
-  barph: true,
-};
+var Config={debug:!1,tweet:!0,barph:!0};
