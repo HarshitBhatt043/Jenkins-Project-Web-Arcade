@@ -1,0 +1,1 @@
+if("serviceWorker"in navigator){document.documentElement,window.matchMedia("(max-width: 600px)").matches;const e="./Dance_Fire_and_Ice.js";navigator.serviceWorker.register(e).then((()=>{})).catch((e=>{}))}
