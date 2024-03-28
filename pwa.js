@@ -1,0 +1,1 @@
+if("serviceWorker"in navigator){document.documentElement,window.matchMedia("(max-width: 600px)").matches;const e="./Rooftop_Snipers_2.js";navigator.serviceWorker.register(e).then((()=>{})).catch((e=>{}))}
