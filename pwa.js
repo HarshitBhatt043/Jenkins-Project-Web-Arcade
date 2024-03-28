@@ -1,0 +1,1 @@
+if("serviceWorker"in navigator){document.documentElement,window.matchMedia("(max-width: 600px)").matches;const e="./Bacon_May_Die.js";navigator.serviceWorker.register(e).then((()=>{})).catch((e=>{}))}
