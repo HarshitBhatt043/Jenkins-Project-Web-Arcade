@@ -1,17 +1,1 @@
-var rand_high, rand_low;
-
-function random_int(min, max) {
-  rand_high = ((rand_high << 16) + (rand_high >> 16) + rand_low) & 0xffffffff;
-  rand_low = (rand_low + rand_high) & 0xffffffff;
-  var n = (rand_high >>> 0) / 0xffffffff;
-  return (min + n * (max - min + 1)) | 0;
-}
-
-function random_seed(seed) {
-  rand_high = seed || 0xbadc0ffe;
-  rand_low = seed ^ 0x49616e42;
-}
-
-function array_rand(array) {
-  return array[random_int(0, array.length - 1)];
-}
+var rand_high,rand_low;function random_int(n,r){return rand_low=rand_low+(rand_high=(rand_high<<16)+(rand_high>>16)+rand_low&4294967295)&4294967295,n+(rand_high>>>0)/4294967295*(r-n+1)|0}function random_seed(n){rand_high=n||3134984190,rand_low=1231121986^n}function array_rand(n){return n[random_int(0,n.length-1)]}
