@@ -1,0 +1,1 @@
+if("serviceWorker"in navigator){document.documentElement,window.matchMedia("(max-width: 600px)").matches;const e="./X_Trial_Racing.js";navigator.serviceWorker.register(e).then((()=>{})).catch((e=>{}))}
