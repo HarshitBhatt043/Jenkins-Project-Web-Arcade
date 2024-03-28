@@ -1,0 +1,1 @@
+["./android-chrome-192x192.png","./android-chrome-512x512.png","./apple-touch-icon.png","./assets.js","./favicon-16x16.png","./favicon-32x32.png","./favicon.ico","./index.html","./PacMan-HTML.data.gz","./PacMan-HTML.framework.js","./PacMan-HTML.loader.js","./PacMan-HTML.wasm.gz","./popup.js","./site.webmanifest","./style.css","./toast.css","./toast.js"]
