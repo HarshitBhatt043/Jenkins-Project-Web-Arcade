@@ -1,0 +1,1 @@
+["./android-chrome-192x192.png","./android-chrome-512x512.png","./app.css","./app.js","./apple-touch-icon.png","./assets.js","./face-wasm.wasm","./favicon-16x16.png","./favicon-32x32.png","./favicon.ico","./index.html","./popup.js","./pull.png","./site.webmanifest","./toast.css","./toast.js"]
