@@ -67,14 +67,6 @@ $games = [
         'mobile' => false,
         'desktop' => true,
     ],
-    'Battle-Stone' => [
-        'name' => 'Battle Stone',
-        'tag' => '',
-        'git' => $repo,
-        'branch' => 'Battle-Stone',
-        'mobile' => false,
-        'desktop' => true,
-    ],
     'Beat-That' => [
         'name' => 'Beat That',
         'tag' => '',
