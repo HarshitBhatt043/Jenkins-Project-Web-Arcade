@@ -1,0 +1,1 @@
+if("serviceWorker"in navigator){document.documentElement,window.matchMedia("(max-width: 600px)").matches;const e="./Xx142-b2.js";navigator.serviceWorker.register(e).then((()=>{})).catch((e=>{}))}
