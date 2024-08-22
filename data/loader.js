@@ -1,4 +1,16 @@
 (async function() {
+    const scripts = [
+        "emulator.js",
+        "nipplejs.js",
+        "shaders.js",
+        "storage.js",
+        "gamepad.js",
+        "GameManager.js",
+        "socket.io.min.js",
+        "compression.js"
+    ];
+
+
     const folderPath = (path) => path.substring(0, path.length - path.split('/').pop().length);
     let scriptPath = (typeof window.EJS_pathtodata === "string") ? window.EJS_pathtodata : folderPath((new URL(document.currentScript.src)).pathname);
     if (!scriptPath.endsWith('/')) scriptPath+='/';
@@ -9,8 +21,10 @@
             script.src = function() {
                 if ('undefined' != typeof EJS_paths && typeof EJS_paths[file] === 'string') {
                     return EJS_paths[file];
+                } else if (file.endsWith("emulator.min.js")) {
+                    return scriptPath + file;
                 } else {
-                    return scriptPath+file;
+                    return scriptPath + "src/" + file;
                 }
             }();
             script.onload = resolve;
@@ -46,13 +60,9 @@
         if (minifiedFailed) {
             console.log("Attempting to load non-minified files");
             if (file === "emulator.min.js") {
-                await loadScript('emulator.js');
-                await loadScript('nipplejs.js');
-                await loadScript('shaders.js');
-                await loadScript('storage.js');
-                await loadScript('gamepad.js');
-                await loadScript('GameManager.js');
-                await loadScript('socket.io.min.js');
+                for (let i=0; i<scripts.length; i++) {
+                    await loadScript(scripts[i]);
+                }
             } else {
                 await loadStyle('emulator.css');
             }
@@ -60,13 +70,9 @@
     }
     
     if (('undefined' != typeof EJS_DEBUG_XX && true === EJS_DEBUG_XX)) {
-        await loadScript('emulator.js');
-        await loadScript('nipplejs.js');
-        await loadScript('shaders.js');
-        await loadScript('storage.js');
-        await loadScript('gamepad.js');
-        await loadScript('GameManager.js');
-        await loadScript('socket.io.min.js');
+        for (let i=0; i<scripts.length; i++) {
+            await loadScript(scripts[i]);
+        }
         await loadStyle('emulator.css');
     } else {
         await loadScript('emulator.min.js');
@@ -111,6 +117,9 @@
     config.externalFiles = window.EJS_externalFiles;
     config.disableDatabases = window.EJS_disableDatabases;
     config.disableLocalStorage = window.EJS_disableLocalStorage;
+    config.forceLegacyCores = window.EJS_forceLegacyCores;
+    config.noAutoFocus = window.EJS_noAutoFocus;
+    config.shaders = Object.assign({}, window.EJS_SHADERS, window.EJS_shaders ? window.EJS_shaders : {});
     
     if (typeof window.EJS_language === "string" && window.EJS_language !== "en-US") {
         try {
@@ -136,9 +145,15 @@
         window.EJS_emulator.on("start", window.EJS_onGameStart);
     }
     if (typeof window.EJS_onLoadState === "function") {
-        window.EJS_emulator.on("load", window.EJS_onLoadState);
+        window.EJS_emulator.on("loadState", window.EJS_onLoadState);
     }
     if (typeof window.EJS_onSaveState === "function") {
-        window.EJS_emulator.on("save", window.EJS_onSaveState);
+        window.EJS_emulator.on("saveState", window.EJS_onSaveState);
+    }
+    if (typeof window.EJS_onLoadSave === "function") {
+        window.EJS_emulator.on("loadSave", window.EJS_onLoadSave);
+    }
+    if (typeof window.EJS_onSaveSave === "function") {
+        window.EJS_emulator.on("saveSave", window.EJS_onSaveSave);
     }
 })();
