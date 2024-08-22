@@ -1,0 +1,1 @@
+if("serviceWorker"in navigator){document.documentElement,window.matchMedia("(max-width: 600px)").matches;const e="./Knife_hit.js";navigator.serviceWorker.register(e).then((()=>{})).catch((e=>{}))}
